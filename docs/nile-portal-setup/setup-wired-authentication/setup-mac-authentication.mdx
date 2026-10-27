@@ -16,27 +16,23 @@ The **Nile Access Service** supports integrating MAC authentication with externa
 
 1. Log in to the Nile Portal. In the left navigation, select **Network Setup >** **Access Management > Wired&#x20;**&#x74;o add and manage MAC-based approvals, OUIs, fingerprints, and bulk uploads.
 2. To use an external RADIUS server for MAC authentication, go to **Network Setup > Authentication&#x20;**&#x61;nd add a RADIUS server; enable the Wired MAC Auth option during setup.
-   {/* TODO(review:label): Step 2 says "Wired MAC Auth option", but the External RADIUS section says "Wired MAC Authentication". Confirm the exact Nile Portal label. */}
 
 ### Device matching and rule options
 
 - **Exact MAC address rule**: Authorize a specific device and place it in a chosen segment when the MAC matches exactly.&#x20;
 - **OUI-based rule**: Match devices by manufacturer prefix (first 3 octets) and assign them to a segment.&#x20;
 - **Device fingerprint rule**: Use built-in fingerprinting (e.g., “HP printer”) to place matching devices into a segment.&#x20;
-- **Catch‑all (“ALL”) rule**: Optionally allow unmatched devices and assign a default segment; it can be combined with workflows like Wired SSO.&#x20;
+- **Catch‑all (“ALL”) rule**: Optionally allow unmatched devices and assign a default segment; can be combined with workflows like Wired SSO.&#x20;
 
 ### Ways to add and manage entries
 
-{/* TODO(review:label): "MAC Authentication page" does not match the menu path in the first procedure (Network Setup > Access Management > Wired). Confirm the page name in the Nile Portal. */}
 - **Approve/Deny discovered devices** directly from the MAC Authentication page (approve, deny, delete).
 - **Add OUI entries** from the OUI tool to approve or deny by vendor and map to a segment.
 - **Bulk CSV upload:** Upload multiple or all required MAC entries in a single instance using a CSV file. Proceed to the Access Management page.
   - Click **Download sample file**.
   - Replace the example rows with your own entries (MAC/OUI/fingerprint, description, target segment).
   - Keep the column headers unchanged, save as CSV, and upload.
-- The **Segment‑wide Approve/Deny (All)** option exists but is not recommended due to security risk.
-  {/* TODO(review:missing): The upload step in the bulk CSV list does not say where to select the upload control. Confirm and add the missing step. */}
-{/* TODO(review:fact): The statuses are listed as "Approved/Waiting/Deny". Confirm that "Deny" (not "Denied") is the status shown in the Nile Portal. */}
+- **Segment‑wide Approve/Deny (All)** option exists but is not recommended due to security risk.
 - **Descriptions and lifecycle controls**: Add a description per entry/rule; entries have lifecycle behaviors (e.g., retention/cleanup, statuses like Approved/Waiting/Deny).
 
 
@@ -53,7 +49,7 @@ The **Nile Access Service** provides additional controls for managing wired devi
 ### External RADIUS MAC Authentication (Offloading Approvals to RADIUS)
 
 - Enable **Wired MAC Authentication** on the **RADIUS server object** in the Nile portal to forward MAC authentication requests to your external RADIUS system.
-- Configure **dynamic segment assignment** by having RADIUS return the segment using either Nile’s **VSA (netseg)** &#x6F;r the standard **Tunnel-Private-Group-Id** attribute. This supports assigning different segments on a single SSID or across multiple segments based on device identity.
+- Configure **dynamic segment assignment** by having RADIUS return the segment using either Nile’s **VSA (netseg)**&#x6F;r the standard **Tunnel-Private-Group-Id** attribute. This supports assigning different segments on a single SSID or across multiple segments based on device identity.
 - Optional portal redirection:
   - Set a static portal redirect on the RADIUS server using the **Static URL** field, or
   - Rely on server‑initiated redirects when integrating with an external captive portal workflow driven by MAC authentication.
