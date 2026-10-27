@@ -1,0 +1,415 @@
+---
+title: Cisco Identity Service Engine (ISE) - RADIUS
+slug: cisco-identity-service-engine-ise-radius
+createdAt: Thu Apr 24 2025 18:37:41 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+This document describes Cisco Identity Services Engine (ISE) integration configuration with Nile Service Blocks (NSB).
+
+# Overview
+
+Cisco Identity Services Engine (ISE) is an identity-based network access control and policy enforcement system. Nile service Block can be integrated with ISE using RADIUS protocol for Wireless authentication 802.1x, MAB, Guest Portal and BYOD Certificate of Authenticity (CoA) authentication.&#x20;
+
+# Prerequisites
+
+1. Cisco Identity Services Engine (ISE) version 2.7 or higher.
+2. Connectivity between Nile Gateway over RADIUS port and ISE.
+
+# 1) ISE pre-configurations
+
+## a) Import Nile vendor dictionary
+
+- Add the VSA dictionary tells Cisco ISE how to send attributes Nile understands.
+- Copy the contents below into a text file and save it as “Nile.dictionary” to create a Microsoft Personal Dictionary file.
+
+<BlockQuote>
+  VENDOR  Nile    58313
+
+  BEGIN-VENDOR    Nile
+
+  ATTRIBUTE       redirect-url    1       string
+  ATTRIBUTE       netseg          2       string
+  ATTRIBUTE       nile-avpair     3       string
+
+  END-VENDOR      Nile
+</BlockQuote>
+
+To import the file:
+
+- Login to ISE GUI as an administrator.&#x20;
+- Navigate to Policy menu > Policy Elements > Dictionaries > RADIUS > RADIUS Vendors then Click Import button.
+- Click Browse to choose the “Nile.dictionary” from the file system running on your client browser.
+- Click Import to import the Nile vendor dictionary.
+- Expand RADIUS and select RADIUS Vendors as in below screenshot and verify Nile dictionary is listed under RADIUS vendors list.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/c8lqAcviIZGWzYvIsxacF_screenshot-2025-04-24-at-73307-pm.png)
+
+- Double-click the Nile VSA file and verify that its attributes match those shown in the screenshots below.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/l9VzWyuOeGl-8J5huRBnB_screenshot-2025-04-24-at-73211-pm.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/4qUeW5g4xSZT7Mne6xF8A_screenshot-2025-04-24-at-73156-pm.png)
+
+## b) Add a new RADIUS network device profile
+
+A Network Device Profile tells ISE if there are vendor specific configurations (like a VSA dictionary) that should be used when communicating with an 802.1X authenticator (i.e. Nile HE).
+
+- Login to ISE GUI as an administrator.&#x20;
+- Navigate to Administration > Network Resources > Network Device Profiles.
+- Add a new device profile using the configuration paramaters highlighted in below screenshot.
+
+**Note:** If a dropdown is unavailable for any parameter, manually enter the value to match the screenshots provided below.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/zGXYllgyIlbKwqbQy5ogi_new1.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/eAl3L5l7LeuFxhhhBjrpL_screenshot-2025-04-24-at-74702-pm.png)
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ISg1wfB7IL-4HyDSLlKKo_screenshot-2025-04-24-at-75035-pm.png" size="80" width="575" height="538" position="center" showCaption="false"></Image>
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QjsUuZ1MsA1tXtMbw0pQ7_screenshot-2025-04-24-at-75145-pm.png" size="70" width="434" height="499" position="center" showCaption="false"></Image>
+
+- Verify that the summary matches the below screenshot, then click Save to store the profile.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Kool1-VfK1VDH-lxbj4hY_screenshot-2025-04-24-at-75250-pm.png)
+
+## c) Enable MS-CHAPv2 as an allowed protocol on ISE
+
+MS-CHAPv2 is required for the Nile portal to monitor a configured ISE server.
+
+- From ISE GUI, Naviate to Policy > Policy Elements > Results > Authentication > Allowed Protocols > Default Network Access > Make sure that MS-CHAPv2 is allowed.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/cWOctjv2ZHMwVeds7cKKM_allow-mschapv2.png" size="80" width="862" height="956" position="center" showCaption="false"></Image>
+
+# 2) ISE Integration
+
+## a) Add Nile gateway to ISE
+
+To proceed with this step, you will need the Nile HE IP address.
+
+- The IP address for the Nile HE, required for ISE configuration, can be found in the Authentication settings when adding a new RADIUS server in the Nile portal. Click the "Display NAS IP's" button to view it.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KVBaFWkHUDYCRTWitkndi_nas-ip.png)
+
+- From within ISE GUI, Navigate to  Administration > Network Resources > Network Devices and Click on 'Add'.
+- Configure the Nile Gateway as the network device, using the network device profile Nile created in the previous step. Refer to following screen for other parameters.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/udsNKZRitCk9TVYaDcmAr_screenshot-2025-04-24-at-75541-pm.png" size="90" width="572" height="669" position="center" showCaption="false"></Image>
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ojIZnBwhSBvR22atHzgiP_screenshot-2025-04-24-at-75555-pm.png" size="90" width="698" height="602" position="center" showCaption="false"></Image>
+
+## b) Add RADIUS (ISE) to Nile portal
+
+This section describes the Nile Portal's configuration to add RADIUS. 
+
+Create a radius configuration on the Nile Portal as following:
+
+- Login to the Nile Portal > Click on the Settings icon > Navigate to the Authentication tab.
+- Click on the ‘**+**’ sign to create a radius entry for the ISE server.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_0pNJr2hkjAaaDz_EpEUB_nop.png)
+
+**Note:** The user shown here, “nilestatus” is used by the Nile Portal to poll ISE availability and latency every one-minute interval. This user must exist in an identity store supported by ISE. The typical approach for a demo is to use the local ISE user identity store and create this user within it.
+
+# 3) Use case - Wireless/Wired 802.1X Authentication
+
+## a) Create ISE Authentication/Authorization policy
+
+- From ISE GUI, Navigate to Policy > Policy Sets > select Default, Click on the right side ‘**>**’ to expand the default policy set.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UbwhCafqA6tysRZd3pv8e_screenshot-2025-04-24-at-84549-pm.png)
+
+- Click on left side ‘**>**’ to expand the Authentication Policy.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UfUvL5ewZX77bCPoD5vhi_screenshot-2025-04-24-at-84625-pm.png" size="90" width="613" height="422" position="center" showCaption="false"></Image>
+
+- Click on the ‘**+**’ sign to create a new authentication policy rule as mentioned below.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/T_XFFa68aOvxDVicdNDe1_screenshot-2025-04-24-at-84715-pm.png)
+
+- Rename the ‘Authentication Rule 1’ to ‘Dot1X.
+- Add the Conditions: Wireless\_802.1X **OR&#x20;**&#x57;ired\_802.1X
+- Select All\_User\_ID\_Store.
+- Set the ‘Option’ rule by as follows:
+  - If Auth fail: REJECT
+  - If User not found: REJECT     &#x20;
+  - If Process fail: DROP
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/klHYwt9SmqE9b0EIWxeRu_screenshot-2025-04-24-at-84731-pm.png)
+
+- Click on left side ‘**>**’ to expand the Authorization Policy.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/eIHmL-ANo0pm9rZUQzuNQ_screenshot-2025-04-24-at-84910-pm.png" size="90" width="559" height="383" position="center" showCaption="false"></Image>
+
+- Click on the ‘**+**’ sign to create a new Authorization Rule policy.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mf3sACzuyAZwx1C2134Pm_screenshot-2025-04-24-at-84911-pm.png)
+
+- Rename the ‘Authorization Rule 1’ to Dot1X.
+- Add the Conditions:  Wireless\_802.1X **AND** EAP-MSCHAPv2.
+- Select “PermitAccess” as Results Profile.
+- Click on Save to save the configs.
+
+## b)  Nile Dynamic Segments using RADIUS (ISE) attribute – netseg (Optional)
+
+This section is applicable only if you have multiple segments associated with a single dot1x SSID and you prefer to push segments dynamically.&#x20;
+
+Nile supports dynamic segment allocation that can be assigned by RADIUS (ISE) depending on the user account (e.g., employee or contractor).
+
+To setup the Nile Dynamic Segments, please follow the below steps.
+
+- From ISE GUI, Navigate to Policy > select Policy Elements > Results > expand Authorization and select Authorization Profiled, click on “**+**” to create a profile that matches Nile segment name.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/t-Lijii1-Ovcp7-P5gF5e_screenshot-2025-04-24-at-85026-pm.png)
+
+- Enter the name for the new Authorization profile,&#x20;
+  - Select access type as “ACCESS\_ACCEPT”
+  - &#x20;Network Device Profile as NileSecure
+  - Under Advanced Attributes, select Nile\:netsg and enter Nile segment name as a value (Name is case sensitive)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/d6MvZFYTCff8YRaR85Zto_screenshot-2025-04-24-at-85106-pm.png)
+
+- Click on Submit to save the config and repeat  the same steps to create a new Authorization profile for the other segment.
+- From ISE GUI, Naviate to Policy > Policy Sets > select Default, Click on the right side ‘**>**’ to expand the default policy set.
+- Click on left side ‘**>**’ to expand the Authorization Policy.
+- Click on the ‘**+**’ sign to create a new rule.
+- Rename the ‘Authorization Rule 1’ to Dot1X-Segment-Name.
+- Add the Conditions:  Wireless\_802.1X **AND** IdentityGroup equal to user group (e.g., employee or contractor).
+- Select the respective setment's Authorization profile as Results Profile.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/oSM5nwLmQg6TZz8gaPzbK_screenshot-2025-04-24-at-85341-pm.png)
+
+- Repeat the same steps to create an Authorization policy for the second user groups that will be mapped to the second segment.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KsBrpQfvVYYn3u_yU9bDO_screenshot-2025-04-24-at-85342-pm.png)
+
+- Modify the Nile Wireless SSID to include the multi segments.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8OgPOP7fK24Tm9FUhUYxj_screenshot-2025-04-24-at-85526-pm.png" size="90" width="648" height="507" position="center" showCaption="false"></Image>
+
+# 4) Use case - Wired MAB Authentication
+
+By default, the standard Cisco MAB AuthC policy does not recognize the attributes sent by Nile. If these attributes are not adjusted, the ISE RADIUS live logs will show that the AuthC policy is not being matched by the data received from Nile.
+
+ISE Auth policy for MAB with Nile requires that we call out:
+
+<BlockQuote>
+  \{
+  Radius-Service-Type EQUALS “Call Check”
+  AND
+  Radius-NAS-Port-Type EQUALS “Ethernet”
+  }
+
+</BlockQuote>
+
+## &#x20;a) ISE Authentication/Authorization policy
+
+- From ISE GUI, Naviate to Policy > Policy Sets > Default > Authentication Policy and configure a MAB policy, or reconfigure the existing MAB AuthC policy, to match on these conditions:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/V8AF41GEgXzY1DuEi5kpd_mab.png)
+
+- Configure the Options to:
+  - If Auth fail = CONTINUE
+  - If User not found = CONTINUE
+
+This tells ISE that if the wired MAC address is currently unknown or never seen before by ISE, to go ahead and let it proceed for AuthZ policies.
+
+Once an endpoint has passed an Authentication (AuthC) policy, ISE still needs further context for what to do with the endpoint. That is where the Authorization (AuthZ) policy comes into play.
+
+- From ISE GUI, Naviate to Policy > Policy Sets> Default> Authorization Policy. Click the **+** sign to create a new policy
+- You can match the conditions of Authorization Policy to same as that of AuthC policy above. And then place all endpoints into segment “Internal-Net3”.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/lnodxSxLX12oUu5wQUuNx_mab2.png)
+
+- Save policy set and verify results within ISE. You can review all of the specifics regarding user authentication and authorization from within the ISE live logs. This is the best resource to figure out if your policy is working or not for any use case. The live logs will show exactly what ISE is doing and why it is doing it.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jFsQkQf1GGbru_zzEMGT2_ise-livelogs.png)
+
+**Note:** Make sure the ISE server is checkbox is configured to support Wired MAC Authentication from within the Nile portal. If you don’t see this checkbox available, then you will need to get a feature flag enabled on the tenant you are configuring this on.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9cSIZ5_tjrRzCKXasSAKy_nop.png)
+
+# 5) Use case - Wireless Guest Sponsored Portal Authentication
+
+A Guest Access Captive Portal authentication approach has three kinds of portal configurations:
+
+- Hotspot Guest Portal (Terms & Conditions)
+- Self-Registered Guest Portal
+- Sponsored Guest Portal.
+
+In this use case, we will describe the Sponsored Guest portal options that ISE can present to wireless clients for guest authentication.
+
+## a) Create an Authorization profile for Terms & Conditions Guest Redirect .
+
+- From ISE GUI, Naviate to Policy > Policy Elements > Results > Authorization Profiles
+- Click on: Add and enter/select the following:
+  - Name: Nile\_Redirect
+  - Access Type: ACCESS\_ACCEPT
+  - Network Device Profile: NileSecure
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/XErajUTUL__-FCsSXg34C_screenshot-2025-04-28-at-41416-pm.png)
+
+- In ‘Advanced Attributes Settings:
+  - Select the attribute ‘Nile\:redirect-url’
+  - Copy and paste the above URL while replacing ‘iseHost’ with the IP or FQDN of the ISE server.
+  - **Note:** Ensure that you add a prefix '**url=**' before the URL
+- Verify Attributes Details and Click on Submit to save the new profile.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LT3awjvz1m3OMd45h5Q6J_screenshot-2025-04-28-at-42647-pm.png)
+
+## b) Create an Authorization profile for Guest post-redirection
+
+- From ISE GUI, Navigate to Policy > Policy Elements > Results > Authorization Profiles.
+- Click on: Add and enter/select the following:
+  - Name: Nile-Guest-Access
+  - Access Type: ACCESS\_ACCEPT
+  - Network Device Profile: NileSecure
+- Configure Advanced Attributes Settings as per the following screenshot and Save the profile.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ih1HkGZtazyttVj1XEs-i_screenshot-2025-04-28-at-41453-pm.png)
+
+## c) Create new Authentication and Authorization Policies
+
+- From GUI Navigate to Policy > Policy Sets > select Default, Click on the right side ‘**>**’ to expand the default policy set.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UbwhCafqA6tysRZd3pv8e_screenshot-2025-04-24-at-84549-pm.png)
+
+- Click on left side ‘**>**’ to expand the Authentication Policy.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UfUvL5ewZX77bCPoD5vhi_screenshot-2025-04-24-at-84625-pm.png" size="90" width="613" height="422" position="center" showCaption="false"></Image>
+
+- Click on the ‘**+**’ sign to create a new rule and rename the ‘Authentication Rule 1’ to ‘MAB’.
+- Add the Conditions:  Wireless\_MAB **OR** Wired\_MAB.
+- Select Internal Endpoints.
+- Set the ‘Option’ rule by as follows:
+  - If Auth fail: REJECT
+  - If User not found: CONTINUE      &#x20;
+  - If Process fail: DROP
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/XjdxwTicDBqdiVRBbDoDS_screenshot-2025-04-28-at-41544-pm.png)
+
+- Click on left side ‘**>**’ to expand the Authorization Policy.
+- Click on the ‘**+**’ sign to create a new rule and rename the ‘Authorization Rule 1’ to “Nile\_Guest\_Access”.
+- Add the Conditions as “Wireless\_MAB” **AND** “Guest\_Flow”.
+- Select Results Profile “Nile-Guest-Access”.
+- Click on the ‘**+**’ sign to create a second rule and rename the ‘Authorization Rule 1’ to “Nile\_Redirect”.
+- Add the Conditions:  “Wireless\_MAB” only.
+- Select Results Profile “Nile\_Redirect” and Save.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/01IE5IKnpTuR1xN9bK6jm_screenshot-2025-04-28-at-41605-pm.png)
+
+## d) Create Guest SSID
+
+- Navigate to the WIRELESS tab and Click on the ‘**+**’ sign to add an SSID.
+- Select ‘Captive Portal’ for Security, choose the Guest Segment with the ISE server mapped, and click Save.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AmEspEUPFhc6LIHkM_pco_screenshot-2025-04-28-at-44024-pm.png)
+
+# 6) Use case - BYOD SSID Integration with Cisco ISE
+
+In a single SSID BYOD deployment, only one SSID is used for both onboarding devices and providing afterwards full access to those registered devices.
+
+The flow to connect a client to a BYOD SSID is as follows:
+
+- User connects to the BYOD SSID with EAP-PEAP credentials.
+- Redirection to the BYOD portal with limited access.
+- Device registration.
+- Native Supplicant Assistant (NSA) download from ISE.
+- Profile and client certificate download.
+- EAP-TLS authentication for full access.
+
+Please refer to below step-by-step configuration of a single SSID wireless BYOD on Nile Service block (NSB) leveraging Cisco ISE radius services, BYOD portal and its private PKI infrastructure.
+
+## a) Create a certificate template for BYOD users
+
+- From ISE GUI, Navigate to Administration > Certificates > Certificate Authority > Certificate Templates Click on 'Add' and configure following parameters
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/2B_j5kcDeXx4ggzSbOr90_screenshot-2025-04-25-at-70103-pm.png)
+
+- Add a Native Supplicant Profile (NSP) - Navigate to > Work Centers > BYOD > Client Provisioning > Resources > Click on 'Add'.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sZDgpUgJ1JsExiHvpFwIU_screenshot-2025-04-25-at-70321-pm.png)
+
+- Select Native Supplicant Profile and Click on 'Add'
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1aHbqwOn6HIuWiJ_pl7rd_screenshot-2025-04-25-at-70434-pm.png)
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/qUp3kONkrxnXVI-7gMQa6_screenshot-2025-04-25-at-70512-pm.png" size="80" width="575" height="898" position="center" showCaption="false"></Image>
+
+- Click the Submit at the bottom of the page to save the new NSP
+- Modify the client provisioning policy - Navigate to Work Centers > BYOD > Client Provisioning > Client Provisioning Policy and Click on 'Edit' for the Windows rule
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fcAjT7xNkztW5kuz0syty_screenshot-2025-04-25-at-70545pm.png)
+
+- Select Windows All and WinSPWizard 3.x.x.x and Acme-ISE-NSP then Click Done followed by Save.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/R0AQIY3l9TijKaT-aVslx_screenshot-2025-04-25-at-70800-pm.png)
+
+## b) Create an Authorization profile for non-registered BYOD devices
+
+- From ISE GUI, Navigate to Policy > Policy Elements > Results > Authorization Profiles Click 'Add' and Enter/select the following:
+  - Name: Nile\_BYOD\_Redirect
+  - Access Type: ACCESS\_ACCEPT
+  - Network Device Profile: NileSecure
+  - Web Redirection: Native Supplicant Provisioning value BYOD Portal.
+- Click Submit to save the new profile.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Rav2x9wzXdormxJLsaVFz_screenshot-2025-04-25-at-70943-pm.png)
+
+- Collect the static URL as it needs to be entered in the Nile Portal at a later stage.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1WB-z0GJtljPr5OswMosJ_screenshot-2025-04-25-at-71007-pm.png)
+
+## c) Create an Authorization profile post-authentication for BYOD devices&#x20;
+
+- From ISE GUI, Navigate to > Policy > Policy Elements > Results > Authorization Profiles then Click:  Add Enter/select the following:
+  - Name: Nile\_BYOD\_postauth
+  - Access Type: ACCESS\_ACCEPT
+  - Network Device Profile: NileSecure
+  - Advanced Attributes Settings:   Nile\:netseg = postauth
+- Then Click Submit to save the new profile
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/y7PY29st3yKx62Gdw4cxi_screenshot-2025-04-25-at-71050-pm.png)
+
+**Note:&#xA0;**&#x49;n the case of two Nile segments: one for PEAP and one for EAP-TLS, replace ‘postauth’ with the EAP-TLS segment name.
+
+## d) Create a Policy set, Authentication, and Authorization profiles&#x20;
+
+- From ISE GUI, Navigate to Policy> Policy Sets Click on ‘**+**’ sign to add a policy
+  - Rename the ‘New Policy Set 1’ to: BYOD-Policy-Set
+  - Set the conditions to: Radius-Called-Station-ID ENDS\_WITH Acme-BYO
+  - Set Allowed Protocols to: Default Network Access
+- Click on Save.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-RNkhm6hSa_AfXtjxach7_screenshot-2025-04-25-at-71135-pm.png)
+
+**Note:&#x20;**&#x54;he above policy condition references the Nile BYOD SSID: Acme-BYOD used in this document. Change it to match the BYOD SSID configured on the Nile Portal.
+
+- Create two Authentication profiles as follows:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/gM-AgIRdhQUcq1lrz9Ngh_screenshot-2025-04-25-at-71220-pm.png)
+
+- Click on the right-side arrow ‘**>**’ to expand the policy and Create two Authorization profiles as follows and click on Save when done.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/4Vk1yyF0S8NHVt8rWMoQj_screenshot-2025-04-25-at-71249-pm.png)
+
+## e) BYOD Nile Portal configuration
+
+This section touches on the Nile Portal pertinent configuration to get a BYOD SSID up and running.
+
+- Create/modify the radius configuration on the Nile Portal.
+  - Connect to the Nile Portal
+  - Navigate to the Authentication page
+  - Add the static redirect URL generated in the step **6b** (Create an Authorization profile for non-registered BYOD devices), when creating the redirect authorization profile and replace the ‘isehost’ string by the ISE server FQDN or IP address.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/CZ7m0Nh8mT2icMBNu3Vxx_image-20210805-004128.png)
+
+- Configure the BYOD segment to use the appropriate radius and static URL.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ax9WMonTV_mPqsrRYMQGa_image-20210805-004327.png)
+
+- Validate the SSID string is matching the SSID used by ISE.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/hX9V7xKVlJs34MF5GkVRp_image-20210805-004450.png)
+

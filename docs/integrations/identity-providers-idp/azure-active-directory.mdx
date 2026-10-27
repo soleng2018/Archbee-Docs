@@ -1,0 +1,307 @@
+---
+title: Azure Active Directory
+slug: azure-active-directory
+createdAt: Fri May 24 2024 17:29:36 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Overview]{docCommentId="3ci2-LC0bBeHC-xfJmfsb" resolved="false"}
+
+This document is designed to assist with the setup of SAML federation between Nile, leveraging Okta as a Service Provider (SP), and Azure Active Directory (AD) as the Identity Provider (IdP). Integrating Azure AD with the Nile Access Service is an important step in establishing a secure, zero-trust campus network aligned with Nile's architectural principles.
+
+By configuring this integration, you can leverage your existing Azure AD infrastructure to authenticate users and devices, ensuring consistent access controls and policies across your network. This guide will walk you through the necessary steps to set up the Azure AD enterprise application, configure the Nile Identity Provider, and map Azure AD groups to Nile access groups.&#x20;
+
+## Requirements
+
+- Administrator rights to Nile Customer Portal.
+- Administrator rights to Azure AD.
+- The same Nile Customer Portal administrator needs to be a user in Azure AD
+
+## Azure AD Enterprise Application Setup
+
+Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="https://portal.azure.com" newTab="true"}
+
+- Click the portal menu icon in the top left, and select&#x20;
+- In the left pane, under
+- On the Enterprise applications page, click “**New application”**
+
+![Browse Azure AD Gallery](https://nilesecure.com/wp-content/uploads/2024/02/Picture2-1.png "Browse Azure AD Gallery")
+
+- On the “Browse Azure AD Gallery”, click “**Create your own application**”
+
+
+![Azure Enterprise Applications page](https://nilesecure.com/wp-content/uploads/2024/02/1.png "Azure Enterprise Applications page")
+
+- Click **Create**.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/2.png)
+
+- On the Nile **Overview** page:
+
+![Azure Org Overview Page](https://nilesecure.com/wp-content/uploads/2024/02/3.webp "Azure Org Overview Page")
+
+- Click “**Assign users and groups”**.
+  - On the **Users and** groups page: Click on “Add user/groups”.
+
+![Azure Organization Users and Groups Page](https://nilesecure.com/wp-content/uploads/2024/02/4-1.png "Azure Organization Users and Groups Page")
+
+![Azure Organization Add Assignment Page](https://nilesecure.com/wp-content/uploads/2024/02/5.png "Azure Organization Add Assignment Page")
+
+- **Select** user(s) to assign to the application:
+- Click **Assign**
+- Next; Click **Single sign-on** in the left menu
+
+![Azure Organization Select Single Sign On method Page](https://nilesecure.com/wp-content/uploads/2024/02/6.png "Azure Organization Select Single Sign On method Page")
+
+
+
+- In **Select a single sign-on method**, click **SAML panel** and Click **Edit.**
+- On the **Set UP Single Sign-On with SAML** page, in the **Basic SAML Configuration** section click "Edit".
+- Enter temporary values for **Identifier (Entity ID)** and **Reply URL (Assertion Consumer Service URL)** to generate the certificate for download.
+- Click on **Save** (top bar) to save the changes.
+-
+
+
+
+![Azure Organization Select Single Sign On method Page](https://nilesecure.com/wp-content/uploads/2024/02/7.png "Azure Organization Set up Single Sign On Page")
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/8.png)
+
+- Back on the **Set UP Single Sign-On with SAML** page, in the **Attributes & Claims** section, click Edit
+  - The **Attributes & Claims page** is presented
+    &#x20;
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/9.png)
+
+
+
+- Edit each claim one by one as follows:
+  - Click on the user.mail claim line to open it for editing and delete the namespace URI. Change the Name to “mail” and click **Save**.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/11.png)
+
+
+
+- Similarly edit user.givenname by deleting the namespace URI and renaming givenname to **firstName**, and click save.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/12.png)
+
+
+
+- Edit user.userprinciplename by deleting the namespace URI, and click **Save.**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/13-3.png)
+
+- Edit user.surname by deleting the namespace URI and renaming surname to **lastName**, and click Save.
+  &#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/14-3.png)
+
+
+
+- Next, add a new claim for the **mobile** attribute:
+  - Name: "mobile"
+  - Source: "Attribute"
+  - Source Attribute: "user.mobilephone"
+  - Click Save
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/15.png)
+
+
+
+- Add a new claim for the **displayName** attribute;
+  - Name: displayName
+  - Source: "Attribute"
+  - SourceAttribute: "user.displayname"
+  - Click Save
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/16.png)
+
+- Add a group claim for the **memberOf** attribute;
+  - Select "All Groups" option.
+  - Check "Customize the name of this group claim"
+  - Click Save
+    &#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/17.png)
+
+
+
+- Download the ‘SAML Signing Certificate’ (to be uploaded later to the Nile Customer Portal when adding Azure AD as a provider):
+- Azure AD Identifier:
+  - &#x20;https\://sts.windows.net/f8b44d9b-778d-47da-9391-6249440b17a9/
+- Login URL:
+  - https\://login.microsoftonline.com/f8b44d9b-778d-47da-9391-6249440b17a9/saml2
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture19-1.png)
+
+- Make a note of the **Azure AD Identifier** and the **Login URL**
+  &#x20;(to be used on the Nile Customer Portal provider setup):
+  &#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/18-3.png)
+
+**To be done after completing the next section:**
+
+Update the ‘Identifier’ and ‘reply URL’ in the ‘Basic SAML Configuration’ section of the Nile app from the metadata.xml file downloaded after completing the Nile Customer Portal provider setup in the next section.
+
+<hint type="info">
+  After Azure AD is made an identity provider in the next section, the actual values for Identifier and Reply URL can be updated.
+</hint>
+
+## Nile Customer Portal Identity Provider Setup
+
+Login to the Nile Customer Portal (:Link[https://www.nile-global.cloud]{href="https://www.nile-global.cloud" newTab="true"}) as an administrator.
+
+- Go to **Settings** -> **Global Settings -> Identity**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/19.png)
+
+
+Click on **ADD A NEW PROVIDER:**
+
+- Fill up the fields in the new provider window as follows:
+  - Name: An appropriate string to name the provider.
+  - IdP Issuer URI: Azure AD SAML app Identifier noted in step 15 of the previous section.
+  - IdP SSO URL: Azure AD SAML app Login URL noted in step 15 of the previous section.
+  - Destination URL: Azure AD SAML app Login URL noted in step 15 of the previous section.
+  - SELECT CERTIFICATE: Upload the ‘SAML signing certificate downloaded previously.
+  - Click the **SUBMIT** button to save the changes and add the new Azure AD provider.
+
+![](https://nilesecure.wpenginepowered.com/wp-content/uploads/2024/02/Picture22-1.png)
+
+
+Click the **METADATA** button to download the file.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/21-3.png)
+
+
+Open the downloaded file with a text editor, and search for the ‘entityID’ and ‘Location’ strings.
+
+**NOTE**: Save the **entityID** and **Location** values. Those values are used later to
+&#x20;complete the Azure AD enterprise application configuration
+
+For illustration purposes only, the values used in this example:
+&#x20;entityID:
+&#x20;**https\://www\.okta.com/saml2/service-provider/spchehmcqiylhitxumru**
+&#x20;Location:
+&#x20;**https\://login.u1.nile-global.cloud/sso/saml2/0oaah83qpuT5TRtMY5d7**
+
+Go back to the enterprise app (Nile) created on Azure AD to edit the ‘Basic SAML Configuration and click **Edit.**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/22.png)
+
+Replace the temporary values of **Entity ID** and **Reply URL** with the values of **entityID** and **Location** collected previously.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/23.png)
+
+&#x20;Click the Save button to save the changes and thus complete the Azure AD enterprise app (Nile) configuration.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/24.png)
+
+&#x20;Verify your changes on the single sign on page.
+&#x20;
+
+<hint type="info">
+  It is assumed that the administrator credentials belong to a domain in Azure AD. This domain would already be an Allowed domain on the Nile Customer Portal.&#x20;
+
+  Note: The Azure AD provider configuration is completed for SSO users to gain Internet access after signing-in using their AD credentials.
+</hint>
+
+## Group Mapping
+
+The group mapping is used to map a designated Azure AD admin group to the Nile Customer Portal Administrator group. A **Group** rule is needed and can be added on the Nile Customer Portal as illustrated in the following steps.
+
+The example that follows maps an AD admin group “NileAdmin” to the Nile Customer Portal Administrator group, and a ‘NileMonitor’ group to the Nile Customer Portal Monitor Admin group
+
+1\. Click the **Group Rules** tab:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/25-2.png)
+
+
+2\. Click “Add Group Mapping”:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/26-1.png)
+
+
+Add the group name to the “Friendly name” and “External name” fields and click Save.
+
+Next, click the **ADD GROUP RULE**:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/27-2.png)
+
+Add two group rules to map AD users members of two AD groups (NileAdmin and NileMonitor in this example) to the Nile Customer Portal Administrator and Monitor groups respectively, by evaluating the ‘memberOf’ attribute value coming in the SAML assertion from Azure AD:
+
+- **Name**: An appropriate rule name
+- **Mapping Value**: Azure AD Group object ID
+- **Assigned groups**: Select the appropriate Nile group from the drop-down list
+- Click Save.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture29.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture28.png)
+
+After adding the two rules, this pane is displayed:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/31.png)
+
+Activate the two rules by clicking on the **INACTIVE** button to change the state to **ACTIVE**:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/30-1.png)
+
+## PSK-SSO SSID Setup
+
+Log back in to the Nile Customer Portal
+
+- Go to the **Settings → Segments** page to create the PSK SSO Segment:
+  - Click on the ⊕ to add a new segment
+  - Type a meaningful segment name (Demo PSK SSO)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/32-1.png)
+
+Go to the ‘Service area’ tab to select the DHCP server and scope:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/33.png)
+
+Go to the ‘Advanced’ tab and check off the ‘URL Allow List’ and click on to add the following DNS names one at a time:
+
+- **azure.microsoft.com**
+- **amp.azure.net**
+- **dev.azure.com**
+- **\*.amcdn.msftauth.net**
+- **\*.trafficmanager.net**
+- **\*.omegacdn.net**
+- **\*.azureedge.net**
+- **\*.aadcdn.msftauth.net**
+- **\*.msidentity.com**
+- **\*.dev.azure.com**
+- **\*.aadcdn.msauth.net**
+
+Click SAVE to complete the addition of the new segment
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/34.png)
+
+Go to the **Settings ” Wireless** page to create the PSK SSO SSID:
+
+- Select the ‘
+- Type the desired SSID name
+- Select the&#x20;
+- Check off the ‘
+- Enter the Pre-shared key
+- Select the previously created PSK-SSO segment
+- Click the SAVE button to complete the PSK-SSO SSID creation.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/35.png)
+

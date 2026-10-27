@@ -1,0 +1,291 @@
+---
+title: Access Switch/NSW1000 LED indicators
+slug: access-switchnsw1000-led-indicators
+createdAt: Mon Sep 30 2024 21:00:29 GMT+0000 (Coordinated Universal Time)
+---
+
+NSW1000 or Access Switches have three types of ports: 48 RJ45 ports, 4 SFP ports and 2 QSFP ports. Status of each of these ports can be identified by checking the LED indications of the respective ports. Apart from the LED colour of ports, Power and System LED lights can also be seen in the Switch. Following section defines the meaning of the different LED colors in the Switch:
+
+1. **PWR (Power) LED** **:**
+
+PWR LED shows the power status of the Switch. Following are the different color indications of PWR LED along with the meaning and recommended action if the color is seen in the Switch:
+
+i) **[Red color](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#anchor2):**
+
+Either only one power supply (out of two) is provided to Switch or Power module failure condition (if Switch is powered with both power supplies).
+
+Recommended Action: Check if both Power supplies are connected to the Switch and verify whether the power supplies are providing enough power. If yes, there might be an issue with the power module and might need to check for hardware fault or RMA. Run `icos-show env` command which tells if a PSU is not powered or not present.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/mwOKhspnN3NxBPt26EeLQ_zc-yiedjccucg-1elcv-srv7ejgxpgo0w.jpeg" size="60" width="2338" height="2334" position="center" showCaption="false"></Image>
+
+      Red PWR LED
+
+ii) **Blinking Red color:**
+
+Input power Preset/OK, Output failed or Power module not seated/inserted properly.
+
+Recommended Action: Remove and insert the power module and check whether the issue is getting resolved. If not, we may need to proceed with RMA.
+
+iii) **[Green color](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#greenpwr):**
+
+**Power module OK and delivering correct power.**
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/yMxByG6v3_V8J4EXmWep3_fadi-wd8u5h7ah8bze6c4vjhahwl2o5ylw.jpeg" size="60" width="2384" height="2346" position="center" showCaption="false"></Image>
+
+     Green PWR LED
+
+**2. SYS (System) LED** **:**
+
+<Iframe code="<u dir=&#x22;ltr&#x22;>">
+
+</Iframe>
+
+SYS LED shows the system status. Following are the different color indications of SYS LED along with the meaning and recommended action if the color is seen in the Switch:
+
+i) \*\*[Red color](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#redsys):\*\*Power ON \[transit] or Major fault \[persistent].
+
+Recommended Action: Make sure enough power supply is provided to the Switch and whether Switch processes are active.
+
+       Red SYS LED
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/zC3s_lorfimm0Xu9_hISI_gg8y0bmrhd97nkggyaabgc-zmycp08lgq.jpeg" size="60" width="1434" height="2270" position="center" showCaption="false"></Image>
+
+ii) **Blinking Red color** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050613493)** to view):
+
+Switch unable to reach cloud but able to reach active HE or Switch unable to reach active HE but able to reach cloud.
+
+Recommended Action: Make sure there is proper reachability to HE and internet/Cloud from Switch. Also make sure firewall or other network devices are not blocking the traffic between Switch and HE/Cloud.
+
+iii) **[Green color](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#greensys)**:
+
+System Fully Functional and Ready. Able to reach Active HE and Cloud. Full config received/applied, Tunnels established, system ready to carry service traffic.
+
+      Green SYS LED
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/nTqK5HbQAKTgjk9-_PcnH_8u3hnab3ynk2qt0opzh-mzirqs0v0leiw.jpeg" size="60" width="2261" height="2252" position="center" showCaption="false"></Image>
+
+iv) **Blinking Green color** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050613601)** to view):
+
+System OS loading/Initialization in process (wait).
+
+Recommended Action: Make sure Switch is completely booted up and whether any process is stuck. Also check whether there is any kernel corruption issue.
+
+v) **[Blue color](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#bluesys)**:
+
+BT/BLE - Paired. BT/BLE connection established with Mobile App/peer.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/zMJLAb4KF8h3j_sCWDh2A_j-r-2mrtudljgwwgz8kcpgx0mgymijn8za.jpeg" size="60" width="1864" height="2383" position="center" showCaption="false"></Image>
+
+     Blue SYS LED
+
+vi) **Blinking Blue color** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050613706)** to view):
+
+BT/BLE - Ready to Pair or Service not Ready (Staging mode - Cloud config not pushed). Also Cloud/HE connectivity is not established.
+
+Recommended Action: Verify whether there is any connectivity/reachability issue between Switch and Cloud/Active HE. Verify Serial number is activated in Cloud.
+
+**3.** RJ-45 Port LEDs  **:**
+
+<Iframe code="<u>">
+
+</Iframe>
+
+RJ-45 ports have two LED lights to indicate port activity or PoE status. LED1 mentioned below is the left LED and LED2 is right LED. Following are different color indications of both ports along with the meaning and recommended action if the color is seen in the Switch:
+
+i) **[LED1 - Off](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led1off)**:
+
+No Link or Port admin down. 
+
+Recommended Action: Verify whether the end device is connected properly and whether the device is up and running. If yes, check whether the ethernet cable is passing traffic and the Switch/Switch port is not blocking the traffic.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/Zswx5v9TEJNv71JHZvNQo_y-6q8bfsugmqv-75kzou2cgvt7ovcf0zw.jpeg" size="60" width="1941" height="1585" position="center" showCaption="false"></Image>
+
+       RJ45 LED1-Off
+
+ii) **[LED1 - Green](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led1green)**:
+
+Link Present, Port admin Up (but no activity).
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/sJSOZBgOuLP2gFdgenWfN_pdgzhayn2layrxf98ccyyfrdd75imksyga.jpeg" size="60" width="3072" height="2936" position="center" showCaption="false"></Image>
+
+    RJ45 LED1-Green
+
+iii) **LED1 -** **Blinking Green** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050614181)** to view):
+
+Port is active and sending or receiving data.
+
+iv) **[LED1 - Yellow/Amber](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led1yellow)**:
+
+Port is temporarily blocked or initializing state.
+
+Recommended Action: Check whether the Switch is blocking traffic from end device or whether any Switch process is stuck in initializing state.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/qPAAPz9lRKCZnBf9oWceV_irnv4sktnm-1f9e0u6l6tkanfeusfoqd3w.png" size="60" width="750" height="718" position="center" showCaption="false"></Image>
+
+    RJ45 LED1-Yellow
+
+v) **LED1 -** **Blinking Yellow/Amber** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050614373)** to view):
+
+Port is passing traffic with Errors like CRC errors, alignment errors, jabbers, etc. Port will remain in blinking state even if the errors are not incrementing (if the error count is non-zero).
+
+Recommended Action: Check whether the receiving traffic has errors in it. If so, verify whether the issue is with End device, ethernet cable or Switch. If the error count is not getting incremented, flap the port once.
+
+vi) **[LED2 - Off](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led2off)**:
+
+Port not providing PoE supply to the connected device.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/H8B1NxSdt_17X5_tgzscq_gembh8dzfqk0sjui7ai3zhwdo0qpb2t9uq.png" size="60" width="750" height="660" position="center" showCaption="false"></Image>
+
+      RJ45 LED2-Off
+
+vii) **[LED2 - Green](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led2green)**:
+
+PoE is ON and providing power to the connected device.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/HaIWFA6IoqMkxZCue-eJ8_cn9jclpiytdkqcy0oypgthc7mbrwm65oxq.jpeg" size="60" width="3072" height="2936" position="center" showCaption="false"></Image>
+
+   RJ45 LED2-Green
+
+viii) **[LED2 - Yellow/Amber](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#rj45led2yellow)**:
+
+PoE power is denied to the connected device as the required power for the device exceeds the capability of the port or exceeds the overall limit of the Switch or a limit set in software was exceeded.
+
+Recommended Action: Check whether the total allocated poe power of the Switch is exceeded and check whether the connected device is requesting for power more than the allocated power per Switch port. Power consumption and limit can be verified using the command "`icos-show poe power total".`
+
+`![](Helpdesk%20%20Nile%20Customer%20Support/KMa-fswKv0tyvjBNaJ_89a_UHKFOKumPAg.jpeg)` RJ45 LED2-Yellow
+
+**4. SFP/SFP28 Port LED** **:**
+
+<Iframe code="<u>">
+
+</Iframe>
+
+Ports 48-52 are SFP ports in Access Switch and have one LED indication to show the port, module or traffic status. Following are the different color indications for the SFP port LED along with the meaning and recommended action if the color is seen in the Switch:
+
+i) **[Off](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#sfpledoff)**: 
+
+No Link or Port admin down.
+
+Recommended Action: Check whether the end device is connected properly and is in power on state. If so, verify the connected cable/Switch/SFP module functionality.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/E9i3bYZU-1Q6XYjKA3zcs_setmavieptvavtwr9h-jw5lfyw4gyhswwa.png" size="60" width="750" height="913" position="center" showCaption="false"></Image>
+
+        SFP LED Off
+
+ii) **[Red](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#sfpredled)**:
+
+Unsupported SFP module OR mismatch in the SFP module supported speed and link speed.
+
+Recommended Action: Verify whether the SFP module vendor is supported for the NSW1000 and check whether the SFP module supported speed matches with the link speed of the port.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/K2Yg3U1TknklJzThyCQsn_b7xrqqr04gzznimzq-o4ywzdb7s4oq3kxw.jpeg" size="60" width="2725" height="2651" position="center" showCaption="false"></Image>
+
+        SFP Red LED
+
+iii) **[Green](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#sfpgreenled)**:
+
+Link Present/Port admin up (but no activity)
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/hMMadqT7VruDuZLnk7qOO_jejjgaaljeivlxgdp8cjsgfoz41qndaj8a.png" size="60" width="750" height="1097" position="center" showCaption="false"></Image>
+
+     SFP Green LED
+
+iv) **Blinking Green** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050615636)** to view):
+
+Slow Blinking Green: Port is active and sending or receiving data at 10Gbps.
+
+Blinking Green: Port is active and sending or receiving data at 25Gbps.
+
+v) **Yellow/Amber**:
+
+Port is temporarily blocked or initializing state.
+
+Recommended Action: Check whether the Switch is blocking traffic from end device or whether any Switch process is stuck in initializing state.
+
+vi) **Blinking Yellow/Amber**:
+
+Port is passing traffic with Errors like CRC errors, alignment errors, jabbers, etc. Port will remain in blinking state even if the errors are not incrementing (if the error count is non-zero).
+
+Recommended Action: Check whether the receiving traffic has errors in it. If so, verify whether the issue is with End device, ethernet cable or Switch. If the error count is not getting incremented, flap the port once.
+
+**5. QSFP28 Port LEDs** **:**
+
+<Iframe code="<u>">
+
+</Iframe>
+
+QSFP port is located at the rear side of the Access Switch and has two LED indications. Following are different color indications of both LEDs. LED1 and LED2 are left and right LEDs.
+
+i) **[LED1 - Off](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#qsfpled1off)**:
+
+No Link or Port admin down.
+
+Recommended Action: Verify whether the end device is connected properly and whether the device is up and running. If yes, check whether the ethernet cable is passing traffic and the Switch/Switch port is not blocking the traffic.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/YTHGpmUh0jsaRWwyooi3P_ya4mooh70yvlng5anmbdk5aj0zrb1ibr7g.png" size="60" width="750" height="704" position="center" showCaption="false"></Image>
+
+      QSFP LED1-Off
+
+ii) **[LED1 - Red](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#qsfpredled1)**:
+
+Unsupported SFP module OR mismatch in the SFP module supported speed and link speed.
+
+Recommended Action: Verify whether the SFP module vendor is supported for the NSW1000 and check whether the SFP module supported speed matches with the link speed of the port.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/OY1hu264Y_kIsapPv9rdj_va2hhxwz2rlikngqmj1jehyktghavc3gw.png" size="60" width="750" height="617" position="center" showCaption="false"></Image>
+
+     QSFP Red LED1
+
+iii) **[LED1 - Green](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#qsfpgreenled1)**:
+
+Link Present/Port admin up (but no activity).
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/qEshhGU96Km2AhiM0surw_dorhylznyvdilz-svlse0y6rm6hahfaceq.png" size="60" width="750" height="867" position="center" showCaption="false"></Image>
+
+    QSFP Green LED1
+
+iv) **LED1 -** **Blinking Green** (Click **[here](https://nileglobalhelp.freshdesk.com/helpdesk/attachments/66050616421)** to view):
+
+Slow Blinking Green: Port is active and sending or receiving data at 10Gbps.
+
+Blinking Green: Port is active and sending or receiving data at 25Gbps.
+
+v) **LED1 -** **Yellow/Amber**:
+
+Port is temporarily blocked or initializing state.
+
+Recommended Action: Check whether the Switch is blocking traffic from end device or whether any Switch process is stuck in initializing state.
+
+vi) **LED1 -** **Blinking Yellow/Amber**:
+
+Port is passing traffic with Errors like CRC errors, alignment errors, jabbers, etc. Port will remain in blinking state even if the errors are not incrementing (if the error count is non-zero).
+
+Recommended Action: Check whether the receiving traffic has errors in it. If so, verify whether the issue is with End device, ethernet cable or Switch. If the error count is not getting incremented, flap the port once.
+
+vii) **[LED2 - Off](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#qsfpled2off)**:
+Port is not active or admin down.
+
+Recommended Action: Verify whether the end device is connected properly and whether the device is up and running. If yes, check whether the ethernet cable is passing traffic and the Switch/Switch port is not blocking the traffic.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/DsgBu1j222_z-vC5Vi5_T_umrrznykq02rzxrxiiicibpnjvc5kqew.png" size="60" width="750" height="729" position="center" showCaption="false"></Image>
+
+       QSFP LED2 Off
+
+viii) **LED2 - Green**:
+
+Port is operating at 10Gbps speed.
+
+ix) **LED2 - Blinking Green**:
+
+Port is operating at 25Gbps speed.
+
+x) **[LED2 - White](https://nileglobalhelp.freshdesk.com/a/solutions/articles/66000514128?lang=en#qsfpwhiteled2)**:
+
+Port is operating at 40Gbps speed.
+
+<Image src="https://api.archbee.com/api/presign/6swSwg1BT-BlfEPtYJhxM/ElLMiKPhYpZueQhzBltLk_sdc5anxdynmifi105b7lkeuy6r0rinucq.png" size="60" width="750" height="807" position="center" showCaption="false"></Image>
+
+      QSFP White LED2
+
+xi) **LED2 -** **Blinking White**&#x20;
+Port is operating at 100Gbps speed.

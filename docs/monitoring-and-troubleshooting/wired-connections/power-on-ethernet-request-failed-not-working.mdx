@@ -1,0 +1,25 @@
+---
+title: Power-on-Ethernet request failed - not working
+slug: power-on-ethernet-request-failed-not-working
+createdAt: Wed Jul 24 2024 20:16:19 GMT+0000 (Coordinated Universal Time)
+---
+
+**When would you see this problem?**
+
+If you are connecting a wired device to a Nile Access switch, and expecting the device to be powered from the switch (e.g., POE), but it does not power up when connected.
+
+**How can I tell what is wrong?**
+
+Please visit Nile Portal at [https://u1.nile-global.cloud/](https://u1.nile-global.cloud/)  and from the left-hand Navigation, choose Alerts -- it is a triangle with an Exclamation point inside, like so:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/P4a-6GqZo5jX9_H887tvW_v-gw8k51ggme8uojtkubeulupuhbvv0yw.png" size="12" width="102" height="550" position="flex-start" caption="Nile Portal: Alerts " alt="Nile Portal: Alerts " showCaption="true"></Image>
+
+You will immediately see a list of Alerts. Within the list of alerts, look for an alert titled "Power-on-Ethernet Request Failed."
+
+![Alert Type/Details : Switch POE Status ](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Iv9hfY4ILsPeX0N1ORsOh_8lqpcxvsr50zguv5-uaik53mvdnzbbmsag.png "Alert Type/Details : Switch POE Status ")
+
+**What should I do?**
+
+The most likely cause for these alerts is that the switch's power budget is nearly used up by other devices plugged in as POE and drawing power. Please try plugging the device into a different switch to check if it works there. 
+
+If trying the device in one or more different switches does not resolve the issue, please open a support ticket.

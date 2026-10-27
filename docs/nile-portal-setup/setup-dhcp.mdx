@@ -1,0 +1,54 @@
+---
+title: Setup DHCP
+slug: setup-dhcp
+createdAt: Tue May 21 2024 14:39:03 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+A DHCP server automatically assigns IP addresses, default gateways, and other network parameters to client devices. Nile offers cloud DHCP as a service you can use immediately, or you can use your own DHCP server (e.g., Windows Server, Infoblox).&#x20;
+
+If you are using your own DHCP server, configure the DHCP relay agent in the Nile Portal.
+
+## Option 1: Nile Cloud DHCP Server
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > DHCP**.
+2. Click on Nile DHCP.
+3. Click on the '**+**' icon and enter the following details:&#x20;
+   - **Pool Name**: Enter a name for the DHCP user subnet.&#x20;
+   - **Network:** Enter the subnet.
+   - **Default Gateway:** This is auto-populated once you enter the network subnet. Please keep it as is.
+   - **Lease Time**: Select the lease time. The default is 1 day.&#x20;
+   - **DNS Server:** Please enter the IP addresses of your DNS server.
+     - For example: 8.8.8.8, 8.8.4.4.
+   - **IP Range:** Click on the '**+**' icon to add an IP range. Specify the start and end IP addresses. The fields are pre-populated; modify them as required. &#x20;
+4. The basic setup is now complete and it covers the most common configuration.
+5. **Advanced:**&#x20;
+   - **DHCP Reservation:** Enter the device hostname, MAC address, and the IP address to reserve for each device.
+   - **Options**: This section is used to configure advanced settings such as NTP, TFTP and DNS servers.
+
+
+## Option 2: Bring Your Own DHCP Server
+
+## Prerequisites
+
+- Ensure you have the IP addresses of all the DHCP servers you plan to use in your enterprise.
+- The Nile Service Block (NSB) acts as a DHCP relay and sends DHCP requests from the first IP address of each subnet (for example, for the employee subnet 192.168.1.0/24, it sends from 192.168.1.1).&#x20;
+- Ensure your DHCP server supports Layer‑3 DHCP. Standalone servers such as Windows Server and Infoblox support this; many routers and firewalls do not. Verify support before configuring the Nile Portal.
+- Ensure bidirectional routing between the DHCP server and your core router/firewall that connects to the Nile Service Gateway.
+
+## Configuring DHCP
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > DHCP**.
+2. Click on the '**+**' icon and enter the following details:&#x20;
+   - **Name**: Specify the name you would like to use for the DHCP server.
+   - **Host**: You can specify all the DHCP server IP addresses here. If you have multiple DHCP servers, please specify additional IP addresses or FQDNs in the subsequent Host fields.
+   - **Geo Scope**: Select the sites where this DHCP server will be used to assign IP addresses.
+   - **Subnet**: Click on the '**+**' sign to add a subnet. Add all applicable subnets (for example, Employee, Corporate, and IoT).
+   - **Router**: Enter the default gateway IP address for the subnet. This address is used by the **Nile Relay Agent&#x20;**&#x77;hen obtaining an IP lease from the **DHCP server**. Ensure this IP is configured on your DHCP server as the router/default gateway DHCP option (commonly Option 3). This is typically the first usable IP in the subnet.
+3. Click **Save** to complete configuration.
+
+<CtaButton label="Next: Setup Authentication" externalHref="https://docs.nilesecure.com/setup-authentication" openInNewTab="true">
+
+</CtaButton>
+

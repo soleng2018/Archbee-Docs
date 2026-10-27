@@ -1,0 +1,310 @@
+---
+title: November 2024 Feature Update
+slug: november-2024-feature-update
+createdAt: Mon Dec 09 2024 21:38:51 GMT+0000 (Coordinated Universal Time)
+---
+
+In the month of November, we’ve delivered a host of new improvements tied to our alert and visibility capabilities. We’ve introduced simplicity and automation with the goal of providing guidance into what’s important - without the noise.&#x20;
+
+To eliminate trouble tickets and random troubleshooting, we’ve also made it easier to see things like the expiry date of a certificate before there’s a problem, or quickly identify when IoT devices, like security cameras and VoIP phones, have exceeded the PoE budget on your Nile Ethernet devices.
+
+Video Highlights --> :Link[Click here]{href="https://drive.google.com/file/d/1T09CbWVX1UTMiicP4tD444WI6OQBZ64W/view?usp=sharing" newTab="true" hasDisabledNofollow="false"}
+
+**New Outcomes/Features**
+
+<table isTableHeaderOn="true" columnWidths="58">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Outcome (Benefits)**
+    </td>
+    <td>
+      **Feature/Capability&#x20;**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      This capability reduces user frustration and help desk calls by quickly identifying power-related device issues.
+      <Paragraph>
+        **For example** - IT is notified when a specific security camera is inactive due to insufficient power.&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      We now generate PoE alerts for these scenarios:
+      <Paragraph>
+        · If the Nile Ethernet device does not grant PoE&#x20;
+      </Paragraph>
+      <Paragraph>
+        · If your floor-wide PoE budget limit is exceeded
+      </Paragraph>
+      <Paragraph>
+        · If a power supply is down
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      IT teams can quickly restore complete sensor information for Nile service operations by restoring physical sensors to their original condition.
+      <Paragraph>
+        **For example** - If sensors are unplugged or moved, the IT team can move them to their original location as shown in the floor plan.
+      </Paragraph>
+    </td>
+    <td>
+      The floorplan in the Nile portal shows the physical sensors and APs hosting the virtual sensors.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      This functionality quickly helps IT know all the impacted areas to fix on a floor with a consolidated alert related to availability, coverage, and capacity as opposed to receiving an alert per impact area.&#x20;
+      <Paragraph>
+        **For example,&#x20;**&#x69;f multiple sensors report a problem, only one alert per floor will be generated with floor wide insights into impacted areas.
+      </Paragraph>
+    </td>
+    <td>
+      Availability, coverage, and capacity alerts are correlated and collated into a single alert on a per-floor basis.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      This feature helps IT teams focus on important issues by reducing alert clutter.
+      <Paragraph>
+        **For example** - Severity 1 alerts are sent at exponentially increased intervals. Notifications for the alerts with other severity are sent only once.
+      </Paragraph>
+    </td>
+    <td>
+      Repeated notifications for alerts are removed.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Guest - Alerts
+    </td>
+    <td>
+      IT teams can expedite the resolution of Nile Guest connectivity issues caused by capacity limitations eliminating guest's frustrations and help desk calls.
+      <Paragraph>
+        **For example** - if the number of guests exceeds \~1000 at a given site, then the IT teams receive a notification to contact Nile to resolve the issue.
+      </Paragraph>
+    </td>
+    <td>
+      Nile Guest Service alerts you if your allotted IP address pool has reached its limit or the guest device's capacity is nearing the maximum limit.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      6
+    </td>
+    <td>
+      Nile Access Service - DNS Alerts
+    </td>
+    <td>
+      This feature reduces user connectivity problems by alerting on DNS failures experienced by end devices. **For example** - if multiple users on a floor lose Internet connectivity due to DNS, an alert is raised indicating the DNS errors and the devices impacted by the errors.
+    </td>
+    <td>
+      A new alert called “DNS Errors” is added to the “Client Devices” alert category. “DNS Error” alert is generated in the Nile Portal when multiple clients encounter DNS errors. Alert is cleared when the issue is resolved
+    </td>
+  </tr>
+  <tr>
+    <td>
+      7
+    </td>
+    <td>
+      Enhanced Trust Service - Identity Provider (IdP) Alerts
+    </td>
+    <td>
+      This new feature eliminates help desk calls, user frustration and shortens the time taken to debug and troubleshoot expired certificate issues.
+      <Paragraph>
+        **For example** - what took hours to debug and troubleshoot, we can now proactively inform IT so that the certificate can be updated before an issue.
+      </Paragraph>
+    </td>
+    <td>
+      Monitor the customer’s Identity Provider (IDP) certificate and send notifications to the customer if the expiration date is within 90 days, 60 days, 30 days and 10 days.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      8
+    </td>
+    <td>
+      Enhanced Trust Service - Setup
+    </td>
+    <td>
+      User authentication issues due to accidental removal of identity provider configurations, which often resulted in help desk tickets, are eliminated.&#x20;
+      <Paragraph>
+        **For example&#x20;**- we will not allow the Okta (IDP) setting to be mistakenly deleted if it is actively being used to authenticate users.
+      </Paragraph>
+    </td>
+    <td>
+      Check and prevent Identity Provider (IDP) settings deletion in the Nile Portal if it is actively being used.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      9
+    </td>
+    <td>
+      Core Trust Service
+    </td>
+    <td>
+      This feature saves IT time by automating the new device approval process based on select attributes, including fingerprints and OUI.
+      <Paragraph>
+        **For example** - the IT team can set up an onboarding rule using IoT device vendor information versus manually approving new devices daily.
+      </Paragraph>
+    </td>
+    <td>
+      Secure workflow allows IT teams to automatically approve and/or deny end users from connecting endpoints using rules based on fingerprints, OUI or ‘ALL’ variables.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      10
+    </td>
+    <td>
+      Nile Access Service - Visibility
+    </td>
+    <td>
+      IT teams can see detailed Wi-Fi Access Point (AP) information for faster troubleshooting.&#x20;
+      <Paragraph>
+        **For example -&#x20;**&#x69;f a connectivity problem arises it takes IT teams seconds to view the access points that are associated with the problem and the root cause.
+      </Paragraph>
+    </td>
+    <td>
+      The AP page of Nile Device Inventory shows detailed information on AP. Information includes name, serial number, channel load, location, and uptime.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      11
+    </td>
+    <td>
+      Nile Access Service - Visibility
+    </td>
+    <td>
+      This improvement allows IT to run operational analytics on endpoint details for actionable insights. **For example -** a quick report can easily be generated that identifies the percentage of devices that Apple, in the event a software upgrade is causing issues. This helps IT teams and the end users.&#x20;
+    </td>
+    <td>
+      IT teams can download a simple CSV list of endpoints that contains detailed information about each device.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      12
+    </td>
+    <td>
+      Nile Access Service - Visibility
+    </td>
+    <td>
+      Faster troubleshooting by quickly finding which switch and port is a wired endpoint plugged into.
+      <Paragraph>
+        **For example -** if someone mentions that an AP or IoT device seems to be off-line, IT teams can quickly locate the switch and port to check for a faulty cable. No need to go looking for a printed table of ports to devices.
+      </Paragraph>
+    </td>
+    <td>
+      See which floor, switch, and port a wired end device is connected to.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      13
+    </td>
+    <td>
+      Nile Access Service - Visibility
+    </td>
+    <td>
+      Enables IT teams to quickly understand that the maps show contextual information related to various tiles in the Nile Portal dashboard.
+      <Paragraph>
+        **For example -&#x20;**&#x77;hen looking at the infrastructure tile, the legend on the map will match showing infrastructure incidents that need to be addressed.&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      Legends on the Nile Portal summary page match the highlighted metrics on the Nile Portal summary page tile.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      14
+    </td>
+    <td>
+      Nile Access Service - Integrations
+    </td>
+    <td>
+      Create actionable insights with network and endpoint data related to types of devices, behavior, and more.
+      <Paragraph>
+        **For example -&#x20;**&#x49;T can easily ingest data from Nile, applications, cloud, and endpoint products into Snowflake for SIEM use cases.
+      </Paragraph>
+    </td>
+    <td>
+      Store and use Nile captured endpoint events in Snowflake to build analytics data reports.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      15
+    </td>
+    <td>
+      Nile Access Service - Setup
+    </td>
+    <td>
+      Prevents mistakenly entering a domain name incorrectly or trying to use a domain that is already in use.&#x20;
+      <Paragraph>
+        **For example -**&#x6C;et’s say someone at AcmeCorp.comtries to addAcmeUSA.com as an allowed list domain. We’d verify that AcmeUSA.comindeed belongs to AcmeCorp.combefore allowing it to be used. This simple verification saves time and frustration if a simple misspelling is used.
+      </Paragraph>
+    </td>
+    <td>
+      Verify that a legitimate domain is used when building out your Nile setup.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      16
+    </td>
+    <td>
+      Nile Guest Service - Setup
+    </td>
+    <td>
+      Consistent login process so that our customers can ensure that the Guest landing page matches the corporate brand.
+      <Paragraph>
+        **For example -**&#x69;nstead of a generic page, visitors are greeted with a landing page that has our customer’s corporate logo, background images and colors for a guest better experience.
+      </Paragraph>
+    </td>
+    <td>
+      Nile Guest Service landing page customization to match customer’s corporate look-and-feel.
+    </td>
+  </tr>
+</table>
+
+<Iframe iframeHeight="0" code="<iframe src=&#x22;https://drive.google.com/file/d/1T09CbWVX1UTMiicP4tD444WI6OQBZ64W/preview&#x22; width=&#x22;840&#x22; height=&#x22;480&#x22; allow=&#x22;autoplay&#x22;></iframe>">
+
+</Iframe>
+

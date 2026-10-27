@@ -1,0 +1,206 @@
+---
+title: Nile Service Block
+slug: nile-service-block
+createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The Nile architecture is based on the core principles of Core, Environment, and Context. These three pillars form the foundation of the Nile network design and management approach. The architecture inherently is a deterministic design with built-in campus zero trust. Augmented with the comprehensive data collection enabled by sensors, this is a self-managed service and provides performance guarantees. Lets explore the architecture in more detail.
+
+## Core, Environment, Context
+
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/tlDva2htLiEkprsSCzp4V_core-context-environment.png" darkSrc="https://archbee-image-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/P5ZeOHE14J4ey7OaMBGMl-20260601-080216.png" size="100" width="2285" height="862" darkWidth="1816" darkHeight="866" position="center" showCaption="false"></Image>
+
+### :Comment[Core]{docCommentId="SnjAqiEcFWi7cdIX87kq7" resolved="false"}
+
+When we talk about 'Core' in this context we are referring to the Nile Service Block which provides wired and wireless access infrastructure as a service. Designing our own hardware means we can embed physical and virtual sensors throughout the NSB in order to gather the deep intelligence required to deliver fully automated infrastructure.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/E5FAcRoCX0YXBh5DXS5vm-20260602-032121.jpg" darkSrc="https://archbee-image-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/6WTwAxQDCh0fIk_yBSPdf-20260602-032101.jpg" size="100" width="7547" height="9568" darkWidth="7546" darkHeight="9568" position="center" showCaption="false"></Image>
+
+
+
+
+Nile's architecture is designed to ensure maximum uptime and minimize service disruptions. We achieve this through built-in redundancy at every layer of the Nile Service Block:
+
+- **NSB Gateway** NSB gateway is a role that is assumed by the switch that connects to the customers upstream router/firewall using OSPF to dynamically manage path failover, ensuring continuous connectivity even if a hardware component fails. Whether a large campus with Distribution switches or a remote site with only Access switching, NSB Gateway guarantees service resiliency.&#x20;
+- **Access:** Two or more  Nile Access switches are deployed per wiring closet, coupled with a "Salt & Pepper" WiFi deployment model where neighboring APs are connected to different switches in the wiring closet. Should a switch fail, WiFi coverage remains unaffected, and only directly connected wired ports on that switch are impacted. Given that the Nile Access Service does not have any switch or port level config, affected devices can be easily moved from the impacted Access Switch to a functioning AS. OSPF ensures upstream path redundancy.&#x20;
+
+### Environment
+
+An autonomous vehicle uses a variety of sensors to monitor its surroundings, leveraging this data to make decisions and fine-tune its driving. Similarly, Nile monitors the environment where NSB is deployed, using a comparable model to automatically fine-tune the service.
+
+Physical Wi-Fi sensors and dedicated monitoring radios in our APs provide real-time data on the wireless environment, while switches in the NSB monitor for cabling health and power fluctuations.
+
+### :Comment[Context]{docCommentId="4hlepF8FF40b1H7ACjYhO" resolved="true"}
+
+In the Nile Architecture, Context refers to the users and devices connected to the NSB, as well as the services and applications (external to the NSB) being consumed/delivered. Nile's context monitoring doesn't end with device status, monitoring user/device **experience** at the point of consumption is vital to our 360 degree view.
+
+For example; when a wireless user establishes a connection they will be authenticated using RADIUS. Once authenticated they receive an IP address via DHCP from internal systems or Nile DHCP. The user accesses enterprise cloud applications, requiring DNS.
+
+Nile monitors the availability and response time of these services, building an ongoing 'pattern-of-life' dataset that our AI tools can use to take action if there are deviations in normal operations.
+
+The same methodology is used to monitor the user experience across 3,800 automatically identifiable applications.
+
+This 'Outside-in' approach is both unique and fundamental to the Nile Access Service.
+
+### Monitoring Framework
+
+Nile has developed a comprehensive network monitoring solution that provides a "outside-in" view. This system utilizes three types of sensors to gather real-time data on network performance and security:
+
+1. **Physical Sensors:** These wall pluggable devices connect to the Nile network via Wi-Fi and monitor the core network infrastructure (NSB). They automatically connect to the strongest access point, similar to a mobile phone or laptop.
+2. **Dedicated 3rd Radio AP Sensors:** Integrated into all Nile access points, these sensors use a dedicated radio to perform the same functions as physical sensors. Additionally, they are employed for wireless intrusion detection and prevention (WIDS/WIPS). These sensors connect to neighboring access points rather than themselves.
+3. **Virtual Sensors:** Embedded in network switches, these sensors monitor customer infrastructure components such as DHCP, DNS, RADIUS, internet connectivity, and the top 10 most used applications.
+
+The diagram below illustrates how these sensors collectively monitor the NSB, customer infrastructure, and applications.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/I7oNtXO5Z7hdQPf40s_el_picture1.png)
+
+**Physical and AP 3rd radio sensor monitoring capabilities conducted every minute**
+
+<table isTableHeaderOn="true" columnWidths="176,100">
+  <tr>
+    <td>
+      Feature
+    </td>
+    <td>
+      Details
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Availablity
+    </td>
+    <td>
+      The sensor probes the network every 12 seconds to ensure continuous connectivity.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Coverage
+    </td>
+    <td>
+      To verify adequate signal strength, the sensor collects data every minute, confirming it can receive a signal from at least one access point with a signal strength of -67 dBm or higher (5 bars).
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Capacity
+    </td>
+    <td>
+      The sensor gathers data every minute to verify that the expected number of access points are operational on the floor
+    </td>
+  </tr>
+</table>
+
+**Virtual sensor monitoring capabilities conducted every minute**
+
+<table isTableHeaderOn="true" columnWidths="181,100">
+  <tr>
+    <td>
+      Feature
+    </td>
+    <td>
+      Details
+    </td>
+  </tr>
+  <tr>
+    <td>
+      DHCP
+    </td>
+    <td>
+      Pings the DHCP server every minute. The admin has an option to do an on-demand DHCP transaction (UDP 67/68)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      DNS
+    </td>
+    <td>
+      DNS transaction (UDP 53)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      RADIUS
+    </td>
+    <td>
+      RADIUS transaction (UDP 1812).
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Applications
+    </td>
+    <td>
+      HTTPS transaction
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Internet
+    </td>
+    <td>
+      Cloud Connectivity transactions
+    </td>
+  </tr>
+</table>
+
+
+
+## Deterministic Design
+
+Within a Nile Service Block, Wi-Fi 6 APs with four radios are installed in salt-n-pepper redundancy, including an embedded sensor. A physical Wi-Fi sensor infrastructure is also installed for continuous evaluation of the service quality. Access switching with 5 Gbps PoE+ ports and redundant distribution switching with 40 Gbps uplinks act as the backbone. The topology and design of each Nile Service Block is automatically generated based on the site survey and performance requirements for the install location at hand.
+
+Here are some of the unique capabilities of the Nile Service Block when it comes to enabling deterministic system design across any campus or branch location:
+
+- No product catalogs for network elements: never select SKUs again
+- No dedicated hardware selection at each site: blocks horizontally scale
+- No configuration for network elements: eliminating “snowflakes”
+- No console ports or CLI: blocks are activated with a mobile app
+- No configuration for physical/virtual sensors: orchestrated from the cloud
+- No configuration for network protocols: dynamic per topology
+- No configuration for traffic forwarding rules: dynamic per topology
+- No configuration for network QoS: automatic with DPI
+- Elimination of Layer 2: No VLANs, STP, Trunking or Stacking
+
+## :Comment[Campus Zero Trust]{docCommentId="XHIcpR0j56jr37ZBhzbrR" resolved="false"}
+
+Nile Service Block enforces L3-only isolation (see figure below) on hardened hardware for all user and device sessions. Eliminating L2 VLAN-based policy enforcement radically reduces the amount of complexity that’s involved in translating zero-trust security policies within the enterprise campus and branch networks. By speaking the language of the internet - IP - its policy management orchestration directly aligns with cloud-based security solutions.
+
+Here are the unique capabilities of the Nile Service Block when it comes to enabling campus zero-trust security for wired and wireless connectivity:
+
+- Tamper-proof hardware with secure boot, always with the latest security patch
+- Encrypted management and control plane, each network element validating the other
+- ”Default: deny” Every device must be authenticated and authorized, before IP address
+- No VLANs or ACLs for policy enforcement, preventing lateral movement of malware
+- Each connected device is completely isolated from any other in Layer 3
+- Sessions are continuously verified with first hop security and device fingerprinting
+- Centralized encryption and external firewall enforcement protect north-south flows
+- Microsegmentation within device and user groups protects east-west flows
+
+### Comprehensive Data Collection&#x20;
+
+Data is the fuel required to start automating traditional lifecycle management, and it is the
+secret ingredient that extracts intelligence out of the network. Nile Service Blocks are purpose-designed to help convert enterprise networks into a collection of data sets to automate its operations. Nile Service Blocks make it possible to create an integrated data model across all aspects of the enterprise network deployments in the Nile Services Cloud. This includes continuous collection of telemetry data from all types of network elements within the core of the infrastructure, environmental data from external IT infrastructure components, and contextual data from users, devices, applications and associated network services.
+
+Here are the unique capabilities of the Nile Service Block when it comes to enabling comprehensive data collection:
+
+- Physical sensors and dedicated AP radio to enable continuous and on-demand testing
+- Virtual sensors in every network element to augment continuous testing
+- User and IoT experience as ”sensors” to augment data collection
+- Deep instrumentation to collect metrics, events and logs from every network element
+- Wi-Fi air quality data across every RF link, and across sensors and APs
+- Environmental data: power/voltage fluctuations, cabling issues, RF interference
+- Latency and availability data for RADIUS, DHCP, DNS network services
+- Latency and availability data for popular enterprise and internet applications
+
+
+
+## Nile SLAs
+
+Nile stands apart from traditional connectivity providers with financially backed SLAs that guarantee network reliability and a 99.95% uptime commitment. This is enabled through the Availability, Coverage, and Capacity monitoring provided by our Outside In approach.
+
+Our proactive monitoring allows us to alert you of potential issues before they significantly impact your users. If a violation of our 99.95% SLA occurs, Nile provides financial credits, demonstrating our commitment to exceptional service. We calculate SLA compliance monthly, per building, based on the percentage of time Nile meets the above thresholds.

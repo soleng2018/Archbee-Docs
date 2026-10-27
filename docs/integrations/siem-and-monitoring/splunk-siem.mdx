@@ -1,0 +1,146 @@
+---
+title: Splunk SIEM
+slug: splunk-siem
+createdAt: Thu May 23 2024 19:38:56 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Overview]{docCommentId="BJXZWvRknFduwFGzEeSI-" resolved="false"}
+
+The Nile Service Block (NSB) integrates with Splunk via Splunk’s *HTTP Event Collector* (HEC), to export NSB security events – audit logs and user device events – to Splunk for log analysis and archiving by the customer.
+
+## Prerequisites
+
+- Cloud Splunk instance, or an on-premises Splunk instance, with access from Nile cloud.
+- Administrative log in to Spunk instance.
+- Administrative log in to Nile Portal.
+
+<hint type="warning">
+  Nile Service Block supports only signed SSL certificates, or HTTP access with no SSL. Self-signed HTTPS certificates are not acceptable.
+</hint>
+
+
+
+## Splunk Configuration:
+
+### Create Splunk HTTP Event Collector
+
+Log in to Splunk instance as an administrator.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ppUkSLr_6kQdgmFn1Mm6y_image.png)
+
+Navigate to **Settings&#x20;**&#x74;hen Select **Data inputs** from the DATA section.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/b_WugUGG-uVviPYAuai4v_image.png)
+
+Click on the **+ Add new** link to create a new HTTP event collector (HEC).
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fqp_hY_xYVj7YyoH1gnio_3.png)
+
+Type a descriptive name for the collector – in this example, we will use “nile\_test”.Keep all other values at their default value (“optional”). The, click the **Next** button
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sgxy46rwb7OqT_X2BsHXI_image.png)
+
+Keep the **Source Type** as Automatic;Keep the index as “main”.**NOTE**: HEC data will be stored at by default in the main index; you can create a specific index by clicking on the **Create a new index** This can be changed at any time. This example uses the main index; in production, use a sandbox index first then change the setting later.
+
+The, click the **Review** button.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rBzlGUzM8uDXPB3ZehICk_image.png)
+
+Verify the HTTP Event Collector configuration. Then, click the  **Submit** button.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jL2mWDFvcZaeOW-tdnjkz_image.png)
+
+Copy the contents of **Token Value**, and save it in a text file for later use in the Nile Portal Network Setup.(Example here is “**55344676-48db-4a9a-a522-23b95C**”.), then Click the **Start Searching** button.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/q-AmMqjSCiBn9mvXjNz71_image.png)
+
+Enter a search string; in this example,**source=”http\_test” (index=”main”)**
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AOZzflfNrYjffF62M7SeR_image.png)
+
+### Configure the Splunk HTTP Event Collector
+
+After creating the HTTP Event Collector, enable the Collector, and configure the URL port and SSL options.
+
+From the Data section, click the **Data inputs** link, then click on **HTTP Event Collector** link.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/pAByH7Ai5YJxXSFzmZ02R_image.png)
+
+In the HTTP Event Collector page, click on **Global Settings** button.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rFXOmR4BDzMs5i3-blJ9n_image.png)
+
+Enter these values into the form**All Tokens**:   click on **EnabledEnable SSL**:   check (HTTPS) or uncheck (HTTP) the checkbox**HTTP Port Number**:   8088 (default).Keep all other settings in their default value.
+
+Click the **Save** button.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/d0xHdjWjM5rt2obednNqF_image.png)
+
+This example shows that SSL is disabled, and the port number is the default value.
+
+<hint type="info">
+  Important Note: The SSL and Port Number setting is a global setting, and will affect all HTTP Event Collectors.
+</hint>
+
+## Nile Portal Configurations:
+
+### Add Splunk collector to Nile Portal
+
+Login to Nile portal — [https://u1.nile-global.cloud/](https://u1.nile-global.cloud/) — using an admin account. Then, Navigate to → **Global Settings**  →  **Integration** subtab.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GRMx9CN2i8FwsaEeFOgYQ_image.png)
+
+Click on ⊕; a new popup window will open, then click on **Splunk.**
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/D37jOMrULUBbGH0t5UZKL_image.png)
+
+Fill out Splunk information:
+
+- **Token**:   Copy and paste the token saved when creating the  Splunk HEC
+- **URL**:   Enter the Splunk cloud URL plus the port number
+
+Click the **Next** button.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/G18BO9HXMvPkgmR9R6TR5_image.png)
+
+Select, by clicking on the checkboxes, if Audit, User Device Events, and/or Alerts need to be sent to Splunk.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/e50KKVAaDyC4hwGxt9VfM_image.png)
+
+Click the **Save** button to save the settings.Click on **Splunk,** then click on ↔, to test the connection
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/bCXZYMGCL-EIT3g7FXniD_image.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/EJs7vQaHpSbMZFxiwH-Sb_image.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mqO3NXecpQHSaNbYJmzG1_image.png)
+
+If the test is successful, the collector status will change to UP (Green). if it fails it will show up as DOWN (red).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MbeUc5y7kEH8O4R6TAkmC_image.png)
+
+To modify Splunk URL or Token, click on (pen); to delete Splunk integration, click on (trash)
+
+### Verify Nile Events under Splunk Search and Report:
+
+- Login to Splunk instance as administrator.
+- In the top menu, click on **Search** elementUse the HEC name as a source,the index name for the specific index, andthe filter for searching for specific data.For this example, the HEC name is “nile\_test”, the index name is “main”, and  the filter is:                **source=”http\_test” (index=”main”)**
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/f130eGkVCNDG2jCTStg_U_image.png)
+
+Use a topic name to display only audits or user device events
+
+Examples: **source=”http\_test” (index=”main” , topic”audit”)source=”http\_test” (index=”main” , topic”userdeviceevents”)**
+
+
+
+**Please note:**
+`If there is a need to configure IP Address to be Permit Listed in Splunk to allow data flow from Nile Cloud to Splunk. The IP Address that you'll need to Permit List within Splunk is: 44.238.235.251`

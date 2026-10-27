@@ -1,0 +1,846 @@
+---
+title: What's New at Nile
+slug: whats-new-at-nile
+createdAt: Tue May 19 2026 06:02:50 GMT+0000 (Coordinated Universal Time)
+---
+
+When the stakes are highest, the network has to hold. At Black Hat MEA 2025, Nile powered 40,000+ attendees with zero security incidents. At Wild West Hackin' Fest, it blocked more than 1 million targeted attacks. That's what a secure-by-design network delivers in the most hostile conditions.
+
+This release builds on that foundation with three additions to the platform: Nile RADIUS, Nile Edge, and new capabilities across Nile Trust Service.
+
+- **New Nile Trust Service** moves you beyond basic segmentation to a true Zero Trust operating model. By combining identity-based policy, continuous device fingerprinting, and agentless validation, it lets you enforce least-privilege access, catch suspicious device drift, and automatically quarantine non-compliant endpoints before threats spread.
+- **Nile RADIUS** extends that model into authentication with cloud-native RADIUS, native Entra and Intune integration, and no shared secrets or on-prem NAC to manage—giving you stronger access control with far less operational burden.
+- **Nile Edge Service** completes the stack, delivering secure internet and cloud access without separate SD-WAN, firewall, or branch-router sprawl. The result: lower cost, simpler operations, and more resilient branches, all from one platform.
+
+One platform. One operating model. Secure by design, from campus to branch.
+
+## Campus Zero Trust — Nile Trust Service Enhancements
+
+<table isTableHeaderOn="true" columnWidths="50,126,147.8290258449304,175.84890656063618,162.3220675944334">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      1
+    </td>
+    <td align="left">
+      SIEM Integrations
+    </td>
+    <td align="left">
+      Crowdstrike SIEM Integration for Alerts, Audit Logs, and End User Device Events
+    </td>
+    <td align="left">
+      Nile Portal now supports native integration with CrowdStrike SIEM, allowing administrators to configure a secure connection (e.g., OAuth or API key) and select which topics to stream:
+      • Alerts
+      • Audit logs
+      • End-user device events, such as connection, disconnection, authentication, DHCP, and DNS.
+      Data is streamed in JSON format, with built-in performance and scalability considerations. It also outlines supported event volumes so customers understand expected capacity.
+      For more details on the data format, please refer to:
+      :Link[https://docs.nilesecure.com/nile-siem-event-schema]{href="https://docs.nilesecure.com/nile-siem-event-schema" newTab="true" hasDisabledNofollow="false"}
+    </td>
+    <td align="left">
+      Nile streams rich network, user, and device telemetry directly into CrowdStrike SIEM, to build a unified view of all security events.
+      This enables faster threat detection, better incident investigations, and simpler operations without custom integrations between Nile and CrowdStrike SIEMs.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      2
+    </td>
+    <td align="left">
+      SSE Integrations
+    </td>
+    <td align="left">
+      Microsoft Global Secure Access (SSE) Integration with Nile Trust Service
+    </td>
+    <td align="left">
+      Nile Trust Service now supports fully orchestrated, redundant IPsec (IKEv2) tunnels from Nile to primary and secondary Microsoft Global Secure Access (SSE) POPs, leveraging Microsoft APIs for POP selection and tunnel lifecycle management.
+      This integration automatically provisions tunnels from the Zero Trust Fabric, monitors tunnel health, and performs high-availability failover when necessary. Administrators can map Nile network segments to Microsoft Global Secure  Access security segments and have the traffic be inspected by Microsoft's cloud-delivered security stack.
+    </td>
+    <td align="left">
+      Nile now provides fully automated, redundant IPsec tunnels to Microsoft Global Secure Access, enabling seamless integration with cloud-delivered security.
+      This ensures high availability, automated failover, and consistent policy enforcement by extending Zero Trust controls to Microsoft’s SSE platform.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      3
+    </td>
+    <td align="left">
+      Authentication & Identity
+    </td>
+    <td align="left">
+      After-hours SSO session expiry
+    </td>
+    <td align="left">
+      Nile now supports per-tenant SSO session timeout configuration, letting each tenant define a maximum SSO session lifetime with a custom value and time unit. Sessions now expire at 01:00 a.m. in the tenant's local time zone on the last valid day — rather than exactly N hours/days after login — ensuring timeouts never land mid-workday or during an active call.
+    </td>
+    <td align="left">
+      SSO sessions now expire overnight, preventing unexpected disruptions/logouts during the workday or active meetings. This ensures that the user experience is maintained.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      4
+    </td>
+    <td align="left">
+      Authentication & Identity
+    </td>
+    <td align="left">
+      SSO Only Admin Access for Federated Tenants
+    </td>
+    <td align="left">
+      When SSO is enabled via an external Identity Provider (IdP), all local admin accounts except the root admin are automatically disabled, and new local admins cannot be created. A warning is shown during setup to highlight this change.
+    </td>
+    <td align="left">
+      This feature eliminates shadow admin accounts and reduces insider threat risk, ensures compliance with enterprise IAM policies and audit requirements, and gives IT teams a single control plane for access governance.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      5
+    </td>
+    <td align="left">
+      Authentication & Identity
+    </td>
+    <td align="left">
+      Continuous Device Fingerprinting & Device Integrity
+    </td>
+    <td align="left">
+      Nile can now continuously fingerprint connected devices, tracking attributes such as device type, operating system, manufacturer, and model over time. When a device’s fingerprint deviates from its learned baseline, the system generates security telemetry, including alerts and device events, and can optionally place the device into a denied or restricted state based on policy.
+      Flexible matching logic allows organizations to treat benign changes—such as firmware updates within the same device family—differently from higher-risk identity changes. For example, if a device previously identified as a specific IP phone model suddenly appears as a different model or device type, the system can flag the change as suspicious.
+      For environments requiring stricter controls, administrators can enable exact-match enforcement, ensuring that any deviation from the original device fingerprint triggers policy actions.
+    </td>
+    <td align="left">
+      Continuously fingerprints devices and detects deviations from their baseline, generating alerts and optionally enforcing restricted or denied access.
+      This enables adaptive, policy-driven security—distinguishing benign changes from suspicious ones—and strengthens Zero Trust enforcement across the network.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      6
+    </td>
+    <td align="left">
+      Micro segmentation
+    </td>
+    <td align="left">
+      Identity-Based Micro segmentation: Safer Access for Users, Devices & Apps
+    </td>
+    <td align="left">
+      The enhanced Nile Trust Engine delivers full identity-driven Zero Trust across the campus, enforcing least-privilege policies for all traffic directions—east–west, north–south, and internet—using identity-based user, device, and application groups with customizable Service Profiles per traffic flow.
+      <Paragraph>
+        Policies support allow, deny, or upstream-forward actions and are enforced natively within the Zero Trust Fabric, with all traffic denied by default until explicitly permitted.
+      </Paragraph>
+      <Paragraph>
+        In addition, Nile Trust Service performs agentless device validation for IoT/OT devices using SNMPv3, SSH, and HTTP/HTTPS. Administrators define validation policies within device groups based on MAC/OUI or fingerprint match criteria, along with credentials and check intervals (defaulting to one hour). Devices that pass are classified into the appropriate group, while those that fail are automatically quarantined—ensuring that non-user devices such as cameras, printers, and other IoT endpoints meet corporate security requirements without requiring agents.
+      </Paragraph>
+      <Paragraph>
+        For more details, refer to :Link[https://docs.nilesecure.com/nile-trust-service]{href="https://docs.nilesecure.com/nile-trust-service" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Full identity-driven Zero Trust across the campus, enforcing granular, least-privilege policies for all traffic—east-west and north-south, including internet access.
+      This provides precise control, stronger security by default-deny, and flexible policy enforcement directly within the network fabric.
+    </td>
+  </tr>
+</table>
+
+## Day N – Operational Efficiency Enhancements in Nile Access Service
+
+<table isTableHeaderOn="true" columnWidths="50,127.46124763705103,147.14012755941513,174.38132933879783,162.0172954647361">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      7
+    </td>
+    <td align="left">
+      Security & Authentication
+    </td>
+    <td align="left">
+      MAC Authentication Rules Based on Switch Hostname and Port
+    </td>
+    <td align="left">
+      Nile's Access Service now supports a new MAB rule type that matches on switch hostname and port — in addition to the existing fingerprint and MAC-based rules — allowing administrators to assign segments based on where a device is connected.
+    </td>
+    <td align="left">
+      Devices can now be segmented based on where they connect (switch and port) in addition to the existing identity or MAC-based access, enabling reliable access control even when identity is unknown.
+      This simplifies onboarding, reduces operational overhead, and provides location-based security context.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      8
+    </td>
+    <td align="left">
+      Security & Authentication
+    </td>
+    <td align="left">
+      MAC Authentication (MAB) — Waiting for Approval” Dashboard Indicator
+    </td>
+    <td align="left">
+      On the Nile Portal dashboard, an icon shows the number of wired devices pending MAB approval. It acts as an alert and is clickable, taking admins directly to a filtered view where they can approve devices.
+    </td>
+    <td align="left">
+      IT teams get a Nile Portal alert of unapproved MAB devices, making it easy to identify pending device backlogs.
+      They can quickly approve or investigate devices, reducing overhead and streamlining wired onboarding and troubleshooting.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      9
+    </td>
+    <td align="left">
+      Security & Authentication
+    </td>
+    <td align="left">
+      UPSK SSID with Multiple Segments Support
+    </td>
+    <td align="left">
+      A single UPSK SSID can now map to multiple segments—similar to 802.1X—enabling identity-based segmentation on the same SSID.
+    </td>
+    <td align="left">
+      A single UPSK SSID now supports multiple segments, enabling role- and device-based segmentation without the RF overhead of multiple SSIDs. Different departments or device types—such as cameras, printers, or Zoom Rooms—can be routed into distinct segments, each with the right policies applied automatically based on the UPSK used. This simplifies WLAN design and operations while delivering more granular, scalable, and identity-based access control.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      10
+    </td>
+    <td align="left">
+      Wireless & RF
+    </td>
+    <td align="left">
+      Nile MESH Support for extending wireless access
+    </td>
+    <td align="left">
+      Nile has added support for Wi-Fi AP to AP mesh capability for distances up to 100 ft between the Root AP and Mesh Point AP. Customers do not have to configure a dedicated SSID for MESH, and Nile takes care of auto-forming the MESH link.
+      <Paragraph>
+        Note: The mesh support entails extending the Wi-Fi access coverage up to a short distance and does not support or act as a point-to-point link.
+      </Paragraph>
+      <Paragraph>
+        For more details, refer to :Link[https://docs.nilesecure.com/nile-mesh]{href="https://docs.nilesecure.com/nile-mesh" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Nile now supports AP-to-AP mesh, automatically extending Wi-Fi coverage over short distances without requiring cabling.
+      This simplifies deployments in hard-to-wire areas while maintaining seamless connectivity.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      11
+    </td>
+    <td align="left">
+      Wireless & RF
+    </td>
+    <td align="left">
+      Support for 6GHz Standard Power on Nile WiFi6E/WiFi7 APs using AFC
+    </td>
+    <td align="left">
+      Nile has added support for 6GHz standard power by getting certified for AFC in the USA. This allows Nile to plan a deployment with Standard Power on 6 GHz, where Low Power Indoor mode may fall short on providing the coverage needed.
+      <Paragraph>
+        Nile automatically determines the need for Standard Power based on site survey data uploaded to the Nile cloud by partners and/or customers, and enables AFC seamlessly and allocates standard power levels across APs on the 6GHz band.
+      </Paragraph>
+    </td>
+    <td align="left">
+      Supports 6GHz standard power with AFC, enabling stronger coverage where low-power indoor modes fall short.
+      This allows optimized, survey-driven deployments with automatic power allocation—improving performance and coverage without manual tuning.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      12
+    </td>
+    <td align="left">
+      Wireless & RF
+    </td>
+    <td align="left">
+      Rogue AP Detection — Ability to mark end devices as ignore from WIDS
+    </td>
+    <td align="left">
+      Nile now provides the ability to mark end device MAC addresses as safe to avoid WIDS Rogue AP alerting on admin-approved devices.
+      <Paragraph>
+        For more details, refer to
+      </Paragraph>
+      <Paragraph>
+        :Link[https://docs.nilesecure.com/widswips#excluding-trusted-device-from-wids]{href="https://docs.nilesecure.com/widswips#excluding-trusted-device-from-wids" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Mark approved device MAC addresses as safe, preventing unnecessary rogue AP alerts to reduce false positives and improving the accuracy of WIDS-based threat detection.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      13
+    </td>
+    <td align="left">
+      Troubleshoot
+    </td>
+    <td align="left">
+      Wired and Wireless Packet Capture support in Nile Portal
+    </td>
+    <td align="left">
+      Nile now offers packet capture as a built-in troubleshooting capability directly within the Nile Portal.
+      Administrators can initiate packet captures from the AP Details page to capture over-the-air traffic observed by that access point.
+      For wired clients, administrators can run per-port packet captures from the Switch Details page. They can also initiate packet captures from Device → Run Test, which defaults to the client’s MAC address as the primary filter, with optional filters such as packet count, protocol (TCP/UDP), and port.
+    </td>
+    <td align="left">
+      IT teams can capture packets directly from the Portal for both wired and wireless devices.
+      This accelerates root cause analysis and enables faster resolution of complex endpoint connectivity issues.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      14
+    </td>
+    <td align="left">
+      Visibility & Monitoring
+    </td>
+    <td align="left">
+      End Device Inventory & Tagging
+    </td>
+    <td align="left">
+      Nile now surfaces client descriptions from the Access Management tab as tags on the Devices page. When administrators add a description under Access Management → Clients, it appears as a tag on the wired device details page.&#x20;
+      <Paragraph>
+        Note that this currently applies to wired devices only — wireless clients are not yet supported. This provides a simple way to label and identify important wired endpoints, such as key servers, across sites without duplicating information.
+      </Paragraph>
+    </td>
+    <td align="left">
+      Tag and group important devices using simple human-readable labels that carry across views.
+      This improves visibility and audits, especially in large, geographically distributed environments.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      15
+    </td>
+    <td align="left">
+      Visibility & Monitoring
+    </td>
+    <td align="left">
+      Floor Map with AP Location in the Device Inventory page
+    </td>
+    <td align="left">
+      In the Device Inventory, selecting an AP's location details—such as its site, building, or floor—will navigate you directly to the corresponding floor map view.
+    </td>
+    <td align="left">
+      AP location attributes (site, building, floor) in the Device Inventory enable direct navigation to the floor map view.&#x20;
+      This provides faster visual context and simplifies troubleshooting and location-based analysis.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      16
+    </td>
+    <td align="left" rowSpan="2">
+      Operations & Reporting
+    </td>
+    <td align="left">
+      Exportable Network Summary Reports
+    </td>
+    <td align="left">
+      Network Summary page in Nile Portal now includes an Export option that lets any user who can view the page download the full summary for offline analysis and reporting. &#x20;
+      The exported file reflects the same scope, time window, and filters as the on-screen view, so what is downloaded matches exactly what was visible in the Network Summary UI at the time of export.
+    </td>
+    <td align="left">
+      Network and security teams can quickly generate shareable Network Summary reports from the Nile Portal for leadership discussions, audits, and capacity reviews — without rebuilding views or copying data manually.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      17
+    </td>
+    <td align="left">
+      Ability to customize the Nile device hostname
+    </td>
+    <td align="left">
+      Network teams can now assign custom, intuitive names to Nile devices — typically reflecting device location — directly from the Nile Portal via Global Settings > Device Inventory. Simply select an AP or Switch and customize the device name to align with your operational naming conventions.
+      <Paragraph>
+        For more details, refer to
+      </Paragraph>
+      <Paragraph>
+        :Link[https://docs.nilesecure.com/custom-hostname-for-nile-elements]{href="https://docs.nilesecure.com/custom-hostname-for-nile-elements" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Improves operational clarity, making it easier to identify devices by assigning intuitive, location-based names to APs and switches directly from the Device Inventory.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      18
+    </td>
+    <td align="left">
+      Integrations
+    </td>
+    <td align="left">
+      Forescout App Integration with Nile Portal
+    </td>
+    <td align="left">
+      Nile now provides a Forescout app integration, exposing a public Client List API that gives Forescout real-time programmatic access to the same device inventory shown in the portal. The API supports site and time-window filters and honors both basic and advanced client filters, returning exactly what operators see in the UI via a consistent REST interface.
+    </td>
+    <td align="left">
+      With the Forescout Integration, Security and IT teams get a real-time, complete view of all devices across the network and can build automated workflows to quarantine devices that do not meet corporate standards.
+      The device posture can be continuously assessed and enforced automatically using Nile's MAB table, enabling faster response, stronger policy enforcement, and reduced operational overhead
+    </td>
+  </tr>
+</table>
+
+## Nile DHCP Service Enhancements
+
+<table isTableHeaderOn="true" columnWidths="50,127.46124763705103,150.06158384089485,173.8999321402144,159.57723638183978">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      19
+    </td>
+    <td align="left">
+      DHCP Options
+    </td>
+    <td align="left">
+      &#x20;PXE Boot Support in Nile DHCP
+    </td>
+    <td align="left">
+      Nile DHCP Service now supports PXE boot using DHCP options 66 and 150, allowing IT admins to configure the PXE/TFTP “Next Server” on a per-subnet-range basis. When these options are set, Nile automatically advertises the correct Next Server IP address so PXE clients can fetch boot files from the intended PXE server.
+    </td>
+    <td align="left">
+      DHCP Service now supports PXE boot by automatically providing the correct next-server information per subnet.
+      This enables seamless zero-touch device-provisioning workflows.
+    </td>
+  </tr>
+</table>
+
+## Nile Alerts Enhancements
+
+<table isTableHeaderOn="true" columnWidths="50,130.46124763705103,150.09833973809134,171.37117238771992,159.06924023713776">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      20
+    </td>
+    <td align="left">
+      Link & Network Health Monitoring
+    </td>
+    <td align="left">
+      Uplink Saturation Alerts for Nile Fabric upstream devices
+    </td>
+    <td align="left">
+      Nile Access Service now generates a customer-visible “Uplink Saturated” alert when a Nile Gateway switch's uplink to the router or firewall approaches full capacity for a sustained period.
+      The alert appears under Nile Infrastructure and clearly identifies the affected link, including switch name and serial number, uplink port, peer device/port via LLDP, site/building, duration, maximum bandwidth, and observed utilization. Notifications—via email, webhook, or other channels—deliver the same detailed information, enabling customers to troubleshoot directly from their own monitoring and automation tools.
+    </td>
+    <td align="left">
+      Alerts customers when uplinks approach sustained saturation, providing detailed, actionable context on the affected link.
+      This enables faster troubleshooting and proactive capacity management to prevent performance degradation.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      21
+    </td>
+    <td align="left">
+      Link & Network Health Monitoring
+    </td>
+    <td align="left">
+      Link Speed Degradation Alerts for Nile Gateways and ISP Connections
+    </td>
+    <td align="left">
+      Nile Access Service now detects when critical links renegotiate to a speed lower than their provisioned capacity, including AP-to-switch, switch-to-switch, and Nile gateways-to-ISP (DS-to-ISP) uplink connections. &#x20;
+      When this occurs, Nile raises an Infrastructure alert titled “Link operating with lower than provisioned speed”, providing detailed context such as the affected devices and ports, site, building, floor, and the duration for which the link has been in a degraded-speed state. Notifications reuse this context so IT teams can act directly from email or webhook payloads.
+    </td>
+    <td align="left">
+      Faster identification and resolution of performance issues, helping maintain network reliability and capacity by proactively detecting when critical links drop below their expected speed and alerting teams with detailed, location-aware context.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      22
+    </td>
+    <td align="left">
+      Link & Network Health Monitoring
+    </td>
+    <td align="left">
+      AP Capacity Exceeded Alert for Overloaded Wi‑Fi Radios
+    </td>
+    <td align="left">
+      Nile now generates a new “AP association exceeded recommended threshold” alert when a Wi-Fi radio sustains more than 40 associated clients and channel utilization above 80% over a 3-minute rolling window.
+      Each incident includes detailed diagnostics to help operators investigate the condition. This includes client association counts per band and radio over the preceding 10 minutes, NSS statistics, TX/RX byte counters at the AP, and AP channel utilization—providing the context needed to validate and respond to the alert.
+    </td>
+    <td align="left">
+      Proactively detects Wi-Fi congestion by alerting when APs exceed recommended client and utilization thresholds.
+      With built-in diagnostics and historical context, teams can quickly validate issues and take action to maintain performance and user experience.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      23
+    </td>
+    <td align="left">
+      Link & Network Health Monitoring
+    </td>
+    <td align="left">
+      Zscaler ZIA Tunnel Health and Bandwidth Alerts
+    </td>
+    <td align="left">
+      Nile now provides customer-facing alerts and notifications for Zscaler SSE integration.
+      If a tunnel goes down, Nile generates an “SSE Tunnel Down” alert in the portal and sends notifications via supported channels such as email, webhooks, and Slack. Alerts appear under a new Integrations category and include details on the affected cloud provider, site/building, outage duration, and a direct link to the relevant policy.
+      Nile also monitors tunnel utilization. When a tunnel exceeds 90% bandwidth, it raises an “SSE Tunnel Bandwidth Threshold Reached” alert, providing capacity metrics and a link highlighting the top five devices contributing the most traffic.
+    </td>
+    <td align="left">
+      Nile now provides real-time alerts for Zscaler SSE integrations, notifying teams of tunnel outages and high utilization with detailed context.
+      This enables faster issue resolution and proactive capacity management, ensuring reliable and secure traffic inspection.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      24
+    </td>
+    <td align="left">
+      Alert Management
+    </td>
+    <td align="left">
+      Alert Severity in Notifications and Integrations
+    </td>
+    <td align="left">
+      Nile now includes a clear alert severity level in every notification.
+      Email alerts, chat-style messages (e.g., Slack/Teams), webhooks, and SIEM integrations all carry a numeric Severity field from 0–5 (Critical (0) → Informational (5)). If a severity is not explicitly set for an alert, it defaults to 3.
+      In user-facing notifications, this appears immediately after the Impact line (for example, “Severity: 2”), so teams can quickly understand how urgent an issue is across all channels.
+    </td>
+    <td align="left">
+      Teams can quickly assess the urgency of issues across all channels, enabling faster prioritization and response.
+      This is enabled by adding a standardized severity level (0–5) to all alerts and notifications, consistently displayed across email, chat, webhooks, and SIEM integrations.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      25
+    </td>
+    <td align="left">
+      Alert Management
+    </td>
+    <td align="left">
+      Webhook —  Enhanced JSON payload and Test button
+    </td>
+    <td align="left">
+      Nile has enhanced the JSON payload for alert notifications sent as webhooks to customer IT ticketing systems. The JSON body now includes separate fields for device\_type and serial\_number, as part of the newly introduced device\_entity. Additionally, customers will be able to test the webhook connectivity when configuring the webhook itself with the newly introduced 'Test' button in the Nile Portal webhook settings cards.
+      <Paragraph>
+        For more details, refer to :Link[https://docs.nilesecure.com/webhook-enhancements]{href="https://docs.nilesecure.com/webhook-enhancements" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Webhook alert payloads now include richer device details (type and serial number) and a structured device entity, improving integration with IT systems.
+      The new “Test” capability simplifies validation, ensuring reliable webhook connectivity and faster setup.
+    </td>
+  </tr>
+</table>
+
+## Nile Guest Service Enhancements
+
+<table isTableHeaderOn="true" columnWidths="50,134.46124763705103,151.75503705380143,170.38189749145673,154.4018178176908">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      26
+    </td>
+    <td align="left">
+      Guest  Access Control
+    </td>
+    <td align="left">
+      Configurable Session Timeout for Employee Self‑Approved Guest Access
+    </td>
+    <td align="left">
+      Nile's Guest Portal supports an Email Approval flow where a connecting user enters their name, email, and a sponsor's name and email to request network access. For employees using self-approval — where they act as both the guest and the sponsor — administrators can now configure an Employee Timeout that controls how long that self-approved session remains valid before re-authentication is required.&#x20;
+    </td>
+    <td align="left">
+      Employees using personal devices on the guest network get longer session durations, reducing repeated re-authentication and improving user experience.
+      At the same time, periodic revalidation is maintained—balancing convenience for trusted users with continued security and access control.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      27
+    </td>
+    <td align="left">
+      Guest  Access Control
+    </td>
+    <td align="left">
+      Geo-Scope selection for Nile Guest
+    </td>
+    <td align="left">
+      Admins can now scope Nile Guest access by location (site, tag, zone, building, or floor) instead of using a single global configuration. Create Guest Portals with specific authentication types and map them to defined geoscopes.
+    </td>
+    <td align="left">
+      Set different  Guest access policies by location (site, building, floor, zone, or tag), instead of relying on a single global configuration.
+      This enables an enterprise-grade, context-aware guest experience and simplifies policy management across geographically distributed environments.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      28
+    </td>
+    <td align="left">
+      Guest  Access Control
+    </td>
+    <td align="left">
+      Restrict Guest Sponsors for Email‑Approval
+    </td>
+    <td align="left">
+      Admins can now restrict guest approval requests to a defined list of designated sponsor email addresses when using Email Approval, rather than allowing any user with a company domain email to act as a sponsor. This ensures guest access approvals are handled exclusively by authorized teams such as Network Admins or IT.
+    </td>
+    <td align="left">
+      Limit guest approvals to a defined set of sponsor email addresses, ensuring only authorized individuals can approve access.
+      This strengthens security controls while streamlining and standardizing the approval workflow.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      29
+    </td>
+    <td align="left">
+      Authentication
+    </td>
+    <td align="left">
+      SMS Authentication for Nile Guest Service
+    </td>
+    <td align="left">
+      Admins can now enable SMS Access Code as a guest authentication method in the Nile Portal. Guests enter their phone number with country code, receive a one-time code via SMS, and use it to connect.
+    </td>
+    <td align="left">
+      Nile provides fully managed SMS-based guest access, removing the need to manage SP vendors, regulations, or phone number provisioning.
+      This enables seamless, global guest onboarding with zero operational overhead for IT teams.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      30
+    </td>
+    <td align="left">
+      API
+    </td>
+    <td align="left">
+      Guest Access Code API Support
+    </td>
+    <td align="left">
+      Nile Guest Service now supports generating and managing guest access codes via API, enabling admins and external systems to programmatically create, update, and delete guest codes at scale. This supports both shared codes (reusable by any guest during a configured validity window) and guest-specific codes (bound to an individual guest's name and email).&#x20;
+    </td>
+    <td align="left">
+      Guest access codes can now be created and managed via both UI and API, with full audit tracking for all actions.
+      This enables a scalable, automated guest onboarding experience without the complexity of a PSK authentication approach.
+    </td>
+  </tr>
+</table>
+
+## Nile NAV App Enhancements
+
+<table isTableHeaderOn="true" columnWidths="50,134.46124763705103,152.68780726698745,171.87136589881743,151.97957919714418">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      31
+    </td>
+    <td align="left">
+      Integrations
+    </td>
+    <td align="left">
+      Site Discovery Enhancement: Hamina Integration with Nile Nav
+    </td>
+    <td align="left">
+      Nile Site Discovery now integrates natively with Hamina, streamlining the wireless design workflow from survey to deployment. Once a Hamina survey is complete, simply export the design in Open Intent format (File → Export → To file) and upload the .zip file into your Nile site survey job.&#x20;
+      <Paragraph>
+        Nile ingests the Open Intent output via API into Nile NAV, importing key RF design details including wall attenuation, map scale, AP and sensor locations, predicted signal strength, power levels, antenna height and tilt, and ceiling type.&#x20;
+      </Paragraph>
+      <Paragraph>
+        This data is then used to automate BOM creation and coverage analysis — consistent with the existing Ekahau integration experience.
+      </Paragraph>
+    </td>
+    <td align="left">
+      Faster, more accurate wireless design and deployment with reduced manual effort, enabled by Nile’s native integration with Hamina to ingest survey data and automate BOM creation and coverage analysis.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      32
+    </td>
+    <td align="left">
+      Enhancements
+    </td>
+    <td align="left">
+      Independent Installers Onboarding
+    </td>
+    <td align="left">
+      For Installer and MSP tenant types, Nile now supports onboarding user accounts with personal email domains (for example, gmail.com, outlook.com, icloud.com), under explicit administrative control. &#x20;
+      Under Global Settings → Domains, the root admin can enable “Allow external/personal emails” for a tenant, explicitly accepting liability for the use of these accounts and their impact on the tenant’s security posture. &#x20;
+      Once enabled, only the root user can create or update external users for that tenant, and those users must be members of the Installer group. &#x20;
+      Standard domain verification checks remain enforced for normal tenants; this relaxation is scoped strictly to Installer/MSP environments and does not apply to customer login flows.
+    </td>
+    <td align="left">
+      Partners and installers can use their existing email identities across multiple tenants, simplifying access and reducing onboarding friction.
+      At the same time, built-in controls ensure governance, accountability, and security remain fully intact.
+    </td>
+  </tr>
+</table>
+
+## New Premium Nile Services :inlineImage[]{src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/wmBbDdAWPvZlFINDfvjvF_.blob" alt caption width="26" height="26"}
+
+<table isTableHeaderOn="true" columnWidths="50,137.46124763705103,153.63393579666055,169.83928708999142,150.06552947629706">
+  <tr>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **#**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Category**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Title**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Feature Capability**
+    </td>
+    <td lightBackgroundColor="rgb(191, 191, 191)" darkBackgroundColor="rgb(191, 191, 191)" align="left">
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      33
+    </td>
+    <td align="left">
+      Nile Cloud RADIUS
+    </td>
+    <td align="left">
+      Nile Cloud RADIUS
+    </td>
+    <td align="left">
+      Nile RADIUS delivers cloud-native authentication and authorization as a fully managed service, eliminating the need for on-premises NAC appliances. All communication between Nile infrastructure and the RADIUS service is encrypted over secure gRPC tunnels, with no additional configuration of shared secrets, NAS IPs, or RadSec required. EAP-TLS (certificate-based authentication) is supported today, with additional EAP methods coming in future releases.
+      <Paragraph>
+        Nile RADIUS integrates natively with Microsoft Entra via SCIM for dynamic identity sync and with Microsoft Intune for device compliance enforcement. Policy actions include accepting or rejecting access, assigning users to specific network segments, or applying Palo Alto tags for firewall integration.
+      </Paragraph>
+      <Paragraph>
+        The service is highly available, auto-scaling, and monitored continuously — with detailed authentication logs available per device.&#x20;
+      </Paragraph>
+      <Paragraph>
+        For more details, refer to :Link[https://docs.nilesecure.com/nile-radius]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"}
+      </Paragraph>
+    </td>
+    <td align="left">
+      Customers can offload RADIUS authentication to Nile’s cloud service, eliminating on-prem infrastructure and simplifying secure 802.1X adoption.
+      This delivers a unified, scalable authentication-to-authorization workflow with higher reliability, lower operational overhead, and consistent access control across the network.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      34
+    </td>
+    <td align="left">
+      Nile Edge Service
+    </td>
+    <td align="left">
+      Nile Internet Gateway (IGW)
+    </td>
+    <td align="left">
+      Nile Edge Service extends the Nile Access Service to provide secure internet and cloud connectivity for offices without requiring separate SD-WAN appliances, firewalls, or routers at each site.
+      It transforms Nile distribution switches into managed internet gateways with built-in NAT, stateful firewall, DoS/DDoS protection, and LTE-based disaster recovery to ensure uninterrupted connectivity, all monitored and managed through the familiar Nile Portal.
+      With the initial release, Nile supports the virtual Internet Gateway (vGW) role on NSW250 switches, enabling smaller sites to achieve secure internet breakout without additional hardware. The functionality will be enabled automatically by the system if the customer has subscribed to the Nile Edge Service.
+    </td>
+    <td align="left">
+      Secure internet and cloud connectivity is delivered without separate SD-WAN, firewall, or router appliances—reducing cost and simplifying branch architecture.
+      This is enabled by extending Nile switches into managed gateways with built-in security, NAT, and resilience for smaller sites.
+    </td>
+  </tr>
+</table>
+

@@ -1,0 +1,61 @@
+---
+title: Setup Device Fingerprinting
+slug: setup-device-fingerprinting
+createdAt: Thu Oct 22 2026 17:57:46 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+**Device Fingerprint Authentication** is used to approve a type of wired device, such as "HP Printer" or "Avaya IP Phone 250", without listing each MAC address. The Nile Access Service identifies the make, model, and operating system of a device from its network traffic and places it in the segment defined in the fingerprint rule.
+
+Nile maintains an extensive database of device models, makes, and operating systems. A device is identified using its MAC address, DHCP and DNS transactions, and User-Agent data. A RADIUS server is not required. Learn more about MAC Authentication.
+
+**Note:** Fingerprint rules work best with a catch-all (**Allow all MACs**) rule assigned to a quarantine or Internet-only pre-auth segment. This allows new devices to obtain a temporary IP address while the system collects data points to identify and fingerprint them.
+
+## Prerequisites
+
+Complete the following before you set up MAC Authentication. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for MAC authentication and configure a DHCP server and IP address pool for it. Devices connected to this segment do not require authentication mapping on segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+
+### Configuring Allow all MACs Authentication
+
+1. Log in to the Nile Portal.
+2. In the left navigation, go to **Network Setup > Access Management**, click the **Wired** tab, and click **+** to add a device.
+3. Configure the following:&#x20;
+   - Enable the **Allow all MACs&#x20;**&#x63;heckbox in the top-left corner. No MAC address entry is required, the Status is automatically set to Approved, and the geographic scope is set to global.
+   - **Segment:** Choose the segment.
+   - **Tag:** Optional. Add a label to identify the rule, for example, "Quarantine - allow all".
+4. Click **Submit**.
+
+**Notes:**
+
+- It applies at the **global geo scope** only. It cannot be applied at the site level.
+- It is recommended to use it only for Quarantine and pre-auth segments. Nile does not recommend allowing all wired macs for production wired user segments with full network access.
+
+### Configuring Device Fingerprinting
+
+Configuring Device Fingerprint Authentication
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Access Management > Wired**, and add device by clicking '**+**'
+   - **Select:** Choose **Fingerprint** from the drop-down.
+   - **Segment:** Select the segment the device will join.
+   - **Fingerprint\*:** Start typing the device name (e.g., “HP Printer” or “Avaya IP Phone 250”) and select the matching entry.
+   - **Geo scope:** Optional. Restrict the device to a specific site, building, or floor. By default, access is allowed at all locations. If the device connects outside the selected area, it will be denied until approved again.
+   - **Tag:** Optional. Add a descriptive label (e.g., “Printer - Lab 1”).
+   - **Status:** Leave as Approved.
+   - **Static IP:** Leave unchecked.
+   - **Allow all MACs:** Leave unchecked.
+   - **Passive IP:** Leave unchecked.
+   - **Lock to Port:** Leave unchecked.
+2. Click **Submit**.
+
+### How fingerprint matching works
+
+- **First connection**: A new device has no IP address, so Nile has limited information at first. The catch-all rule gives the device a temporary IP address from Quarantine or Pre-auth segment.
+- **Automatic move**: Once the device starts sending traffic, Nile identifies it and moves it to the respective configured segment in your fingerprint rule. The device's initiates DHCP and gets a new IP address.
+- **Learned entry**: Nile learns the device's fingerprint and creates a specific entry for it going forward.
+- **Most specific rule wins**: If a device matches more than one fingerprint rule, the most specific rule takes precedence. For example, "Avaya IP Phone 250" wins over "Avaya Phones".
+- Refer to the :Link[Nile Wired Access Management FAQ ]{href="https://docs.nilesecure.com/nile-wired-access-management-faq" newTab="true" hasDisabledNofollow="false"}for more details.

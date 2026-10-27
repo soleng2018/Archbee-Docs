@@ -1,0 +1,81 @@
+---
+title: Setup Wireless MAC Auth SSID
+slug: setup-wireless-mac-auth-ssid
+createdAt: Wed Oct 21 2026 06:14:30 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Wireless MAC Authentication lets you control access to an Open or PSK SSID based on device MAC addresses. Only devices on the allow list can connect. This works well for devices without a screen or keyboard, such as printers, cameras, and sensors. MAC addresses can be copied, so use it together with other controls for sensitive devices.
+
+## Prerequisites
+
+Complete the following before you create a MAC filtering SSID. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+- **Check that Wireless MAC Auth is available.** Wireless MAC Authentication must be enabled for your tenant, and your software release must support this feature. If the MAC Auth option is not visible under the SSID settings, contact Nile Support.
+
+## Configuration Steps
+
+### Create the SSID
+
+Choose the option that matches the type of SSID you want to protect with MAC filtering.
+
+**Option 1: Open SSID**
+
+1. In the left navigation, select Network Setup > Wireless and click the '+' sign.
+2. Choose the Type as **Open**.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - **Security:** Use standard Open security. Do not select Enhanced Open, because the MAC Auth toggle is disabled when it is selected.
+   - **MAC Auth:** Turn on the **MAC Auth** toggle to allow only the devices on your allow list. If the toggle is disabled, check that the SSID does not use Enhanced Open.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - Ensure that the other checkboxes, such as SSO, are disabled for this SSID.
+   - **Segments:** Select the appropriate segment for this SSID and save your changes.
+
+**Option 2: PSK SSID**
+
+1. In the left navigation, select Network Setup > Wireless and click the '+' sign.
+2. Choose the Type as **Personal**.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - **Security:** Select **WPA2**. Do not select WPA3, because the MAC Auth toggle is disabled when WPA3 is selected.
+   - **Passphrase:** Use a random passphrase of at least 16 characters. Don't reuse it across SSIDs, and change it if it is exposed or when users who know it leave.
+   - **MAC Auth:** Turn on the **MAC Auth** toggle to allow only the devices on your allow list. If the toggle is disabled, check that the SSID uses WPA2, not WPA3.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - Ensure that the other checkboxes, Unique Passphrase and SSO, are disabled for this SSID.
+   - **Segments:** Select the appropriate segment for this SSID and save your changes.
+
+### Add the allowed devices
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Access Management, and click the **Wireless** tab.
+3. To add one device, click the '+' icon and configure the following in the **Add Access** window:
+   - **Select:** Choose **MAC Authentication**.
+     - **Allow:** Leave **Allow** selected (the default). Devices that are not on the list are denied automatically.
+     - **Tag:** Optionally, enter a label for the device (for example, "Printer - Lab 1").
+     - **MAC:** Enter the device's MAC address.
+4. Click **Save**.
+   - Nile accepts any common MAC format and stores it as AA\:BB\:CC\:DD\:EE\:FF.
+     - A MAC address can appear only once. Duplicate or invalid entries are rejected.
+5. To add many devices at once, click the upload icon at the top of the table and upload a CSV file of MAC addresses.
+
+### Adding many devices at once
+
+1. On the Access Management > Wireless page, click the upload icon and download the sample file.
+2. Update the sample file with the required changes below, then upload the CSV file.
+   - **MAC Address**: Required.
+   - **Static IP**: Optional.
+   - **IP Address**: Optional.
+   - **Site**: Required if you use a static IP.
+   - **Tag**: Optional.
+   - **State**: Optional. Allow or Deny.
+
+### Connect and manage devices
+
+- A device on the allow list can connect to the SSID. A device that is not on the list is denied.
+- If you add or remove a MAC address after a device has connected, disconnect the device (or have it forget the SSID) and reconnect it so the change takes effect.
+- Many phones and laptops use a private (randomized) Wi-Fi address by default. Add the address the device uses on this SSID, or turn off the private address for this network on the device.
+- If you turn MAC Auth off, the SSID goes back to its normal Open or PSK behavior.

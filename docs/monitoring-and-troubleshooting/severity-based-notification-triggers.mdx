@@ -1,0 +1,85 @@
+---
+title: Severity Based Notification Triggers
+slug: severity-based-notification-triggers
+createdAt: Wed Aug 28 2024 19:16:36 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The Nile Access Service employs a sophisticated alert notification system to keep network administrators informed about critical events and issues. Customers can view alerts on the Nile Portal and subscribe to notifications for individual alert categories via Nile Portal. This document outlines the notification trigger mechanism based on alert severity levels, designed to provide timely information while reducing alert fatigue. &#x20;
+
+## Alert Severity Levels
+
+The Nile Portal (NP) categorizes alerts into four severity levels:
+
+1. Severity 1 (Sev-1): Critical issues requiring immediate attention
+2. Severity 2 (Sev-2): High-priority issues
+3. Severity 3 (Sev-3): Moderate-priority issues
+4. Severity 4 (Sev-4): Low-priority issues or informational alerts
+
+## Notification Trigger Mechanism
+
+### Severity 1 (Sev-1) Alerts
+
+For critical issues, the Nile Access Service implements an exponential notification schedule:
+
+- Initial notification at time T (when the alert is first triggered)
+- Subsequent notifications at:&#x20;
+  - T+2 hours
+  - T+6 hours
+  - T+14 hours
+  - T+24 hours
+  - T+48 hours
+  - T+72 hours
+  - T+96 hours
+  - T+120 hours
+  - Continuing at 24-hour intervals thereafter
+
+This escalating schedule ensures that critical issues remain visible without overwhelming administrators with frequent notifications.
+
+### Severity 2, 3, and 4 Alerts
+
+For Sev-2, Sev-3, and Sev-4 alerts:
+
+- A single notification is sent when the alert is first triggered
+- No repeat notifications are sent for these severity levels
+
+## Behavior for Existing Open Alerts
+
+### Severity 1 Incidents
+
+- For open Severity 1 incidents, notifications will continue according to the schedule:
+  - Subsequent notifications will be repeated every 24 hours.
+
+### Lower Severity Incidents (Sev-2, Sev-3, Sev-4)
+
+- For open incidents of lower severity (Sev-2, Sev-3, Sev-4):
+  - Subsequent notifications will be discontinued
+
+## :Comment[Alert Visibility and Management]{docCommentId="qjAalvacMjxBYOKMuVm3u" resolved="false"}
+
+All alerts, regardless of severity, are visible on the Nile Portal. Administrators can:
+
+- View active alerts in real-time
+- Access historical alert data
+- Manage and respond to alerts directly through the portal
+
+## Notification Subscription
+
+Customers can subscribe to alert notifications through the Nile Portal. Subscription options include:
+
+- Email notifications
+- Webhook integrations for third-party systems. For schema, please click :Link[here]{href="https://docs.nilesecure.com/nile-siem-event-schema#SmMog" newTab="true" hasDisabledNofollow="false"}.
+
+## Benefits of Severity-Based Triggers
+
+This notification system offers several advantages:
+
+1. Prioritizes critical issues with a persistent notification schedule
+2. Reduces overall notification volume to prevent alert fatigue
+3. Allows administrators to focus on the most pressing issues
+4. Provides flexibility in how alerts are received and managed
+
+## Conclusion
+
+The severity-based notification trigger system in the Nile Access Service balances the need for timely information with the importance of maintaining a manageable alert volume. By differentiating between critical and non-critical issues, this system helps ensure that network administrators can effectively prioritize and address network issues.

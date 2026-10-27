@@ -1,0 +1,78 @@
+---
+title: QoS within Nile Service Block
+slug: qos-within-nile-service-block
+createdAt: Thu Jan 23 2025 08:41:49 GMT+0000 (Coordinated Universal Time)
+---
+
+## Objectives
+
+- **Enhance User Experience:** Deliver high-quality user experience by prioritizing voice, video, and critical business applications.
+- **Simplify QoS Requirements:** Promote architectural simplicity through a zero-configuration model.
+- **Enable Wireless QoS:** Utilize 802.11e WMM and EDCA to ensure efficient wireless QoS.
+- **Preserve QoS Across Networks:** Maintain end-to-end QoS standards across the Nile Service Block (NSB) network.
+
+## Capabilities Outline
+
+### Support for Multiple Priorities and Classes
+
+Traffic can be classified into four priority categories:
+
+1. Network Control and Voice
+2. Video and Business Premium/Critical
+3. Background
+4. Best Effort / Low Priority
+
+These categories are mapped to WMM 802.11e Access Classes and aligned with conventional switch/router service tiers (for example, Platinum, Gold, Silver, Bronze).
+
+### DSCP-Based Classification and Re-Marking
+
+- Supports classification and re-marking of DSCP values based on Deep Packet Inspection (DPI).
+- Trusted applications such as Wi-Fi Calling, Zoom, Webex, and Teams adhere to DSCP-trust principles.
+- If incoming traffic is marked with lower DSCP values than DPI-provided thresholds, re-marking is applied in both upstream and downstream directions.
+
+### Traffic Processor and Classifier
+
+- Implements traffic buffering mechanisms.
+- Supports multiple priority levels and Class-Based Weighted Fair Queuing (CBWFQ).
+- Allocates queue weights dynamically on a profile basis.
+
+# DPI and Application Prioritization
+
+The Nile Service Block (NSB) integrates a Deep Packet Inspection (DPI) engine to identify and prioritize latency-sensitive applications.
+
+### Traffic Identification
+
+DPI inspects packet headers and payloads to classify traffic into protocol families such as:
+
+- **FAMILY\_AUDIO\_VIDEO:** Applications including Zoom, Webex, and Teams
+- **FAMILY\_AUTHENTICATION**
+- **FAMILY\_MICROSOFT\_OFFICE**
+- Additional well-known protocol groups
+
+### Dynamic Re-Marking
+
+DPI assigns DSCP values to traffic based on protocol family and criticality. If traffic enters the NSB with lower DSCP markings, it is re-marked according to DPI guidance. Examples include:
+
+- **Voice traffic:** DSCP 48, priority weight 30%
+- **Video traffic:** DSCP 34, priority weight 10%
+- **Best Effort / Background traffic:** Lower-priority DSCP values
+
+### Application Awareness
+
+Ensures real-time and business-critical applications, such as voice calls and video conferencing, consistently receive priority handling across the network
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FxN3fUrjk-uNCOrOehJOQ_image.png" size="34" width="960" height="540" position="center" showCaption="false"></Image>
+
+### Wi-Fi Calling
+
+Wi-Fi Calling differs from other voice protocols because it uses an IPSec-based connection to send voice traffic from a mobile device to the carrier’s **Evolved Packet Data Gateway (ePDG)**.
+
+<BlockQuote>
+  **Note:** The ePDG is a core network component that connects Wi-Fi networks to mobile networks, enabling Voice over Wi-Fi (VoWiFi) services such as phone and video calls over Wi-Fi.
+</BlockQuote>
+
+Nile maintains a predefined set of known ePDGs for global carriers to correctly identify Wi-Fi Calling flows and assign the appropriate voice priority when traffic traverses the NSB. Nile also collaborates with customers in different regions to add carrier-specific ePDGs as needed.
+
+# Guest Traffic
+
+All guest traffic is forwarded through the Nile Service Block as **Best Effort**.

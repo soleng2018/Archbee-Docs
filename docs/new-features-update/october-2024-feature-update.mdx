@@ -1,0 +1,171 @@
+---
+title: October 2024 Feature Update
+slug: october-2024-feature-update
+createdAt: Mon Nov 04 2024 18:38:47 GMT+0000 (Coordinated Universal Time)
+---
+
+As customers continue to use the Nile Access Service and its AI-powered visibility apps, we've listened to their feedback and enhanced security plus boosted efficiency. A major update to the Nile Trust Service introduces a new security feature that now authenticates wired devices with the same methods used for wireless devices. Many customers have adopted Single Sign-On (SSO) with multi-factor authentication for wireless network access, providing a simpler alternative to the complexities of certificate management and RADIUS server deployment. We've extended SSO to wired access as well, delivering a unified authentication experience that ensures consistent user connectivity across both wired and wireless networks.
+
+Additionally, we're improving our alerting and notification system. To combat alert fatigue and provide more detailed insights for resolving real issues during help desk incidents, we’re rolling out three key enhancements. These updates are designed to help customers troubleshoot more efficiently—one of the core advantages of our campus network-as-a-service offering.
+
+**New Outcomes/Features**
+
+
+
+<table isTableHeaderOn="true" columnWidths="51">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Service Area**
+    </td>
+    <td>
+      **Outcome (Benefits)**
+    </td>
+    <td>
+      **Feature/Capability (Epic)**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Trust Service - Secure Access
+    </td>
+    <td>
+      Enhanced authentication method through a unified access approach for both wired and wireless devices. This improves user experience and IT efficiency by keeping it simple across both wired and wireless networks.
+    </td>
+    <td>
+      :Link[Single Sign-On (SSO)]{href="https://docs.nilesecure.com/single-sign-on-sso" newTab="true" hasDisabledNofollow="false"} now extends to devices for :Link[wired network access]{href="https://docs.nilesecure.com/single-sign-on-sso#2gyUD" newTab="true" hasDisabledNofollow="false"}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Trust Service - Secure Access
+    </td>
+    <td>
+      Easily locate and review how devices are authorized and check their status, saving time and streamlining troubleshooting.
+      <Paragraph>
+        Lock to Port: When a device connects to a wired port, this restricts the authorization of this device to the specific port.
+      </Paragraph>
+      <Paragraph>
+        Set Geoscope: Enhances security by limiting device usage to designated sites.
+      </Paragraph>
+      <Paragraph>
+        Static IP/Static IP Address: Provides visibility into whether a device has a static IP address and its IP address.
+      </Paragraph>
+    </td>
+    <td>
+      Ability to view the setup of Nile wired devices, including key details like 'Lock to Port,' 'Configured Geoscope,' and 'Static IP.'
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Access Service - Visibility
+    </td>
+    <td>
+      Pinpoint issues and rule out the network as a potential cause by a deeper view of each Nile network element.
+    </td>
+    <td>
+      Enhanced Nile Network Switch capabilities to provide more granular details and port status:
+      <Paragraph>
+        Switch-Level Information
+      </Paragraph>
+      <Paragraph>
+        \- IP/MAC address, location, operational status, version, and connected devices
+      </Paragraph>
+      <Paragraph>
+        \- Uptime, upgrade history, and active alerts
+      </Paragraph>
+      <Paragraph>
+        \- Available power budget
+      </Paragraph>
+      <Paragraph>
+        Port-Level Details:
+      </Paragraph>
+      <Paragraph>
+        \- Device information for all connected devices
+      </Paragraph>
+      <Paragraph>
+        \- Detailed port status including PoE consumption
+      </Paragraph>
+      <Paragraph>
+        \- Error detection: CRC issues and high temperature
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      Quickly pinpoint the root causes of problems with wired devices connected to the Nile network by subscribing to specific alerts and viewing granular details.&#x20;
+      <Paragraph>
+        An alert such as 'Power on Ethernet (PoE) request failed on port 0/5' offers actionable information for rapid troubleshooting.&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      We've added new metrics to provide insights into Power over Ethernet (PoE), temperature, power supply, DHCP pool space, cloud and Nile Service Block (NSB) maintenance alerts.
+      <Paragraph>
+        Additionally, we've refined alert messaging to streamline root cause analysis and aligned alerts with their corresponding infrastructure categories.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      To streamline DHCP troubleshooting, IT teams will be alerted whenever a client device encounters DHCP errors. It helps isolate a problem. Alerts such as 'DHCP Server rejected request' clearly indicate a server-side issue.
+    </td>
+    <td>
+      Enhanced DHCP error alerting capability to identify client or server issues.
+      <Paragraph>
+        This alert is generated when multiple clients face DHCP problems and is classified as a 'Client Devices' alert.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      6
+    </td>
+    <td>
+      Nile Access Service - Alerts
+    </td>
+    <td>
+      Proactively identify switches with available PoE capacity and balance devices accordingly. Our new alerts notify you when a switch's PoE budget is low or exhausted, allowing you to optimize network performance.
+    </td>
+    <td>
+      With a single click, you can access a detailed view of PoE availability across all switches, including PoE usage by endpoint and endpoint type.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      7
+    </td>
+    <td>
+      Nile Access Service - Administration
+    </td>
+    <td>
+      IT teams can now quickly resolve Nile login credential reset requests for users with multi-factor authentication, eliminating the need for Nile's direct involvement.
+    </td>
+    <td>
+      IT administrators now have the authority to reset multi-factor authentication for IT users accessing Nile Portal.
+    </td>
+  </tr>
+</table>
+

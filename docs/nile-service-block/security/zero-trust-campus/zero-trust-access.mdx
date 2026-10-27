@@ -1,0 +1,140 @@
+---
+title: Zero Trust Access
+slug: zero-trust-access
+createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
+---
+
+# What is Zero Trust Access?
+
+Providing authentication mechanisms for all users and devices across wired and wireless networks can be frustrating and overly complex. Zero Trust Access delivers a simplified and unified access approach by delivering functionalities like 802.1X, MAB, and SSO, for both wired and wireless networks. Always available and enabled on every component of the Nile service. Nile's Architecture by design offer zero trust isolation where every connection flows through a central policy enforcement point.
+
+**Authentication Methods in the Nile Access Service: Building a Zero Trust Campus**
+
+The Nile Access Service is built on the principles of the "Zero Trust Campus," ensuring that no user or device is implicitly trusted. By implementing strong authentication methods and granular access controls, the Nile Access Service helps organizations secure their network resources and protect against unauthorized access.
+
+The following authentication methods are supported within the Nile Access Service, each playing a crucial role in establishing a Zero Trust Campus:
+
+1. 802.1X - Wired and Wireless
+2. Wired MAC Authentication
+3. Unique PSK
+4. Single Sign-On (SSO)
+
+Let's review each of these in more detail.
+
+**Wired and Wireless 802.1X: Strong Authentication for Zero Trust**
+
+802.1X is an IEEE standard for port-based network access control, providing strong authentication and encryption for both wired and wireless connections. By implementing 802.1X, organizations can ensure that only authenticated users and devices can access network resources, aligning with the principles of the Zero Trust Campus. Nile  integrates with existing RADIUS infrastructure for centralized authentication and authorization
+
+[Learn more](https://docs.nilesecure.com/8021x-wired-and-wireless) about configuring 802.1X in the Nile Access Service to strengthen your Zero Trust Campus.
+
+**MAC Authentication: Securing Devices in a Zero Trust Campus**
+
+MAC Authentication is an authentication method that grants network access based on a device's MAC address. While MAB is useful for devices that don't support 802.1X, it's essential to implement additional security measures to maintain the integrity of the Zero Trust Campus.
+
+Nile's MAB implementation includes:
+
+- Quarantine all new devices by default
+- Centralized configuration through the Nile Customer Portal
+- Create custom rules based on match criteria.
+  - Exact MAC address&#x20;
+  - Fingerprint&#x20;
+  - MAC OUI&#x20;
+  - Wired SSO
+- Optionally, Integration with external MAC address databases (e.g Aruba ClearPass and Cisco ISE) for granular access control&#x20;
+
+[Explore the configuration and best practices](https://docs.nilesecure.com/mac-authentication) for MAB in the Nile Access Service to secure devices within your Zero Trust Campus.
+
+**Unique Passphrase (UPSK)**
+
+The Nile Access Service offers the Unique Passphrase (UPSK) feature to enhance the security of wireless network access. Unlike traditional pre-shared key (PSK) wireless networks, where a single key is shared among all devices, UPSK assigns a unique key to every authenticated user or device.
+
+Nile also provides a self-registration portal that allows users to securely onboard their devices, including BYOD and corporate assets, using UPSK and single sign-on (SSO) authentication.
+
+The Unique Passphrase (UPSK) feature in the Nile Access Service enables secure network access for a wide range of devices, including Internet of Things (IoT) equipment, AV equipment, and employee-owned devices. It can work with or without an external RADIUS server
+
+**Single Sign-On (SSO): Streamlining Zero Trust Access**
+
+Single Sign-On allows users to access multiple applications with a single set of credentials, streamlining the user experience while maintaining the principles of the Zero Trust Campus. By integrating SSO with the Nile Access Service, organizations can enforce consistent authentication and authorization policies across their network resources.
+
+Nile's SSO integration provides:
+
+- Support for popular SSO protocols, including SAML, to ensure compatibility with leading identity providers.
+- Centralized SSO configuration through the Nile Customer Portal
+
+[Discover how SSO](https://docs.nilesecure.com/single-sign-on-sso) can be seamlessly integrated into the Nile Access Service to enhance your Zero Trust Campus.
+
+
+
+By leveraging these authentication methods and following best practices, organizations can build a robust Zero Trust Campus with the Nile Access Service, ensuring secure access to network resources and protecting against unauthorized access.
+
+### Authentication Comparison
+
+<table isTableHeaderOn="true" columnWidths="150,218">
+  <tr>
+    <td align="left">
+      Authentication Method
+    </td>
+    <td align="left">
+      Description
+    </td>
+    <td align="left">
+      Zero Trust Campus Benefits
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Wired & Wireless 802.1x
+    </td>
+    <td align="left">
+      IEEE standard for port-based network access control - Supports various EAP methods (PEAP, EAP-TLS, EAP-TTLS) - Provides strong authentication and encryption
+    </td>
+    <td align="left">
+      - Ensures only authenticated users and devices access network resources
+      - Enables granular access control based on user identity.
+      - Integrates with existing RADIUS infrastructure for centralized management
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      MAC Authentication and Fingerprinting
+    </td>
+    <td align="left">
+      Authenticates devices based on their MAC address or Fingerprint - Useful for devices that don't support 802.1X (printers, IoT devices)
+    </td>
+    <td align="left">
+      - Provides network access for devices that can't support 802.1X.
+      - Serves as a fallback method to ensure maximum device coverage.
+        - Centralized configuration through the Nile Customer Portal
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Unique PSK
+    </td>
+    <td align="left">
+      Allows users or device groups (printers, cameras etc.) to have a unique PSK
+    </td>
+    <td align="left">
+      1. A single user's compromises key does not affect all users and devices
+      2. With SSO on top of UPSK, deactivated users in IDP will lose network access immediately with SCIM integration
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Wired & Wireless Single Sign-On (SSO)
+    </td>
+    <td align="left">
+      Allows users to access multiple applications with a single set of credentials - Supports popular SSO protocols (SAML, OAuth, OpenID Connect) - Reduces password fatigue and improves user experience
+    </td>
+    <td align="left">
+      - Enforces consistent authentication and authorization policies.
+      - &#x20;Provides granular access control based on user attributes and group membership.
+      - Streamlines user experience while maintaining Zero Trust principles
+      - SCIM integration ensures deactivated users lose network access immediately
+    </td>
+  </tr>
+</table>
+
+### Read Next
+
+:Link[802.1x Authentication]{href="https://docs.nilesecure.com/8021x-wired-and-wireless" newTab="true" hasDisabledNofollow="false"}, :Link[Single Sign-On (SSO)]{href="https://docs.nilesecure.com/single-sign-on-sso" newTab="true" hasDisabledNofollow="false"}, :Link[MAC Authentication]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}

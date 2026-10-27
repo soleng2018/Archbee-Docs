@@ -1,0 +1,28 @@
+---
+title: Find Unknown MAC addresses pending approval?
+slug: find-unknown-mac-addresses-pending-approval
+createdAt: Wed Jul 24 2024 20:16:19 GMT+0000 (Coordinated Universal Time)
+---
+
+Question: How can I find unknown device MAC addresses that are pending approval by an admin?
+
+Answer: Nile detects all MAC addresses of devices connected to Nile Access or Distribution switch port.
+
+- Navigate to **Nile Portal → Access Management** tab →**&#xA0; Wired** sub-tab.
+- In the Search box, key "Waiting for approval", and click the magnifying glass icon 
+
+![NIle Portal: MAB Device entries list](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sFgk_VF2xMG1sbazbFVx6_zy42q12acvxk-rmh2wdvtpiaagvl-uwdba.png "NIle Portal: MAB Device entries list")
+
+The result is a complete list of entries waiting for approval.  Each row contains:
+
+- MAC address
+- Geolocation
+- Switch and port
+- When the new devices was detected.
+
+Three options are optionally available for each entry:  
+
+1. Do nothing; this leaves the device in the "Waiting for approval" state
+2. Remove the unwanted device entry by clicking the check-box next to the MAC address, and then click the **DELETE** button.
+3. Allow the device by clicking the check-box next to the MAC address, and then press the **APPROVE** button.
+

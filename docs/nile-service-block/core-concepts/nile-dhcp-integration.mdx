@@ -1,0 +1,81 @@
+---
+title: Nile DHCP Integration
+slug: nile-dhcp-integration
+createdAt: Mon Apr 08 2024 17:41:35 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+The Nile Access Service provides a comprehensive DHCP solution to ensure seamless IP address assignment and network connectivity across campus environments. This document explains the integration options and configuration details for the Nile DHCP service.
+
+# Nile DHCP Service Overview
+
+The Nile Access Service includes a fully managed DHCP service built on the same cloud-native architecture that powers the overall platform. The service can operate in two modes:
+
+**Nile Managed DHCP**
+
+- Nile provisions and manages DHCP, including IP address assignment and lease management.
+- Best suited for organizations that lack an existing DHCP infrastructure or prefer a fully managed solution.
+
+**Integration with External DHCP Servers**
+
+- Nile integrates seamlessly with existing customer DHCP servers.
+- This option provides compatibility with existing infrastructure while allowing customers to maintain control and visibility.
+
+Regardless of mode, the Nile DHCP service integrates tightly with network segmentation and access control policies, ensuring a secure and unified connectivity experience.
+
+# Integrating with External DHCP Servers
+
+If you prefer to use your organization’s DHCP infrastructure, the Nile Access Service integrates directly with external servers. This allows continued control while benefiting from Nile’s centralized management.
+
+# Understanding Nile’s DHCP Integration Approach
+
+Traditionally, DHCP servers are integrated into firewalls such as Palo Alto or Fortinet. These servers operate at Layer 2, listening for DHCP broadcasts across VLANs. DHCP broadcast packets travel to the firewall over trunk ports connected to controllers, switches, or access points.
+
+Nile operates differently. The Nile Access Service is Layer 3 based and does not forward DHCP broadcasts upstream. Instead, Nile functions as an IP helper by generating a Layer 3 DHCP packet and forwarding it directly to the DHCP server.
+
+**Key Differences in Nile’s Approach**
+
+- **Packet Origination:** The DHCP request originates from the subnet assigned to the device. The source IP is the subnet’s default gateway provided by Nile.
+- **Default Gateway Configuration:** For example, if you configure three user subnets (192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24), Nile assigns default gateways 192.168.1.1, 192.168.2.1, and 192.168.3.1. When a device connects, Nile originates the DHCP helper request from the appropriate default gateway.
+
+Because of this architecture, DHCP traffic must be routed through the customer’s firewall or router to reach the DHCP server. Customers must ensure that firewall rules allow UDP ports 67 and 68 between the Nile default gateway IPs and the DHCP servers.
+
+This integration ensures that DHCP assignment is consistent with Nile’s segmentation and access control policies.
+
+# Configuring External DHCP Integration
+
+To configure external DHCP server integration:
+
+1. **Configure External Server Details in Nile**
+   - In the Nile Customer Portal, go to **Network Setup > DHCP**.
+   - Select **Add DHCP Server**.
+   - Choose **External DHCP** and enter the server name, IP address, and geographical scope.
+   - Ensure that the DHCP server and upstream firewalls respond to requests from the Nile Service Block (NSB).
+2. **Associate DHCP Server with a Network Segment**
+   - In **Network Setup > Segments**, select the segment to configure.
+   - Under the **Service Area** tab, select the external DHCP server created in step 1.
+   - Save the configuration to complete integration.
+
+# DHCP Server Redundancy
+
+The Nile DHCP service supports two redundancy models to ensure availability and failover.
+
+**Option 1: Virtual IP (VIP) Configuration**
+
+- Customers provide the shared VIP address in the Nile Portal.
+- Nile sends DHCP requests to the VIP.
+- The cluster of DHCP servers behind the VIP manages load balancing and redundancy.
+
+**Option 2: Load-Balanced DHCP Server Cluster**
+
+- Customers configure up to three servers (Host 1, Host 2, Host 3).
+- The servers must be set up in a load-balanced cluster.
+- When a request is sent, all servers receive it. The first valid response is used, and others are discarded.
+
+In both models, customers are responsible for configuring redundancy and high availability on the DHCP server side. Nile forwards requests to the configured servers and relies on the first valid response.
+
+# Summary
+
+The Nile DHCP service provides flexible options, from fully managed DHCP to seamless integration with customer-owned servers. Its Layer 3 approach ensures DHCP functions align with segmentation and zero trust policies, while redundancy options provide resilience. This combination allows organizations to benefit from Nile’s cloud-managed simplicity while preserving their preferred DHCP deployment model.
+

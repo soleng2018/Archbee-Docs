@@ -1,0 +1,139 @@
+---
+title: Setup MAC Authentication
+slug: mlhe-setup-mac-authentication
+createdAt: Tue May 21 2024 14:53:51 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile Cloud MAC Authentication is used for wired devices, such as printers, desk phones, sensors, and cameras, that are connected to Nile Access Switches and do not support 802.1X. The device's MAC address is used as its authentication credential. You approve devices in the Nile Portal under Access Management, so no RADIUS server is needed.
+
+You can approve a device before it connects, or after it connects and shows as **Waiting for approval**. If no rule matches a device, it is placed in Waiting for approval by default and cannot use the network until you approve it.
+
+A MAC address can be copied. Use MAC Authentication for low-risk or controlled devices, and use 802.1X where you need stronger security.
+
+## Prerequisites
+
+Complete the following before you set up MAC Authentication. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for MAC authentication and configure a DHCP server and IP address pool for it. Devices connected to this segment do not require authentication mapping on segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+
+## Option 1: MAC address
+
+Use this for devices that don't support 802.1X and require individual approval before or after connecting. You can add the device by its full MAC address before it connects, or approve it after it connects and shows as **Waiting for approval**.
+
+### Approve a device before it connects
+
+**Steps to configure:**
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Access Management, click the **Wired** tab, and click '+' to add device.
+3. Configure the following:
+   - **Select:** In the drop-down, choose **MAC**.
+   - **Segment:** Choose the segment the device will join.
+   - **MAC\*:** Enter the device's full MAC address.
+   - **Geo scope:** Optional. Restrict the device to a specific site, building, or floor. By default, the device is allowed at all locations. If the device connects outside the selected area, it is no longer allowed, and you must approve it again.
+   - **Tag:** Optional. Add a label to identify the device, for example, "Printer - Lab 1".
+   - **Status:** Choose **Approved**.
+   - **Static IP:** Optional. Select this for a device that has a fixed IP address.
+   - **Passive:&#x20;**&#x53;ome devices with static IP addresses remain silent until contacted by another device. Selecting Static automatically enables the Passive option. You must enter the device’s IP address manually.
+   - **Lock To Port:** Optional. Bind the device to the switch port it first connects to. If the device later connects through a different port or switch, it is no longer allowed, and you must approve it again. Use this for devices that must stay in one place, such as a desk phone.
+   - **Note:** Leave **Allow all MACs** unchecked.
+4. Click **Save**.
+
+**Note:** An exact MAC address entry always takes priority over fingerprint, OUI, and catch-all rules. Nile does not move a device with an exact entry to a different segment later, even if its fingerprint changes.
+
+### Approve a device after it connects
+
+If no rules are configured, every new device that connects appears in the **Wired** table with the status **Waiting for approval** until an administrator approves or denies access. This is the default behavior and is included in Nile’s base access service at no additional cost.
+
+**Steps to configure:**
+
+1. Log in to the Nile Portal.
+2. In the left navigation, go to **Network Setup > Access Management**, then click the **Wired** tab.
+3. Find the devices waiting for approval in either of these ways:&#x20;
+   - Click the filter icon at the right end of the search bar, then filter by the status **Waiting for approval**.
+   - Click the pending-approval icon (tick mark with a count) at the top right of the portal. The count shows how many devices are waiting.
+4. Select the device and set the following:&#x20;
+   - **Segment:** Choose the segment the device will join.
+   - **Geo scope:** Optional. Restrict the device to a specific site, building, or floor. By default, the device is allowed at all locations. If the device connects outside the selected area, it is no longer allowed, and you must approve it again.
+   - **Tag:** Optional. Add a label to identify the device, for example, "Printer - Lab 1".
+   - **Status:** Choose **Approved** or **Denied**.
+   - **Static IP:** Optional. Select this for a device that has a fixed IP address.
+   - **Passive:&#x20;**&#x53;ome devices with static IP addresses remain silent until contacted by another device. Selecting Static automatically enables the Passive option. You must enter the device’s IP address manually.
+   - **Lock To Port:** Optional. Bind the device to the switch port it first connects to. If the device later connects through a different port or switch, it is no longer allowed, and you must approve it again. Use this for devices that must stay in one place, such as a desk phone.
+
+**Note:** An exact MAC address entry always takes priority over fingerprint, OUI, and catch-all rules. Nile does not move a device with an exact entry to a different segment later, even if its fingerprint changes.
+
+### Option 2: MAC address list (CSV)
+
+Use this to approve multiple devices at once before they connect to the network, for example, when you migrate an existing network to Nile.
+
+**When to use CSV upload**
+
+- Migrating an existing network to Nile, using a MAC list exported from your current NAC, DHCP, or switch tables.
+- Pre-staging a new site, building, or floor from a device inventory before go-live.
+- Onboarding many known devices that need the same kind of settings, such as segment, tag, or Lock to Port.
+- Applying a mix of Allow and Deny entries in a single upload.
+
+For a few devices or one-offs, use **Add device** or approve them from the **Waiting for approval** list. To cover a whole device type or vendor, use an OUI or fingerprint rule instead of listing every MAC.
+
+**Steps to configure:**
+
+1. Log in to the Nile Portal.
+2. In the left navigation, go to **Network Setup > Access Management**, then click the **Wired** tab.
+3. In the toolbar, click the **Upload CSV** icon. The **CSV Import** window opens.
+4. Click **Click here** to download the sample CSV file.
+5. Replace the example rows with your own entries. The sample file has these columns:&#x20;
+   - **MAC Address:** Required.
+   - **Segment:** Required for rows set to **Allow**. Optional for rows set to **Deny**.
+   - **Lock to Port:** Optional.
+   - **Site, Building, or Floor&#x20;**(at least one required): For geographic scope, you must specify at least one of these three fields.
+   - **Allow or Deny:** Required.
+   - **Tag:** Optional.
+   - **Static IP:** Optional. Set to **yes** only for a device with a fixed IP address that stays silent until another device contacts it. Otherwise, leave it as **no**.&#x20;
+   - **IP Address:** Required when Static IP is **yes**. Enter the device's fixed IP address. Not needed when Static IP is **no**.
+   - **Passive IP:** Optional. Set to **yes** when Static IP is **yes**, because Static IP turns on Passive. Leave it as **no** when Static IP is **no**.
+6. Keep the column headers unchanged and save the file as a CSV.
+7. In the **CSV Import** window, click **SELECT CSV FILE**, choose your file, and upload it.
+
+### Option 3: OUI
+
+An OUI is the first three parts of a MAC address (for example, 00:11:22). It identifies the manufacturer. Use an OUI rule to approve all devices from one manufacturer in one step.
+
+**Steps to configure:**
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Access Management, click the **Wired** tab, and click **Add Device**.
+3. Configure the following:
+   - **Select:** In the drop-down, choose **OUI**.
+   - **Segment:** Choose the segment the device will join.
+   - **OUI\*:** Enter the device's full MAC address.
+   - **Geo scope:** Optional. Restrict the device to a specific site, building, or floor. By default, the device is allowed at all locations. If the device connects outside the selected area, it is no longer allowed, and you must approve it again.
+   - **Tag:** Optional. Add a label to identify the device, for example, "Printer - Lab 1".
+   - **Status:** Choose **Approved**.
+   - **Static IP:** Optional. Set to **yes** only for a device with a fixed IP address that stays silent until another device contacts it. Otherwise, leave it as **no**.
+   - **IP Address:** Required when Static IP is **yes**. Enter the device's fixed IP address. Not needed when Static IP is **no**.
+   - **Passive IP:** Optional. Set to **yes** when Static IP is **yes**, because Static IP turns on Passive. Leave it as **no** when Static IP is **no**.
+4. Click **Save**.
+
+An OUI rule approves every device from that manufacturer, including ones you do not know about. Use it only for manufacturers whose devices you trust. Nile does not move a device that matched an OUI rule to another segment later. Do not create an OUI rule for devices that you want to place using fingerprinting.
+
+### Option 4: Allow all MACs
+
+Use this rule to approve any device that connects into a segment, without entering MAC addresses one by one.
+
+- It applies at the **global geo scope** only. It cannot be applied at the site level.
+- It is recommended to use it only for **Quarantine** and pre-auth segments. Nile does not recommend allowing all wired macs for production wired user segments with full network access.
+
+**Steps to configure:**
+
+1. Log in to the Nile Portal.
+2. In the left navigation, go to **Network Setup > Access Management**, click the **Wired** tab, and click **+** to add a device.
+3. Configure the following:&#x20;
+   - Enable the **Allow all MACs&#x20;**&#x63;heckbox in the top-left corner. No MAC address entry is required, the Status is automatically set to Approved, and the geographic scope is set to global.
+   - **Segment:** Choose the segment, such as **Quarantine** or a pre-auth segment.&#x20;
+   - **Tag:** Optional. Add a label to identify the rule, for example, "Quarantine - allow all".
+4. Click **Submit**.

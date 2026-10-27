@@ -1,0 +1,19 @@
+---
+title: Wireless printer is not able to get an IP address but works fine with Wired connection
+slug: wireless-printer-is-not-able-to-get-an-ip-address-but-works-fine-with-wired-connection
+createdAt: Wed Jul 24 2024 21:49:00 GMT+0000 (Coordinated Universal Time)
+---
+
+Some wireless printer WiFi drivers might reject connections to an 802.11r capable SSID. You can check if this is the problem by disabling 802.11r on the Printer. 
+
+1\.  Check the Printer's Wireless NIC card driver to see if it is the latest. If not, please try to upgrade the driver to the latest (this applies all the latest bug fixes for the printer).
+
+2\.  Disable 802.11r on the Printer. You can look up the User or Admin guide for the printer online on the printer vendor's website.
+
+3\. If the printer still cannot get an IP Address after these changes, please reach out to Nile support.
+
+**What is 802.11r? and what impact will it have if I disable it on the printer? &#xA0;**
+
+The 802.11r protocol is for mobility "fast transition" - see Wikipedia definition here: [https://en.wikipedia.org/wiki/IEEE\_802.11r-2008](https://en.wikipedia.org/wiki/IEEE_802.11r-2008)
+
+What 802.11r does is enable moving devices like laptops, phones with WLAN calls, or tablets to switch between access points seamlessly. Since the Printer is (presumably) a non-mobile device, disabling 802.11r on the printer will have no effect on the printer.

@@ -1,0 +1,127 @@
+---
+title: Wireless Intrusion Detection and Prevention in the Nile Access Service
+slug: wireless-intrusion-detection-and-prevention-in-the-nile-access-service
+createdAt: Wed May 29 2024 21:55:30 GMT+0000 (Coordinated Universal Time)
+---
+
+# :Comment[Introduction]{docCommentId="8jOrfN91yzcW1M5wE59df" resolved="false"}
+
+The Nile Access Service is designed to protect wireless networks from unauthorized access and security threats. This is achieved through the use of Wireless Intrusion Detection Systems (WIDS) and Wireless Intrusion Prevention Systems (WIPS) - technologies that monitor the wireless network traffic and take action to detect, alert, and mitigate potential security breaches.
+
+## Wireless Intrusion Detection System (WIDS)
+
+A WIDS is a technology that monitors the Nile wireless network for any suspicious activity or unauthorized access attempts. It does this by continuously analyzing the wireless traffic to identify patterns or behaviors that may indicate a security breach.
+
+## Wireless Intrusion Prevention System (WIPS)
+
+A WIPS goes a step further by not only detecting potential threats but also taking immediate action to prevent them. This system uses a combination of techniques to detect and mitigate rogue access points, man-in-the-middle attacks, denial-of-service attacks, and other threats to the Nile wireless network.
+
+Importance of WIDS and WIPS
+
+Implementing WIDS and WIPS technologies is crucial for the Nile Access Service for several reasons:
+
+1. **Improved Wireless Security**: WIDS and WIPS help to detect and alert on any unauthorized activities on the Nile wireless network, protecting sensitive data and preventing unauthorized access.
+2. **Compliance**: Some industries may require the use of intrusion detection systems as part of regulatory requirements. WIDS and WIPS can help organizations meet these compliance standards.
+3. **Increased Visibility**: WIDS and WIPS provide visibility into the Nile wireless network, including tracking access points, users, devices, and more, which can help identify potential security weaknesses.
+4. **Proactive Threat Management**: WIDS and WIPS enable proactive threat management, allowing the Nile Access Service to detect and mitigate potential vulnerabilities before they become security incidents.
+
+By leveraging these technologies, the Nile Access Service can provide a comprehensive wireless security solution that protects against both external and internal threats.
+
+# Threat vectors in wireless networks
+
+## Rogue Access Points
+
+Rogue access points are unauthorized APs that are connected to the network without the knowledge or approval of the IT team. These rogue APs can create an entry point for non-corporate devices to access the network, potentially exposing the organization to security risks.&#x20;
+
+![Wi-Fi Rogue Access Points](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kjVaZ2WqML1au1r60ZZu7_image.png "Wi-Fi Rogue Access Points")
+
+## Evil Twins or Honeypot APs
+
+An evil twin AP, also known as a honeypot AP, is a form of rogue AP that impersonates a legitimate access point. When users connect to the evil twin AP, attackers can intercept the data traffic, leading to potential compromise of login credentials and other sensitive information.
+
+![Wi-Fi Honeypot / Evil-Twin](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AC_wTY1oS0ecNdxB-5JGM_image.png "Wi-Fi Honeypot / Evil-Twin")
+
+## Sniffers and Snoopers
+
+Sniffers and snoopers are tools that passively monitor and intercept wireless network traffic, including unencrypted data. Criminals can use these tools to spy on and steal sensitive information transmitted over the wireless network.&#x20;
+
+## Denial-of-Service (DoS) Attacks
+
+DoS attacks can take various forms in the wireless domain, such as:
+
+- Jamming wireless frequencies to disrupt connectivity
+- Sending a flood of de-authentication messages to connected devices, causing disruption
+- Exploiting vulnerabilities in the wireless protocols to disrupt network operations
+
+These DoS attacks can not only impact the availability of the wireless network but also serve as a precursor to more sophisticated attacks, such as evil twin or man-in-the-middle scenarios.
+
+![Wi-Fi DoS Attacks ](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Y-In69FSlToDdtbKV_mlG_image.png "Wi-Fi DoS Attacks ")
+
+By understanding these generic threat vectors, the Nile Access Service can implement robust WIDS and WIPS strategies to detect, alert, and mitigate these security risks, ensuring the overall integrity and reliability of the wireless network.&#x20;
+
+# Nile's Approach to Wireless Intrusion Detection and Prevention
+
+The Nile Access Service is designed with comprehensive WIDS and WIPS capabilities to detect, alert, and mitigate a wide range of wireless security threats. Nile's approach leverages the unique features and architecture of the Nile Service Blocks (NSBs) and the Nile Cloud Services to provide a robust wireless security solution.
+
+## Authorized Network Elements
+
+The Nile Access Service ensures that all authorized network elements, including Nile APs and client devices, are properly authenticated and integrated into the system:
+
+- Nile APs are automatically authenticated by the Nile switches using a Trusted Platform Module and MACsec encryption.
+- All client devices connected to the Nile network are authorized and authenticated, following the zero-trust principles of the Nile Access Service.
+
+## Neighbor AP Monitoring
+
+The Nile APs are equipped with a dedicated third radio that continuously scans the wireless environment, including neighboring APs that are not part of the Nile infrastructure. This allows the Nile Access Service to classify and monitor these "neighbor APs" for any potential security threats.
+
+## Threat Detection and Alerting
+
+The Nile Access Service leverages the comprehensive data collected from the NSBs and the Nile Cloud Services to detect and categorize various wireless security threats, including:
+
+1. **Rogue Access Points**: The Nile Access Service can detect and alert on any non-Nile APs that attempt to connect to the network. These rogue APs are identified based on their lack of authentication and authorization within the Nile system.
+2. **Misassociated Clients**: The Nile Access Service can identify client devices that are connected to a rogue AP, even if the rogue AP is not performing network address translation (NAT) on the traffic.
+3. **Honeypot APs**: The Nile Access Service can detect and alert on any APs that are impersonating a legitimate Nile AP by analyzing the wireless beacons and identifying discrepancies in the vendor-specific information elements.
+
+When these threats are detected, the Nile Access Service generates alerts that are surfaced in the Nile Cloud Services Portal, allowing administrators to take appropriate action.
+
+
+![Nile Services: Alerts & Audit page](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3BXYkRWl5y5RG7O5TJOxD_suspected-rogue.png "Nile Services: Alerts & Audit page")
+
+As this is a Rogue AP, most likely it might NAT all the traffic out of its interface on to the Nile system
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ieca3xo5cKGr-quXD_-M4_nat-rogue.png)
+
+When the traffic is NAT'ed even though the source mac address and the IP address will be re-written by the rogue AP, the NSB will see two packets with the same IP and mac address with two different TTL values and that confirms the detection of a Rogue AP.
+
+If the user navigates to the Nile Portal >> Devices page, the 4th tile shows the overview of the clients detected under WIDS/WIPS
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ICgyZ_6iDx1xCWLb9JzrO_devcies-page-rogue.png)
+
+if you click on the Rogue AP, you can go into further details about the client and find out the vendor it belongs to and the timeline of the events.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/avWMEfeWq0hDL2I8TtfU1_rogue-detected.png)
+
+If the Rogue AP is not NAT'ing the traffic, based on the fingerprinting data and also by comparing the wired mac address with the BSSID's broadcasting from of the rogue AP, we will be able to detect them and an alert is showed on the Nile Portal.
+
+**Misassociated Clients:** In case of a Rogue AP that is in bridge mode where the packets are not NAT'ed, as the traffic from that client is ingressing from the same switch interface as the Rogue AP, it will be categorized as a misassociated client and it will also show the details related to which Rogue AP it is connected to.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YiTIYjkVQdoxoGIFf_4qZ_misassociated-client.png)
+
+**Honeypot AP:** A non-Nile AP broadcasting the same ESSID and/or BSSID that of a authorized Nile AP, should be detected as ‘Honeypot’ impersonation attempt. These APs are defined as non-wired malicious APs that are impersonating an enterprise AP to lure clients to it as the first step to what’s to follow later.&#x20;
+
+Such APs can be detected by tracking the presence of vendor specific Information Element (IE) in the beacons of the impersonating AP. As Nile has its own custom IE in the beacons that is encrypted, any other third party AP that is trying to impersonate a Nile AP certainly differs from the IEs in our beacons and hence can be detected easily.
+
+:Comment[**\*\* Not able to find a clean screenshot for this alert, will add at a later time**]{docCommentId="CtpDgozt5JOHXOPa2XLM9" resolved="false"}
+
+# Threat Mitigation
+
+Upon the detection of a rogue AP, the Nile Access Service can automatically take the following mitigation actions:
+
+1. Shut down the wired port on the Nile Access Switch where the rogue AP is connected.
+2. Change the MAC Authentication Bypass (MAB) rule in the Nile Cloud Services Portal to deny access for the rogue AP.
+3. Send an alert to the customer via email or webhook, if the customer has subscribed to these notifications.
+
+By combining comprehensive threat detection, alerting, and automated mitigation capabilities, the Nile Access Service provides a robust wireless security solution that protects the network from a wide range of security threats.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/doo9dX8KCvCYA4ZiUaA8i_alerts.png "Rogue AP mitigation alert")
+

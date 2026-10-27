@@ -1,0 +1,600 @@
+---
+title: Wi-Fi Security Modes and Client Capability Interoperability Matrix
+slug: wi-fi-security-modes-and-client-capability-interoperability-matrix
+createdAt: Fri Dec 12 2025 06:32:14 GMT+0000 (Coordinated Universal Time)
+---
+
+
+
+<table isTableHeaderOn="true" columnWidths="99,125,97,141,111,137,116">
+  <tr>
+    <td darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="2">
+    </td>
+    <td darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+    </td>
+    <td align="left">
+    </td>
+    <td darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+    </td>
+    <td align="left">
+    </td>
+    <td darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+    </td>
+    <td align="left">
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+    </td>
+    <td align="left">
+    </td>
+    <td darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="4" rowSpan="1">
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      **Security Mode**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="2" rowSpan="1">
+      **Client Connect Behaviour&#xA0;**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="2" rowSpan="1">
+      **Configuration push to WiFi-6E APs**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="2" rowSpan="1">
+      **Configuration push to WiFi-7 APs**
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      ****
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      ****
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      ****
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      **2.4 GHz / 5 GHz&#xA0;**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      **6 GHz**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      **2.4 GHz / 5 GHz&#xA0;**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="rgb(198, 237, 251)" align="left" colSpan="1" rowSpan="1">
+      **6 GHz**
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **Open&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes  
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      Open Authentication
+      <Paragraph>
+        No AKM
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      Open Authentication
+      <Paragraph>
+        No AKM
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **Enhanced Open (Strict)&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO (OWE) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      OWE (CCMP-128) with PMF enabled 
+      <Paragraph>
+        AKM: 00-0F-AC:18
+      </Paragraph>
+      <BlockQuote>
+        Note: PMF is mandatory for OWE
+      </BlockQuote>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      OWE + (GCMP-256 / CCMP-128) with MLO enabled, PMF enabled 
+      <Paragraph>
+        AKM: 00-0F-AC:18
+      </Paragraph>
+      <BlockQuote>
+        Note: GCMP-256 (required for Wi-Fi 7), CCMP-128 (\<=WiFi 6E)
+      </BlockQuote>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (OWE) 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      🚫 No 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **Enhanced Open (Transition)&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO (OWE) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      DUAL SSIDs (1. Open, 2. OWE)
+      1. Open Authentication - No AKM
+      2. OWE (CCMP-128) with PMF enabled - AKM: 00-0F-AC:18
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      OWE (CCMP-128) with PMF enabled 
+      <Paragraph>
+        AKM: 00-0F-AC:18
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      DUAL SSIDs (1. Open, 2. OWE)
+      1. Open Authentication - No AKM
+      2. OWE (CCMP-128 / GCMP-256) with MLO enabled, optional PMF - AKM: 00-0F-AC:18
+      <BlockQuote>
+        Note: Wi-Fi Enhanced Open Transition Mode is disallowed on BSSs with EHT or MLO enabled. If the network includes EHT or MLO APs and needs to support legacy STAs (that do not support Wi-Fi Enhanced Open) then the network should be configured with Dual SSIDs
+      </BlockQuote>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      OWE (CCMP-128 /  GCMP-256) with MLO enabled, PMF enabled 
+      <Paragraph>
+        AKM: 00-0F-AC:18
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (OWE) 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (Open) 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA2 Personal&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA2-PSK 
+      <Paragraph>
+        AKM: 00-0F-AC:2 (PSK),  00-0F-AC:4 (PSK+FT)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA2-PSK 
+      <Paragraph>
+        AKM: 00-0F-AC:2 (PSK),  00-0F-AC:4 (PSK+FT)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA3 Personal (Strict)&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO (WPA3-SAE) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-SAE with PMF enabled 
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-SAE with MLO enabled, PMF enabled 
+      <Paragraph>
+        Cipher: CCMP-128 / GCMP-256
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT), 00-0F-AC:24 (SAE H2E), 00-0F-AC:25 (FT-SAE-EXT-KEY)
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (WPA3-SAE) - if OS/driver support WPA3 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      🚫 No 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA3 Personal (Transition)&#xA0;**
+      <Paragraph>
+        WPA2/WPA3
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO (WPA3-SAE) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3-SAE and WPA2-PSK with optional PMF  
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:2 (PSK),  00-0F-AC:4 (PSK+FT), 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3-SAE with PMF enabled 
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3-SAE with MLO enabled and WPA2-PSK with optional PMF&#x20;
+      <Paragraph>
+        Cipher: CCMP-128 / GCMP-256
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:2 (PSK), 00-0F-AC:4 (PSK+FT), 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT), 00-0F-AC:24 (SAE H2E), 00-0F-AC:25 (FT-SAE-EXT-KEY)
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3-SAE with MLO enabled, PMF enabled 
+      <Paragraph>
+        Cipher: CCMP-128 / GCMP-256 
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:8 (SAE), 00-0F-AC:9  (SAE+FT), 00-0F-AC:24 (SAE H2E), 00-0F-AC:25 (FT-SAE-EXT-KEY)
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (WPA3-SAE) - if OS/driver support WPA3 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes (WPA2-PSK) 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA2 Enterprise&#xA0;**
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA2-Enterprise 
+      <Paragraph>
+        AKM: 00-0F-AC:1 (802.1X),  00-0F-AC:3 (802.1X+FT), 00-0F-AC:5 (802.1X+SHA256) 
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA2-Enterprise 
+      <Paragraph>
+        AKM: 00-0F-AC:1 (802.1X),  00-0F-AC:3 (802.1X+FT), 00-0F-AC:5 (802.1X+SHA256) 
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      🚫 No  SSID on 6GHz 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA3 Enterprise (192-bit)&#xA0;**
+      <Paragraph>
+        WPA3 only
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-Enterprise (192-bit) with PMF enabled
+      <Paragraph>
+        Cipher: GCMP-256
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:12 (802.1X-SHA-384), 00-0F-AC:13 (FT+ 802.1X-SHA-384)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-Enterprise (192-bit) with MLO enabled, PMF enabled 
+      <Paragraph>
+        Cipher: GCMP-256
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:12 (802.1X-SHA-384), 00-0F-AC:13 (FT+ 802.1X-SHA-384)
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes - Only if OS/driver supports WPA3 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (\<=Wi-Fi 5)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      🚫 No 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA3 Enterprise (128-bit)&#xA0;**
+      <Paragraph>
+        WPA3 only
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes with MLO&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-Enterprise (128-bit) with PMF enabled
+      <Paragraph>
+        Cipher: CCMP-128&#x20;
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" colSpan="2" rowSpan="3">
+      WPA3-Enterprise (128-bit) with MLO enabled, PMF enabled
+      <Paragraph>
+        Cipher: CCMP-128&#x20;
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11ax (W-Fi 6 Client)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes - Only if OS/driver supports WPA3 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (\<=Wi-Fi 5)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      🚫 No 
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="#f9fafb" darkBackgroundColor="rgb(198, 237, 251)" align="left" rowSpan="3">
+      **WPA3 Enterprise (Transition)&#xA0;**
+      <Paragraph>
+        WPA2/ WPA3
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      802.11be (Wi-Fi 7 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes  
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3/WPA2-Enterprise (128-bit) with optional PMF
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:1 (802.1X),  00-0F-AC:3 (802.1X+FT), 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      WPA3-Enterprise (128 bit) with PMF enabled 
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      &#x20;WPA3/WPA2-Enterprise (128-bit) with optional PMF, MLO enabled 
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:1 (802.1X),  00-0F-AC:3 (802.1X+FT), 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left" rowSpan="3">
+      &#x20;WPA3-Enterprise (128-bit) with MLO enabled, PMF enabled
+      <Paragraph>
+        Cipher: CCMP-128
+      </Paragraph>
+      <Paragraph>
+        AKM: 00-0F-AC:5 (802.1X+SHA256), 00-0F-AC:11 (FT + 802.1X-SHA256)
+      </Paragraph>
+      <BlockQuote>
+        For MLO: Every band in MLD must use the same AKM.
+      </BlockQuote>
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+       802.11ax (W-Fi 6 Client) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      ✅ Yes  
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy Client (Wi-Fi 5 or lower) 
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      🚫 No 
+    </td>
+  </tr>
+</table>
+
+ 
+
+ 
+
+ 

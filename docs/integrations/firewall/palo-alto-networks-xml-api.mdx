@@ -1,0 +1,211 @@
+---
+title: Palo Alto Networks - XML API
+slug: palo-alto-networks-xml-api
+createdAt: Fri May 24 2024 17:25:47 GMT+0000 (Coordinated Universal Time)
+---
+
+# &#x20;Overview
+
+This document covers the API integration between the Nile Access Service and Palo Alto Networks (PAN) Next Generation Firewalls (NGFW) to provide secure campus networks through dynamic and granular segmentation. The Nile Service Block (NSB) inside the Nile Access Service communicates with PAN‑OS® through XML API calls to provide the NGFW with mappings of client IP addresses to their dot1x user identity and group. The dynamic exchanges enable organizations to apply granular segmentation policies based on the organization security strategies.
+
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi1.png" size="70" width="552" height="662" position="center" darkWidth="552" darkHeight="662" showCaption="false"></Image>
+
+## Components required
+
+- Nile Access Service
+- PAN NGFW with PAN‑OS® version 9.1 and higher
+- HTTPS (TCP port 443) connection to PAN firewall for API communication
+- RADIUS server
+
+<hint type="success">
+  Note: The tests conducted in this guide used PAN-OS® 10.2.3-h4 and ClearPass. Although Clearpass is shown in this guide, any RADIUS server will work.
+</hint>
+
+## Feature flow
+
+1. A dot1x user authenticates to a Nile Enterprise SSID.
+2. The associated RADIUS server returns a ‘Filter-Id’ VSA holding the user group with the ‘Access-Accept’
+3. The NSB maps the username, acquired client DHCP IP address and the user group and sends via XML API to the PAN NGFW.
+4. The PAN firewall identifies the group as a configured tag with an associated dynamic group with a security policy that implements the desired access control on the user traffic.
+
+# Required steps
+
+- Setting up RADIUS to return ‘Filter-Id’ VSA
+- Setting up PAN NGFW to identify information sent from NSB
+- Setting up the Nile Access Service to communicate with PAN NGFW
+- Validate the integration
+
+## Setting up RADIUS to return 'Filter-Id' VSA
+
+The screenshots below provide examples of the Enforcement Policy and associated Profiles necessary to display the ‘Filter-ID’ attribute returned by ClearPass. It is based on the Active Directory ‘memberOf’ attribute:
+
+### Enforcement Profile
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi3.png)
+
+### Enforcement Policy
+
+The screenshots below provide examples of the Enforcement Policy and associated Profiles necessary to display the ‘Filter-ID’ attribute returned by ClearPass. It is based on the Active Directory ‘memberOf’ attribute:
+Enforcement Policy
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi2.png)
+
+<hint type="info">
+  This guide shows ClearPass being used as a server, but any RADIUS server can be used. The :Link[Aruba Clearpass - RADIUS]{label="Aruba Clearpass - RADIUS" spaceId docId="9VvMkdAlBRKnf-SA8DK8h" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../radius/aruba-clearpass-radius.mdx"} document should be reviewed for the complete ClearPass Policy Manager setup.
+</hint>
+
+## &#x20;Setting up RADIUS to return 'Filter-Id' VSA
+
+:Comment[To create an administrator account, there are 2 steps that must be followed:]{docCommentId="vMVW1iJCk2NW3nlPDzCuQ" resolved="true"}
+
+1. Create an Admin Role Profile. The screenshot below shows an example of profile named ‘nile-xml-role’
+2. Add an administrator account and attach the Admin Role Profile created in step a. The screenshot below shows an example of the account created named ‘ nile-admin’ attaching to the Admin Role Profile named ‘nile-xml-role’
+
+## New Admin Role
+
+1. Navigate to **Device > Admin Roles**, and click on the **Add&#x20;**&#x62;utton
+2. Enter the name “nile-xml-role”
+3. Under the **Web UI** tab, <u>disable all options.</u>
+4. Under the **XML API** tab, <u>disble all options</u> except **User-ID Agent**
+5. Click on **OK&#x20;**&#x74;o complete the role addition
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi4.png)
+
+1. Navigate to **Device > Administrator**s, and click on the **Add&#x20;**&#x62;utton
+2. **Name:** Enter the name “nile-admin”
+3. **Password:** Enter a password and confirm it
+4. **Administrator Type:** Role Based
+5. **Profile:** Select the “nile- xml-role” profile
+6. :Comment[Click ]{docCommentId="jvx9_8dOhCLP_2DkpxfOV" resolved="true"}on OK to complete new account creation.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi5.png)
+
+Tags are identifiers that can be used to create Dynamic Address Groups. PAN‑OS® utilizes those groups to form tag-based security policies.
+
+### Tags and Address Groups
+
+For the API integration to work, Tags and Dynamic Address Groups are required. .The **Staff** and **Student** Group seen below illustrate how to create Tags. The Tags will be mapped with the user group information sent by the NSB. Subsequently, those two tags are used to configure two PAN-OS® dynamic Address Groups: **Staff-role** and **Student-role**.
+
+1. :Comment[Navigate to ]{docCommentId="8IDyUM9_lZ2A6WI4HM9lC" resolved="true"}**Objects > Tags**, and click on the **Add&#x20;**&#x62;utton
+2. Add two Tags named <u>Staff </u>and <u>Student</u>
+
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi6.png" size="60" width="398" height="188" position="center" darkWidth="398" darkHeight="188" showCaption="false"></Image>
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi7.png" size="60" width="400" height="186" position="center" darkWidth="400" darkHeight="186" showCaption="false"></Image>
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi8.png)
+
+### &#xA;Create two dynamic Address Groups
+
+1. :Comment[Navigate to ]{docCommentId="UxAatLqgXG6HgER2bVc32" resolved="true"}**Objects > Address Groups**, and click on the **Add** button
+2. Add two Address Groups <u>Staff-role</u> and <u>Student-role</u> of type **Dynamic&#x20;**&#x6D;atching respectively the <u>Staff</u> and <u>Student</u>
+
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi10.png" size="60" width="460" height="302" position="center" darkWidth="460" darkHeight="302" showCaption="false"></Image>
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi9.png" size="60" width="458" height="302" position="center" darkWidth="458" darkHeight="302" showCaption="false"></Image>
+
+### Security Policies
+
+This guide assumes that the Nile NSB is connected to the Palo Alto Networks firewall through two ports that are both assigned to a newly created security zone called NSB.
+
+To illustrate an example usage of security policies based on the Dynamic Address Groups created in the previous section, two security policies are created to allow all traffic matching the ‘Staff’ Tag, and deny access to the ‘wargaming.net’ and ‘traceroute’ for traffic matching the ‘Student’ Tag:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi11.png)
+
+### Loopback Address
+
+Since the NSB connects to the PAN firewall through two Equal Cost Multi-Path (ECMP) interfaces, it is recommended to configure a loopback IP address that the NSB can use to connect to the firewall, no matter which interface the XML API traffic flows through.
+
+For illustration purposes, the following loopback setting is shown below:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi12.png)
+
+## Set up the Nile Access Service to communicate with PAN NGFW
+
+The following screenshots shows an example on how to accomplish that on the Nile Portal:
+
+**DHCP** **-** Set the DHCP Server and Subnets for the user groups.
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi13.png" size="80" width="644" height="480" position="center" darkWidth="644" darkHeight="480" showCaption="false"></Image>
+
+**Authentication -&#x20;**&#x53;et RADIUS server parameters.
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi14.png" size="80" width="678" height="536" position="center" darkWidth="678" darkHeight="536" showCaption="false"></Image>
+
+**Segments&#x20;**– Map the DHCP server and authentication method to the user segment
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi15.png)
+
+**Wireless&#x20;**– Set up the SSID and attach user segment(s)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi16.png)
+
+Now **Validate&#x20;**&#x74;he integration. The validation steps below show what to look for when validating asuccessful dot1x authentication, returning the correct user group/tag through the ‘Filter-id’ attribute from ClearPass Policy Manager.
+
+## RADIUS server
+
+Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId’. The example below demonstrates ClearPass assigned the correct role to ‘**staff1**’ through the returned attribute ‘Filter-Id’ with the value ‘**staff1**’:
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi20.png" size="60" width="510" height="232" position="center" darkWidth="510" darkHeight="232" showCaption="false"></Image>
+
+A second validation for the user ‘**staff1**’ is shown below:&#x20;
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi19.png" size="60" width="412" height="326" position="center" darkWidth="412" darkHeight="326" showCaption="false"></Image>
+
+Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId’. The example below demonstrates ClearPass assigned the correct role to ‘**student1**’ through the returned attribute ‘Filter-Id’ with the value ‘**Student**’:
+
+&#x20;
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi18.png" size="60" width="534" height="234" position="center" darkWidth="534" darkHeight="234" showCaption="false"></Image>
+
+A second validation for the user ‘**student1**’ is shown below:
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi17.png" size="60" width="404" height="318" position="center" darkWidth="404" darkHeight="318" showCaption="false"></Image>
+
+## Palo Alto RADIUS User Mapping
+
+### Automatic correlation of IP to User-ID
+
+Inside the PAN management dashboard, validate that there is correct mapping between IP and User-ID. The image below demonstrates the correct mapping between the users ‘student1’ and ‘staff1’ to their respective IP addresses 172.16.14.14 and 172.16.14.15:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi21.png)
+
+Inside the PAN management dashboard, validate that there is correct mapping between IP addresses and tags. The image below demonstrates the correct mapping betweenIP addresses to their respective tags:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi22.png)
+
+### Traffic Flow
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi24.png)
+
+Inside the PAN management dashboard, validate that traffic logs are available with the right flow. The image below demonstrates that security policies created did enforce as intended. The traffic log shows that ‘wargaming.net’ and ‘traceroute’ were denied for the user ‘student1’ with IP address 172.16.14.14, when it was allowed for user ‘staff1’ with IP address 172.16.14.15:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/panapi23.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rB8PYK0TUaTqEpAxf04o5_image.png)
+
+**Notes:**
+
+<hint type="danger">
+  It is recommended to create a dedicated administrator account inside the management console with the purpose of handling XML API communication initiated by ClearPass. Note: Nile recommends contacting a Nile Operator to assist for backend setup. Before contacting a Nile Operator, make sure to create an enterprise (dot1x) SSID.
+</hint>
+
+<hint type="warning">
+  Nile recommends contacting a Nile Operator to assist for backend setup. Before contacting a Nile Operator, make sure to create an enterprise (dot1x) SSID.
+</hint>
+
+<hint type="warning">
+  Nile performs a **periodic refresh&#x20;**&#x6F;f endpoint identities every 45 minutes, plus **on-demand** updates for new and departing clients, so the PAN NGFW always has current IP-to-identity mappings.
+</hint>
+

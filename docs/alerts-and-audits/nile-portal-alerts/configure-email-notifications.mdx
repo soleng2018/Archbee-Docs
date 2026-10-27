@@ -1,0 +1,50 @@
+---
+title: Configure Email Notifications
+slug: configure-email-notifications
+createdAt: Mon May 06 2024 22:07:08 GMT+0000 (Coordinated Universal Time)
+---
+
+The **Configure Email Notifications** feature lets administrators subscribe to timely alert emails directly from the Nile portal, ensuring they are immediately informed about events across **Nile infrastructure, Nile service, customer infrastructure, applications, and security**. Each admin can control their own subscriptions so they receive only the alerts that matter to them, using their authenticated login email as the delivery address for all notifications.
+
+For Configuration, Logon to Nile Portal Global Settings -> Integrations, you can subscribe to email alert notifications (Nile Infra, Nile Service, Infrastructure, Applications, Security).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xw_-kJ7k4pfxfsni4GGao_image.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-FFxL_dXJvTT5Jgop3cL2_image.png)
+
+The email address for notification is not configurable. Your logged-in email address will be used for notification emails. Each Admin user must subscribe or unsubscribe to alert notifications themselves. If you have a SIEM service set up, then email alerts will go to your SIEM system instead.
+
+After your subscription(s) are enabled, you will receive Alerts related to your system. You can click on "Click here" to get detailed information on the required action.&#x20;
+
+Here are some examples of email notifications:
+
+<BlockQuote>
+
+</BlockQuote>
+
+The alert's severity level indicates how serious the issue is and how urgently it needs attention. Severity levels range from 0-5; 0 is the highest severity, and 5 is the lowest.&#x20;
+
+To view all Alerts on Nile Porta,l click on Alerts from the left-hand Navigation bar as shown below.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FKbdZ1HdIwYjMn3xGPdsS_image.png)
+
+## Send Alerts to a Group Alias Email Address
+
+By default, email alert subscriptions in the Nile Portal are tied to the logged-in admin user, and each admin must enable alerts for themselves individually.
+
+If your team wants alerts to go to a shared mailbox or distribution list, you can use a group alias as a workaround. The recommended approach is to create an admin user for that alias account, sign in with that account, and subscribe to alerts through the portal.
+
+### Steps:
+
+1. Create or identify the shared mailbox, distribution list, or alias email address your team wants to use for alerts.
+2. Log in to the **Nile Portal** with an admin account.
+3. Go to **Network Setup > Admins** and create a new admin user for the shared alias email address.
+4. Sign out, then sign back in using the new shared alias account.
+5. Go to **Global Settings > Integrations** and select **Subscribe to alerts and events**.
+6. Select the alert categories the alias account should receive, then save your changes.
+7. Confirm that the shared mailbox receives future alert emails for the selected categories.
+
+### Notes
+
+- This is a useful workaround when multiple people need visibility into the same alerts through a shared inbox or ticketing address.
+- Alert subscriptions are still user-based rather than tenant-wide, so the setup must be completed while logged in as the alias user.

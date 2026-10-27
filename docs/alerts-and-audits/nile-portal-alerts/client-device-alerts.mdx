@@ -1,0 +1,155 @@
+---
+title: Client Device Alerts
+slug: client-device-alerts
+createdAt: Tue Jul 23 2024 19:47:31 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Client device alerts raise awareness about errors encountered by wired and wireless devices
+
+***
+
+# RADIUS Errors
+
+This alert is generated when multiple client devices are encountering RADIUS errors. The alert is automatically closed when no devices are encountering RADIUS errors. 
+
+<table isTableHeaderOn="true" columnWidths="195,100">
+  <tr>
+    <td>
+      Alert Text
+    </td>
+    <td>
+      Number of impacted clients: &#x35;**% \<= %clients \< 10%+:***\< # number> of clients attempting to do RADIUS authentication in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      <Paragraph>
+        Number of impacted clients:  ***10% \<= %clients \< 25%+:**\< # number> of clients (>10%)  attempting to do RADIUS authentication in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      </Paragraph>
+      <Paragraph>
+        Number of impacted clients: 25 %+:\< # number> of clients (>25%) attempting to do radius authentication in the last “15mins” encountered radius failures at  for \<x hrs/mins
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Recommended Action
+    </td>
+    <td>
+      - Click on the alert to get a list of all devices encountering RADIUS failures
+      - Fix the condition shown in the "Error" field.  
+    </td>
+  </tr>
+</table>
+
+
+
+# DNS Errors
+
+This alert is generated when multiple client devices are encountering RADIUS errors. The alert is automatically closed when no devices are encountering RADIUS errors. 
+
+<table isTableHeaderOn="true" columnWidths="195,100">
+  <tr>
+    <td>
+      Alert Text
+    </td>
+    <td>
+      Number of impacted clients: &#x35;**% \<= %clients \< 10%+:***\< # number> of clients attempting to do DNS failures in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      <Paragraph>
+        Number of impacted clients:  ***10% \<= %clients \< 25%+:**\< # number> of clients (>10%)  attempting to do DNS failures in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      </Paragraph>
+      <Paragraph>
+        Number of impacted clients: 25 %+:\< # number> of clients (>25%) attempting to do DNS failures in the last “15mins” encountered radius failures at  for \<x hrs/mins
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Recommended Action
+    </td>
+    <td>
+      - Click on the alert to get a list of all devices encountering DNS failures
+      - Fix the condition shown in the "Error" field.  
+    </td>
+  </tr>
+</table>
+
+
+
+# DHCP Errors
+
+This alert is generated when multiple client devices are encountering DHCP errors. The alert is automatically closed when no devices are encountering DHCP errors. 
+
+<table isTableHeaderOn="true" columnWidths="195,100">
+  <tr>
+    <td>
+      Alert Text
+    </td>
+    <td>
+      Number of impacted clients: &#x35;**% \<= %clients \< 10%+:***\< # number> of clients attempting to do DHCP failures in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      <Paragraph>
+        Number of impacted clients:  ***10% \<= %clients \< 25%+:**\< # number> of clients (>10%)  attempting to do DHCP failures in the last “15mins” encountered radius failures at  for \<x hrs/mins*
+      </Paragraph>
+      <Paragraph>
+        Number of impacted clients: 25 %+:\< # number> of clients (>25%) attempting to do DHCP failures in the last “15mins” encountered radius failures at  for \<x hrs/mins
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Recommended Action
+    </td>
+    <td>
+      - Click on the alert to get a list of all devices encountering DHCP failures
+      - Fix the condition shown in the "Error" field.  
+    </td>
+  </tr>
+</table>
+
+# CRC Errors
+
+**Overview**
+
+The **CRC Error Alert** triggers when an interface detects corrupted data packets. A Cyclic Redundancy Check (CRC) error occurs when a frame fails its integrity check, meaning data was damaged during transit.
+**Alert Details**
+
+- **Severity:** sev\_2 (Configurable)
+- **Trigger Condition:** Triggered when any wired client link experiences CRC errors after the link comes up for that client.
+- **Clear Condition:** Once crc stops portal will wait for another 24 hours to confirm if issue is occuring again.
+
+**Potential Impact**
+
+- **Packet Loss:** Corrupted packets are dropped, requiring retransmissions.
+- **Network Degradation:** Slow application performance and reduced throughput on the affected link.
+
+**Troubleshooting Steps**
+
+1. **Check Physical Connections:** Inspect the copper or fiber cables for physical damage or loose connections.
+2. **Verify SFP/Transceiver Health:** Check the optical power levels (DOM/DDM) on fiber ports to ensure they are within operational limits.
+3. **Isolate Electromagnetic Interference (EMI):** Ensure network cables are not running too close to high-voltage power lines or faulty machinery.
+4. **Test the Cable:** Use a cable tester or swap the cable with a known working one to isolate the issue.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/z4tpMA0NI8iUrpj-X-Dqe_image.png)
+
+# Link Speed/Duplex Mismatch Alert
+
+**Overview**
+&#x20;The **Link Mismatch Alert** triggers when two connected network devices are configured with conflicting speed or duplex settings. This typically happens when one side is hardcoded and the other relies on Auto-Negotiation.
+**Alert Details**
+
+- **Severity:** sev\_2 (Configurable)
+- **Trigger Condition:** Triggered when the wired client link speed decreases from the original speed observed when the link came up.
+- **Clear Condition:** Once the link speed returns to its original speed, the portal waits for **24 hours** to confirm that the issue does not recur before clearing the alert.
+
+**Potential Impact**
+
+- **Severe Performance Drop:** Duplex mismatches cause massive collision rates, dropping performance to a fraction of the capacity.
+- **Flapping Links:** The interface may repeatedly go up and down.
+- **Total Disconnect:** A complete speed mismatch will prevent the link from establishing a connection entirely.
+
+**Troubleshooting Steps**
+
+1. **Verify Interface Settings:** Check the configuration on both local and remote devices.
+2. **Standardize Configuration:** Ensure **Auto-Negotiation** is enabled on both sides, or manually hardcode the exact same speed and duplex settings on both devices.
+3. **Check Capabilities:** Confirm that both physical hardware interfaces are capable of supporting the same maximum speed.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/OM11muZAaXWlZYaTyC8SB_image.png)
+

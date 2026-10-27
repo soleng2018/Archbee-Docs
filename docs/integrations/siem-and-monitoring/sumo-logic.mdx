@@ -1,0 +1,58 @@
+---
+title: Sumo Logic
+slug: sumo-logic
+createdAt: Thu Mar 13 2025 18:12:58 GMT+0000 (Coordinated Universal Time)
+---
+
+Nile has added support for integration with Sumo Logic. Sumo Logic is a cloud-based log analytics platform that provides real-time visibility into an organization's data, enabling DevOps, IT Ops, and security teams to monitor, track, troubleshoot, and improve applications and software quality
+
+Traditionally, network monitoring relied on SNMP, Logs, events, CLI of the network infrastructure. However, in the case of Nile, since it is offered as a service, the approach taken is to export synthesized events to the Sumo Logic from the Nile cloud. The following events are sent to the Sumo Logic:
+
+- **End-user device events**
+  - This includes all the events seen on the Device Details page of the customer’s Nile Portal
+  - For e.g. Device connection/disconnection, Authentication pass/fail, DHCP pass/fail, and several more
+- **Service-related alerts**
+  - Includes all the alerts that are seen today under the Alerts section of the Control Center (Nile portal), which includes service, infrastructure (customer’s DHCP, RADIUS, DNS), security and application monitoring related alerts, including Nile Infrastructure related alerts
+- **Audit Trail**
+  - Any action taken by a user inside the Nile Portal, such as modifying settings
+
+Nile leverages the Sumo Logic's HTTPS Log and Metric collector feature. A secure https-based connection is created between the Nile cloud and the Sumo Logic instance using Sumo Logic's secure https URL generated when a new HTTPS collector is added to Sumo Logic
+
+## Settings
+
+### Sumo Logic Settings
+
+Nile's SIEM integration with Sumo Logic uses the HTTPS Logs and Metric Collector; follow the instructions :Link[here]{href="https://help.sumologic.com/docs/send-data/hosted-collectors/http-source/logs-metrics/" newTab="true" hasDisabledNofollow="false"} to add a Logs and Metrics source collector within the Sumo Logic.
+
+Follow all the steps and perform the required settings per the Sumo Logic documentation linked above.
+
+1. When you are finished configuring the Source, click **Save**.
+2. When the URL associated with the source is displayed like below, copy the URL so you can use it in the next steps to configure Sumo Logic in Nile
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/p2tmLKY1Saquqexhzo6Y9_image.png" size="50" width="522" height="284" position="center" showCaption="false"></Image>
+
+### Nile Settings&#x20;
+
+- Navigate to the new integrations screen Global Settings > Integrations > Setup Integration to add a new integration
+- Selet Sumo Logic
+- Paste the URL for Sumo Logic HTTP collector generated from previous steps in the url field
+- Name field should be left as 'default' as the exact string if this is the default SIEM integration you are using
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9MmTyHQim47vuUGLqYGG0_screenshot-2025-03-13-at-112324-am.png)
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BFJUdYS0BsKqHb61K72Oe_screenshot-2025-03-13-at-112430-am.png" size="50" width="922" height="365" position="center" showCaption="false"></Image>
+
+- Subscribe to the category of SIEM events to be sent to Sumo Logic and click Save
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/umWYVVoDCW7LSys5MR96h_screenshot-2025-03-13-at-112605-am.png" size="50" width="922" height="446" position="center" showCaption="false"></Image>
+
+- Sumo Logic is now configured from Nile and events for selected categories will be sent from Nile cloud into Sumo Logic
+- Check the Sumo Logic Collector logs for events coming in from Nile
+
+### Testing capability
+
+Once the Sumo Logic instance is integrated successfully, it appears as a tile with status as UP. There is an ability to ‘Test’ the connection to Sumo Logic from the Nile cloud and the Sumo Logic widget will display the time and status.&#x20;
+
+
+

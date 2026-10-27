@@ -1,0 +1,30 @@
+---
+title: Setup a PSK SSO SSID
+slug: setup-a-psk-sso-ssid
+createdAt: Fri May 24 2024 07:37:59 GMT+0000 (Coordinated Universal Time)
+---
+
+## Prerequisites
+
+Complete the following before you create a PSK SSO SSID. Each step has its own page with detailed instructions.
+
+- **Configure Segments.** Create a segment for this SSID. A RADIUS server is not required for PSK SSO SSIDs. Add your IdP's login URLs to the Walled Garden so users can reach it before they sign in. See Setup Segments.
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+- **Configure SSO.** Integrate your identity provider (IdP) with Nile. For IdP integration, refer to Integrations > Identity Providers (IdP): Google Workspace, Okta, Microsoft Entra ID, or Azure Active Directory.
+
+### Configuration Steps
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Wireless, click the '+' sign, and choose the Type as Personal.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - **Security:** Select WPA2 or WPA3.
+     - When WPA2 is selected, you can enable the Unique Passphrase checkbox to assign a unique passphrase per user or device for the SSID.
+     - When WPA3 is selected, enable the Backward Compatibility checkbox to allow WPA2-only legacy clients to connect. This sets the SSID to WPA3 Transition Mode.
+     - **Passphrase Best Practices**: Use a random passphrase of at least 16 characters. Don't reuse it across SSIDs, and change it if it is exposed or when users who know it leave.
+   - **SSO:** Select the SSO checkbox to require users to authenticate via your identity provider (IdP) after they connect with the passkey.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - Ensure that the Unique Passphrase checkbox is disabled for this PSK SSO SSID. To assign a unique passphrase per user or device, set up a UPSK SSID instead.
+   - **Segments:** Select the appropriate segment for this SSID and save your changes.

@@ -1,0 +1,617 @@
+---
+title: URL Filtering
+slug: url-filtering
+createdAt: Tue Nov 19 2024 19:21:31 GMT+0000 (Coordinated Universal Time)
+---
+
+URL filtering, also known as web filtering, enables organizations to control and monitor the websites and web content that users can access on the Nile Guest Service network.&#x20;
+
+URL filtering works by comparing requested web addresses (URLs) against a predefined list or database of categorized websites. Based on the configured policies, the filtering system can then allow, block, or restrict access to specific web resources.
+
+Nile Guest Service uses common categories such as news, gambling, adult material, malicious, dangerous etc to classify websites and apply the appropriate access controls.&#x20;
+
+The administrator can apply granular policies for URL filtering.  &#x20;
+
+- ****:Comment[**Strict**]{docCommentId="4XlfiQrHUM92QUQTfSYXN" resolved="true"} - Blocks everything in "Moderate" along with other potentially harmful sites.
+- **Moderate** - Blocks everything in "Low" and adult sites.
+- **Low&#x20;**- Blocks online threats including malware & spyware sites.
+- **None -** Allows full web access with no filtering or restrictions applied.
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KtxszZCEGp6H8_zsQacyc_image.png" size="72" width="1268" height="540" position="center" showCaption="false"></Image>
+
+:Comment[]{docCommentId="VumCMZ_gHetBcIh6KUvnU" resolved="false"}
+
+Further, administrators can manually filter specific URLs through :Comment[the Advanced tab]{docCommentId="0dtfGiU5qtlqOGHQBsFdx" resolved="true"}.&#x20;
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uDtPySzxgGvAbreQzUejW_image.png" size="42" width="852" height="760" position="center" showCaption="false"></Image>
+
+By controlling and monitoring guest user access to websites and web content, URL filtering helps organizations minimize security risks and enhance productivity.
+
+
+Below are the categories and sub-categories that for Low, Moderate and Strict Levels:
+
+## Low Level:&#x20;
+
+### Malware / Security
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      Hacking/Cracking
+    </td>
+    <td>
+      SPAM
+    </td>
+    <td>
+      Phishing Sites
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Malware
+    </td>
+    <td>
+      Spyware
+    </td>
+    <td>
+      Keyloggers
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Remote Proxies
+    </td>
+    <td>
+      Botnets
+    </td>
+    <td>
+      Mobile Malware
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Tracking Sites
+    </td>
+    <td>
+      Infected Sites
+    </td>
+    <td>
+      BOTPhone Home
+    </td>
+  </tr>
+</table>
+
+### Dangerous / Harmful
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      Illegal Activities
+    </td>
+    <td>
+      Violence
+    </td>
+    <td>
+      Abortion
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Illegal Drugs
+    </td>
+    <td>
+      Advocacy in General
+    </td>
+    <td>
+      Child Abuse
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Marijuana
+    </td>
+    <td>
+      Guns
+    </td>
+    <td>
+      Piracy\&CopyRight Theft
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CBD\&Hemp Products
+    </td>
+    <td>
+      Ammunition
+    </td>
+    <td>
+      Fireworks
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Terrorism/Extremists
+    </td>
+    <td>
+      Knives
+    </td>
+    <td>
+      Cyberbullying
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Weapons
+    </td>
+    <td>
+      Paintball
+    </td>
+    <td>
+      &#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Hate/Slander
+    </td>
+    <td>
+      Self-Harm
+    </td>
+    <td>
+      &#x20;
+    </td>
+  </tr>
+</table>
+
+## Moderate Level:&#x20;
+
+Everything in "Low" + the Adult Category
+
+### Adult
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      Adult/Porn
+    </td>
+    <td>
+      Lottery
+    </td>
+    <td>
+      Fetish
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Nudity
+    </td>
+    <td>
+      Grotesque
+    </td>
+    <td>
+      SexualExpression(text)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Sexual Services
+    </td>
+    <td>
+      AdultMagazine/News
+    </td>
+    <td>
+      Occult
+    </td>
+  </tr>
+  <tr>
+    <td>
+      AdultSearch/Links
+    </td>
+    <td>
+      Smoking
+    </td>
+    <td>
+      SexEducation
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Dating
+    </td>
+    <td>
+      Drinking
+    </td>
+    <td>
+      Swimsuits\&Lingerie
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Gambling in General
+    </td>
+    <td>
+      AlcoholicProducts
+    </td>
+    <td>
+    </td>
+  </tr>
+</table>
+
+## Strict Level:&#x20;
+
+Everything in Moderate + the below categories
+
+### Personal
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      Medication
+    </td>
+    <td>
+      Horoscope/Astrology/FortuneTelling
+    </td>
+    <td>
+      Arts\&Cultural Events
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Wedding/ Matrimony
+    </td>
+    <td>
+      Entertainer/Celebrity/Pop Culture
+    </td>
+    <td>
+      Ringtones
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Online Games
+    </td>
+    <td>
+      Dining/Gourmet
+    </td>
+    <td>
+      Fashion\&Beauty
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Games
+    </td>
+    <td>
+      Entertainment /Venues/Activities
+    </td>
+    <td>
+      Emoticons
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Shopping/ Retail
+    </td>
+    <td>
+      TraditionalReligions
+    </td>
+    <td>
+      Books/eBooks
+    </td>
+  </tr>
+  <tr>
+    <td>
+      PersonalWebPages/Blogs
+    </td>
+    <td>
+      Religions
+    </td>
+    <td>
+      Online Magazines
+    </td>
+  </tr>
+  <tr>
+    <td>
+      StreamingMedia
+    </td>
+    <td>
+      Politics
+    </td>
+    <td>
+      Pets/Veterinarian
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Career Advancement
+    </td>
+    <td>
+      News
+    </td>
+    <td>
+      Science
+    </td>
+  </tr>
+  <tr>
+    <td>
+      SpecialEvents
+    </td>
+    <td>
+      Education
+    </td>
+    <td>
+      Society\&Culture
+    </td>
+  </tr>
+  <tr>
+    <td>
+      PopularTopics
+    </td>
+    <td>
+      Health
+    </td>
+    <td>
+      Photography\&Film
+    </td>
+  </tr>
+  <tr>
+    <td>
+      CostumePlay/Enjoyment
+    </td>
+    <td>
+      Fitness
+    </td>
+    <td>
+      Museums\&History
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Home\&Family
+    </td>
+    <td>
+      Recreation & Hobbies
+    </td>
+    <td>
+      eLearning
+    </td>
+  </tr>
+  <tr>
+    <td>
+      ProfessionalSports
+    </td>
+    <td>
+      Home\&Garden
+    </td>
+    <td>
+      Fandom
+    </td>
+  </tr>
+  <tr>
+    <td>
+      SportsinGeneral
+    </td>
+    <td>
+      Reference
+    </td>
+    <td>
+      ChildSafety\&GovernmentHelp
+    </td>
+  </tr>
+  <tr>
+    <td>
+      LifeEvents
+    </td>
+    <td>
+      KidsSites
+    </td>
+    <td>
+      SelfHelp
+    </td>
+  </tr>
+</table>
+
+### Social Media
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      PhotoSearchSharingSites
+    </td>
+    <td>
+      LinkedIn\:Connections
+    </td>
+    <td>
+      Tumblr\:Photo/Video Upload
+    </td>
+  </tr>
+  <tr>
+    <td>
+      SocialNetworksinGeneral
+    </td>
+    <td>
+      LinkedIn\:Jobs
+    </td>
+    <td>
+      Google+
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook
+    </td>
+    <td>
+      Twitter
+    </td>
+    <td>
+      Google+: Posting
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Posting
+    </td>
+    <td>
+      Twitter\:Posting
+    </td>
+    <td>
+      Google+: Commenting
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Commenting
+    </td>
+    <td>
+      Twitter\:Mail
+    </td>
+    <td>
+      Google+\:PhotoUpload
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Friends
+    </td>
+    <td>
+      Twitter\:Follow
+    </td>
+    <td>
+      Google+: VideoUpload
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:PhotoUpload
+    </td>
+    <td>
+      YouTube
+    </td>
+    <td>
+      Google+: VideoChat
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Events
+    </td>
+    <td>
+      YouTube\:Commenting
+    </td>
+    <td>
+      Pinterest
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Apps
+    </td>
+    <td>
+      YouTube\:VideoUpload
+    </td>
+    <td>
+      Pinterest\:Pin
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Chat
+    </td>
+    <td>
+      YouTube\:Sharing
+    </td>
+    <td>
+      Pinterest\:Commenting
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Questions
+    </td>
+    <td>
+      Instagram
+    </td>
+    <td>
+      Ask.fm
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:VideoUpload
+    </td>
+    <td>
+      Instagram\:Upload
+    </td>
+    <td>
+      Ask.fm\:Ask
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Groups
+    </td>
+    <td>
+      Instagram\:Commenting
+    </td>
+    <td>
+      Ask.fm\:Answer
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Facebook\:Games
+    </td>
+    <td>
+      Instagram\:PrivateMessage
+    </td>
+    <td>
+      Wordpress
+    </td>
+  </tr>
+  <tr>
+    <td>
+      LinkedIn
+    </td>
+    <td>
+      Tumblr
+    </td>
+    <td>
+      Wordpress\:Posting
+    </td>
+  </tr>
+  <tr>
+    <td>
+      LinkedIn\:Updates
+    </td>
+    <td>
+      Tumblr\:Posting
+    </td>
+    <td>
+      Wordpress\:Upload
+    </td>
+  </tr>
+  <tr>
+    <td>
+      LinkedIn\:Mail
+    </td>
+    <td>
+      Tumblr\:Commenting
+    </td>
+    <td>
+      TikTok
+    </td>
+  </tr>
+</table>
+
+### Miscellaneous&#x20;
+
+<table isTableHeaderOn="false">
+  <tr>
+    <td>
+      Miscellaneous
+    </td>
+  </tr>
+</table>
+

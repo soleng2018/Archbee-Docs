@@ -1,0 +1,354 @@
+---
+title: Generic Upstream Firewall Guide
+slug: generic-upstream-firewall-guide
+createdAt: Fri Jun 13 2025 05:12:36 GMT+0000 (Coordinated Universal Time)
+---
+
+**For Integrating with the Nile Service Block (NSB)**
+
+
+
+## 1. Prerequisites
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td>
+      Requirement
+    </td>
+    <td>
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Four /30 subnets
+    </td>
+    <td>
+      Required to establish four routed point-to-point interfaces from the NSB to the firewall (two per NSB gateway)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Static or Dynamic Routing
+    </td>
+    <td>
+      Choose either static routes with ECMP or OSPF, depending on your firewall capabilities
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Internet uplinks
+    </td>
+    <td>
+      One or two WAN-facing interfaces with static default routes toward the ISP
+    </td>
+  </tr>
+</table>
+
+## &#x20;
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kj3VeQp92nQK97Z3e35JU_image.png" size="70" width="834" height="996" position="center" showCaption="false"></Image>
+
+## 2. Interface Configuration
+
+Configure four Layer 3 point-to-point interfaces using /30 subnets between the NSB and the firewall.
+
+**Example Interface Mapping:**
+
+<table isTableHeaderOn="true" columnWidths="220,220,221">
+  <tr>
+    <td>
+      NSB Gateway
+    </td>
+    <td>
+      Firewall Interface
+    </td>
+    <td>
+      Subnet (/30)
+    </td>
+  </tr>
+  <tr>
+    <td>
+      GW-1
+    </td>
+    <td>
+      eth1/1
+    </td>
+    <td>
+      172.16.7.0/30
+    </td>
+  </tr>
+  <tr>
+    <td>
+      GW-2
+    </td>
+    <td>
+      eth1/2
+    </td>
+    <td>
+      172.16.7.4/30
+    </td>
+  </tr>
+  <tr>
+    <td>
+      GW-1
+    </td>
+    <td>
+      eth1/3
+    </td>
+    <td>
+      172.16.7.8/30
+    </td>
+  </tr>
+  <tr>
+    <td>
+      GW-2
+    </td>
+    <td>
+      eth1/4
+    </td>
+    <td>
+      172.16.7.12/30
+    </td>
+  </tr>
+</table>
+
+Each interface should be configured as Layer 3 with static IPs assigned from the /30 ranges.
+
+## &#x20;3. Routing Configuration
+
+### Option 1: Static Routing with ECMP
+
+Use ECMP by configuring **multiple static routes to the same subnet**, one for each NSB uplink:
+
+<BlockQuote>
+  plaintextCopyEditset route 172.16.8.0/21 next-hop 172.16.7.1
+  set route 172.16.8.0/21 next-hop 172.16.7.5
+  set route 172.16.8.0/21 next-hop 172.16.7.9
+  set route 172.16.8.0/21 next-hop 172.16.7.13
+</BlockQuote>
+
+- The /21 subnet aggregates all **NSB, sensor, and client** subnets defined in the Nile Portal.
+- ECMP should be **enabled** (if required) in the firewall’s routing engine to allow load sharing across the four next hops.
+
+Also, configure **default routes to the ISP(s)**:
+
+<BlockQuote>
+  plaintextCopyEditset route 0.0.0.0/0 next-hop \<ISP1-GW> metric 10
+  set route 0.0.0.0/0 next-hop \<ISP2-GW> metric 100
+</BlockQuote>
+
+### Option 2: OSPF Routing
+
+Enable **OSPF on all four NSB uplink interfaces**, and configure the firewall as follows:
+
+<BlockQuote>
+  plaintextCopyEditrouter ospf 1
+  &#x20; router-id 10.10.10.1
+  &#x20; default-information originate
+  &#x20; network 172.16.7.0 0.0.0.3 area 0
+  &#x20; network 172.16.7.4 0.0.0.3 area 0
+  &#x20; network 172.16.7.8 0.0.0.3 area 0
+  &#x20; network 172.16.7.12 0.0.0.3 area 0
+</BlockQuote>
+
+- Ensure **default-information originate** is present to advertise default route to NSB.
+- All subnets behind the NSB (client, sensor, NSB) will be reachable via OSPF-learned paths.
+
+## 🔒 4. Firewall Rules
+
+Create explicit firewall policies for traffic between NSB and external/internal zones.
+
+<table isTableHeaderOn="true" columnWidths="165,165,165,166">
+  <tr>
+    <td>
+      Rule Type
+    </td>
+    <td>
+      From Zone
+    </td>
+    <td>
+      To Zone
+    </td>
+    <td>
+      Action
+    </td>
+  </tr>
+  <tr>
+    <td>
+      NSB to Internet
+    </td>
+    <td>
+      NSB
+    </td>
+    <td>
+      Internet
+    </td>
+    <td>
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Internet to NSB
+    </td>
+    <td>
+      Internet
+    </td>
+    <td>
+      NSB
+    </td>
+    <td>
+      Allow *(only if hosting services)*
+    </td>
+  </tr>
+  <tr>
+    <td>
+      NAT
+    </td>
+    <td>
+      NSB
+    </td>
+    <td>
+      Internet
+    </td>
+    <td>
+      Source NAT using public IP *(if required)*
+    </td>
+  </tr>
+</table>
+
+**Example NAT Configuration:**
+
+- Source: NSB subnet
+- Destination: Internet
+- NAT Mode: Dynamic IP & Port (using WAN interface IP)
+
+## 🌐 5. Firewall Port Requirements
+
+Ensure the following outbound ports are **open from the NSB to the Internet**:
+
+<table isTableHeaderOn="true" columnWidths="163,147.46370967741933,118.61046681609979,231.9258235064808">
+  <tr>
+    <td align="left">
+      Service
+    </td>
+    <td align="left">
+      Cloud
+    </td>
+    <td align="left">
+      Protocol/Port
+    </td>
+    <td align="left">
+      Destination
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Nile Global Cloud (U1 / AWS)
+    </td>
+    <td align="left">
+      TCP 443
+    </td>
+    <td align="left">
+      u1.nilesecure.com, ne-u1.nile-global.cloud, nilesw-us-west-2.s3.us-west-2.amazonaws.com, nile-prod-us-west-2.s3.us-west-2.amazonaws.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Nile KSA Cloud (M1 / GCP)
+    </td>
+    <td align="left">
+      TCP 443
+    </td>
+    <td align="left">
+      ne-m1.nile-global.cloud, m1.nilesecure.com, storage.googleapis.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      DNS
+    </td>
+    <td align="left">
+      Both
+    </td>
+    <td align="left">
+      UDP 53
+    </td>
+    <td align="left">
+      8.8.8.8, 8.8.4.4 (or your internal DNS servers)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NTP
+    </td>
+    <td align="left">
+      Both
+    </td>
+    <td align="left">
+      UDP 123
+    </td>
+    <td align="left">
+      time.google.com, pool.ntp.org
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      RADIUS
+    </td>
+    <td align="left">
+      Both
+    </td>
+    <td align="left">
+      UDP 1812, 1813
+    </td>
+    <td align="left">
+      Your RADIUS servers
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      DHCP
+    </td>
+    <td align="left">
+      Both
+    </td>
+    <td align="left">
+      UDP 67, 68
+    </td>
+    <td align="left">
+      Your DHCP servers
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Nile Guest Service
+    </td>
+    <td align="left">
+      Both
+    </td>
+    <td align="left">
+      UDP 6081
+    </td>
+    <td align="left">
+      Required for Nile Guest Service (GuestPop) if enabled
+    </td>
+  </tr>
+</table>
+
+## 📌 Final Checklist
+
+- All four NSB-to-firewall interfaces are configured with /30 IPs
+- Static or OSPF routes to the NSB, sensor, and client subnets are configured
+- Default route(s) to ISP configured
+- Firewall rules allow bidirectional traffic between NSB and Internet zones
+- NAT applied for outbound access from the NSB subnet
+- Required ports opened for Nile to communicate with cloud and identity services
+

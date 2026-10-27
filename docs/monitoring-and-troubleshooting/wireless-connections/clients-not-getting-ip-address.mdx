@@ -1,0 +1,46 @@
+---
+title: Clients not getting IP address
+slug: clients-not-getting-ip-address
+createdAt: Wed Jul 24 2024 21:49:00 GMT+0000 (Coordinated Universal Time)
+---
+
+When Wireless/Wired devices are unable to get an IP address while trying to connect to a network, please validate the below steps:
+
+- Check the end device network settings and verify whether the device is configured to obtain IP address from DHCP server.
+- If issue is only seen for Wireless clients, check whether the issue is specific to any AP, location, SSID/Segment.&#x20;
+- If the issue is only with Wired devices, confirm whether there is no issue with the ethernet cable between end device and Switch and check by connecting to a different Switch port. Also verify whether the issue is with a specific subnet/Segment.
+- Verify whether the device is passing the authentication. For Wired devices, check if the device MAC address is Approved under Settings -> Access Management option. For Wireless devices, it should not be in the Deny list under Access Management and it should pass the SSID specific authentication as well.
+
+
+
+
+
+
+![](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641190/original/rJ_VfayVqr-LcbtNwSjbDrTr3HJ0H1mgjg.png?1700924152 "Nile portal: Access management")
+
+- Verify whether the issue is for a specific device or for all devices connecting to the SSID/network.
+- Login to Nile portal dashboard and confirm if DHCP tile in Infrastructure section is showing green.
+
+<Image src="https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641009/original/kwKFB2Ky_lRDbTrbj9qL3292qsWWl8kaNw.png?1700923224" size="64" width="716" height="446" position="center" caption="Nile portal: Dashboard" showCaption="true"></Image>
+
+Also in Devices tab, we will be able to see the number of devices failing to get IP from DHCP server:
+
+![Nile portal: Devices info](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641022/original/nBSQ50O55Wz6Cl1FbOU3nE9mlICbA05f4g.png?1700923292 "Nile portal: Devices info")
+
+- Check whether Devices tab in Nile portal shows any error message as below:
+
+![Nile portal: Devices info](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641036/original/HgQuVTgNtZ1CL7axqllsoyN0joAvdHDh_g.png?1700923418 "Nile portal: Devices info")
+
+![Nile portal: Devices info](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641073/original/6plTf9eo3s23D7EosOtIU-cS348lgk53vg.png?1700923538 "Nile portal: Devices info")
+
+- Verify device details page of the reported device by clicking on the username/MAC address to see the Events and check if there is any error message is there like below.
+
+"DHCP Server Unreachable" error below shows that there is no response from DHCP server (which can be due to multiple reasons like the DHCP Discover/Request is not reaching DHCP server, DHCP Server is not responding to the Discover/Request packet from client device, intermittent network issue, etc.).
+
+![Devices page: ](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66066641497/original/Zdil1N_8h1QfjF1Diys25bYi84cg6XOJXQ.png?1700925202 "Devices page: ")
+
+- Login to the DHCP server and check if DHCP server is receiving any Discover/Request from the reported device. We can check the DHCP server logs, leases or check by running a packet capture at the DHCP server side. Also check if enough IPs are available in the DHCP scope for the specific client subnet.&#x20;
+- If DHCP server is not receiving DHCP Discover/Request packet, take a capture at the NSB uplink and check if NSB is sending out DHCP packets to the DHCP server (Head End in NSB should act as a Relay agent for the Nile clients and should send unicast packets to the DHCP server).
+
+If clients are sending out DHCP packets and if you are not seeing DHCP packets out of NSB, please contact Nile Support team.
+

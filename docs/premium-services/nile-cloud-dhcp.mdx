@@ -1,0 +1,61 @@
+---
+title: Nile Cloud DHCP
+slug: nile-cloud-dhcp
+createdAt: Wed Apr 24 2024 01:15:18 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+Nile Managed DHCP is responsible for allocating IP addresses to endpoints, ensuring that connected devices can access the network and the internet. By leveraging Nile's cloud-native platform, organizations can benefit from a secure, flexible, and scalable DHCP solution without the need for on-premises infrastructure.
+
+## Benefits of Nile Managed DHCP
+
+Nile Managed DHCP offers several advantages over traditional on-premises DHCP servers:
+
+1. **Security**
+   - All DHCP transactions between the Nile Access Service and the Nile Managed DHCP are encrypted over a secure tunnel, preventing packet spoofing and ensuring the integrity of the DHCP process.
+2. **Simplicity&#x20;**
+   - The Nile Managed DHCP is easy to configure and manage through the Nile Customer Portal, reducing the administrative burden on IT teams.
+3. **Flexibility and Scalability&#x20;**
+   - The Nile Managed DHCP can scale to accommodate growing network requirements across multiple sites and regions.
+4. **High Availability**
+   - Nile runs the industry's first microservices based DHCP in the cloud, providing redundancy and ensuring uninterrupted network connectivity, even in the event of cloud or internet unavailability.
+
+## Configuring Nile Managed DHCP
+
+To configure Nile Managed DHCP in the customer portal, follow these steps:
+
+1. **Provision DHCP Servers in the Nile Customer Portal**:
+   - Navigate to the "Network Setup" > "DHCP" section of the Nile Customer Portal.
+   - Click the "Add DHCP Server" button and provide the necessary details, such as the server name, IP address range, and geographical scope.
+   - The Nile platform will automatically provision and manage the DHCP service based on your configuration.
+2. **Associate DHCP Servers with Network Segments**:
+   - In the "Network Setup" > "Segments" section, edit the segment you want to configure for Nile Managed DHCP.
+   - Under the "Service Area" tab, select the DHCP server you provisioned in the previous step.
+   - Save the segment configuration to enable the Nile Managed DHCP service for that network.
+
+## Supported DHCP Options
+
+Nile Managed DHCP currently supports the following DHCP options:
+
+- Option 3: Router option (gateway address)
+- Option 6: DNS server option
+- Option 15: DNS domain name
+- Option 26: Interface MTU size
+- Option 42: NTP server addresses
+- Option 60: Vendor class identifier
+- Option 66: TFTP server name
+- Option 67: Boot file name
+- Option 150: TFTP server IP address
+
+Custom DHCP options are on the roadmap and will be supported in the next release.
+
+## High Availability and Failover
+
+Nile Managed DHCP is designed for high availability and failover. In the event of cloud or internet unavailability, existing devices with active DHCP leases will continue to have network connectivity, though new device connections may be impacted until the service is restored.
+
+## Visibility and Monitoring
+
+Customers can monitor the status and performance of Nile Managed DHCP through the Nile Customer Portal. This includes visibility into subnet utilization, IP address allocation, and client information.
+
+Nile will also proactively alert customers about any service-related issues or upcoming maintenance activities.

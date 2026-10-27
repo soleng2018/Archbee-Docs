@@ -1,0 +1,469 @@
+---
+title: Nile Infrastructure Alerts
+slug: nile-infrastructure-alerts
+createdAt: Tue Jul 23 2024 19:47:31 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Nile infrastructure alerts raise awareness about the issues experienced by Nile-owned services such as Nile Service Block (NSB), Nile Guest Service, and Nile DHCP service.
+
+Below is the list of alerts raised in the Nile Portal for Nile Infrastructure, along with recommended actions.
+
+***
+
+## Device Unavailable
+
+This alert is generated when a Nile service element, such as switches, access points, or sensors go offline. The user can view the details on offline network elements by clicking the alert and visiting the "Nile Device Inventory" page.&#x20;
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Service Element switch AS1 Serial Number: E00A00064619 has lost power at Bangalore/Bldg\_1/ Floor\_1. for 1 day 6 hours 6 minutes
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Ensure that the device is powered on and ready.
+      • Check for unplugged or damaged cables.
+    </td>
+  </tr>
+</table>
+
+***
+
+## Link Down
+
+This alert is generated when a link connecting the Nile service element with another Nile Service Element or upstream devices is down.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Link between Nile switch NS-NLHQ-1 Serial Number: E00A00065658 port 29 and as-nlhq-3 Serial Number: E00A00064571 port 0/53 has been down at Bangalore/Bldg\_1/ Floor\_1 for 3 weeks 5 hours 58 minutes
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Check for unplugged or damaged cables
+      • Check for incorrectly connected cables (router port configuration)
+    </td>
+  </tr>
+</table>
+
+***
+
+## PoE Not Granted
+
+This alert is generated when a PoE request from a wired device connected to a Nile switch cannot be granted by the Nile switch.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Power-On-Ethernet request failed on port-0/6 switch DU.DS.2 Serial Number: E99Z99999111 at Bangalore/Bldg\_1/Floor\_1 for 10 hours.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Redistribute the PoE devices across the switches
+      • Contact Nile CSE/CSM for further assistance
+    </td>
+  </tr>
+</table>
+
+***
+
+## Floorwide PoE Budget Limit
+
+This alert is generated when the aggregated PoE across all Nile switches on a floor is close to the limit, and less than 30W of aggregated power is available.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Power over Ethernet budget low ( \< 30W) on the switches: \<DU.DS.2 Serial Number: E99Z99999111>, \<DU.DS.3 Serial Number: E99Z999991211> at Bangalore/Bldg\_1/Floor\_1 for 3 hours 42 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Contact Nile CSE/CSM for assistance
+    </td>
+  </tr>
+</table>
+
+***
+
+## Temperature is high
+
+This alert is generated when the Nile Service Element is operating at a higher-than-recommended temperature.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Service element AS1 Serial Number: E99Z999991211 is operating at high temperature at Bangalore/Bldg\_1/Floor\_1 for 9 hours.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Inspect the area for sufficient ventilation
+      • Check for free air circulation
+      • Verify that room cooling is operating correctly
+      • Contact Nile CSE/CSM for assistance
+    </td>
+  </tr>
+</table>
+
+***
+
+## Power Supply Down
+
+This alert is generated when one of the power supplies in the Nile access switches, distribution switches, and head-end equipment is down.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Power supply unit 1 on device AS1 Serial Number: E99Z999991211 seems to have lost power at Bangalore/Bldg\_1/Floor\_1 for 3 days.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Inspect the connections to power
+      • If there are no issues with the power supply, please work with Nile CSM on the RMA process
+    </td>
+  </tr>
+</table>
+
+***
+
+## Nile Cloud DHCP pool space is low
+
+This alert is generated when the Nile Cloud DHCP Service is running low on the IP address pool space.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile DHCP Server 1.2.3.4 is running low on IP addresses at Bangalore/Bldg\_1/Floor\_1 for 30 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Increase the IP address pool space at the DHCP server identified by the IP address
+      • Reduce the lease time.
+    </td>
+  </tr>
+</table>
+
+***
+
+## Nile Guest DHCP pool space is low
+
+This alert is generated when the Nile Guest DHCP Service has exhausted all IP addresses.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Guest Services has exhausted all IP addresses for 42 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • None
+    </td>
+  </tr>
+</table>
+
+***
+
+## Nile Services Cloud Processing Issues
+
+This alert is generated when Nile Services Cloud experiences momentary processing issues.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile cloud service is experiencing momentary processing issues for 6 hours. Network connectivity is not impacted. Data shown in the Nile portal may not be the latest. -- All historical data will be updated when the processing issues are resolved. No action is required.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • No action is required.
+    </td>
+  </tr>
+</table>
+
+***
+
+## Device Location Change
+
+This alert is generated when Nile sensors are displaced from the original installed location.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Sensor Element SE-BLDF-3 Serial Number: E99Z99999111 not detected at the original installed location Bangalore/Bldg\_1/Floor\_1 for 40 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Restore the sensor to the original location
+      • If the sensor needs to be moved, please contact Nile customer support
+    </td>
+  </tr>
+</table>
+
+***
+
+## Maintenance Window
+
+This alert is generated when Nile Services is undergoing maintenance.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Service is currently undergoing scheduled maintenance at the Site/Building/Floor for 30 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • None
+    </td>
+  </tr>
+</table>
+
+***
+
+## Nile POP Tunnel Down
+
+This alert is generated when Nile Guest Services is not available.
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Nile Guest Services is currently unavailable at the BLR site for 2 minutes. Please verify that your firewall permits UDP traffic on port 6081. For further assistance, contact Nile Customer Support.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • No action required
+    </td>
+  </tr>
+</table>
+
+***
+
+## Renegotiation to Lower Speed - Nile Service Block Links
+
+This alert is generated when a network link is operating at a lower speed than its provisioned capacity. The alert covers both intra-NSB links (Access Point to Switch, Switch to Switch) and NSB to Internet links (DS-ISP). These conditions are typically caused by devices renegotiating to a lower speed, often due to a faulty cable.&#x20;
+
+
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alerts&#x20;
+    </td>
+    <td align="left">
+      **Access Point to Switch Link:**
+      <Paragraph>
+        Link between Nile access point AP 1000 and Nile switch E00A00064619 port 11 is operating at a lower than the provisioned capacity at  Bangalore/Bldg\_1/Floor\_1 for 40 minutes.
+      </Paragraph>
+      <Paragraph>
+        **Switch to Switch Link**
+      </Paragraph>
+      <Paragraph>
+        Link between Nile switch E00A00064610 port 12 and Nile switch E00A00064619 port 11 is operating at a lower than the provisioned capacity at  Bangalore/Bldg\_1/Floor\_1 for 40 minutes.
+      </Paragraph>
+      <Paragraph>
+        **NSB to Internet Link**
+      </Paragraph>
+      <Paragraph>
+        Link between Nile switch E00A00064610 port 12 and ISP router port 11 is operating at a lower than the provisioned capacity at  Bangalore/Bldg\_1/Floor\_1 for 40 minutes.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      Check the cable connecting the corresponding network elements
+    </td>
+  </tr>
+</table>
+
+## Flapping Links&#x20;
+
+This alert is generated when a network link flaps continuously.  The alert covers both intra-NSB links (Access Point to Switch, Switch to Switch) and NSB to Internet links (DS-ISP). These conditions are typically caused by a faulty cable.&#x20;
+
+
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alerts&#x20;
+    </td>
+    <td align="left">
+      **Access Point to Switch Link:**
+      <Paragraph>
+        Link between port 11 of Nile switch E00A00064619 and Nile access point AP 1000 and is flapping freuently at  Bangalore for 40 minutes.
+      </Paragraph>
+      <Paragraph>
+        **Switch to Switch Link**
+      </Paragraph>
+      <Paragraph>
+        Link between port 12 of Nile switch E00A00064610 and port 11 of Nile switch E00A00064619 is flapping frequently at  Bangalore for 40 minutes.
+      </Paragraph>
+      <Paragraph>
+        **Switch to HeadEnd Link**
+      </Paragraph>
+      <Paragraph>
+        Link between port 12 of Nile switch E00A00064610 and port 11 of Headend HE00A00064619  is flapping frequently at  Bangalore for 40 minutes.
+      </Paragraph>
+      <Paragraph>
+        **Switch to Internet Link**
+      </Paragraph>
+      <Paragraph>
+        Link between port 12 of Nile switch E00A00064610 and port 11 of ISP router  is flapping frequently at  Bangalore minutes.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      **Switch to Switch or Switch to Headend or Switch to ISP Router Link:**
+      - Check for sharp bends along the fiber length
+      - Reseat the SFP
+      - Clean the fiber heads and reinsert the fiber into the SFP
+      <Paragraph>
+        **Switch to Access Point Link**
+      </Paragraph>
+      - Verify the cabling. Check patch panels and consider replacing the cabling
+    </td>
+  </tr>
+</table>
+
+## Incompatible SFP - DS to ISP Link&#x20;
+
+This alert is generated when an incompatible SFP is detected on the link between Nile Service Block's distribution switch (DS) and the Internet Service Provider (ISP) router.&#x20;
+
+
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alerts&#x20;
+    </td>
+    <td align="left">
+      SFP on the Link connected to port  11 of Nile Switch E00A00064610 at  Bangalore/Bldg\_1/Floor\_1  is not compatible with Nile recommendations
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      Install a :Link[Nile-approved SFP]{href="https://app.archbee.com/docs/MjnTA8DnypS-TwOSWoG9b/1zQfH_lscUZjzH0HewF6W" newTab="true" hasDisabledNofollow="false"} on the link.&#x20;
+    </td>
+  </tr>
+</table>
+
+## NSB to Internet Link Saturation
+
+Nile portal generates an alert when the NSB to Internet link is operating close to its maximum capacity
+
+
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Example Alerts&#x20;
+    </td>
+    <td align="left">
+      Link between uplink port 0/35 of Nile switch E998567 and port 0/36 on Switch XYZ at BLR site is operating close to its capacity for 15 minutes. Maximum link bandwidth is 1 Gbps and utilized link bandwidth is 900Mbps&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      - Audit any change in capacity needs
+      - Consider moving to a higher bandwidth link between the Nile Service Block and uplink router/firewall
+      - If the ISP link is saturating as well, consider upgrading to a higher bandwidth plan
+      - Please reach out to support for assistance with upgrading the link between the Nile service block and uplink router/firewall
+    </td>
+  </tr>
+</table>
+

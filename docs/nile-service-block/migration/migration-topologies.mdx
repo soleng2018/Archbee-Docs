@@ -1,0 +1,97 @@
+---
+title: Migration Topologies
+slug: migration-topologies
+createdAt: Fri Jul 26 2024 03:09:05 GMT+0000 (Coordinated Universal Time)
+---
+
+:Comment[In this document we will explore the following two use cases and see how they can be migrated to Nile;]{docCommentId="ssD5RzDvyDQ-4jBX6P4b9" resolved="false"}
+
+1. :Comment[Large Campus Deployment]{docCommentId="6tsmgW36qP4h1mupghZTH" resolved="false"} - Multiple buildings and floors with enterprise applications
+2. Small to Medium Deployment - A single warehouse with beep and scan applications or an office floor or suite with enterprise applications
+
+## :Comment[Large Campus Deployment]{docCommentId="cBEvBhE-dqMlLAuK5YBug" resolved="false"}
+
+:Comment[A large campus]{docCommentId="gNksPb2JCV7u2I0QYC4ol" resolved="false"} typically has multiple buildings connected via fiber to a core. It's usually a three-tier architecture with access, distribution, and core layers. As shown below, the existing distribution layer and access layer will be replaced by the Nile Service Blocks (NSBs). The Nile NSB gateway will connect to the core routers via a Layer 3 link and form an OSPF neighborhship to exchange routes. The existing DHCP, DNS, and RADIUS servers will be connected to the core layer or in the cloud.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-JqJxqx1A3mDw193oUwTTb-20241024-085804.jpg)
+
+The upstream device can be anything that supports **OSPF** or **static routes with ECMP**. Following are the types of devices we can connect to
+
+1. L3 Switch
+2. Core Router
+3. Firewall Appliance
+4. SD-WAN Appliance
+
+### OSPF 
+
+Nile service will automatically configure OSPF when Core or Uplink router interface facing Nile NSB gateway has OSPF enabled and configured:
+
+<hint type="info">
+  Nile NSB gateway interface facing customer router/firewall default MTU is 9000 (jumbo frame) if uplink router tries to negotiate an adjacency on an interface in which the Nile NSB gateway neighbour has a larger MTU, the adjacency will be denied, Nile service will automatically adjust the MTU to match uplink router and establish OSPF adjacency.
+</hint>
+
+Router Interface OSPF Options:
+
+| **OSPF Options**                           | **Description**                                                                                                                                      |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Area ID**                                | Defines the area ID for that interface facing the Nile NSB gateway.                                                                                  |
+| **cost**                                   | Explicitly specifies the cost of sending a packet on an OSPF interface.                                                                              |
+| **Priority**                               | Sets priority to help determine the OSPF-designated router for a network.                                                                            |
+| **network point-to-point**                 | Configures an interface as point-to-point for broadcast media.                                                                                       |
+| **hello-interval (seconds)**               | Specifies the length of time between the hello packets that the Cisco IOS software sends on an OSPF interface.                                       |
+| **dead-interval**<br />**&#x20;(seconds)** | Sets the number of seconds that a device must wait before it declares a neighbor OSPF router down because it has not received a hello packet.<br />  |
+| **MTU**                                    | MTU needs to be matched between Nile NSB gateway and uplink router as OSPF packets cannot be larger than the interface MTU.                          |
+
+### Routing with VRF migration requirements
+
+For multi-tenancy deployments that require virtual routing and forwarding (VRF) with LAN SVI to segment routing protocols between tenancies, customers will need to configure policy-based routing (PBR) on the interfaces facing the Nile NSB gateway cluster. This will map Nile segments to VRFs and enable VRF leaking to advertise the Nile NSB routes to the appropriate VRF routing.&#x20;
+
+**Policy-Based Routing (PBR) for traffic from NSB to the enterprise tenant network**
+
+PBR uses a route map to specify an attribute other than the destination and then define the path out of the router based on these conditions, to support multi-tenant routing with VRF, the customer will need to change segment default VRF to specific VRF at the router ingress interface, to achieve this, customers will need a policy map to match a specific segment subnet/subnets, then set a new VRF to match tenant VRF, the router will use the tenant routing table to forward the traffic to the destination.
+
+| **PBR**                   | **Description**                                                                                                                                       |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Access or prefix List** | Access or prefix list (depending on router software) to match segment or segment subnets (Source IP).                                                 |
+| **Route map**             | Route map to match the access or prefix list (match segment or segments) and change the VRF from default or original VRF to destination VRF (Set VRF) |
+| **Policy**                | Apply a router map as an ingress policy under the interface facing the Nile NSB gateway                                                               |
+
+**VRF Leaking using static routes with VRF setting**
+
+| **VRF leaking**           | **Description**                                                                                    |
+| ------------------------- | -------------------------------------------------------------------------------------------------- |
+| **Static route with VRF** | Create a static route for a specific segment with VRF and next-hop as NSB NSB gateway interface/IP |
+| **Redistribute to BGP**   | Redistribute to BGP under VPN IPv4 VRF                                                             |
+| **IP Prefix list**        | Match specific Nile segment subnet/subnets                                                         |
+| **Route map**             | Use IP prefix list to create a route map of Nile segment/segments                                  |
+| **VRF**                   | Import IPv4 unicast to VRF using segment/segments Route MAP                                        |
+| **BGP**                   | Redistribute OSPF or Static route (Nile segments routes) to BGP                                    |
+
+### Multiple NSB's
+
+If the campus is very large, multiple NSBs can be installed, with each NSB scaling to serve multiple buildings. This design will divide the campus into multiple clusters of buildings, each managed by a different NSB.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-oTaY90ev7RjcV4fT2qqHc-20241023-161043.jpg)
+
+<hint type="info">
+  Note: When multiple NSB's are used on a campus. unique subnets have to be defined for each segment. For example, if there are 3 NSBs in a campus, the Employee segment will have 3 unique subnets; one for each NSB
+</hint>
+
+### Split Core
+
+In large campuses, there can be primary and secondary core. Nile's distribution layer can be split across the two cores to provide active-active redundancy
+
+## :Comment[Small to Medium Deployment]{docCommentId="RxWhKGMkfgzKVplLhJPIM" resolved="false"}
+
+This topology is common in small and medium-sized campus/branch sites where the core and distribution layers are combined. In this case, the Nile Service Block will replace the customer's existing distribution and access layers. The Nile Service Gateway will connect to the customer's core routers or Firewall via a Layer 3 link and form an OSPF neighborhship to exchange routes. The existing  DHCP, DNS, and RADIUS servers will be connected to the core layer or on the cloud.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-OAFZmyVe0qbWPhNd0q_bm-20241024-085834.jpg)
+
+&#x20;If a router or SD-WAN device is being used as the core the same routing principles outline in the previous section will apply. If a firewall is being used as a router, the VLANs need to be removed and converted to Nile Segments.
+
+## :Comment[Firewall ]{docCommentId="8ERQrOyT_QXFQxBkpYPNM" resolved="false"}Policies with the Nile Access Service
+
+<ContentSnippet docRefId="P3huWyAVlVLHQaIAdHOTb">
+
+</ContentSnippet>
+

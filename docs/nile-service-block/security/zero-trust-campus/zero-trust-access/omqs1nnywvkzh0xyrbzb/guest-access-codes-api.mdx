@@ -1,0 +1,332 @@
+---
+title: Guest Access Codes API
+slug: guest-access-codes-api
+createdAt: Mon Feb 02 2026 09:14:50 GMT+0000 (Coordinated Universal Time)
+---
+
+Nile exposes a **Guest Portal Access Code public API** for customers who want to automate the lifecycle of guest access codes.
+
+With this API, you can:
+
+- Discover Guest portals that use **Access Code** authentication
+- Create and manage **generic** access codes (shared codes not tied to a specific guest)
+- Create and manage **guest‑specific** access codes (per‑guest codes with name and email tied to the access code)
+- Update start or end time for the access codes as required.
+- Delete Access Codes when they are no longer needed
+
+### Prerequisites
+
+1. **Create a guest portal for Access Code Authentication.**
+   - Enable a guest portal and configure its authentication type as **Access Code** in the Nile Cloud Services portal.
+   - Decide whether the portal will use generic access codes or guest-specific access codes; a single portal cannot use both models simultaneously.
+2. **Generate API key**
+
+<Paragraph indent="2">
+  From the Nile Portal, go to the Security tab and create an API key.&#x20;
+</Paragraph>
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ja2k9eeyMIzLMmYM2kfkp_screenshot-2026-01-12-at-32924apm.png" size="100" width="3398" height="1314" position="center" showCaption="false" indent="2"></Image>
+
+3. When you save, an API key JSON file will be generated. This will look like :
+
+<BlockQuote>
+  \{
+  &#x20; "api\_token":"08D552EF4C423F8D....",
+  &#x20; "name":"AccessCode\_Tests",
+  &#x20; "url":"https\://u1.nile-global.cloud",
+  &#x20; "validBeforeTime":"2026-11-10T20:30:00Z"
+  }
+</BlockQuote>
+
+- The API Token is used as a **Bearer** token in the Authorization header.
+- The URL is the API base URL for all requests documented below.
+- This key is scoped to allow only APIs in the Access Codes workflow.
+
+## Discovering Guest Portals with authentication as Access‑Code
+
+Before creating access codes, you will need to find the portal ID for the guest portal that uses Access Code authentication using the **API** GET *\<base-url-from-nile>/api/v1/portalconfig/summary*.
+
+This will list the guest portals and identify which ones are configured with Access Code authentication.
+
+**Example request:**
+
+<BlockQuote>
+  GET /api/v1/portalconfig/summary HTTP/1.1
+  Host: \<base-url-from-nile>
+  Authorization: Bearer \<api\_token>
+</BlockQuote>
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/TpD43fLneYBAR52ZuGGIL_screenshot-2026-01-12-at-34929apm.png)
+
+**Example Response:**
+
+<BlockQuote>
+  \{
+  &#x20; "content": \[
+  &#x20;   \{
+  &#x20;     "id": "3d81e0a4-b4e3-485c-b7dd-8c6e1128e441",
+  &#x20;     "name": "GuestPopServicePortal",
+  &#x20;     "portalType": "Access-Code",
+  &#x20;     "tenantId": "e40319a4-0fd5-4e85-81c9-890d949ae6c1",
+  &#x20;     "genericAccessCode": false,
+  &#x20;     "geoScope": \{
+  &#x20;       "sites": \[
+  &#x20;         \{
+  &#x20;           "id": "5f8b4aae-acc8-4cd1-bcf0-fc7f8683f273",
+  &#x20;           "name": "5f8b4aae-acc8-4cd1-bcf0-fc7f8683f273"
+  &#x20;         }
+  &#x20;       ],
+  &#x20;       "buildings": \[],
+  &#x20;       "floors": \[],
+  &#x20;       "zones": \[]
+  &#x20;     }
+  &#x20;   }
+  &#x20; ],
+  &#x20; "totalElements": 1
+  }
+
+</BlockQuote>
+
+**Key fields:**
+
+- portalType: must be "Access-Code" for use with access codes.
+  genericAccessCode:
+  - true → portal uses generic access codes
+  - false → portal uses guest‑specific access codes
+- The guest portal ID is provided in the first line of the example above as "id". This value will be used as &#x7B;portalId} in all subsequent API requests.
+
+## Creating Generic Access Codes
+
+If your portal is configured with genericAccessCode = true, the same **API** POS&#x54;*\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes* can be used to create generic access codes that are not tied to a specific guest. These codes are ideal when you want a single access code printed in a lobby or front desk. You do not need per‑guest attribution on the backend.
+
+**Option 1: Generic Access Code**
+
+A **single shared access code** that can be used by multiple guests.
+
+**Characteristics:**
+
+- The administrator has the option to define a custom access code, or Nile can automatically generate one
+- One access code shared across all guests&#x20;
+- Not tied to an individual guest&#x20;
+- Time-bound (start and end time)&#x20;
+- Simple to distribute verbally, via signage, or email&#x20;
+
+**Typical Use Cases:**
+
+- Short-duration events&#x20;
+- Meetings or training sessions&#x20;
+- Temporary guest access where individual tracking is not required&#x20;
+
+<BlockQuote>
+  \{
+  &#x20;   "expires": true,
+  &#x20;   "generatePerGuest": false,
+  &#x20;   "startTime": "2026-01-16T00:00:00Z",
+  &#x20;   "endTime": "2026-01-18T00:00:00Z",
+  &#x20;   "sendEmail": false,
+  &#x20;   "useTags": false,
+  &#x20;   "targets": \[ \{
+  &#x20;           "accessCode": "123455555" &#x20;
+  &#x20;   }]
+  }
+</BlockQuote>
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QocdJAb_eXkJfP5sF5Flg_screenshot-2026-01-12-at-51907apm.png)
+
+**Result:**
+
+The response contains one entry per generic access code, each with its own start and end time. Because these are generic codes, no Guest Name or Guest Email fields are present, and any guest who knows a valid code can use it to gain access through that portal.
+
+## Creating Guest‑Specific Access Codes
+
+**Option 2: User-Specific Access Code**
+
+A **unique access code per guest**, tied to user identity.
+
+**Characteristics:**
+
+- One access code per guest. The administrator has the option to define a custom access code, or Nile can automatically generate one&#x20;
+- Associated with the guest's **Name** and **Email Address**&#x20;
+- Time-bound (start and end time)&#x20;
+- Enables traceability and personalized distribution&#x20;
+
+**Typical Use Cases:**
+
+- Employee-hosted visitors&#x20;
+- Contractors or partners&#x20;
+- Conferences and events requiring individual access control&#x20;
+- Integration with helpdesk or registration systems&#x20;
+
+Once the portal is configured with genericAccessCode = false, you can create access codes that are tied to individual guests using the **API** POS&#x54;*\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
+
+All variants of the API share the same basic request structure:
+
+- expires – Whether the codes expire.
+- startTime, endTime – Validity window (UTC, ISO 8601).
+- generatePerGuest – Generate codes per guest (true) or expect them in the payload (false).
+- sendEmail – Whether to send emails to guests (if configured for your tenant).
+- useTags – Whether geo/tags are used.
+- targets – One object per guest.
+
+**Example Request 1: Pre-defined Access Code per guest**
+
+In this scenario, you must explicitly specify which access codes are assigned to each user based on their name and email. For example, for a conference, you can use the guest registration ID as the Access Code and map with guest username and email.
+
+<BlockQuote>
+  \{
+  &#x20;     "expires": true,
+  &#x20;     "startTime": "2026-02-12T00:02:00Z",
+  &#x20;     "endTime": "2026-02-13T23:58:00Z",
+  &#x20;     "generatePerGuest": false,
+  &#x20;     "sendEmail": false,
+  &#x20;     "useTags": false,
+  &#x20;     "targets": \[
+  &#x20;          \{
+  &#x20;             "accessCode": "12345678",
+  &#x20;             "guestName": "John Doe" ,
+  &#x20;             "guestEmail": "johndoe\@myCompany.com"
+  &#x20;         },
+  &#x20;         \{
+  &#x20;             "accessCode": "ABCD123",
+  &#x20;             "guestName": "Jane Doe ",
+  &#x20;             "guestEmail": "janedoe\@gmail.com"
+  &#x20;         },
+  &#x20;         \{
+  &#x20;             "accessCode": "12345678",
+  &#x20;             "guestName" : "Thomas Edison",
+  &#x20;             "guestEmail" : "tedision\@electric.com"
+  &#x20;         }
+  &#x20;   ]
+  &#x20; }
+  }
+  settings \{
+  &#x20; encodeUrl: true
+  &#x20; timeout: 0
+  }
+</BlockQuote>
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/eDEpW_FRzhi3pRYm4USNH_screenshot-2026-01-12-at-42740apm.png)
+
+**Result:**
+
+Here, the admin defines Access Code explicitly for each guest, and all guests share the same validity window.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8z1LAqWdvZV7ZrD4cuM5c_screenshot-2026-01-12-at-43005apm.png)
+
+**Example Request 2: System‑generated Access Code per guest**
+
+If you are able to share codes with guests in advance, you can rely on Nile to generate access codes for each user. You only need to pass the user’s name and email as attributes via the API. For example, the help desk can generate these codes and send them to guests via email.
+
+<BlockQuote>
+  \{
+  &#x20; "expires": true,
+  &#x20; "startTime": "2025-11-14T00:02:00Z",
+  &#x20; "endTime": "2025-11-15T23:58:00Z",
+  &#x20; "generatePerGuest": true,
+  &#x20; "sendEmail": false,
+  &#x20; "useTags": false,
+  &#x20; "targets": \[
+  &#x20;   \{
+  &#x20;     "guestName": "Jane Austen",
+  &#x20;     "guestEmail": "austen\@gmail.com"
+  &#x20;   }
+  &#x20; ]
+  }
+</BlockQuote>
+
+**Result:**
+
+Nile returns a unique access code and all metadata for each guest, along with a success message such as:
+
+`"message": "Successfully created 1 access code(s)"`
+
+**Example Request 3: Shared event code for multiple guests**
+
+In this scenario, a single access code is shared by multiple guests from the same organization. For example, at a conference center where several vendors/exhibitors are present, you can assign one access code per company and use it for all guests belonging to that company
+
+<BlockQuote>
+  \{
+  &#x20; "expires": true,
+  &#x20; "startTime": "2025-12-01T00:00:00Z",
+  &#x20; "endTime": "2025-12-31T23:59:59Z",
+  &#x20; "sharedAcessCode": "EVENT2026",
+  &#x20; "generatePerGuest": false,
+  &#x20; "sendEmail": false,
+  &#x20; "useTags": false,
+  &#x20; "targets": \[
+  &#x20;   \{
+  &#x20;     "guestName": "La Croix",
+  &#x20;     "guestEmail": "foo\@lacroix.com"
+  &#x20;   },
+  &#x20;   \{
+  &#x20;     "guestName": "Foo Bar",
+  &#x20;     "guestEmail": "emma.bar\@lacroix.com"
+  &#x20;   }
+  &#x20; ]
+  }
+</BlockQuote>
+
+**Result:**
+
+The response contains one entry per guest, all with the same access code and a summary field sharedAccessCode: "EVENT2026".
+
+## Update Guest‑Specific Access Codes:
+
+You can also update parameters such as start time, end time and Access Code for guest‑specific using the following API: **PUT** *\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
+
+You will have to provide the guest email and name as attributes in the request body as they remain contsant and cannot be updated.You must include the guest’s email and name as attributes in the request body because these values are fixed at creation time and cannot be modified later
+
+**Example Request: Updation of Access Codes**
+
+<BlockQuote>
+  \{
+  &#x20;   "expires": true,
+  &#x20;   "generatePerGuest": false,
+  &#x20;   "startTime": "2026-02-02T00:02:00Z",
+  &#x20;   "endTime": "2027-02-13T23:58:00Z",
+  &#x20;   "sendEmail": false,
+  &#x20;   "useTags": false,
+  &#x20;   "targets": \[ \{
+  &#x20;           "guestEmail":"janedoe2\@gmail.com",
+  &#x20;           "guestName" : "Jane Doe"
+  &#x20;   }]
+  }
+</BlockQuote>
+
+**Result:**
+
+If a matching entry exists for the specified email, the parameters get updated for the same.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/HRbG6YjCM6DNI8HR-tzFo_screenshot-2026-02-02-at-105855apm.png)
+
+### GET System Generated Access Codes:
+
+Use the API to obtain a system-generated access code by sending a GET request to: *\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3sY1A5RTDPMluVzbyAtKR_screenshot-2026-02-02-at-110346apm.png)
+
+<Image size="100" isUploading="true" uploadStartedAt="1770053833940" showCaption="false"></Image>
+
+## Deleting Guest‑Specific Access Codes:
+
+Once the event is completed, you can clean up guest‑specific access codes by deleting them using the following API:**&#x20;DELETE&#x20;***\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
+
+You will have to provide the guest email and name as parameters in the request body.
+
+**Example Request: Deletion of Guest Access Code**
+
+<BlockQuote>
+  \{
+  &#x20; "targets": \[
+  &#x20;   \{
+  &#x20;     "guestEmail": "ben5\@gmail.com",
+  &#x20;     "guestName": "Ben Schmitt5"
+  &#x20;   }
+  &#x20; ]
+  }
+</BlockQuote>
+
+**Result:**
+
+If a matching entry exists for the specified email, the API returns HTTP 204 No Content to indicate that the delete operation succeeded.
+

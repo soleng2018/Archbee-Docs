@@ -1,0 +1,364 @@
+---
+title: Nile Security Alerts
+slug: nile-security-alerts
+createdAt: Tue Jul 23 2024 19:47:31 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Alerts for Nile Access Service raise awareness about the following: 
+
+1. Network security detection
+2. Location where the condition occurred 
+3. Time at which the condition occurred
+4. Time period for which the condition lasted
+
+Below is the list of alerts raised in the Nile Portal for Nile Access Service and their recommended actions. 
+
+***
+
+## Rogue AP violation type 1
+
+This alert is generated when a non-Nile AP is connected to a Nile switch and is broadcasting an SSID that is not configured in Nile portal. The port connecting the rogue AP with the Nile switch has been authorized in Nile Portal and Nile Services Cloud has correlated the wired and wireless mac address of the rogue AP. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Rogue AP  with BSSID  58:6d:8f\:ed:9d:6c broadcasting SSID 'Linksys2.4' has been detected at  Bangalore/Bldg\_1/Floor\_1 for 8 hours. The Rogue AP is connected to port 21 on Nile Access Switch AS.2 Serial Number: E99Z99999111. Switch port has been blocked.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any that are found
+    </td>
+  </tr>
+</table>
+
+## Rogue AP violation type 2
+
+This alert is generated when a non-Nile AP is connected to a Nile switch and is broadcasting an SSID that is not configured in Nile portal. The port connecting the rogue AP with the Nile switch has been authorized in Nile Portal and Nile Services Cloud has not correlated the wired and wireless mac address of the rogue AP.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Rogue AP with BSSID - 26:15:10:2e:81:1b broadcasting SSID - hwmix-open has been detected, in building - Bldg\_1, floor - Floor \_1. The Rogue AP is connected to port 13 on Nile Access Switch AS.2 Serial Number: E99Z99999111. Switch port has been blocked.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+    </td>
+  </tr>
+</table>
+
+## Rogue AP violation type 3
+
+This alert is generated when a non-Nile access point is connected to a Nile switch.  Nile Services Cloud detected the actual vendor of the rogue AP via fingerprinting. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Rogue AP with mac address 52:54:00:13:9d\:ee has been detected with device type Meraki WAP in Bldg Bldg\_1, Floor\_1. The Rogue AP is connected to port 4 on Nile Access Switch AS.2 Serial Number: E99Z99999111. Switch port has been blocked.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+    </td>
+  </tr>
+</table>
+
+## Suspected Rogue AP
+
+This alert is generated when a non-Nile access point is connected to a Nile switch. The port connecting the suspected rogue AP with the Nile switch has been authorized in Nile Portal. Nile Services Cloud has not correlated the wired and wireless mac address of the rogue AP and the suspected rogue AP may be connecting with the Nile switch via NAT
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      *Suspected Rogue AP with macAddress 52:54:00:13:9d has been detected in Bldg - Bangalore, floor - Floor\_1*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+      - Remove the rogue access point MAC address from Access Management in Nile Portal
+    </td>
+  </tr>
+</table>
+
+## Impersonation - Honeypot AP
+
+This alert is generated when a rogue AP is broadcasting the same SSID that is configured in the Nile portal
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Impersonation attack: Honeypot AP (Bssid : 26:15:10:2B:02\:A0) spoofing a valid Nile AP SSID Nile-Secure has been detected in the air at Bangalore/Bldg\_1/Floor\_1.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+    </td>
+  </tr>
+</table>
+
+## Impersonation - Evil Twin violation 1
+
+This alert is generated when a non-Nile access point is impersonating Nile Access Point by broadcasting the same SSID configured in Nile portal and Nile access point BSSID. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      *Impersonation attack: Evil-Twin AP spoofing a valid Nile AP SSID PERFSENSORPSKSSID and BSSID 26:15:10:2d:04:11 detected in the air at Bangalore/Bldg\_1/Floor\_1*
+    </td>
+    <td align="left">
+      **
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+    </td>
+  </tr>
+</table>
+
+## Impersonation - Evil Twin violation 2
+
+This alert is generated when a non-Nile access point is impersonating Nile Access Point by broadcasting the same BSSID as Nile access point BSSID. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      *Impersonation attack: Evil-Twin AP spoofing a valid Nile AP BSSID 26:15:10:2d:04:11 detected in the air at Bangalore/Bldg\_1/Floor\_1. User devices may accidentally connect to the impersonating AP that is attempting a man-in-the-middle intrusion*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated floor for any non-Nile access points
+      - Physically unplug and remove any found
+    </td>
+  </tr>
+</table>
+
+## Static IP Detection
+
+This alert is generated when a device is detected with static IP address
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Device with Static IP address 10.4.7.245 detected and blocked at Bangalore/Bldg\_1/Floor\_1.  This device has MAC Address 08:6a\:c5:6a:06\:a8.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Visit the indicated location; find the device with a static IP address; change the device to use DHCP.
+    </td>
+  </tr>
+</table>
+
+## IP Conflict - Static IP
+
+This alert is generated when a Nile Services Cloud detects IP address conflict between a device using static IP and another device using DHCP. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Device with Static IP address 10.4.7.245 causing an IP conflict detected and blocked at Bangalore/Bldg\_1/Floor\_1. This device has MAC Address 08:6a\:c5:6a:06\:a8.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Visit the indicated location; find the device with a static IP address; change the device to use DHCP.
+    </td>
+  </tr>
+</table>
+
+## IP Conflict - DHCP IP
+
+This alert is generated when Nile Services Cloud detects IP address conflict between devices using DHCP
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      Device with DHCP IP address 10.4.7.245 causing an IP conflict detected and blocked at Bangalore/Bldg\_1/Floor\_1. This device has MAC Address 08:6a\:c5:6a:06\:a8.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Change the DHCP configuration to avoid IP address conflicts
+    </td>
+  </tr>
+</table>
+
+## Interferer violation
+
+This alert is generated when a non-WiFi device is interfering with Nile Access Points 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      A non-WiFi device is interfering (interferer type: CONTINUOUS\_WAVE) with the Nile Wireless network has been detected by Nile Access Point Serial Number: A00A00076256 on band 2 at HQ/HQ/Floor 1 for 1 minute.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Inspect the indicated location for a device operating in Radio Frequency (e.g., Microwave ovens, Cordless Phones, BlueTooth links, etc.). 
+      - Locate the source of interference 
+      - Remove or relocate any sources found
+    </td>
+  </tr>
+</table>
+
+## Adhoc violation
+
+This alert is generated when Nile Services Cloud detects an adhoc peer-to-peer wifi connection. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      *An Adhoc WiFi peer-to-peer connection was detected between devices e4:5f:01:42\:fb:9b and e4:5f:01:3b\:b9:03  at Bangalore/Bldg\_1/Floor\_1.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Locate the devices engaged in a P2P connection at the indicated location
+      - Disable the Adhoc connection.
+    </td>
+  </tr>
+</table>
+
+
+
+## DOS violation type 1
+
+This alert is generated when Nile Services Cloud detects a Denial of Service (DOS) attack involving deauthentication.  
+
+
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      *A Denial of Service (DoS) attack was detected on BSSID  26:15:10:19:00:00 at Bangalore/Bldg\_1/Floor\_1. The DoS attack type was identified as BROADCAST\_DEAUTHENTICATION.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Locate the source of Denial of Service Attack; remove from the environment
+    </td>
+  </tr>
+</table>
+
+
+
+## DOS violation type 2
+
+This alert is generated when Nile Services Cloud detects a Denial of Service (DOS) attack involving broadcast disassociation. 
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td>
+      A flood attack of type deauthentication from clients 98:59:7a:09:97:78 to bssid 26:15:10:2d:05:01 has been detected by APs A99Z99999380,A00A00076256 at HQ/HQ/Floor 1.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td>
+      - Locate the source of Denial of Service Attack; remove from your environment.
+      - Reach out to the Nile support team for tips on how to determine the origin of DoS attack. 
+    </td>
+  </tr>
+</table>
+
+-
+

@@ -1,0 +1,149 @@
+---
+title: Integration of Nile Access Service with Palo Alto Prisma SASE Provider
+slug: integration-of-nile-access-service-with-palo-alto-prisma-sase-provider
+createdAt: Thu Jul 10 2025 06:17:36 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+This document guides the integration of the **Nile Access Service** with **Palo Alto Networks Prisma SASE** (Secure Access Service Edge) provider to enable seamless, secure connectivity and policy enforcement across campus and cloud environments.
+
+With the increasing adoption of cloud-based SASE solutions, organizations require streamlined integration to protect infrastructure while simplifying network operations. Nile’s integration with Palo Alto Prisma SASE automates the setup of secure IPsec tunnels and traffic source subnets, allowing customers to easily forward traffic from selected network segments to Prisma Access cloud nodes for comprehensive security enforcement.
+
+By configuring this integration, customers can leverage Prisma SASE’s advanced cloud-delivered security capabilities alongside Nile’s zero-trust campus access service. This ensures consistent policy application, enhanced visibility, and resilient connectivity across users, devices, and applications.
+
+## Requirements
+
+- Active subscriptions and Administrative rights to Palo Alto Networks Prisma Access.
+- Administrative rights to the Nile Control Center.
+- Service Account credentials with Network Administrator and Security Administrator for All Apps and Services for setting up Prisma Access Integration.
+
+## Palo Alto Prisma Access Configuration
+
+- Log in to the Prisma Access administrative console.
+  [https://stratacloudmanager.paloaltonetworks.com/](https://stratacloudmanager.paloaltonetworks.com/)
+- Navigate to Settings -> Identity & Access -> Add Identity
+- Choose Identity type: **Service Account**, create a Service Account name, and click Next.
+
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-Qx_fLCpG-1qlNp30rBJNT-20250710-065042.png" size="70" width="924" height="540" position="center" showCaption="false"></Image>
+
+- Save the **Client ID** and **Client Secret&#x20;**&#x66;or later use in Nile Control Center.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-aIUX5Nch_vKDSmu4-3hhz-20250711-053222.png" size="70" width="921" height="537" position="center" showCaption="false"></Image>
+
+- Choose **All Apps & Services** and Role: **Network Administrator** & **Security Administrator**
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-JqznDUrTXSUsHX_XYa2RG-20250710-071540.png" size="70" width="911" height="242" position="center" showCaption="false"></Image>
+
+## Nile Access Service Configuration
+
+- Login to the Nile Control Center as an administrator.
+- Navigate to **Settings > Global Settings > Integrations.**
+- Click on “+ **Setup Integration**”. You should be able to see “SSE Integration”. Click on the option. If you don’t have access to the SSE integration option, please reach out to Nile support to ensure that you have the option enabled.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-2msQK8A_fBCX4EbuwgUPi-20250710-082441.png" size="70" width="1711" height="683" position="center" showCaption="false"></Image>
+
+
+
+- On the **Configuration Instance** menu, enter the name of the integration and select **Palo Alto Networks** as the provider.
+- Fill in the **Client ID** field using the Palo Alto Networks service account Client ID obtained from the previous step.
+- Enter the **Client Secret** using the value saved from the previous step.
+- Fill in the **Tenant Service Group ID** using the numerical portion of the Client ID.
+- For example, if the Client ID is Soleng@**1581964182**.iam.panserviceaccount.com, the Tenant Service Group ID will be **1581964182**.
+- Enter the **Domain**. Note that there is no domain validation, so any domain can be used. You may use the preconfigured domain nilesecure.com.
+- Specify the desired **Bandwidth**. The default is 500 Mbps, but you can adjust this if needed. This bandwidth represents the minimum allocation for a Prisma Access (compute) location where the remote network is onboarded, if not already allocated.
+- Click **Test** and wait for the test to complete.
+- Once the test completes successfully and the **Save** button is enabled, click **Save**. The configuration will then be available for use.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-SnJzLPy1Wi2mu-El1fnUf-20250710-083346.png" size="70" width="1892" height="532" position="center" showCaption="false"></Image>
+
+**NOTE**: At this point, no tunnels are set up. Tunnel setup initiates when the first external rule is configured to forward a segment’s traffic to the SSE. Please refer to the next section for setting up forwarding rules.
+
+## Configuration to forward Traffic from Nile to Prisma Access
+
+- Once the SSE account credentials setup is complete, the admin user can then create rules to forward traffic to Prisma Access.
+- Log in to the Nile Portal as Administrator.
+- Go to “**Global Settings**” > “**Access Engine**”.
+- Click on “**Create Rule**” > “**Create External Rule**”.&#x20;
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-tXnkJnxQKxP-I0IAtZ-X0-20250710-083926.png" size="70" width="1896" height="492" position="center" showCaption="false"></Image>
+
+
+
+- Follow the workflow to set up the external rule. Select the “**Source Segment**” and then select the destination as “**All Internet Bound Traffic**”.
+- On the Action page, select the“**Forward**” action, and the SSE instance will be preselected.&#x20;
+- Choose whether to forward the traffic to the local upstream firewall in case of tunnel failure.&#x20;
+  \***Important** **Note**: If this option is not enabled, then traffic will be dropped in the event of tunnel failure and end users/devices may lose network connectivity.
+- Fill in the appropriate rule name.
+- Fill in the appropriate description.
+- Click Save.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-JIbS6ztyk3jifXXsI78ZC-20250710-084217.png" size="70" width="1892" height="829" position="center" showCaption="false"></Image>
+
+
+
+- Note: all provisioning of Prisma Remote Networks and Tunnels is automated and may take up to 20 minutes if the Remote Network is not already created and available in a Geo location.
+
+## Monitoring on Prisma Access
+
+Once the Access Engine rule configurations are saved in the Nile Control Center, the Nile Access Service automatically creates the following constructs in Prisma Access:
+
+**Remote Network**: A Remote Network is a resource instance created in Prisma Access to process network traffic and enforce policies in a geographic location close to the Nile NSB (Network Service Block) that is forwarding the traffic.
+
+Each Remote Network should have a name in the format \<**Nile\_Site\_Name**>\_\<**RandomNumber**>.
+
+You can view existing Remote Networks in the Prisma Access portal by navigating to **Monitor > Branch Sites**.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-rN07-bSv668oZaxz5Mq3l-20250710-085650.png" size="70" width="1894" height="877" position="center" showCaption="false"></Image>
+
+**Address:**
+The Address instance represents an object corresponding to the subnet(s) belonging to the Nile segment from which traffic is being forwarded.
+
+Each Address object should have tags with **"Nile"**, **"\<Nile\_Site\_Name>"**, and **"\<Segment\_Name>"**. These tags help classify traffic and enable the creation of consistent policies.
+
+To access Address objects in Prisma Access, navigate to:
+**Manage > Configuration > NGFW and Prisma Access > Objects > Addresses**.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-wTqzasjrNfmzuk5RHbvAY-20250710-090126.png" size="70" width="1901" height="853" position="center" showCaption="false"></Image>
+
+Users can also monitor traffic and the corresponding actions applied to traffic within Prisma.&#x20;
+For this, navigate to “**Incidents and Alerts**” > “**Log Viewer**”
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-0c-tAhLV9ifTTnv9ZpkPL-20250710-102306.png" size="74" width="2048" height="1170" position="center" showCaption="false"></Image>
+
+## Monitoring on the Nile Control Center
+
+- Admin can check the integration logs using the rule logs present on the Access Engine page.&#x20;
+  Once the external rules are configured, Admin can go to “**Settings**” > “**Global Settings**” > “**Access Engine**” > “**Rule Logs**”.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-IoLuVd-M_zuA8_YnLgjZ1-20250710-102913.png" size="70" width="2698" height="694" position="center" showCaption="false"></Image>
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-ZjAOAISjUfmS996qvlvtw-20250710-102945.png" size="72" width="2952" height="1250" position="center" showCaption="false"></Image>
+
+- Admin can also directly access rule logs filtered for specific rules by clicking on the rule in the rule table, then selecting **“View Rule Log”&#x20;**&#x6F;n the Rule Configuration page.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-ZkRWis-sUgEOSpCw3Fayv-20250710-103226.png" size="70" width="1867" height="516" position="center" showCaption="false"></Image>
+
+## Troubleshooting&#x20;
+
+If tunnels are down, users can check the tunnel status in the Prisma Access Monitoring section.
+This section provides real-time visibility into the health and connectivity of IPsec tunnels established between Nile Service Block and Prisma Access.
+
+Administrators can also review **Rule logs** directly from the **Nile Control Center** by accessing the External Rules configuration. The rule logs show whether traffic from specific Nile segments is hitting the intended forwarding rules to Prisma Access. This helps verify that traffic is correctly routed and policy enforcement is functioning as expected, despite tunnel status.
+
+**Recommendation for Traffic Management&#x20;**
+
+Nile recommends using Dynamic Address Groups for accurate and consistent policy application. For this, the Admin needs to create a Dynamic Address Group using Tags set on Nile Addresses.
+
+For example, if the administrator wants to apply a specific set of policies to “\<Segment Name>” users, they can follow these recommended steps:
+
+- To access Address Groups in Prisma Access, navigate to:&#xA;**&#x20;Manage > Configuration > NGFW and Prisma Access > Objects >Address > Address Groups**
+- Create a Dynamic Address Group where tags used to filter traffic are “Nile Secure” and “\<Segment Name>.
+- Use the Dynamic Address Group in policies to apply policies as needed.
+- As the Dynamic Address Groups are maintained automatically by the Prisma Access platform, when a new Nile site is deployed and the segment is extended to a new site, policy application will automatically extend to the new site’s users/devices. This is also true for site/segment deletions as well.
+
+<Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-tWKLW-_8K058p7t5VPgcb-20250710-104858.png" size="70" width="1910" height="310" position="center" showCaption="false"></Image>
+
+**Note**:&#x20;
+Changing Segment Names in Nile Control Center is not recommended as tag recreation is not supported while the tunnels are created and are up.

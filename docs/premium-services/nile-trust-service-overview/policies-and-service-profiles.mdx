@@ -1,0 +1,121 @@
+---
+title: Policies and Service Profiles
+slug: policies-and-service-profiles
+createdAt: Thu Oct 16 2025 07:52:25 GMT+0000 (Coordinated Universal Time)
+---
+
+## Introduction
+
+Policies and Service Profiles define how the Nile Trust Engine enforces communication rules across users, devices, and applications. Together, they determine which endpoints can communicate, what protocols are permitted, and what enforcement action should be applied. This combination gives enterprises precise control over traffic flows while maintaining simplicity and scalability.
+
+## Understanding Policies
+
+A **Policy** represents an explicit rule that dictates whether traffic between two Policy Groups is allowed, denied, or forwarded. Every network flow is evaluated against the active policy set, ensuring that only approved connections are established.
+
+Each policy includes the following key components:
+
+| Component           | Description                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------ |
+| **Source**          | The originating Policy Group (user, device, or application).                                     |
+| **Destination**     | The target Policy Group.                                                                         |
+| **Service Profile** | Defines which protocols and ports are permitted.                                                 |
+| **Action**          | Determines how the Trust Engine handles matching traffic (Allow, Deny, Forward, Forward to SSE). |
+| **Status**          | Indicates whether the policy is active or disabled.                                              |
+
+If no matching policy exists, the Nile Trust Engine applies the default security posture of **deny all**.
+
+## Creating Policies in Nile Control Center
+
+Administrators create and manage policies through the **Trust Service > Policies** section of Nile Control Center.
+
+### Step-by-Step Workflow
+
+1. Select **Create Policy**.&#x20;
+2. Choose the **Source** and **Destination** Policy Groups.&#x20;
+3. Select a **Service Profile** to define the allowed protocols and ports.&#x20;
+4. Choose an **Action** (Allow, Deny, Forward, Forward to SSE).&#x20;
+5. Review and **Save** the configuration.&#x20;
+
+The new policy becomes part of the tenant’s **Global Policy Set** and applies automatically across all sites.
+
+### Editing or Disabling Policies
+
+Policies can be edited to update service profiles or change actions. When a policy is disabled, the associated traffic reverts to the default deny behavior until the policy is re-enabled.
+
+## The Global Policy Set
+
+Every Nile tenant includes a **Global Policy Set** that defines how traffic is managed network-wide. It contains both system-defined and administrator-defined policies.
+
+### Default Policies
+
+The Trust Engine automatically includes foundational policies to support essential services:
+
+| Source → Destination            | Service Profile                 | Action | Purpose                                                                            |
+| ------------------------------- | ------------------------------- | ------ | ---------------------------------------------------------------------------------- |
+| Local → External                | DNS Services Profile            | Allow  | Enables DNS resolution for onboarding and operations.                              |
+| Local → Infrastructure Services | Infrastructure Services Profile | Allow  | Supports DHCP, HTTPS, and RADIUS traffic for client authentication and onboarding. |
+| Quarantine → Internet           | N/A                             | Deny   | Blocks Internet access for devices in quarantine.                                  |
+| External → Local                | N/A                             | Deny   | Prevents inbound access to internal resources.                                     |
+
+These defaults ensure the network remains secure and operational immediately after deployment.
+
+Administrators can add new rules to this policy set to reflect organizational security and compliance needs. Future releases will support multiple policy sets for environments that require site-level customization.
+
+## Understanding Service Profiles
+
+A **Service Profile** defines which ports and protocols are allowed when communication between Policy Groups is permitted. Service Profiles enforce least-privilege access by limiting each connection to only the required services.
+
+### Default Service Profiles
+
+- **Open Service Profile** – Allows all protocols and ports. Useful for transitional use during network migration but not recommended for production.&#x20;
+- **Infrastructure Services Profile** – Includes DHCP (UDP 67), HTTPS (TCP 443) for IdP communication, and optional DNS. Supports onboarding and authentication workflows.&#x20;
+- **DNS Services Profile** – Enables communication with local or external DNS servers over UDP/TCP 53 and TCP 853 (DNS over TLS).&#x20;
+
+Custom Service Profiles are available in the **Enterprise tier**, providing flexibility for defining traffic rules that match specific application or protocol needs.
+
+### Creating a Custom Service Profile
+
+1. Navigate to **Trust Service > Service Profiles**.&#x20;
+2. Select **Create Profile**.&#x20;
+3. Enter a name and description.&#x20;
+4. Add one or more protocol and port combinations.&#x20;
+5. Save the configuration.&#x20;
+
+Administrators can later attach these profiles to policies that govern specific traffic patterns.
+
+## Actions and Enforcement Behavior
+
+Each policy defines how matching traffic should be handled. Available actions include:
+
+| Action               | Description                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **Allow**            | Permits traffic to flow between the defined source and destination using the allowed protocols.                           |
+| **Deny**             | Blocks matching traffic. This is the system’s default behavior if no policy exists.                                       |
+| **Forward Upstream** | Redirects traffic to an upstream firewall or SD-WAN appliance for centralized enforcement.                                |
+| **Forward to SSE**   | Sends traffic to a Secure Service Edge for inspection and policy enforcement in the cloud (available in future releases). |
+
+## Policy Evaluation and Logging
+
+When traffic passes through the Nile Service Block, the Trust Engine evaluates it against active policies in real time. Each matching flow is logged in Nile Control Center, including details such as:
+
+- Timestamp&#x20;
+- Source and destination Policy Groups&#x20;
+- IP and MAC addresses&#x20;
+- Protocol and port&#x20;
+- Service Profile name&#x20;
+- Enforcement action&#x20;
+
+These logs allow administrators to audit traffic, validate policies, and troubleshoot access issues with full visibility.
+
+## Best Practices for Policy Design
+
+- Start with broad policies for essential services, then refine with narrower Service Profiles.&#x20;
+- Apply the principle of least privilege by allowing only required protocols and destinations.&#x20;
+- Centralize sensitive or regulated traffic for inspection through upstream firewalls or SSE platforms.&#x20;
+- Regularly review logs and policy effectiveness using Nile Control Center’s monitoring tools.&#x20;
+
+## Summary
+
+Policies and Service Profiles give administrators the tools to design and enforce secure, identity-based communication rules across the enterprise network. Through the Nile Trust Engine, every connection—whether user, device, or application—is continuously evaluated and logged, ensuring complete control and visibility.
+
+**Next:** Getting Started with Trust Service — Learn how to prepare, configure, and activate the Trust Service for new and existing Nile deployments.

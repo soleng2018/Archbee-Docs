@@ -1,0 +1,148 @@
+---
+title: Setup Wired Authentication
+slug: setup-wired-authentication
+createdAt: Tue May 21 2024 15:21:02 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile secures wired network access by requiring every device connected to a Nile switch to be authenticated before it can access the network. Wired authentication is always enabled and cannot be disabled.
+
+You can configure one or more authentication methods based on your device types and security requirements. Once authenticated, each device is assigned to a network segment according to your configuration.
+
+Use the table below to review the available authentication methods and choose the options that best fit your environment.
+
+<table isTableHeaderOn="true" columnWidths="197,156.5,336.5">
+  <tr>
+    <td align="left">
+      **Option**
+    </td>
+    <td align="left">
+      **Method**
+    </td>
+    <td align="left">
+      **Best for**
+    </td>
+  </tr>
+  <tr>
+    <td align="left" colSpan="1" rowSpan="4">
+      **1. MAC authentication bypass (MAB)**
+    </td>
+    <td align="left">
+      MAC address
+    </td>
+    <td align="left">
+      Devices that don’t support 802.1X and require individual approval before or after connecting. &#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      MAC address list (CSV)
+    </td>
+    <td align="left">
+      Approving multiple devices at once before they connect to the network.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      OUI
+    </td>
+    <td align="left">
+      All devices from one manufacturer
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Allow all MACs
+    </td>
+    <td align="left">
+      A catch-all for devices that match no other rule.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **2. Fingerprint**
+    </td>
+    <td align="left">
+      Fingerprint
+    </td>
+    <td align="left">
+      A type of device such as "HP printer" or "Vocera Phone"
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **3. Switch hostname + port**
+    </td>
+    <td align="left">
+      Switch hostname + port
+    </td>
+    <td align="left">
+      Any device plugged into specific switch ports.
+    </td>
+  </tr>
+  <tr>
+    <td align="left" colSpan="1" rowSpan="3">
+      **4. Wired Secured Guest&#x20;**
+      <Paragraph>
+        **& Wired SSO**
+      </Paragraph>
+    </td>
+    <td align="left">
+      Wired Secured Guest
+    </td>
+    <td align="left">
+      Visitors and unknown devices authenticate through a captive portal and are fully isolated from the Nile network.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Wired SSO
+    </td>
+    <td align="left">
+      Employee-owned laptops and docking stations that authenticate through your identity provider.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Both together
+    </td>
+    <td align="left">
+      A single captive portal for visitors and employees, with wired devices fully isolated from the Nile network.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **5. Wired Self Register**
+    </td>
+    <td align="left">
+      Wired Self Register
+    </td>
+    <td align="left">
+      Users who register their own devices
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **6. Wired 802.1X**
+    </td>
+    <td align="left">
+      Wired 802.1X
+    </td>
+    <td align="left">
+      Recommended for managed laptops and devices that support 802.1X, providing stronger authentication and security.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **7. MAC authentication with external RADIUS**
+    </td>
+    <td align="left">
+      RADIUS MAB
+    </td>
+    <td align="left">
+      Customers who want to keep approving devices on their third party RADIUS server
+    </td>
+  </tr>
+</table>
+

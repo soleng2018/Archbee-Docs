@@ -1,0 +1,24 @@
+---
+title: Setup Nile Captive Portal SSID
+slug: setup-nile-captive-portal-ssid
+createdAt: Fri May 24 2024 07:37:59 GMT+0000 (Coordinated Universal Time)
+---
+
+# Prerequisites
+
+Complete the following before you create a Nile captive portal SSID. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure a Guest Portal.** Configure the type of guest portal guests will use to authenticate and gain access to the guest network. See :Link[Setup Guest Portal]{href="https://docs.nilesecure.com/setup-guest-portal" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+
+## Configuration Steps
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Wireless, click the '+' sign, and choose the Type as Captive Portal.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - **Segments:** Select the guest segment that uses your guest portal and save your changes.
+4. Connect a test device to the SSID. The device should show a "sign in to network" prompt or open the guest portal page. Complete the sign-in for the portal type you chose.

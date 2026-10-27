@@ -1,0 +1,22 @@
+---
+title: Can we block a wireless client via the dashboard?
+slug: can-we-block-a-wireless-client-via-the-dashboard
+createdAt: Wed Jul 24 2024 21:49:00 GMT+0000 (Coordinated Universal Time)
+---
+
+To block the wireless client, please login to Nile Portal [https://u1.nile-global.cloud](https://u1.nile-global.cloud/devices)
+
+Navigate to **Settings** -> **Access management&#x20;**-> **Wireless** -> **Add&#x20;**&#x61;nd enter the **MAC address** and Click on **Save.&#x20;**&#x4E;OTE: The default rule is Deny.
+
+To allow the wireless client again, checkmark the device -> Delete from the same page
+
+
+
+![Nile portal settings: Access management](https://s3.amazonaws.com/cdn.freshdesk.com/data/helpdesk/attachments/production/66074556756/original/GywHGlfI8YnoCykv2eMiySZ2X-6lRCWB0g.png?1712281283 "Nile portal settings: Access management")
+
+There are few important points that need to be considered while using this Deny feature
+
+1. Every time the 'randomized MAC' address changes, the same device can still connect to the same SSID. This implies that it's not possible to completely deny the device from connecting.
+2. Despite being added to the deny list, devices can bypass this restriction by altering their MAC addresses using MAC Randomization. In this case User will be allowed access, if thats the case Admin has to block the user again for the randomized mac (which is a troublesome process)
+3. So It's always advisable for the customers to implement additional security measures, such as strong authentication protocols like dot1x to mitigate the risk posed by MAC address randomization and help secure the organization from unauthorized access.
+

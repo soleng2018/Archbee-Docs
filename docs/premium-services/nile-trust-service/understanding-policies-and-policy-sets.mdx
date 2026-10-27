@@ -1,0 +1,187 @@
+---
+title: Understanding Policies and Policy Sets
+slug: understanding-policies-and-policy-sets
+createdAt: Fri Feb 20 2026 04:53:01 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+Any communication across the Zero Trust Fabric must have an access policy in place. Policies are access rules and are unidirectional.
+
+When a policy is selected, the reverse trafic direction is implicitly defined using the same service profile.
+
+## Implicit Deny-All Posture and Default Inbound Deny
+
+An implicit 'deny all' posture exists: no endpoint can talk to any other endpoint in any other policy group without an explicit policy. This implicit deny is immutable and does not appear in the UI list of policies. it applies to all endpoints and isoaltes them into a "segment of one", regardless of what network segment they may be on-boarded into.&#x20;
+
+A default non-editable policy explicitly denies inbound traffic from outside the Zero Trust Fabric: External -> Local / Deny. Any inbound communication that should be allowed must be explicitly defined.
+
+## Policy Components
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Component
+    </td>
+    <td align="left">
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **Source**
+    </td>
+    <td align="left">
+      The initiating policy group.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **Service Profile**
+    </td>
+    <td align="left">
+      Defines the permitted protocols and ports.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **Destination**
+    </td>
+    <td align="left">
+      The target policy group.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      **Action**
+    </td>
+    <td align="left">
+      Determines enforcement: Allow, Deny, Forward, or Forward to SSE.
+    </td>
+  </tr>
+</table>
+
+All network traffic is evaluated against the active policy set. If no matching policy exists, the traffic is denied by default.
+
+## Policy Sets and Matching
+
+A policy set is the collection of policies evaluated for each flow. Policies within a policy set have no order.  Each flow is matched based on source group and destination group. Once a match occurs, the corresponding action is taken and the enforcement action is logged.
+
+The Zero Trust Fabric prevents the creation of multiple policies with the same source and destination groups, eliminating policy sprawl. &#x20;
+
+For example, if the following policy is configured:
+
+- User Group “**Employees**” access to Device Group “**Printers**” with Service Profile “**Printing-Service-Profile**”, **Allow**
+
+then the Nile Control Center will prevent the creation of a new policy with the exact same Source and Destination but perhaps different action or service profile.
+
+**Note:&#x20;**&#x77;hile there is no ordering of policies, there is ordering amongst Policy Groups. Any user endpoint will be classified into a User Group based on the ordering of user policy groups, and any device will similarly be classified into a Device Group based on ordering of device policy groups. It is important to place more specific endpoint classification rules earlier in the ordered list of policy groups.
+
+By default, if no policy exists, the flow is denied.
+
+## Enabling Macro- & Micro-segmentation
+
+The **Core Trust Service** tier support traffic access policies at the network segment granularity level.  Enterprises looking to configure basic East/West inter- and intra-segment granular access policies and enforce the policies natively within the Zero Trust Fabric can do so using the Core Trust Service tier by defining source and destination polyc groups based on network segment classification citeria. 
+
+For more advanced security use-cases requiring zero trust least-privilege access policies with micro-segmentation granularity, the **Enterprise Trust Service** adds an extensive level of fine-grained policy controls and identity-centric classification options.  Policy definition using Enterprise Trust Service takes into consideration  user/device/application identity, customizable service profiles, and other tools for implementing more precise access controls. 
+
+## Global Policy Set
+
+The Trust Service currently supports a single Global Policy Set. It is automatically created with default policies, applies to all deployments in the tenant, and all sites are tagged with it by default. The Global Policy Set cannot be deleted. By default, the Global Policy Set includes a number of default policies:
+
+### Default Policies
+
+The Trust Engine automatically includes foundational policies to support essential services:
+
+<table isTableHeaderOn="true" columnWidths="165,142,63.09969788519637,290.90030211480365">
+  <tr>
+    <td align="left">
+      Source → Destination
+    </td>
+    <td align="left">
+      Service Profile
+    </td>
+    <td align="left">
+      Action
+    </td>
+    <td align="left">
+      Purpose
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Local → External
+    </td>
+    <td align="left">
+      DNS Services Profile
+    </td>
+    <td align="left">
+      Allow
+    </td>
+    <td align="left">
+      Enables DNS resolution to external servers for onboarding and operations. This policy is editable.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Local → Infrastructure Services App Group
+    </td>
+    <td align="left">
+      Infrastructure Services Profile
+    </td>
+    <td align="left">
+      Allow
+    </td>
+    <td align="left">
+      Supports DHCP and HTTPS traffic for client authentication and onboarding to customer-defined App Group containing IP addresses for DHCP and SSO IdP servers. Optionally, if a local DNS is used, DNS protocol and server IP should be added to the service profile and app group.  This policy is editable.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Quarantine → Internet
+    </td>
+    <td align="left">
+      N/A
+    </td>
+    <td align="left">
+      Deny
+    </td>
+    <td align="left">
+      Blocks Internet access for devices in quarantine. Admins should modify this based on what remediation services should be allowed.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      External → Local
+    </td>
+    <td align="left">
+      N/A
+    </td>
+    <td align="left">
+      Deny
+    </td>
+    <td align="left">
+      Prevents inbound access to internal resources. This policy is non-editable. To allow traffic in, an explicit policy is required.
+    </td>
+  </tr>
+</table>
+
+These defaults ensure the network remains secure and operational immediately after deployment.
+
+Administrators can add new rules to this policy set to reflect organizational security and compliance needs. Future releases will support multiple policy sets for environments that require site-level customization.
+
+## Modifying Policies
+
+When a policy or any component of a policy is updated, the impact of the change is reflected **not just on new flows, but also on existing flows** that are impacted by the change in near-realtime.  The Nile system is periodically checking for changes that may impact traffic to ensure proper zero trust enforcement.
+
+## East/West and North/South Policy Enforcement
+
+In additton to conventional East/West enforcement within the Zero Trust Fabric, the Trust Engine is capable of supporting enforcement in the North-to-South and South-to-North traffic directions. When an upstream edge Firewall or SD-WAN device exists, consideration of where North-South traffic enforcement occurs is required.
+
+1. Customers have flexibility in deciding which Trust Service policies should be enforced locally and which should be forwarded upstream for enforcement.
+2. Traffic will be subjected to both the set of enforcement policies in the upstream system as well as those defined natively.
+3. For outbound South-to-North traffic, Allow and Forward Upstream actions are synonymous. Traffic that is Allowed in the Zero Trust Fabric can still be blocked by the upstream system.
+4. For inbound North-to-South traffic, any traffic allowed by the upstream firewall is still subjected to any local policies defined that match the inbound traffic.&#x20;
+
+##
+

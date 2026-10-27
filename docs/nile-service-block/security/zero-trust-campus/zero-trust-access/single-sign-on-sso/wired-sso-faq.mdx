@@ -1,0 +1,72 @@
+---
+title: Wired SSO FAQ
+slug: wired-sso-faq
+createdAt: Wed May 08 2024 00:10:21 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Wired SSO Configuration and Behavior]{docCommentId="BTuLn4RjQZ82BRxLEWW7Q" resolved="false"}
+
+**As an admin, do I have control over where and when Wired SSO is enabled?**
+Yes, the admin has control over where Wired SSO is enabled. When creating a segment in the Nile Customer Portal, there will be an option to enable the Wired SSO feature. This feature can only be enabled if an identity provider (IdP) has been configured in the Nile Portal.
+
+Alternatively, the Wired SSO configuration can be accessed through the "Access Management" > "Wired SSO" section, where the admin can enable the feature and select the onboarding and employee segments.
+
+**As an admin, what do I need to do to make Wired SSO work?**
+As an admin, you'll need to complete the following steps to set up Wired SSO:
+
+1. Set up SAML authentication with your identity provider (IdP).
+2. Create a DHCP scope with a short lease time (e.g., 5 minutes). This ensures that devices release their IP addresses and get a new one when the segment changes.
+3. Create an "onboarding" segment and map it to the DHCP scope defined in step 2.
+4. Identify the "employee" segment that authenticated users should be assigned to.
+5. Enable the Wired SSO feature in the Nile Customer Portal and select the onboarding and employee segments.
+
+When Wired SSO is enabled, Nile will automatically create an "ALL" rule that applies the onboarding and employee segment assignments based on the SSO authentication status.
+
+**What happens to devices that are not browser-based and do not match any MAC Auth or OUI rules?**
+Devices that do not match any MAC Auth or OUI rules will be placed in the onboarding segment and marked as "Waiting for Approval" in the Nile Portal. Even though these devices are technically approved, they will not have access to the network due to the captive portal (SSO) requirement.
+
+The admin can manually approve these devices or, if the device can be fingerprinted and a fingerprint rule exists, it can be automatically moved to the appropriate segment. In some scenarios, the device can also be registered through the self-registration portal, which will authorize it while it's in the "Waiting for Approval" state.
+
+**Can Wired SSO be enabled at certain locations only?**
+No, Wired SSO cannot be enabled at specific locations only. It is a global setting that applies to all locations where the configured onboarding and employee segments are used.
+
+**How often does a device have to authenticate via SSO on the wired network?**
+The device has to authenticate via SSO in the following scenarios:
+
+1. If the device has not connected to the network (wired or wireless) for 30 consecutive days.
+2. If the device is seen on a different port than the one it was originally authenticated on (indicating a location change).
+3. If the user changes their password in the IdP (Nile needs to be notified of this event).
+
+Once a device is authenticated, it is added to the MAC Auth table, and subsequent connections to the wired network will not require SSO re-authentication, as the device's MAC address will be recognized.
+
+**What is an "onboarding" segment?**
+The "onboarding" segment is a restricted network segment that only allows access to the customer's IdP portal. All devices that are not capable of 802.1X authentication or are not present in the MAC Auth table will be assigned to this segment and granted an IP address, but they will be blocked from accessing the rest of the network until they successfully authenticate via SSO.
+
+The admin cannot use the onboarding segment for other purposes, such as including it in an OUI or fingerprint rule. The segment must be dedicated to the Wired SSO onboarding process.
+
+**If an IoT device is connected and is not in the MAC Auth table, will it get an IP address?**
+&#x20;Yes, the IoT device will get an IP address from the onboarding segment and will be marked as "Waiting for Approval" in the Nile Portal. It will not have access to the network until it is authenticated via SSO or manually approved by the admin.
+
+**What segment will the device be on after successful SSO authentication?**
+&#x20;After a device successfully authenticates via SSO, it will be moved from the onboarding segment to the employee segment configured during the Wired SSO setup.
+
+If the user has previously connected to the wireless network and been assigned a segment, they will be placed in that same segment. Otherwise, they will be assigned to the employee segment defined in the Wired SSO configuration.
+
+**What is the priority of MAC Auth rules?**
+&#x20;When a device is connected to a wired port, the Nile Access Service will evaluate the following MAC Auth rules in order:
+
+1. Exact MAC address match
+2. Fingerprint match (e.g., Polycom VVX 300)
+3. OUI address match
+4. ALL / Wired Guest / Wired SSO
+
+The "ALL" and onboarding rules are mutually exclusive, meaning only one of them can be configured.
+
+**If a laptop is returned by a user, can we ensure it cannot access the network?**
+&#x20;From the MAC Auth table in the Nile Customer Portal, the admin can delete the MAC address of the user's device or delete the user's entry completely. This will force the device to go through the SSO authentication process again the next time it connects to the network.
+
+**What happens when an employee leaves the company?**
+&#x20;Nile will integrate with the customer's IdP to be notified when an employee leaves the company. All of the employee's associated devices will then be removed from the MAC Auth table, ensuring they can no longer access the network.
+
+**What happens to AD login when a device is not authenticated via SSO?**
+&#x20;The behavior of AD login for devices that are not authenticated via SSO is still to be determined. Nile will need to evaluate whether AD ports can be allowed for authentication in these cases.

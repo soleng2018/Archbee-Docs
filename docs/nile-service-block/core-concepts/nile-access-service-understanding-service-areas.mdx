@@ -1,0 +1,64 @@
+---
+title: Nile Access Service: Understanding Service Areas
+slug: nile-access-service-understanding-service-areas
+createdAt: Fri May 10 2024 21:45:16 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+In the Nile Access Service, **Service Areas** define the geographical scope and coverage of the network infrastructure. Service Areas provide a logical way to group and manage network elements such as switches, access points, and sensors based on their physical location within a customer’s campus or branch environment.
+
+## Benefits of Service Areas
+
+Organizing the Nile Access Service infrastructure into Service Areas offers several key advantages:
+
+**Geographical Segmentation:** Service Areas map Nile network elements to the physical layout of campus or branch locations. This enables better visibility and localized control.
+
+**Granular Policy Management:** By associating network segments, authentication settings, and other configurations with specific Service Areas, you can enforce policies tailored to the needs of each location.
+
+**Simplified Troubleshooting:** When issues occur, the Service Area context helps identify the affected location and its network elements, streamlining troubleshooting.
+
+**Scalable Deployment:** As your organization grows and expands to new sites, additional Service Areas can be created, ensuring consistent network management and user experience across all locations.
+
+**Compliance and Regulatory Alignment:** Service Areas can align configurations and policies with compliance or regulatory requirements that differ across regions.
+
+## Configuring Service Areas in the Nile Customer Portal
+
+To configure Service Areas in the Nile Access Service:
+
+1. **Navigate to Service Areas:** In the Nile Customer Portal, go to *Settings > Service Areas*.
+2. **Create a New Service Area:** Select *Add Service Area*.
+3. **Enter Details:** Provide the following information:
+   - **Name:** A descriptive name such as *Headquarters* or *Branch Office 1*.
+   - **Description:** An optional short description.
+   - **Geo Scope:** Choose the scope, which may be:
+     - **Site:** A logical or physical location, such as a campus or branch.
+     - **Building:** A specific building within a site.
+     - **Floor:** A floor within a building.
+     - **Tags:** Custom tags to group sites.
+     - **Zone:** A defined area within a campus, for example making the guest SSID available only in a lobby zone.
+4. **Configure Segment Assignments:** In the *Segments* tab, assign network segments to the Service Area. This ensures that configurations such as DHCP, authentication, and access policies apply to devices within the defined scope.
+5. **Save:** Select *Save* to finalize the Service Area.
+
+By using these constructs, you can define both geographical and logical groupings that improve clarity and control when managing the Nile Access Service.
+
+## Applying Service Areas to Network Configurations
+
+Once Service Areas are defined, they can be applied across multiple configurations in the Nile Access Service:
+
+- **Segment Configuration:** Associate specific Service Areas with network segments to ensure policies apply to the correct locations.
+- **Authentication Settings:** Map RADIUS servers, SSO providers, and other authentication options to the appropriate geographical area.
+- **Alerts and Monitoring:** The Service Area context is used in the Nile Portal to display location-specific alerts, performance metrics, and troubleshooting details.
+- **Reporting and Analytics:** Service Areas are integrated into reporting and analytics features, allowing you to filter and view usage data by geographical scope.
+
+## Summary
+
+Service Areas are a foundational component of the Nile Access Service. They allow you to organize and manage your infrastructure according to the physical layout of your campuses and branches. By using Service Areas, you can enforce granular access policies, simplify troubleshooting, maintain consistent user experiences across sites, and align with compliance requirements.
+
+For additional details, refer to the following resources:
+
+- :Link[What is the Nile Access Service?]{label="What is the Nile Access Service?" spaceId docId="eW8mEDs6TMrV1MKJq8RjP" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../what-is-the-nile-access-service.mdx"}
+- :Link[Nile's layer 3 only network: Transcending VLANS]{label="Nile's layer 3 only network: Transcending VLANS" spaceId docId="i9Iawst5Yd1IjvP6M_dC3" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="niles-layer-3-only-network-transcending-vlans.mdx"}
+- :Link[Reports]{label="Reports" spaceId docId="M8VRMv1iFCUDgUMa52q2p" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../alerts-and-audits/reports.mdx"}
+
+By understanding and configuring Service Areas, you can unlock the full potential of the Nile Access Service and ensure a seamless, secure, and scalable network infrastructure for your organization.

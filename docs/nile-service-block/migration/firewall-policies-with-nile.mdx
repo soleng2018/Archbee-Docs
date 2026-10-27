@@ -1,0 +1,9 @@
+---
+title: Firewall Policies with Nile
+slug: firewall-policies-with-nile
+createdAt: Thu Dec 12 2024 17:52:55 GMT+0000 (Coordinated Universal Time)
+---
+
+Introduction
+
+This document provides firewall policy recommendations when the Nile Service gateways are L3connected to the Internet/Intranet enterprise firewall.In this case, the Nile Service 1G/10G uplinks are directly connected to one or a pair of firewalls.The connections are layer3 only and the firewall(s) interfaces IP addresses act as defaultgateways for the Nile gateways.Firewall networking designThere are typically two (2) ways that firewalls are connected to the ‘trusted’ enterprise network:VLAN/Subnet terminationDirectThe termination of VLANs and/or subnets is direct, where the firewall acts as the core routingswitch. This is an ideal connectivity for segmenting the internal traffic. VLANs/Subnets aremapped to firewall zones and policies are easily built between zones.Such design is popular with small to medium enterprises (SME), due to its simplicity with thefirewall acting also as a core switch/router.Indirect

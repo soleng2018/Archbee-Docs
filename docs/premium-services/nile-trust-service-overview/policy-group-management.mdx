@@ -1,0 +1,91 @@
+---
+title: Policy Group Management
+slug: policy-group-management
+createdAt: Thu Oct 16 2025 07:51:07 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Policy Groups are at the core of the Nile Trust Service. They define how users, devices, and applications are logically segmented for access control. By classifying endpoints based on identity, device type, or context, administrators can apply policies that align with the enterprise’s security posture without relying on traditional VLANs or static segmentation.
+
+## Understanding Policy Groups
+
+A Policy Group represents a collection of endpoints that share common access requirements. Each endpoint belongs to exactly one Policy Group, ensuring that its access policies are clear and deterministic. The Trust Engine automatically evaluates each user or device during onboarding and assigns it to the most appropriate group based on predefined classification rules.
+
+### Group Types
+
+1. **User Groups** – Endpoints tied to an authenticated user. Commonly used for employees, guests, and contractors.&#x20;
+2. **Device Groups** – Endpoints such as printers, cameras, or IoT devices not associated with user identities.&#x20;
+3. **Application Groups** – Destination endpoints that represent private or public applications.&#x20;
+
+### Default System Groups
+
+Nile automatically creates several predefined groups to simplify configuration:
+
+- **Local:** All endpoints inside the Nile Service Block.&#x20;
+- **External:** All endpoints outside the Service Block.&#x20;
+- **Intranet:** The enterprise’s private address space defined by RFC 1918.&#x20;
+- **Internet:** Public destinations outside the Intranet.&#x20;
+- **Unclassified:** Endpoints that do not match any defined group.&#x20;
+- **Quarantine:** Devices that fail validation or posture checks.&#x20;
+
+These groups are recognized across the Trust Service and can be used as sources or destinations in policy definitions.
+
+## Classification Logic
+
+When an endpoint joins the network, it undergoes classification based on the rules defined for Policy Groups. The Trust Engine evaluates the endpoint against user-based criteria first, followed by device-based criteria. If a match is found, the endpoint is assigned to that group. If multiple matches exist, the system prioritizes the most specific group based on rule ordering.
+
+If an endpoint does not match any criteria, it becomes part of the **Unclassified** group. Devices that fail posture or validation checks are assigned to the **Quarantine** group.
+
+## Managing Policy Groups in Nile Control Center
+
+Administrators can create and manage Policy Groups in the Nile Control Center interface. Each group includes the following configurable parameters:
+
+- **Name and Description:** Human-readable identifiers for easy management.&#x20;
+- **Group Type:** User, Device, or Application.&#x20;
+- **Matching Criteria:** Identity attributes (such as SCIM or RADIUS), network segment, MAC address, or device fingerprint.&#x20;
+- **Validation Settings:** For Enterprise tier customers, continuous validation checks can be enabled using SNMPv3, HTTPS, or SSH to confirm device authenticity.&#x20;
+
+### Creating a Policy Group
+
+1. Navigate to **Trust Service > Policy Groups** in Nile Control Center.&#x20;
+2. Select **Create Group**.&#x20;
+3. Choose the group type (User, Device, or Application).&#x20;
+4. Define the match criteria and optional validation settings.&#x20;
+5. Save the configuration.&#x20;
+
+Once saved, the new group is applied automatically across all Nile Service Blocks in the tenant.
+
+### Modifying Policy Groups
+
+Existing groups can be edited to adjust criteria or metadata. When classification criteria are changed, the Trust Engine recalibrates endpoints in real time, ensuring they remain properly categorized.
+
+### Reassignment and Recalibration
+
+Administrators can manually assign or unassign endpoints to specific groups. When unassigned, an endpoint returns to the **Unclassified** group until it is reassigned or reclassified. Recalibration also occurs automatically when:
+
+- Group criteria are updated.&#x20;
+- A new group is created or deleted.&#x20;
+- Group ordering changes.&#x20;
+
+## Unclassified and Quarantine Groups
+
+Endpoints in the **Unclassified** or **Quarantine** groups require attention from administrators.
+
+- **Unclassified:** Devices or users that do not meet any defined criteria. By default, they have limited access to infrastructure services like DHCP and DNS. Additional access requires explicit policy definition.&#x20;
+- **Quarantine:** Devices that fail security validation. These endpoints are isolated with minimal network access until they pass posture checks or are remediated. Administrators can define policies to allow access to remediation servers or administrative tools.&#x20;
+
+After remediation or revalidation, devices automatically return to their intended Policy Group.
+
+## Best Practices
+
+- Keep classification criteria simple and identity-driven.&#x20;
+- Place the most specific rules higher in the order for accurate classification.&#x20;
+- Use descriptive names for Policy Groups to ensure clarity during troubleshooting.&#x20;
+- Regularly monitor the Unclassified and Quarantine lists to maintain compliance and minimize exposure.&#x20;
+
+## Summary
+
+Policy Group Management provides a clear, identity-based framework for defining security boundaries across users, devices, and applications. Through automated classification, continuous validation, and policy-driven isolation, the Nile Trust Service delivers precise control and visibility into every endpoint in the network.
+
+**Next:** Policies and Service Profiles — Learn how to create access policies and service profiles to define and enforce communication rules across the network.

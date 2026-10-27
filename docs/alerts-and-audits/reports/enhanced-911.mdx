@@ -1,0 +1,36 @@
+---
+title: Enhanced 911
+slug: enhanced-911
+createdAt: Wed Oct 02 2024 22:55:12 GMT+0000 (Coordinated Universal Time)
+---
+
+**E911 (Enhanced 911)** is an advanced version of the traditional 911 emergency calling system, designed to deliver more accurate and specific information about the caller’s location, along with the callback number. Providing a precise location is crucial, as it significantly reduces the search area, allowing emergency responders to reach the 911 caller faster.
+
+A key feature of E911 is the Emergency Location Identification Number (ELIN), which is assigned to specific locations within a building or campus. This, combined with the Emergency Response Location (ERL), helps to provide a more detailed and accurate representation of where an emergency call originates. To ensure emergency services receive this critical data, the system must be able to map individual phones or extensions to the corresponding ERLs, giving responders more granular location details.
+
+To support accurate emergency response, Nile offers several critical data points that help identify the location of endpoints within an organization:
+
+**Key Location Data Points Provided by Nile:**
+
+**1. MAC Address**
+
+In enterprise environments, each endpoint (IP phone, softphone, etc.) has a unique MAC address. Administrators can track these MAC addresses to identify specific devices within the network. Each MAC address can be associated with a particular switch port or wireless access point, allowing the system to pinpoint the device's physical location.
+
+**2. Wireless Access Point (Wi-Fi) Location**
+
+For wireless devices, the location can be inferred based on the Wireless Access Point (WAP) to which the device is connected. Using the BSSID (Basic Service Set Identifier), which uniquely identifies the access point, the system can provide an approximate location of the endpoint within the Wi-Fi coverage area.
+
+**3. Switch Port Mapping**
+
+Each network switch port is linked to a specific physical location, such as a desk or office. When an IP phone is connected to a switch port, its physical location can be determined using the Switch MAC Address. This method allows administrators to map devices to precise locations within the building or campus network.
+
+**4. IP Address and Subnet Information**
+
+The assignment o&#x66;**&#x20;IP addresses** can also help determine the general location of an endpoint, particularly if the network is configured with location-specific subnets. This method can be used to identify which floor, department, or area the endpoint is located in, based on the IP address or subnet range.
+
+**Nile’s CSV File Download for Emergency Responder Integration**
+
+To facilitate seamless integration with emergency services, Nile provides these key data points in a CSV file format. This file can be manually entered or imported into an Emergency Responder system, ensuring that accurate location data is readily available to first responders when an emergency occurs.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/aSYuZZ3tSuOso-3wX7yNO_image.png "CSV Download ")
+

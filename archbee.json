@@ -1,0 +1,1024 @@
+{
+  "docsPath": "docs/",
+  "structure": {
+    "assets": "assets/",
+    "docsTree": [
+      {
+        "categoryName": "New Features Update",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "new-features-update/whats-new-at-nile.mdx",
+            "children": []
+          },
+          {
+            "path": "new-features-update/july-2025-feature-update.mdx",
+            "children": [],
+            "isHidden": true
+          },
+          {
+            "path": "new-features-update/march-2025-feature-update.mdx",
+            "children": [],
+            "isHidden": true
+          },
+          {
+            "path": "new-features-update/december-2024-feature-update.mdx",
+            "children": [],
+            "isHidden": true
+          },
+          {
+            "path": "new-features-update/november-2024-feature-update.mdx",
+            "children": [],
+            "isHidden": true
+          },
+          {
+            "path": "new-features-update/october-2024-feature-update.mdx",
+            "children": [],
+            "isHidden": true
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "path": "exploring-nile-videos.mdx",
+        "children": []
+      },
+      {
+        "path": "become-nile-certified.mdx",
+        "children": []
+      },
+      {
+        "path": "what-is-the-nile-access-service.mdx",
+        "children": []
+      },
+      {
+        "path": "nile-service-block.mdx",
+        "children": [
+          {
+            "categoryName": "Core Concepts",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "nile-service-block/core-concepts/nile-access-service-understanding-service-areas.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/niles-layer-3-only-network-transcending-vlans.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/integrating-routers-with-the-nile-access-service.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/nile-dhcp-integration.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/passive-device-management-and-handling-wired.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/static-ip-management.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/niles-channel-planner-rf-optimization.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/mdns-handling-in-niles-layer-3-network.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/qos-within-nile-service-block.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/multicast-on-the-nile-access-service.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/core-concepts/nile-mesh.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "categoryName": "Hardware and Scaling",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "nile-service-block/hardware-and-scaling/nile-network-elements.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/hardware-and-scaling/datasheets.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/hardware-and-scaling/scaling-the-nile-network.mdx",
+                "children": [],
+                "isHidden": true
+              }
+            ]
+          },
+          {
+            "categoryName": "Security",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "nile-service-block/security/role-based-access-control.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/security/zero-trust-campus.mdx",
+                "children": [
+                  {
+                    "path": "nile-service-block/security/zero-trust-campus/zero-trust-network.mdx",
+                    "children": []
+                  },
+                  {
+                    "path": "nile-service-block/security/zero-trust-campus/zero-trust-access.mdx",
+                    "children": [
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/wired-unified-authentication.mdx",
+                        "children": []
+                      },
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/8021x-wired-and-wireless.mdx",
+                        "children": []
+                      },
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/mac-authentication.mdx",
+                        "children": [
+                          {
+                            "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/mac-authentication/nile-wired-access-management-faq.mdx",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/single-sign-on-sso.mdx",
+                        "children": [
+                          {
+                            "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/single-sign-on-sso/wired-sso-faq.mdx",
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/upsk-and-self-registration.mdx",
+                        "children": []
+                      },
+                      {
+                        "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/guest-access.mdx",
+                        "children": [
+                          {
+                            "path": "nile-service-block/security/zero-trust-campus/zero-trust-access/omqs1nnywvkzh0xyrbzb/guest-access-codes-api.mdx",
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "path": "nile-service-block/security/zero-trust-campus/zero-trust-policy.mdx",
+                    "children": [],
+                    "isHidden": true
+                  }
+                ]
+              },
+              {
+                "path": "nile-service-block/security/widswips.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/security/palo-alto-prisma-sse-connectivity-as-a-service.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/security/zscaler-sse-connectivity-as-a-service.mdx",
+                "children": []
+              }
+            ],
+            "isFoldedByDefault": true
+          },
+          {
+            "categoryName": "Migration",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "nile-service-block/migration/firewall-policies-with-nile.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/migration/migration-process-and-strategies.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-service-block/migration/migration-topologies.mdx",
+                "children": []
+              }
+            ]
+          }
+        ],
+        "isFoldedByDefault": false
+      },
+      {
+        "path": "service-descriptions.mdx",
+        "children": [],
+        "isHidden": true
+      },
+      {
+        "categoryName": "Premium Services",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "premium-services/nile-trust-service.mdx",
+            "children": [
+              {
+                "path": "premium-services/nile-trust-service/traffic-enforcement-with-nile-trust-engine.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/trust-service-constructs-overview.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/understanding-policy-groups.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/default-system-groups.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/understanding-policies-and-policy-sets.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/policy-logging.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/m1yz-getting-started-with-trust-service.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service/nile-trust-service-migration-guide.mdx",
+                "children": []
+              }
+            ],
+            "isFoldedByDefault": true,
+            "isHidden": false
+          },
+          {
+            "path": "premium-services/nile-radius.mdx",
+            "children": []
+          },
+          {
+            "path": "premium-services/nile-trust-service-draft.mdx",
+            "children": [
+              {
+                "path": "premium-services/nile-trust-service-overview/traffic-enforcement-with-the-nile-trust-engine.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service-overview/trust-engine-constructs-and-policy-model.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service-overview/policy-group-management.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service-overview/policies-and-service-profiles.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service-overview/getting-started-with-trust-service.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-trust-service-overview/migration-overview.mdx",
+                "children": []
+              }
+            ],
+            "isHidden": true
+          },
+          {
+            "path": "premium-services/nile-guest-service.mdx",
+            "children": [
+              {
+                "path": "premium-services/nile-guest-service/nile-guest-services-options.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-guest-service/url-filtering.mdx",
+                "children": []
+              },
+              {
+                "path": "premium-services/nile-guest-service/restrict-service-to-specific-geoscopes.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "premium-services/nile-cloud-dhcp.mdx",
+            "children": []
+          },
+          {
+            "path": "premium-services/nile-edge-service.mdx",
+            "children": [
+              {
+                "path": "premium-services/p2cwmmlrwpieajh1yvjhx/ipsec-hub-connectivity.mdx",
+                "children": []
+              }
+            ]
+          }
+        ],
+        "isFoldedByDefault": false
+      },
+      {
+        "path": "nile-service-deployment-steps.mdx",
+        "children": []
+      },
+      {
+        "categoryName": "Nile Portal Setup",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "nile-portal-setup/setup-flow.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-service-areas.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-dhcp.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-authentication.mdx",
+            "children": [
+              {
+                "path": "nile-portal-setup/otosur4kv1fjnjxmavat/setup-guide-for-nile-cloud-radius.mdx",
+                "children": [],
+                "isFoldedByDefault": false
+              }
+            ]
+          },
+          {
+            "path": "nile-portal-setup/setup-guest-portal.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-segments.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-wirelessssid.mdx",
+            "children": [
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-a-8021x-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-a-psk-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-a-psk-sso-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-a-upsk-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-wireless-mac-auth-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-nile-captive-portal-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/setup-own-hosted-captive-portal-ssid.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wirelessssid/wifi-security-operating-modes.mdx",
+                "children": [],
+                "isHidden": true
+              }
+            ]
+          },
+          {
+            "path": "nile-portal-setup/setup-wired-authentication.mdx",
+            "children": [
+              {
+                "path": "nile-portal-setup/setup-wired-authentication/mlhe-setup-mac-authentication.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wired-authentication/setup-device-fingerprinting.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wired-authentication/setup-switch-hostname-and-port-auth.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wired-authentication/setup-wired-secured-guest-and-wired-sso.mdx",
+                "children": []
+              },
+              {
+                "path": "nile-portal-setup/setup-wired-authentication/setup-mac-authentication.mdx",
+                "children": [],
+                "isHidden": true
+              }
+            ]
+          },
+          {
+            "path": "nile-portal-setup/configure-alerts.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-access-engine-policies.mdx",
+            "children": []
+          },
+          {
+            "path": "nile-portal-setup/setup-guide-for-nile-trust-service.mdx",
+            "children": []
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "categoryName": "Integrations",
+        "isCategory": true,
+        "children": [
+          {
+            "categoryName": "Firewall",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "integrations/firewall/generic-upstream-firewall-guide.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/firewall/integration-of-nile-access-service-with-palo-alto-prisma-sase-provider.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/firewall/fortinet-fortigate-fw.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "Palo Alto Network’s Next-Generation Firewall  Nile",
+                "isCategory": false,
+                "path": "integrations/firewall/palo-alto-networks-ngfw.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/firewall/palo-alto-networks-xml-api.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/firewall/nile-segments-mapping-to-fw-zones.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/firewall/velocloud-sd-wan.mdx",
+                "children": [],
+                "isHidden": false
+              },
+              {
+                "path": "integrations/firewall/cato-sockets-integration-with-nile.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "categoryName": "RADIUS",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "integrations/radius/aruba-clearpass-radius.mdx",
+                "children": [
+                  {
+                    "path": "integrations/radius/radius-aruba-clearpass/integrating-aruba-clearpass-for-dynamic-segment-assigment.mdx",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "integrations/radius/cisco-identity-service-engine-ise-radius.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/radius/microsoft-nps.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/radius/secure-w2-cloud-radius-integration.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/radius/nile-cloud-radius-integration-with-entra-id-scim.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/radius/nile-cloud-radius-integration-with-intune.mdx",
+                "children": [],
+                "isHidden": false
+              }
+            ]
+          },
+          {
+            "categoryName": "Identity Providers (IdP)",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "integrations/identity-providers-idp/nile-integration-with-google-workspace-for-sso-setup.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/identity-providers-idp/microsoft-entra-id.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/identity-providers-idp/okta.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/identity-providers-idp/okta-saml-integration.mdx",
+                "children": [],
+                "isHidden": true
+              },
+              {
+                "path": "integrations/identity-providers-idp/azure-active-directory.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "categoryName": "SIEM & Monitoring",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "integrations/siem-and-monitoring/crowdstrike-falcon-ng-siem.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/generic-http-connector.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/splunk-siem.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/sumo-logic.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/nile-siem-event-schema.mdx",
+                "children": [
+                  {
+                    "path": "integrations/siem-and-monitoring/nile-siem-event-schema/version-1-siem-event-schema.mdx",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "path": "integrations/siem-and-monitoring/logicmonitor.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/snowflake.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/webhook-integration-send-alerts-to-servicenow.mdx",
+                "children": [
+                  {
+                    "path": "integrations/siem-and-monitoring/webhook-integration-send-alerts-to-servicenow/webhook-enhancements.mdx",
+                    "children": []
+                  }
+                ],
+                "isHidden": false
+              },
+              {
+                "path": "integrations/siem-and-monitoring/slack-integration.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/siem-and-monitoring/webhook-integration-servicenow-tickets.mdx",
+                "children": [],
+                "isHidden": true
+              },
+              {
+                "path": "integrations/siem-and-monitoring/nile-siem-integration-pull-mode.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "categoryName": "Other Integrations",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "integrations/other-integrations/mac-address-bypass-mab-api.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "Palo Alto Network’s Next-Generation Firewall  Nile",
+                "isCategory": false,
+                "path": "integrations/other-integrations/palo-alto-networks-ngfw-new.mdx",
+                "children": [],
+                "isHidden": true
+              },
+              {
+                "path": "integrations/other-integrations/fortinet-fortigate-fw-vswitch.mdx",
+                "children": [],
+                "isHidden": true
+              },
+              {
+                "path": "integrations/other-integrations/infoblox-nios.mdx",
+                "children": []
+              },
+              {
+                "path": "integrations/other-integrations/infoblox-ddns-integration.mdx",
+                "children": []
+              }
+            ]
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "categoryName": "SLA",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "sla/nile-slas.mdx",
+            "children": []
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "path": "wi-fi-security-modes-and-client-capability-interoperability-matrix.mdx",
+        "children": []
+      },
+      {
+        "categoryName": "Alerts and Audits",
+        "isCategory": true,
+        "children": [
+          {
+            "categoryName": "Nile Portal Alerts",
+            "isCategory": true,
+            "children": [
+              {
+                "categoryName": "newNilePortalAlerts_Application Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/application-alerts.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Client Device Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/client-device-alerts.mdx",
+                "children": [
+                  {
+                    "path": "alerts-and-audits/nile-portal-alerts/newnileportalalertsclient-device-alerts/radius-alerts-for-client-devices.mdx",
+                    "children": []
+                  },
+                  {
+                    "path": "alerts-and-audits/nile-portal-alerts/newnileportalalertsclient-device-alerts/dns-alerts-for-client-devices.mdx",
+                    "children": []
+                  },
+                  {
+                    "path": "alerts-and-audits/nile-portal-alerts/newnileportalalertsclient-device-alerts/dhcp-alerts-for-client-devices.mdx",
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Configure Nile Portal Alert notification emails",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/configure-nile-portal-alert-notification-emails.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Customer Infrastructure Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/customer-infrastructure-alerts.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Nile Infrastructure Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/nile-infrastructure-alerts.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Nile Security Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/nile-security-alerts.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "newNilePortalAlerts_Nile Service Alerts",
+                "isCategory": false,
+                "path": "alerts-and-audits/nile-portal-alerts/nile-service-alerts.mdx",
+                "children": []
+              },
+              {
+                "path": "alerts-and-audits/nile-portal-alerts/configure-email-notifications.mdx",
+                "children": []
+              },
+              {
+                "path": "alerts-and-audits/nile-portal-alerts/nile-sms-alerts.mdx",
+                "children": []
+              }
+            ],
+            "isFoldedByDefault": true
+          },
+          {
+            "path": "alerts-and-audits/reports.mdx",
+            "children": [
+              {
+                "path": "alerts-and-audits/reports/view-devices-and-device-details.mdx",
+                "children": []
+              },
+              {
+                "path": "alerts-and-audits/reports/summary-dashboard-nile-portal-usage-metrics.mdx",
+                "children": []
+              },
+              {
+                "path": "alerts-and-audits/reports/enhanced-911.mdx",
+                "children": []
+              }
+            ],
+            "isFoldedByDefault": false
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "categoryName": "General Administration",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "general-administration/nile-data-retention.mdx",
+            "children": []
+          },
+          {
+            "path": "general-administration/nile-support-access.mdx",
+            "children": []
+          },
+          {
+            "path": "general-administration/allowed-domains.mdx",
+            "children": []
+          },
+          {
+            "path": "general-administration/setup-administrators.mdx",
+            "children": []
+          },
+          {
+            "path": "general-administration/transferring-a-root-account.mdx",
+            "children": []
+          },
+          {
+            "path": "general-administration/account-management.mdx",
+            "children": [
+              {
+                "path": "general-administration/account-management/work-orders.mdx",
+                "children": [],
+                "isHidden": true
+              }
+            ],
+            "isHidden": true
+          },
+          {
+            "path": "general-administration/custom-hostname-for-nile-elements.mdx",
+            "children": []
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "categoryName": "Monitoring and Troubleshooting",
+        "isCategory": true,
+        "children": [
+          {
+            "path": "monitoring-and-troubleshooting/3PgErpUwj03WkQlQyVItM.mdx",
+            "children": []
+          },
+          {
+            "path": "monitoring-and-troubleshooting/my-nile.mdx",
+            "children": [],
+            "isHidden": false
+          },
+          {
+            "path": "monitoring-and-troubleshooting/severity-based-notification-triggers.mdx",
+            "children": []
+          },
+          {
+            "path": "monitoring-and-troubleshooting/led-status.mdx",
+            "children": []
+          },
+          {
+            "categoryName": "Nile Service Block",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "monitoring-and-troubleshooting/nile-service-block/nile-device-inventory.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/nile-service-block/nile-network-topology.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/nile-service-block/access-point-details.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/nile-service-block/how-to-find-serial-numbers-on-nile-service-block-network-elements.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_Access Switch_NSW1000 LED indications",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/nile-service-block/access-switchnsw1000-led-indications.mdx",
+                "children": [],
+                "isHidden": true
+              },
+              {
+                "categoryName": "Helpdesk  Nile Customer Support",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/nile-service-block/access-switchnsw1000-led-indicators.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/nile-service-block/what-do-the-colors-of-the-nile-access-point-ap-led-mean.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "categoryName": "Wireless Connections",
+            "isCategory": true,
+            "children": [
+              {
+                "path": "monitoring-and-troubleshooting/wireless-connections/configured-device-with-wireless-8021x-not-able-to-connect.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_Clients not getting IP address",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/clients-not-getting-ip-address.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_Can we block a wireless client via the dashboard_",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/can-we-block-a-wireless-client-via-the-dashboard.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_How to access _my.nilesecure.com_",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/how-to-access-mynilesecurecom.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_How to check Wireless Client Roaming information_",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/how-to-check-the-wireless-clients-location-and-roaming-information.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_How to check Wireless Client Signal strength",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/how-to-check-wireless-client-signal-strength.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_Wireless Client connection history logs.",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/wireless-client-connection-history-logs.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/wireless-connections/wireless-intrusion-detection-and-prevention-in-the-nile-access-service.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_Wireless Performance issue Troubleshooting",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/wireless-performance-issue-troubleshooting.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleWirelessConn_Wireless printer is not able to get an IP address but works fine with Wired connection",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wireless-connections/wireless-printer-is-not-able-to-get-an-ip-address-but-works-fine-with-wired-connection.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "monitoring-and-troubleshooting/what-is-aqi-air-quality-index-and-how-is-it-calculated-what-is-aqi-air-quality-index-and-how-is-it-calculated-cloned.mdx",
+            "children": []
+          },
+          {
+            "categoryName": "Wired Connections",
+            "isCategory": true,
+            "children": [
+              {
+                "categoryName": "troubleshootingWiredConn_Configured device with Wired 802.1X_ not able to connect",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/configured-device-with-wired-8021x-not-able-to-connect.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_Wired client is not able to connect",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/wired-client-is-not-able-to-connect.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_How I could check if Wired Device connected with MAB Authentication",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/how-i-could-check-if-wired-device-connected-with-mab-authentication.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_Find Unknown MAC addresses pending approval_",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/find-unknown-mac-addresses-pending-approval.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_Power-on-Ethernet request failed - not working",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/power-on-ethernet-request-failed-not-working.mdx",
+                "children": []
+              },
+              {
+                "categoryName": "troubleshootingWiredConn_How to detect Rogue AP in NSB",
+                "isCategory": false,
+                "path": "monitoring-and-troubleshooting/wired-connections/how-to-detect-rogue-ap-in-nsb.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/wired-connections/dns-troubleshooting-using-nile-portal.mdx",
+                "children": []
+              },
+              {
+                "path": "monitoring-and-troubleshooting/wired-connections/how-to-view-internet-connection-issues.mdx",
+                "children": []
+              }
+            ]
+          },
+          {
+            "path": "monitoring-and-troubleshooting/monitoring-latency-on-infrastructure-services.mdx",
+            "children": []
+          },
+          {
+            "path": "monitoring-and-troubleshooting/discover-top-network-users.mdx",
+            "children": []
+          },
+          {
+            "path": "monitoring-and-troubleshooting/maintenance-window.mdx",
+            "children": []
+          }
+        ],
+        "isFoldedByDefault": true
+      },
+      {
+        "path": "nile-co-pilot-chatbot.mdx",
+        "children": [],
+        "isHidden": true
+      },
+      {
+        "path": "msps-managing-customer-tenants.mdx",
+        "children": [],
+        "isHidden": false
+      },
+      {
+        "path": "nile-academy-on-boarding-and-access-for-nile-staff.mdx",
+        "children": []
+      }
+    ]
+  },
+  "shadowDocs": [],
+  "autoMerge": false
+}

@@ -1,0 +1,33 @@
+---
+title: Integrating Aruba Clearpass for Dynamic Segment Assigment
+slug: integrating-aruba-clearpass-for-dynamic-segment-assigment
+createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
+---
+
+### Introduction
+
+The Nile Access Service supports integration with Aruba ClearPass, a leading network access control (NAC) solution, to enable dynamic segment assignment based on user and device attributes.
+
+### Configure Nile to Use Aruba ClearPass as Authentication Server
+
+1. In the Nile Customer Portal, navigate to "Settings" > "Authentication" and click the "Add" button to configure a new authentication server.
+2. Enter the required details, including the ClearPass server's name, IP address, port, and shared secret.
+3. Select the appropriate geographical scope (Geo Scope) for the ClearPass server.
+4. Click "Verify Hosts" to test the connection to the ClearPass server.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uLEzSpKoXYDXwTziHjIxE_add-auth.png)
+
+### Configure ClearPass for Nile Integration
+
+1. Import the Nile dictionary file into the ClearPass RADIUS dictionary. This file contains the necessary vendor-specific attributes (VSAs) used for dynamic segment assignment.
+2. Add the Nile Service Block (NSB) as a network device in the ClearPass Policy Manager, specifying the NAS IP address and RADIUS shared secret.
+3. Create a new 802.1X wireless service in the ClearPass Policy Manager, leveraging the local identity store.
+4. Configure the Enforcement Profile for the 802.1X service to include the "netseg" attribute, which will be used to dynamically assign the user or device to the appropriate network segment in the Nile Access Service.
+
+## Verify Authentication and Segment Assignment
+
+1. In the Nile Customer Portal, navigate to the "Devices" section and select a device that has recently authenticated.
+2. Review the "Events" details to verify the RADIUS authentication information, including the assigned network segment.
+3. You can also check the user authentication logs in the Aruba ClearPass Policy Manager for additional troubleshooting.
+
+By integrating Aruba ClearPass with the Nile Access Service, organizations can leverage the advanced network access control features of ClearPass, such as device profiling and posture assessment, while benefiting from the dynamic segment assignment capabilities of the Nile platform.

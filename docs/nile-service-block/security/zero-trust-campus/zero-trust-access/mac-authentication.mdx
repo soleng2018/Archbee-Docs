@@ -1,0 +1,208 @@
+---
+title: MAC Authentication
+slug: mac-authentication
+createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
+---
+
+# :Comment[MAC Auth]{docCommentId="e_i_0q-r5RTV-6WTjZn_W" resolved="true"}
+
+The Nile Access Service is built on the principles of a "Zero Trust Campus," ensuring that no user or device is implicitly trusted. As part of this security model, the Nile Access Service supports :Comment[MAC Auth]{docCommentId="2aSxSL3Z1JEsOqdUcMsmz" resolved="true"}:Comment[as]{docCommentId="l0m4rR-P92PwsiKTzZ61Q" resolved="true"} an authentication method for devices that :Comment[cannot accommodate the 802.1X standard.]{docCommentId="nV0lUs5g-7mEtczK-TvMa" resolved="true"} When a device connects to a Nile Switch, its MAC address is learned and sent to the Nile Cloud or External RADIUS server for authentication. If the device is successfully authenticated a Segment name is returned to the NSB. The device is then assigned the segment and traffic is allowed.
+
+## Nile Cloud MAC Authentication
+
+By default when a device connects to the Nile Switch it will show up in the Nile Portal as "Waiting for approval". This device can then be manually approved or denied. If approved a segment will be assigned to it. Approving or denying each individual device can be cumbersome. So Nile provides the ability for an admin to create pre-define rules. The following are the rules that can be created:
+
+1. Exact Match Address - The admin can create an entry with an MAC address
+2. Fingerprint Rule - Nile has an exhaustive list of fingerprints in its database. So a rule based on fingerprint can be created e.g. Devices matching "HP Printer" should be assigned the printer segment
+3. OUI - Create a rule based on the first 3 octets of a MAC address
+4. Catch All rule - If none of the rules are not matched a device can be mapped to a segment using this rule
+
+All these rules are optional but its recommended to create rules&#x20;
+
+<ExpandableHeading isOpen="true">
+  ### :Comment[MAC Auth: Address matching process]{docCommentId="yLSbuhZXAJXS21s6yj23x" resolved="true"}
+
+  When a client connects to the Nile Service Block (NSB) and MAC Authentication is enabled, the following matching rules are applied to determine the client's authorization and network segment assignment:
+
+  1. **Exact MAC Address Match**:
+     - If the client's MAC address exactly matches an entry in the MAC Auth table, the client is authorized and placed in the configured network segment.
+     - If no exact MAC address match is found, the process moves to the next rule.
+  2. **Device Fingerprint Match**:
+     1. If the client does not match any of the previous rules, the system attempts to match the client's device fingerprint against the configured fingerprint-based rules.
+     2. The device fingerprint is determined based on factors like MAC address, DHCP, DNS transactions, and User-Agent data.
+     3. If no fingerprint match is found, the process moves to the next rule.
+  3. **OUI Match**:
+     - If the client's Organizational Unique Identifier (OUI) - the first 24 bits of the MAC address - matches a configured OUI-based rule, the client is authorized and placed in the corresponding network segment.
+     - If no OUI match is found, the process moves to the next rule.
+  4. **Catch-All Match**:
+     - If the client does not match the exact MAC address, fingerprint or OUI-based rules, the system checks the "Catch-All" rule.
+     - The Catch-All rule can be configured to either allow the client and place it in a specific network segment, or self serve with Wired SSO.
+     - If Fingerprint based rules are being used, its strongly recommended to have the Catch-all rule. Once the device gets an IP address and passes some traffic like DNS or user-agent, it can get accurately fingerprinted and then moved to the appropriate segment. For example Define a rule defined as "Allow HP Printer on the printer segment". When the printer connects to the network, it may not get fingerprinted right away. But once it falls in the all rule, gets an IP and passes some traffic, it will get fingerprinted and moved to the printer segment
+</ExpandableHeading>
+
+### Setup MAC Auth
+
+Nile provides flexible options for configuring MAC Auth within the Nile Access Service:
+
+**Uploading a MAC Address List:**:Comment[ You ]{docCommentId="4J5aC8MdvxxbFI3Ltaoqd" resolved="true"}can upload a list of MAC addresses for wired MAC authentication by navigating to the Nile Portal (Network Setup > Access Management > Wired) and providing the following information:
+
+- OUI/MAC/Name (mandatory) - Either enter a MAC address or OUI or a Fingerprint value
+- Description (optional) - An admin can provide a description for this device
+- Segment: The network segment to which the device should be assigned (required for "Allow" status, optional for "Deny")
+- Geoscope (optional) Site, Building, Floor: Restrict the device to a specific geographical location. The default is ALL geoscopes which means a device can be plugged into any switch at any site assuming "Lock to port" is not set.
+- Status (mandatory): Specify whether to allow or deny access for the device
+- Lock to Port (optional): The "Lock to Port" feature automatically locks the device to the switch port where it first achieved successful authentication. For example; when a VOIP phone is connected to the network, the admin may choose to lock it to a port to ensure its location is not changed. If this phone is moved to a different port on the same switch or different switch, it will be denied access
+- Allow ALL MACs (optional) - Catch all rule for devices that don't match and criteria's.
+- Wired SSO (optional) - If a device falls in the ALL category, enable SSO and move the device to an employee segment
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AuxSy-KixdkoIA5gjp_of_upload-csv.png)
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fMMaPJaVWQ63swXisrPp__add-device.png)
+
+## :Comment[M]{docCommentId="Oy8sg82cuGyGmcIm2EDiC" resolved="false"}AC AUTH with External RADIUS server
+
+MAC authentication is a mandatory for all devices that don't support 802.1X. But admins have the choice to use MAC auth with their own RADIUS server as opposed to Nile Cloud.
+
+When a RADIUS server is created and the "Wired Auth" checkbox is checked; Nile will do a MAC Auth with the external radius server.
+
+Note: External RADIUS Servers must be configured to return a segment name with authentication to ensure the device is placed in the correct segment. Refer to the expandable header below for details.
+
+<ExpandableHeading isOpen="true">
+  ### Segment Assignment with RADIUS
+
+  In some use cases, a single SSID can be mapped to multiple segments in the Nile Access Service. In such scenarios, it is mandatory for the RADIUS server to send back the exact segment name that the user or device should be assigned to.&#x20;
+
+  For example; A university SSID could have both Faculty and Student segments mapped, allowing each to access their specific resources without needing multiple SSIDs. As well as being very convenient for users, it reduces the issues that can occur when VLAN locked SSIDs proliferate.
+
+  The segment assignment can be achieved in two ways:
+
+  - **Vendor-Specific Attribute (Nile Dictionary File)**: The Nile dictionary file needs to be uploaded into the RADIUS server, and the "netseg" attribute should be leveraged. For example, the RADIUS server should send "netseg=Teacher" or "netseg=Student" when authenticating users. The "netseg" value is case-sensitive and must match the segment names configured in the Nile Customer Portal.
+
+  <CodeblockTabs>
+    Nile custom dictionary file
+
+    ```none
+    VENDOR  Nile    58313
+
+    BEGIN-VENDOR    Nile
+
+    ATTRIBUTE       redirect-url    1       string
+    ATTRIBUTE       netseg          2       string
+    ATTRIBUTE       nile-avpair     3       string
+
+    END-VENDOR      Nile
+    ```
+  </CodeblockTabs>
+
+  - **Standard RADIUS Attribute**: If the RADIUS server does not support uploading a custom dictionary file, the segment name can be sent using the standard RADIUS attribute "Tunnel-Private-Group-ID".
+
+  If the segment name sent by the RADIUS server is null or does not match the configured segments in Nile, the device will fail authentication with the appropriate error message.
+
+  <hint type="info">
+    Note that if the SSID is mapped to only one segment in the Nile Access Service, the use of the Nile dictionary file or the standard RADIUS attribute is not required.
+  </hint>
+</ExpandableHeading>
+
+By understanding the role of MAC Auth within the Nile Access Service and the available configuration options, you can ensure that non-802.1X capable devices are granted secure network access while maintaining the principles of the Zero Trust Campus.
+
+### Summary
+
+In summary, the Nile Access Service's implementation of MAC Auth is a vital component of our comprehensive authentication framework. Nile's flexible MAC Auth configuration options, including MAC address lists, auto-MAC Auth for specific device types, and advanced security controls like port locking and geographical restrictions, empower organizations to extend secure network access to a wide range of devices, including those that cannot support 802.1X.
+
+Furthermore, Nile's innovative approach to network segmentation, which transcends traditional VLAN-based models, enhances the benefits of MAC Auth :Link[The Nile Access Service's Layer 3 segmentation]{href="https://docs.nilesecure.com/niles-layer-3-only-network-transcending-vlans" newTab="true" hasDisabledNofollow="false"}, driven by user identity, device attributes, and application requirements, enables granular access controls and micro-segmentation. This powerful combination of MAC Auth and Nile's advanced segmentation strategy helps enterprises maintain a robust security posture while accommodating diverse connectivity needs, in alignment with Zero Trust principles.
+
+By leveraging the flexibility and security of MAC Auth within Nile's innovative network architecture, organizations can confidently provide secure access to a wide range of devices, minimizing the attack surface and reducing the risk of lateral movement. As a key part of the Nile Access Service's authentication framework, MAC Auth contributes to the overall effectiveness of this cloud-native network solution in helping enterprises build resilient, agile, and highly secure network environments.
+
+<ExpandableHeading isOpen="true">
+  ### :Comment[ Nile Wired Access Management FAQ]{docCommentId="yoUXNGJ6BiVrnkCPm4nFE" resolved="false"}
+
+  ### Why do we need Wired Access Management?
+
+  Nile requires all wired devices to be authenticated before accessing the network. The Nile Access Service supports three different wired authentication methods:
+
+  1. Wired 802.1X authentication (requires a RADIUS server)
+  2. Wired RADIUS MAC authentication (requires a RADIUS server)
+  3. Nile Portal Wired Access management authentication
+
+  ### Can I upload a list of Wired pre-approved devices to Access Management?
+
+  Yes, you can upload a list of pre-approved devices to the Nile Access Management by uploading a CSV file via the Nile Portal (Network Setup > Access Management > Wired). The CSV file should include the following information:
+
+  - MAC address: The device's MAC address (mandatory)
+  - Segment: The network segment the device will be assigned to (required for "Allow" status, optional for "Deny")
+  - Lock to Port: Lock the device to a specific switch port (optional)
+  - Site, Building, Floor: Restrict the device to a specific geographical location (optional)
+  - Allow or Deny: Specify whether to allow or deny access for the device (mandatory)
+
+  ### Can I Disable Nile Wired Device Authentication?
+
+  No, the Nile network is designed with security best practices, and you cannot disable wired device authentication entirely. However, you can add a catch-all "allow all" policy (not recommended) to grant network access to all devices, assigning them to a specific segment. This policy can be enabled in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device > Allow all MACs).
+
+  ### Can I Enable Nile Auto Wired Device Authentication for a Specific Vendor or Device Type?
+
+  Yes, you can create a wired device authentication policy for a specific device vendor or type using the Organizational Unique Identifier (OUI). The OUI is the first 24 bits of a MAC address that is used as a globally unique identifier assigned by the IEEE to identify network devices.You can enable the OUI-based policy in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device > OUI/MAC), where you can select the segment, status (Approved/Denied), and geographical scope for the OUI-based policy.
+
+  ### What is Nile Wired Access Management Lock to Port?
+
+  The "Lock to Port" feature will lock a device's approval to a specific Nile switch port when the device connects for the first time. If the wired device is moved to a different port or a different switch, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again.You can enable the "Lock to Port" feature in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and optionally choosing the geographical scope.
+
+  ### What is Wired Access Management Geo Scope?
+
+  The Wired Access Management Geo Scope is a feature that limits wired device authentication pre-approval to a specific location (site, building, or floor). If a wired device is moved to a different location, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again.You can enable the Geo Scope in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and choosing the geographical scope (site, building, or floor). The admin can view this information in the MAB table
+
+  ### Can Administrators Pre-Approve Devices Based on Device Make, Model, or Software?
+
+  Yes, the Nile Access Service can fingerprint devices and allows administrators to create fingerprint-based rules to pre-approve devices. You can navigate to "Network Setup> Access Management > Wired > Add Devices" in the Nile Customer Portal. Nile has an extensive database of device models, makes, and operating systems that can be used to create these rules. When you start typing the name of your device, the system will auto-populate and display the matching entries in our database.
+
+  ### What If My Device is Not in Nile's Database?
+
+  If your device is not in the Nile database, the administrator will need to use the MAC address or Organizational Unique Identifier (OUI) for pre-approval. You can reach out to Nile support and provide the details of your device, so it can be reviewed and added to the database at a later date.
+
+  ### How Does Fingerprint-Based Approval Work?
+
+  Nile's device fingerprinting works as follows:
+
+  1. The exact MAC address rule match always takes precedence.
+  2. If there is no exact MAC address match, the device will be matched against a fingerprint rule.
+  3. If there is no fingerprint rule match, the device will be matched against an OUI rule.
+  4. If there are no other matching rules, the device will be assigned to the "All" rule.
+
+  When a new device connects to the network and does not have an IP address, Nile will use limited information like the MAC address to attempt a fingerprint match. To get the device a temporary IP address, you need to create an "All" rule with a quarantine or Internet-only segment. Nile's fingerprinting uses parameters like MAC address, DHCP, DNS transactions, and User-Agent data to accurately match the device.
+
+  If the device does not match the fingerprint rule, it will be placed in the segment defined by the "All" rule. Once the device gets a temporary IP and starts communicating, Nile will fingerprint it and automatically move it to the correct fingerprint-based segment, updating the device's IP address accordingly. Nile will learn the device's fingerprint and create a specific entry for it going forward.
+
+  ### What Happens If I Create an Exact MAC Address Entry for a Device?
+
+  If you create an exact MAC address entry for a device with a specific segment assignment, Nile will not automatically move that device to a different segment based on fingerprinting. Devices matching an exact address or OUI rule will not be moved automatically. It is recommended not to create exact MAC address or OUI entries for devices you want to onboard using fingerprinting.
+
+  ### What If Nile Fingerprints a Device Incorrectly?
+
+  If a device is fingerprinted incorrectly, Nile recommends removing the device from the cache and adding the exact MAC address. You can then contact Nile support to provide the device details, so we can evaluate and add it to our database.
+
+  ### What Happens If a Device Matches Multiple Fingerprint Rules?
+
+  When a device matches multiple fingerprint rules, the most specific rule will take precedence. For example, a rule for "Avaya IP Phone 250" will win over a more general "Avaya" rule.
+
+  ### What If I Create New Rules After Devices Are Already Connected?
+
+  Rules need to be created before connecting the devices. When a device connects, Wired Access Management will match it against the existing rules. If there are no matching rules, a device entry will be created with a "waiting for approval" status. To have a new rule applied to an existing device, you will need to delete the device entry and disconnect/reconnect the device to apply the new rule.
+
+  Nile is adding an enhancement to automatically verify all existing entries with a "waiting for approval" status after a new rule is created. If the device matches the new rule, its status will automatically change to "allow" or "deny" based on the new rule.
+
+  ### What Happens If We Delete an Existing Rule?
+
+  Deleting an existing rule will not impact any existing device Wired Access Management entries. It will only affect the addition of new devices. When a new device is added, if it matches a rule, a specific entry will be created for that device. The only impact would be if both the rule and the device entry were deleted - in this case, the device status will change to "waiting for approval" and require manual approval.
+
+
+</ExpandableHeading>
+
+
+
+
+
+
+
+Read Next; :Link[Wired Access FAQ]{href="https://app.archbee.com/docs/JugAmsswAWaUxXjhmYR53/NqRX00KDRS4W4lgx-fqN4" newTab="true" hasDisabledNofollow="false"}
+

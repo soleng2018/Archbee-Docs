@@ -1,0 +1,126 @@
+---
+title: March 2025 Feature Update
+slug: march-2025-feature-update
+createdAt: Fri Apr 25 2025 18:53:13 GMT+0000 (Coordinated Universal Time)
+---
+
+Nile’s latest updates enhance your organization's visibility and control through Sumologic integration, proactive Wi-Fi DoS mitigation, and secure MSP delegation. These enhancements improve monitoring, reduce manual workload, and streamline IT operations without compromising security .&#x20;
+
+Deployment and troubleshooting are faster as remote diagnostics, smart DHCP alerting, and the new Last Known IP feature make it easy to find the root cause of basic issues. Together, these capabilities reduce downtime, lower alert noise, and help IT more efficiently operate your wired and wireless LAN.
+
+<table isTableHeaderOn="true" columnWidths="51,119,246">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Outcome (Benefits)**
+    </td>
+    <td>
+      **Feature (Capability)**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Trust Service: Integration
+    </td>
+    <td>
+      IT teams can view Nile services and end user device alerts and events, and the audit trail in Sumologic.
+    </td>
+    <td>
+      Added new SIEM support for Sumologic. IT admins can easily set up Sumologic in Nile Control Center (Nile Portal), under Integrations, to receive end-user device events, service-related alerts, and audit trail of IT users.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Trust Service: Infrastructure
+    </td>
+    <td>
+      We now automatically establish thresholds to quickly detect disassociation and deauthentication flood type attacks. Alerts using webhook or email display site, building, floor and AP information for mitigation steps. The proactive alerting of WiFi DoS flood attacks improves network reliability by automatically alerting on malicious activity, for customer IT/Networks team to take action
+    </td>
+    <td>
+      Detect and alert/notify, wireless Denial of Service attacks related to floods. For example, Nile automatically establishes thresholds to quickly detect disassociation and de-authentication type flood attacks. Alerts using webhook or email display site, building, floor, and AP information for mitigation steps.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Access Service: Visibility and Control
+    </td>
+    <td>
+      Customers can offload visibility and control tasks to a trusted MSP, enabling oversight and reduced internal IT burden. This new enhancement also provides a secure, scalable way to delegate admin access without sharing credentials, maintaining control (when needed) while enabling operational flexibility.
+    </td>
+    <td>
+      Customers can delegate visibility and control of their network to a Managed Service Provider (MSP) by adding the MSP’s domain under *Account Management > MSP*. Once approved by the MSP, the MSP gains administrative access to the customer’s Nile environment for management purposes.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Nile Access Service: Visibility and Control
+    </td>
+    <td>
+      Faster deployment minimizes downtime during bring-up, and accelerates time-to-service due to external issues by simplifying remote troubleshooting with Nile Na&#x76;**.&#x20;**&#xA0;When the network fails to come up, Nile Nav eliminates complexity by enabling and making remote diagnostics information in the Nile Control Center visible.
+      <Paragraph>
+        With the ability to pull test results and packet captures directly from the network, IT can quickly identify and resolve issues without physical access. This not only accelerates resolution time and minimizes downtime but also reduces operational costs by eliminating unnecessary travel.
+      </Paragraph>
+    </td>
+    <td>
+      Quickly troubleshoot Nile Service Block bring-up by identifying and isolating external issues—such as incorrect upstream configuration, DNS resolution failures, or firewall restrictions—that may block cloud connectivity or device onboarding. For example: 
+      &#x20;
+      <Paragraph>
+        a) We’ve added the ability to use the Nile Nav app to execute diagnostic commands and view real-time results, including packet captures, directly in the Nile Control Center (Nile Portal).
+      </Paragraph>
+      <Paragraph>
+        b) Once the NSB gateways are online, if network issues persist, installers or administrators can execute troubleshooting scripts directly from the Nile Control Center (Nile Portal)—no Nile Nav required. This enables efficient diagnostics and packet capture collection to isolate and resolve issues.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Access Service: Alerts
+    </td>
+    <td>
+      Nile distinguishes between persistent and transient client-side DHCP issues, raising alerts only for those that are persistent. We have minimized unnecessary notifications, reducing the alert volume customers have experienced with competing solutions in the past. 
+    </td>
+    <td>
+      Our alert pipeline now has the intelligence to differentiate between persistent client side DHCP issues and transient DHCP issues. An alert is raised only when there are persistent client DHCP issues such as the client device continuously fails to obtain an IP address due to a misconfigured DHCP server scope or if there’s a firewall misconfiguration that prevents the DHCP request from reaching the server.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      6
+    </td>
+    <td>
+      Nile Access Service: Visibility and Control
+    </td>
+    <td>
+      Many customers rely on static IP addresses as a primary identifier. When such a device goes offline, the “*Last Known IP”* feature enables quick search and effective troubleshooting.
+      <Paragraph>
+        IT can quickly locate offline devices by going to our Device Details page to find the device’s last known IP address. This is particularly valuable for devices with static IPs, allowing for easier identification and troubleshooting even when the device is no longer connected to the network.
+      </Paragraph>
+    </td>
+    <td>
+      A new “Last Known IP” column is now available on the Device List page. The Device Details page will display the last known IP address for each endpoint device for easy reference. 
+    </td>
+  </tr>
+</table>
+
+
+

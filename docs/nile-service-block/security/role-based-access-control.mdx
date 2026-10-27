@@ -1,0 +1,234 @@
+---
+title: Role based access control
+slug: role-based-access-control
+createdAt: Mon Nov 18 2024 22:20:20 GMT+0000 (Coordinated Universal Time)
+---
+
+# What is Role-based access control?
+
+Role-based access control (RBAC) is an essential security framework utilized by organizations to manage and restrict access to sensitive information and resources systematically. This model operates on the principle of assigning users to specific roles that reflect their responsibilities and functions within the organization. Each role is associated with a predetermined set of permissions that define what actions a user can perform and what resources they can access.
+
+## Key Benefits
+
+By implementing RBAC, organizations can ensure that individuals have access only to the information necessary for them to carry out their job responsibilities. For instance, an admin must have access to set up SSIDs, while a help desk admin can only monitor the network for supporting end users. This role-centric approach not only simplifies access management but also reduces the risk of unauthorized access, thereby enhancing overall security.
+
+Furthermore, RBAC enables organizations to streamline the process of onboarding and offboarding employees. When a new employee joins the organization, assigning them to a role automatically grants them the relevant access permissions associated with that role. Conversely, when an employee leaves or changes roles, their access can be revoked or modified quickly and efficiently. This scalability and flexibility make RBAC a preferred choice for many organizations aiming to maintain robust security while promoting operational efficiency.
+
+## What Groups does Nile support?
+
+Nile operates with three clearly defined groups:&#x20;
+
+1. Administrator
+2. Monitor, and&#x20;
+3. Help Desk, each serving a distinct function within the system.
+
+The **Administrator&#x20;**&#x67;roup is equipped with comprehensive capabilities which includes the ability to set up SSIDs, which are essential for establishing wireless networks. Furthermore, the admin role encompasses managing authentication to ensure secure access to the network; wired or wireless. Additionally, the admin can establish integrations with third-party systems, such as ServiceNOW and Zscaler, facilitating streamlined operations and enhanced functionality.
+
+On the other hand, the **Monitor&#x20;**&#x67;roup has a more restricted function. As its name implies, the monitor role is limited to viewing data within the portal. Individuals in this role do not have the authority to modify or configure any settings within the portal, thereby ensuring that critical configurations remain securely managed by the admin role. This role is assigned to employees who field end-user calls and assist with troubleshooting
+
+Lastly, the **Help Desk** admin group functions with capabilities akin to the monitor group, primarily focusing on data visibility. However, this group holds additional responsibilities, including the approval of wired devices. This involves a process where help desk admins can assess wired devices seeking access and then approve or deny them based on predefined criteria.
+
+Together, these roles contribute to a well-structured and efficient operational framework, ensuring that admins can effectively setup up the network (SSID's, Guest Access etc.) and troubleshoot it while maintaining security and accessibility across the board.
+
+<hint type="info">
+  Nile also possesses a **Root Admin** Role. This individual is the initial registrant of the service. The root admin holds the same privileges as the admin; however, the distinguishing factor is that the root admin has the authority to transfer the account to another admin.
+</hint>
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sDTsYOC3eWU8dxCmoSvi__image.png)
+
+## Comparison of Group Privelages
+
+<table isTableHeaderOn="true" columnWidths="100,136,120,100,100">
+  <tr>
+    <td>
+      **Feature**
+    </td>
+    <td>
+      **Root Administrator**
+    </td>
+    <td>
+      **Administrator**
+    </td>
+    <td>
+      **Monitor**
+    </td>
+    <td>
+      **Help Desk**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      All Settings
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      Read Only
+    </td>
+    <td>
+      Read Only
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Wired Device Approval
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      Read Only
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Wireless Deny
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      Read Only
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      All Monitoring
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      <font color="#48ae21">Read/Write</font>
+    </td>
+    <td>
+      Read Only
+    </td>
+    <td>
+      Read Only
+    </td>
+  </tr>
+</table>
+
+
+
+## Fedration with IDP
+
+Administrators can be created locally within the Nile portal. Individuals with Administrator privileges have the capability to create additional **Administrator** accounts or manage **Help Desk** and **Monitor&#x20;**&#x72;ole administrators. Furthermore, Nile can integrate with the customer's Identity Provider (IDP) to facilitate access to the Nile Portal. Roles can be dynamically assigned through the IDP, providing a streamlined approach to user management. One significant advantage of this system is that when an employee leaves the company, their access to the Nile Portal is automatically revoked, ensuring enhanced security and compliance.&#x20;
+
+Please review the :Link[Azure AD]{href="https://docs.nilesecure.com/azure-active-directory-integration#OG8cH" newTab="true" hasDisabledNofollow="false"} article to understand the configuration process
+
+<hint type="info">
+  The Guest group is designated for granting employees access to the network via Single Sign-On (SSO). It is important to note that individuals within this group will not be granted access to the Nile portal.
+</hint>
+
+# Restricting access based on geoscope
+
+Nile is pleased to introduce the concept of tags, which will be utilized to group sites effectively. Tags are free-form, allowing multiple sites to be associated with the same tag. This functionality empowers our customers to tag various site types, such as retail locations, stores, and carpeted offices, with their respective identifiers.
+
+Once a site or sites are tagged, these tags can be leveraged for Role-Based Access Control (RBAC), enabling the assignment of monitoring and settings privileges to users within the Nile Portal.
+
+Let us consider a scenario involving a customer ACME Inc. who manages 100 retail sites alongside 15 enterprise sites. Following is the list of admins at ACME Inc.
+
+<table isTableHeaderOn="true" columnWidths="100,113,100,100">
+  <tr>
+    <td>
+      Name
+    </td>
+    <td>
+      Group
+    </td>
+    <td>
+      Access
+    </td>
+    <td>
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Jane Smith
+    </td>
+    <td>
+      Adminstrator
+    </td>
+    <td>
+      All&#x20;
+    </td>
+    <td>
+      Jane is a global admin and should have access to all sites across ACME Inc.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      John Doe
+    </td>
+    <td>
+      Adminstrator
+    </td>
+    <td>
+      Retail Only
+      <Paragraph>
+        Monitor-Global
+      </Paragraph>
+    </td>
+    <td>
+      John is responsible for managing all the retail sites only but he should have monitoring capabilities for all sites
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Karen Mae
+    </td>
+    <td>
+      Adminstrator
+    </td>
+    <td>
+      Enterprise Only
+    </td>
+    <td>
+      Karen should have read/write access to Warehouse sites only
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Sara Kerr
+    </td>
+    <td>
+      Help Desk
+    </td>
+    <td>
+      Enterprise Only
+    </td>
+    <td>
+      Sara is an a help desk admin supporing all Enterprising Sites
+    </td>
+  </tr>
+</table>
+
+## Step 1: Tag all the sites
+
+Let's begin by tagging all retail sites with the appropriate **retail&#x20;**&#x74;ag and all enterprise sites with the corresponding **enterprise&#x20;**&#x74;ag.
+
+
+
+## Step 2: Create a new admin and map them to the appropriate tags
+
+
+

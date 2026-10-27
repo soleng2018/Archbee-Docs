@@ -1,0 +1,367 @@
+---
+title: Setup Guest Portal
+slug: setup-guest-portal
+createdAt: Tue May 21 2024 14:49:44 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile supports the following guest portals: Click-Through, Email Approval (Normal & Restricted), Access Code (Generic & User Specific), and SMS.
+
+1. **Click-Through:** Use this for an open SSID captive portal that requires guests to accept your company’s terms and conditions before accessing the guest network.
+2. **Email Approval - Normal:** Guests provide their name, email address, host’s name, and the host’s email address (the employee’s email address). The host then receives an email to approve or deny the guest’s access to the guest network.
+3. **Email Approval - Restricted:** Guests enter only their own name and email address. Approval requests are limited to a defined group of approved sponsors.
+4. **Access Code - Generic:** Administrators can create a single shared access code for all guests, with a validity period that can be either fixed or indefinite.
+5. **Access Code - User Specific:** Administrators can generate a unique access code for each guest. Each code is associated with the guest’s name and email address and can be configured with a fixed or indefinite validity period.
+6. **SMS:** SMS authentication allows guests to access the guest network by verifying their phone number with a one-time code sent via SMS. The phone number serves as the guest’s primary identifier, and administrators can optionally collect additional information.
+
+For more information, please visit the :Link[Nile Guest Access documentation.]{href="https://docs.nilesecure.com/guest-access" newTab="true" hasDisabledNofollow="false"}
+
+## Prerequisites
+
+- Prepare your company's terms and conditions. Nile also provides default terms you can use.
+- For Email Approval, add your company email domains as allowed domains. Nile only sends the approval email if the host's email domain is valid for your tenant.&#x20;
+- For SMS authentication, please contact Nile to enable it for your tenant.
+
+## Configuring the Guest Portal
+
+<Heading depth="3" indent="1">
+  Click-Through
+</Heading>
+
+<Paragraph listStyleType="decimal" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile Click-Through).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **Click-Through**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Optionally, enable SSO if IdP integration is complete.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Click Save.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Guest Experience: The guest connects to the SSID, sees the terms page, clicks Agree and Connect, and gets access.
+</Paragraph>
+
+<Heading depth="3" indent="1">
+  Email Approval - Normal
+</Heading>
+
+<Paragraph listStyleType="decimal" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile Email Approval).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **Email Approval**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Under Approver Options, don't enable the Restrict approvers toggle button.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  Optionally, enable SSO if IdP integration is complete.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Click Save.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="10" indent="2">
+  Guest Experience: The guest is presented with a form requesting their name and email address, along with the host’s name and email address. After accepting the Terms of Service, the guest clicks Request Access and sees the following message: “An employee from your organization must approve your request for Internet access.” Once the host approves the request, the guest is granted access to the internet.
+</Paragraph>
+
+<Heading depth="3" indent="1">
+  Email Approval - Restricted Group
+</Heading>
+
+<Paragraph listStyleType="decimal" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile Email Approval).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **Email Approval**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Under Approver Options, enable the **Restrict approvers** toggle button.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Add the email group or the individual email addresses allowed to approve guests, and the geo scope for the sponsor if applicable.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  Optionally, enable SSO if IdP integration is complete.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Click Save.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="10" indent="2">
+  Guest Experience: The guest is presented with a form requesting their name and email address. After accepting the Terms of Service, the guest clicks Request Access and sees the following message: “An employee from your organization must approve your request for Internet access.” The approval request is sent only to the designated sponsors in the Restrict Approvers group. Once a sponsor approves the request, the guest is granted access to the internet.
+</Paragraph>
+
+<Heading depth="3" indent="1">
+  Access Code - Generic
+</Heading>
+
+<Paragraph listStyleType="decimal" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile Access Code).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **Access Code**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Optionally, enable SSO if IdP integration is complete.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  Enable "**Use generic access code**" toggle button. You will see a message "Please add access codes after you have added the new guest server."
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Click Save to apply the changes.&#x20;
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="10" indent="2">
+  Navigate again to Network Setup > Authentication > Nile Guest.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="11" indent="2">
+  Click the portal name you created (Nile Access Code) and scroll down to the Access Code Options section.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="12" indent="2">
+  Ensure "Use generic access code" toggle button is enabled.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Click **+** to add an access code.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Enter the desired access code.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  If needed, enable the expiry option and configure the start and end times.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Click Save to save the access code.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="13" indent="2">
+  Click Save again to apply the changes to portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="14" indent="2">
+  Guest Experience: Guests connect to the designated SSID and are redirected to the guest portal, where they enter the shared access code. The code can be distributed verbally, displayed on signage, shared via email, or provided through a QR code. Access is granted if the code is valid and, when an expiry period is configured, falls within its specified validity window.
+</Paragraph>
+
+<Heading depth="3" indent="1">
+  Access Code - User Specific
+</Heading>
+
+<Paragraph listStyleType="decimal" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile Access Code).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **Access Code**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Optionally, enable SSO if IdP integration is complete.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  For user-specific authentication, ensure the **Use generic access code** toggle is disabled. You will see the following message: ‘Please add access codes after you have added the new guest server.’
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Click Save to apply the changes.&#x20;
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="10" indent="2">
+  Navigate again to Network Setup > Authentication > Nile Guest.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="11" indent="2">
+  Click the portal name you created (Nile Access Code) and scroll down to the Access Code Options section.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="12" indent="2">
+  Click **+**. In the Add Access Code window, enter the access code (or leave it blank for a random one), the Guest Name and the Guest Email ID. Enable Expires if required and set the start and end times. Then click Save in the window.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="13" indent="2">
+  Repeat step 10 for each guest.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="14" indent="2">
+  Click Save again to apply the changes to portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="15" indent="2">
+  Guest Experience: Guests connect to the designated SSID and are redirected to the guest portal. They enter their email address and individual access code to authenticate themselves. The access code can be shared via email, verbally, on signage, or through a QR code. Access is granted when the submitted details are valid and the code is within its configured validity period.
+</Paragraph>
+
+<BlockQuote indent="2">
+  Access codes can also be created and managed using API. For detailed steps, please refer to :Link[Guest Access Codes API documentation.]{href="https://docs.nilesecure.com/guest-access-codes-api" newTab="true" hasDisabledNofollow="false"}
+</BlockQuote>
+
+<Heading depth="3" indent="1">
+  SMS Authentication
+</Heading>
+
+<Paragraph listStyleType="decimal" listRestartPolite="1" indent="2">
+  Log in to the Nile Portal.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="2" indent="2">
+  Navigate to Network Setup > Authentication > Nile Guest and enter a name for the portal (e.g., Nile SMS Access Code).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="3" indent="2">
+  Then choose **SMS - Access Code**.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="4" indent="2">
+  Set the Session Timeout. The default is 24 hours and can be changed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="5" indent="2">
+  Select the Geo Scope (site, building, floor, zone or tag).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="6" indent="2">
+  Under Security Options, optionally enable SSO if IdP integration is completed.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="7" indent="2">
+  Under Customer Login Page, select the information to collect from guests:
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Phone Number: Required.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Name: Optional.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  Email ID: Optional.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="8" indent="2">
+  Under Allowed Device Count, set the maximum number of devices allowed per access code. The maximum value is 5.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="9" indent="2">
+  Under Access Code Time Limit, set how long each access code is valid and select the time unit (Minutes/Hours).
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="10" indent="2">
+  Update the default terms and conditions.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="11" indent="2">
+  Click Save.
+</Paragraph>
+
+<Paragraph listStyleType="decimal" listStart="12" indent="2">
+  Guest Experience: Guests connect to the designated SSID and are redirected to the guest portal. They enter their phone number, including the country code, and any additional information requested. They receive a one-time access code by SMS and enter it on the portal. After the code is verified, network access is granted for the configured session timeout and access code validity period.
+</Paragraph>
+

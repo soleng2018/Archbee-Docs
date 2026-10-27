@@ -1,0 +1,59 @@
+---
+title: Wireless Performance issue Troubleshooting
+slug: wireless-performance-issue-troubleshooting
+createdAt: Wed Jul 24 2024 21:49:00 GMT+0000 (Coordinated Universal Time)
+---
+
+## Introduction
+
+This document includes steps to troubleshoot Wireless client performance-related issues.
+
+While troubleshooting a performance issue we need to find out if the issue is related to:
+
+- **Internet**
+- **High load on client site**
+- **Nile NSB**
+- **Wireless Coverage &#xA0;**
+- **Client Itself  (Laptops, Mobile devices etc.)**
+
+As an example we will check the following working and non-working scenario to see the difference:
+
+### Scenario 1:  client has high load of traffic
+
+From the Nile Portal (NP) Device details page for a particular client, we could click "RUN TEST" on the top right corner to check if there is any Latency:
+
+In our case we could see latency of 323 milliseconds (ms), while Air Quality and Coverage is good. 
+
+![Nile portal: Run test](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/X0oRgAZ-y57dNYLoSVqme_lj7n5eb6itlyzbheh4qhgx6yyb2xhsmjzg.png "Nile portal: Run test")
+
+Additionally, we can check Client Details Usage to see if there are any traffic load spikes:
+
+We see that the client is using 135 Mbps per second of data download:
+
+![Devices: Signal info](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GThDxzQckzq3eQcu6i3jb_jdv8nsls3ytvmctczd4yxz-m9-q9pfvsfw.png "Devices: Signal info")
+
+A speed test from the client side would be a good way to see if there any Speed related issues:
+
+The speed test shows us that the download capacity is 2.46 Mbps while upload is quite higher:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6azz-V56cKnrVIATI5HSw_tzdn4dzz-qldlx-ekpeyb98lrp9ks2-nww.png" size="60" width="752" height="803" position="center" caption="Speed test info" alt="Speed test info" showCaption="true"></Image>
+
+### Scenario 2:  client does not have high load of traffic:
+
+"Run Test" for this particular client checks if there is any Latency.This time there is no latency on ARP/Ping and Air Quality and Coverage is good.
+
+![Nile portal: Run test](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/i6eyRL-4gr02E1esJkzH2_e1cwg2hjxxt3eneicvgr0cjs8ldxoimrzw.png "Nile portal: Run test")
+
+Checking Client Details Usage shows if there are any traffic load spikes.
+
+This time we do not see any high Usage of Outbound or Inbound traffic.
+
+![Devices: client info](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DFc8wm65H5rOdY94puSrr_xwtfkaoi1u4humywyv777ryn4agv6flcoa.png "Devices: client info")
+
+The Speed test from the client shows if there are any Speed related issues.
+
+In this case, the speed test shows us High Download and Upload speed.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fMtIdpEvSPXfApceeCxWM_jczvyzderfwuxiasmvje-wt-7s9vbtrira.png" size="60" width="659" height="735" position="center" caption="Speed test" alt="Speed test" showCaption="true"></Image>
+
+Also, we could use [my.nilesecure.com](http://my.nilesecure.com/) when device is connected to Nile Network to check the status of the client device connection. Read more..

@@ -1,0 +1,97 @@
+---
+title: Migration Process and Strategies
+slug: migration-process-and-strategies
+createdAt: Fri Jul 26 2024 03:17:27 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Migration Process]{docCommentId="taU-3hHDWNqNZLifh9Y8j" resolved="true"}
+
+The migration process consists of the following 5 steps. Optionally, you can skip to this page's end to check out the migration video.&#x20;
+
+1. NSB Bringup
+2. User/Device Segments and Subnets
+3. Firewall Configuration
+4. Nile Portal Settings
+5. Device Migration and Validation
+
+### NSB Bringup
+
+To bring up the Nile Access Service, administrators must complete the following tasks:
+
+- [x] Sign up for Nile Service
+- [x] Create Sites/Buildings/Floors and upload Floor plans
+- [x] Identify NSB and Sensor Subnet
+- [x] Configure the uplink IP addresses&#x20;
+- [x] Provide the DNS and NTP Server list
+- [x] Configure the Uplink Router or Firewall or Layer 3 Switch
+- [x] Firewall - Allow NSB and sensor subnets to communicate over HTTPS, DNS and NTP&#x20;
+
+### User/Device Subnet and Segments
+
+- [x] Identify User Subnets (e.g., Employee, Guest, Contractor, faculty, staff)
+- [x] Identify Device Subnets (e.g., Printers, Conference room systems, cameras)
+- [x] Configure DHCP portals
+- [x] Configure the RADIUS server
+- [x] Configure Guest portals
+
+### Firewall Configuration
+
+The firewall must be configured to allow or deny communication between users, devices, and external resources. Here's an example:&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QIkJkQ_nrtRnGighMT7NE_image.png)
+
+### Nile Portal Settings
+
+Log in to the Nile Portal and set up the network. Please see the"settings" section, starting with :Link[Setup DHCP]{label="Setup DHCP" spaceId docId="9E1eAklBev801XqSSOJHk" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../nile-portal-setup/setup-dhcp.mdx"}, for more details. Once this step is complete the network is fully up and devices can connect to the network
+
+- [x] Provide DHCP server details
+- [x] Provide RADIUS server details
+- [x] Create segments for users and devices
+- [x] Create SSIDs
+- [x] Setup up Access Management rules
+- [x] Sign up for alerts
+
+### Validation
+
+- [x] Verify **Users** can authenticate, get an IP address, and pass traffic
+- [x] Verify **devices** can authenticate, get an IP address, and pass traffic
+- [x] Verify the **firewall&#x20;**&#x72;ules
+- [x] Verify the Nile **SLA’s**&#x20;
+- [x] Verify that the **Infrastructure** (DHCP/DNS/RADIUS/Internet is being monitored by Nile
+- [x] Verify that **alerts** are generated and received
+
+## Migration Strategies
+
+There a two options to migrate a brownfield deployment to the Nile Access Service:
+
+|                                 | Define New Subnets | Migrate existing subnets |
+| ------------------------------- | ------------------ | ------------------------ |
+| Phased Migration                | Yes                | No                       |
+| Downtime                        | No                 | Yes                      |
+| Leverage existing Firewall rule | No                 | Yes                      |
+| Leverage existing DHCP scopes   | No                 | Yes                      |
+
+### :Comment[Defining New Subnets]{docCommentId="j35NMMXO2NZDx-guMMK6g" resolved="false"}
+
+This strategy can be adopted when customers want to bring up the Nile Access Service in parallel with their existing network and perform a phased migration of the devices. The migration can be done building by building without disrupting the existing network. This approach requires creating brand-new subnets for existing devices.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-Iy_DMFjahubS7mAIbUuOY-20240926-200519.jpg)
+
+
+
+As shown in the diagram, all laptops will migrate from VLAN 1 to Segment 1, cameras from VLAN 2 to Segment 2, and printers from VLAN 3 to Segment 3.&#x20;
+
+### :Comment[Migrating Existing Subnets]{docCommentId="kkVNy3-6K3G_7Z-okfFIE" resolved="false"}
+
+This strategy requires removing VLANs from the existing infrastructure and leveraging the subnets on the Nile infrastructure. This strategy is best when the entire site can be migrated during a maintenance window. The primary advantage is that all devices can be migrated in one go.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-Fn43lnzib9COV_y56c0RZ-20240926-200601.jpg)
+
+
+
+As seen in the above diagram the old network is decommissioned and the VLAN L3 SVI's are migrated from the old infrastructure to Nile
+
+<embed url="https://youtu.be/DBZOwLgYLd4?si=co0fpmw1RKd2uAI1">
+
+</embed>
+

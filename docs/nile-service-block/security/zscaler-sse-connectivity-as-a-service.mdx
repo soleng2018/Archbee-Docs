@@ -1,0 +1,36 @@
+---
+title: Zscaler SSE Connectivity-as-a-Service
+slug: zscaler-sse-connectivity-as-a-service
+createdAt: Tue Jan 28 2025 23:45:49 GMT+0000 (Coordinated Universal Time)
+---
+
+# Feature Summary
+
+The new service capability facilitates resilient connectivity from Nile Service Blocks to Zscaler Internet Access (ZIA) service PoPs for customer-selected segments. This enables customers to enhance security posture and protect users, devices (IT/IoT/OT), and applications from Internet-based threats. The connectivity-as-a-service is fully automated with minimal configuration and elmiinates the operational burden of setting up and maintaining the service connectivity. It also helps customers ensure uniform security policies across remote and on-premise users.
+
+# Enabling SSE Connectivity
+
+Customers interested in forwarding Nile Service Block traffic to Zscaler ZIA first configure their Zscaler account credentials. This is necessary for enabling NSB to fully automate the discovery of the closest Zscaler ZEN PoPs, provisioning of resilient secure connectivity to Zscaler, and monitoring of the connectivity service, all without any further configuration.  The connectivity service is designed with resiliency built-in, ensuring automated service recovery in the event of a failure.
+
+The first step is configuring the Zscaler account credentials so a secure connection to Zscaler's APIs can be established. This can be done by going to Global Settings -> Integrations -> Setup integration with third party solutions -> SSE. Here you name the integration connector and identify Zscaler as the Provider as well as enter other account parameters as shown below.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/r9kemyy1HOYtZkzdnx8Zj_screenshot-2026-06-27-at-105940-pm.png)
+
+Once the Zscaler account credentials are added, a test of the API can be performed using the TEST option, prior to saving the account configuration.
+
+Once Zscaler API access is configured, customers can configure security policies that can selectively forward traffic from any network segment from the Nile Service Block directly to the Zscaler ZIA service. This is accomplished by going to Global Settings -> Access Engine -> Create Rule -> Create External Rule. &#x20;
+
+From there, administrators can select any segment for which traffic should be forwarded to ZIA, select All Internet Bound Traffic, and then configure the forwarding behavior in the event that the Zscaler ZIA service becomes unavailable.&#x20;
+
+Finally, the administrator can specify whether this rule should be Active or Inactive.  When activated, any flows originated from the identified segment(s) will be forwarded over the secured IPsec tunnel to Zscaler ZIA.  Resiliency in the connectivity-as-a-service is automatically configured to automate recovery in the event of connectivity failure or service unavailability.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5b3xakGjkPHUvhdSbNvAM_image.png)
+
+When completed, the forwarding rule shows up in the list of External Rules and can be edited or deleted. The Edit action will open up a screen where the rule can be updated, as well as an option to View Rule Log.
+
+To view the rules log, select the View Rule Log option and a view of a fitlered rule log will appear.
+
+# Zscaler Gateway Options
+
+The Nile Service Block automatically sets up Zscaler sub-locations based on the Nile segments that are redirected to Zscaler.  When an update to the subnet information is made to a Nile segment, the sublocation is automatically updated via the Zscaler APIs.  Customers may configure other gateway options from the Zscaler console - any changes made by Nile to the sublocations will not overwrite these options.
+

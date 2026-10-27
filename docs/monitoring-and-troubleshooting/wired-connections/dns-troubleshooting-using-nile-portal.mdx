@@ -1,0 +1,46 @@
+---
+title: DNS Troubleshooting using Nile Portal
+slug: dns-troubleshooting-using-nile-portal
+createdAt: Wed Jul 24 2024 20:28:43 GMT+0000 (Coordinated Universal Time)
+---
+
+# DNS Troubleshooting using Nile Portal
+
+Let's say If a customer reported saying that DNS server is not reachable. We need to first identify whether DNS is not reachable for the end host device or its not reachable from the NSB elements
+
+**To check if the DNS is reachable or not from Infrastructure  (Nile Service blocks)**
+
+1.Check the Nile Portal (NP) Dashboard → Infrastructure → DNS Tile
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/IIosixV8jBA2BXEW2pa-Q_iigb9ww0ipxkdn72zb7gqlsf9nqsiopbda.png" size="68" width="646" height="320" position="center" caption="Nile portal: Infra tab" alt="Nile portal: Infra tab" showCaption="true"></Image>
+
+- If Green:
+  - DNS server(s) have passed NSB reachability → proceed further to check Devices DNS Tile
+  - If Red: DNS server(s) are failing NSB reachability → Global DNS issue
+
+2\. Click on the DNS tile and check the availability status and Experience
+
+![Nile portal: DNS availability info](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/a3qV8NOON_E6rBG_hKjOb_90ncgly5l3hjyaq6dspgwb-7mt6-9coqna.png "Nile portal: DNS availability info")
+
+a)Click on 8.8.8.8 / 192.168.1.9 (Customers internal DNS server) and check the performance graph for any error or drops.
+
+b) Check the DNS section under floors Column - A Blue Tick indicates that the reachability to DNS is fine
+
+**Steps:**
+
+a>Hover the cursor on the graph and check for the Availability -> It should be true.
+
+b>if the availability is false for a specific day or time it means that there was an outage detected.
+
+
+
+![Nile portal: Availability graph](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rONvwKqS-7XUuedY_Ctuj_3npeavdhea2r3ikwfxibws7kzzxma6hhaq.png "Nile portal: Availability graph")
+
+**3. Check the Nile Portal (NP) Devices page → Problem type → DNS tile:**
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YuPW1oJvwtH8zZlbrGIuh_wgsphqma2jlgsdccyebmvs4umg-moe722w.png" size="64" width="648" height="322" position="center" caption="Devices page: DNS info" alt="Devices page: DNS info" showCaption="true"></Image>
+
+- If Red:
+  - Click on the DNS tile to display the affected clientsClick on an affected client to troubleshoot a ‘Client specific DNS issue’.
+- If Green: Problem is likely a client issue and not a Nile issue.
+

@@ -1,0 +1,90 @@
+---
+title: Setup Wired Secured Guest and Wired SSO
+slug: setup-wired-secured-guest-and-wired-sso
+createdAt: Thu Oct 22 2026 19:29:01 GMT+0000 (Coordinated Universal Time)
+---
+
+**Overview**
+
+**Wired Secured Guest** and **Wired SSO** control how visitors and employees join the wired network when their devices are not approved by another rule.
+
+- **Wired Secured Guest**: Visitors and unknown devices sign in through a captive portal. This can be used on its own, without SSO. All guest traffic is directed to a Nile PoP, keeping it separate from corporate traffic.
+- **Wired SSO**: Employees approve their own laptops and docking stations by signing in with your identity provider (IdP).
+- **Both together**: One captive portal serves visitors and employees.
+
+A device starts in a pre-auth segment (or the built-in Secure Guest segment), passes through SAML SSO, and then moves to the post-auth segment. Learn more about Single Sign-On (SSO).
+
+**One catch-all at a time:** Only one of Allow all MACs, Wired Secured Guest, or Wired SSO can be active. Known devices can still be placed in other segments using MAC address, OUI, fingerprint, or switch hostname + port rules.
+
+### Which page you see
+
+The page under **Network Setup > Access Management** depends on what is configured in your organization:
+
+- **Scenario 1 – Wired Secured Guest & SSO tab**: Shown when a guest portal with a guest SSID is set up. The page has two toggles, **Wired Secured Guest** and **Wired SSO**. Wired Secured Guest can be turned on by itself, without an IdP or SSO. The Wired SSO toggle requires an IdP.
+- **Scenario 2 – Wired SSO tab**: Shown when an IdP is configured but the guest portal is not set up. The page has a pre-authentication segment and a post-authentication segment, with no toggles.
+
+### Prerequisites
+
+- **Wired Secured Guest**: Configure a guest portal and a guest SSID. An IdP is not required. Refer to Setup Guest Portal.
+- **Wired SSO (and Wired Secured Guest with SSO)**: Set up SAML single sign-on with your IdP. Refer to Single Sign-On (SSO).
+- **Wired SSO (Scenario 2 only)**: Create a DHCP scope with a short lease time (for example, 5 minutes), so devices get a new IP address when their segment changes.
+- **Wired SSO (Scenario 2 only)**: Create a pre-auth segment mapped to that DHCP scope. This segment only allows access to your IdP sign-in page. Use it only for Wired SSO; do not use it in an OUI or fingerprint rule.
+- **Wired SSO**: Identify the post-auth segment that signed-in users should join.
+
+### Scenario 1: Configuring on the Wired Secured Guest & SSO tab
+
+**Wired Secured Guest only (without SSO)**
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Access Management**, and open the **Wired Secured Guest & SSO** tab.
+2. Turn on the **Wired Secured Guest** toggle. Leave the **Wired SSO** toggle off.
+3. Confirm that the built-in guest segment (**GuestPopNetworkSegment**) is used. This cannot be changed.
+4. Click **Save**.
+
+Unmatched devices join the guest segment and are sent to the captive portal. After the user completes the portal, the device gets guest Internet access. No IdP or SSO is involved.
+
+**Wired Secured Guest and Wired SSO together**
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Access Management**, and open the **Wired Secured Guest & SSO** tab.
+2. Turn on both the **Wired Secured Guest** and **Wired SSO** toggles.
+3. Configure the following:
+   - **Wired Secured Guest**: The built-in guest segment (**GuestPopNetworkSegment**) is used as the pre-auth segment. This cannot be changed.
+     - **Post-authentication**: Select the destination segment after login. Devices here have full access as employees or approved guests.
+4. Click **Save**. Click **Reset** to discard unsaved changes.
+
+Visitors sign in as guests. Employees choose the SSO option on the same portal page and move to the post-authentication segment.
+
+### Scenario 2: Configuring on the Wired SSO tab
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Access Management**, and open the **Wired SSO** tab.
+2. Configure the following:
+   - **Pre-authentication segment**: Select the restricted segment for devices that have not signed in.
+     - **Post-authentication segment**: Select the segment signed-in users should join.
+3. Click **Save**. Nile creates a catch-all rule that uses these two segments.
+
+To remove Wired SSO, open the **Wired SSO** tab and click **Delete**.
+
+### Wired Secured Guest behavior
+
+- **Unmatched devices**: A device that matches no other rule joins the guest segment and is sent to the captive portal. After the user completes the portal, the device gets guest Internet access.
+- **Isolated traffic**: All guest traffic is directed to a Nile PoP and kept separate from corporate traffic. No segment or DHCP scope needs to be created for it.
+- **Replaces Allow all MACs**: If you already have an Allow all MACs rule, review your setup before you turn on Wired Secured Guest.
+- **IP address planning**: Any device that plugs in and is not matched by another rule gets an address from the guest segment.
+
+### Wired SSO behavior
+
+- **Scope**: Wired SSO applies at every location where these segments are used. It cannot be turned on for only some locations.
+- **Devices without a browser**: Printers, sensors, and similar devices cannot sign in. They get an IP address in the pre-auth segment and show as **Waiting for approval**. Approve them manually, add a fingerprint rule, or let users register them through the self-registration portal.
+- **Later connections**: After a successful sign-in, the device is added to the MAC authentication table, and later connections do not ask for sign-in again.
+- **When sign-in is required again**: The device has not been on the network (wired or wireless) for 30 days, it appears on a different port than before, or the user changes the password in the IdP.
+- **Segment after sign-in**: If the user has signed in on wireless before, the device joins the same segment. Otherwise, it joins the post-auth segment.
+- **Returned laptops**: Delete the device's entry from the Wired table to force sign-in again.
+- **Changing or deleting the configuration**: The pre-auth segment can be changed, or Wired SSO deleted, only when no devices are in the pre-auth segment. Devices already in the post-auth segment are not asked to sign in again.
+- **Session status**: The device list shows SSO states such as SSO Initiated, SSO Pending, SSO Approved, SSO Denied, and SSO Session Expired.
+- **BYOD SSO**: Wired BYOD SSO is not supported with Wired SSO.
+
+The **Nile Access Service** provides additional controls for managing wired device access, including:
+
+- Setting the SSO session duration (1 day to 1 year) on the IdP page under **Global Settings > Identity**.
+- Checking how a device was approved in the **Authenticated By** column of the Wired table (for example, SSO or captive portal).
+- Refer to the Wired SSO FAQ for details.
+

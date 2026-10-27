@@ -1,0 +1,688 @@
+---
+title: MAC Address Bypass (MAB) API
+slug: mac-address-bypass-mab-api
+docTags: API
+createdAt: Tue Jul 15 2025 16:33:51 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The Nile MAC Address Bypass (MAB) API allows you to programmatically retrieve network metadata (segments, sites, zones, etc.) and update a device’s MAC address authentication status. It can be used to build automated MAB approval workflows with third-party tools. MAB is most commonly applied to IoT, headless devices, or other clients that cannot support 802.1X authentication.
+
+<hint type="warning">
+  The MAC Address Bypass (MAB) API is offered **as-is** and is not included in Nile’s supported feature set. Please note that Nile Support does not offer troubleshooting or assistance for this API.
+</hint>
+
+## Authentication
+
+All requests require an API key.
+
+**Header format:**
+
+<BlockQuote>
+  x-nile-api-key: \<YOUR\_API\_KEY>
+</BlockQuote>
+
+Obtain your API key in the Nile portal.
+
+### Creating an API key
+
+- Log into Nile Portal using an admin account.
+- Click on the **Global Settings** icon on the left side
+- Click on **Security** tab
+- On API key management, click on the **“ADD KEY**” button to generate a new API token.
+- Fill Add key info:
+  - <u>**Name**</u>**:&#x20;**&#x4B;ey name (example **“Nile MAB API”**)
+  - <u>**Duration (days)**</u>: token key validity, the maximum is 1 year (365 days)
+  - <u>**Workflow**</u>: Select the workflow that we want to generate a key for. For MAB Onboarding, we select: ‘**MAB Onboarding API**’
+  - **Read only:** Select ‘Read-only’ to enable the API for read-only access. By default, the API key permits read/write operations. However, if you intend to update MAB entries, such as approving or denying MAC addresses in specific segments, it is advised not to enable 'Read-only' access."Click on **SAVE** to save the config.
+  - Click **Save** to save the API key.
+
+After saving the configuration, a JSON file containing key information will automatically download to your computer.
+
+🔒 **NOTE:** Please keep this information in a secure location. For security reasons, this file cannot be downloaded again. If the key is lost or compromised, it must be revoked, and a new key must be created.
+
+***
+
+## Quick Start
+
+**Step 1.** Export your API key:
+
+<BlockQuote>
+  export NILE\_API\_KEY="YOUR\_API\_KEY"
+</BlockQuote>
+
+**2. List available segments**
+
+<BlockQuote>
+  curl -s -H "Authorization: Bearer $NILE\_API\_KEY" \\
+  &#x20; -H "Accept: application/json" \\
+  &#x20; https\://u1.nile-global.cloud/api/v1/settings/segments
+</BlockQuote>
+
+<hint type="info">
+  Note on formatting: By default, curl prints JSON as one long line. For readability, pipe through jq:
+
+  <BlockQuote>
+    curl -s -H "Authorization: Bearer $NILE\_API\_KEY" \\
+    &#x20; -H "Accept: application/json" \\
+    &#x20; https\://u1.nile-global.cloud/api/v1/settings/segments | jq .
+  </BlockQuote>
+
+  If jq is not installed:&#x20;
+
+  - macOS: brew install jq
+  - Debian/Ubuntu: sudo apt-get install jq
+  - Windows PowerShell: ... | ConvertFrom-Json | ConvertTo-Json -Depth 8
+</hint>
+
+**Sample output (pretty-printed with jq, truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "errors": \[],
+  &#x20; "data": \{
+  &#x20;   "content": \[
+  &#x20;     \{
+  &#x20;       "id": "3aca0000-...-a134a6100000",
+  &#x20;       "tenantId": "a9800002-...-00007d5d00df",
+  &#x20;       "encrypted": true,
+  &#x20;       "instanceName": "Employee",
+  &#x20;       "uniqueName": "Employee",
+  &#x20;       "segment": \{
+  &#x20;         "name": "Employee",
+  &#x20;           "..."
+  &#x20;         ]
+  &#x20;       }
+  &#x20;     }
+  &#x20;   ]
+  &#x20; }
+  }
+</BlockQuote>
+
+**3. Get client-config for a device (by MAC address)**
+
+<BlockQuote>
+  curl -s -H "Authorization: Bearer $NILE\_API\_KEY" \\
+  &#x20; -H "Accept: application/json" \\
+  &#x20; "https\://u1.nile-global.cloud/api/v1/client-configs-list?filter=macAddress==aa\:bb\:cc\:dd\:ee\:ff" | jq .
+</BlockQuote>
+
+**Sample output (truncated, pretty-printed with jq, anonymized)**
+
+<BlockQuote>
+  \[
+  &#x20; \{
+  &#x20;   ...
+  &#x20;   "clientConfig": \{
+  &#x20;     "id": "t-11111111-...-111111111111-aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "macAddress": "aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "tenantId": "t-11111111-...-111111111111",
+  &#x20;     "segmentId": "s-22222222-...-222222222222",
+  &#x20;     "zoneId": "z-33333333-...-333333333333",
+  &#x20;     "floorId": "f-44444444-...-444444444444",
+  &#x20;     "buildingId": "b-55555555-...-555555555555",
+  &#x20;     "siteId": "s-66666666-...-666666666666",
+  &#x20;     "tag": null,
+  &#x20;     "sourceOfAction": null,
+  &#x20;     "description": null,
+  &#x20;     "state": "AUTH\_DENIED"
+  &#x20;   }
+  &#x20;   ...
+  &#x20; }
+  ]
+</BlockQuote>
+
+***
+
+## Endpoints
+
+<hint type="info">
+  For readability, long IDs are truncated with .... In real responses you will see full UUID values.
+</hint>
+
+### Segments
+
+<BlockQuote>
+  GET /api/v1/settings/segments
+</BlockQuote>
+
+Retrieve tenant segments.
+
+**Sample output (truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "data": \{
+  &#x20;   "content": \[
+  &#x20;     \{
+  &#x20;       "id": "s-22222222-...-222222222222",
+  &#x20;       "instanceName": "Employee",
+  &#x20;       "segment": \{ "name": "Employee" }
+  &#x20;     }
+  &#x20;     ...
+  &#x20;   ]
+  &#x20; }
+  }
+</BlockQuote>
+
+### Sites
+
+<BlockQuote>
+  GET /api/v1/sites
+</BlockQuote>
+
+Retrieve site information.
+
+**Sample output (truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "content": \[
+  &#x20;   \{
+  &#x20;     "id": "s-66666666-...-666666666666",
+  &#x20;     "tenantId": "t-11111111-...-111111111111",
+  &#x20;     "name": "HQ - Florida",
+  &#x20;     "address": "&#x7B;...}",
+  &#x20;     "buildingIds": \["b-55555555-...-555555555555"]
+  &#x20;   }
+  &#x20;   ...
+  &#x20; ]
+  }
+</BlockQuote>
+
+### Buildings
+
+<BlockQuote>
+  GET /api/v1/buildings
+</BlockQuote>
+
+Retrieve buildings.
+
+**Sample output (truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "content": \[
+  &#x20;   \{
+  &#x20;     "tenantId": "t-11111111-...-111111111111",
+  &#x20;     "id": "b-55555555-...-555555555555",
+  &#x20;     "siteId": "s-66666666-...-666666666666",
+  &#x20;     "name": "HQ - South",
+  &#x20;     "floorIds": \["f-44444444-...-444444444444"]
+  &#x20;   }
+  &#x20;   ...
+  &#x20; ]
+  }
+</BlockQuote>
+
+### Floors
+
+<BlockQuote>
+  GET /api/v1/floors
+</BlockQuote>
+
+Retrieve floors.
+
+**Sample output (truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "content": \[
+  &#x20;   \{
+  &#x20;     "id": "f-44444444-...-444444444444",
+  &#x20;     "buildingId": "b-55555555-...-555555555555",
+  &#x20;     "name": "Floor 2",
+  &#x20;     "zoneIds": \["z-33333333-...-333333333333"]
+  &#x20;   }
+  &#x20;   ...
+  &#x20; ]
+  }
+</BlockQuote>
+
+### Zones
+
+<BlockQuote>
+  GET /api/v1/zones
+</BlockQuote>
+
+Retrieve zones.
+
+**Sample output (truncated)**
+
+<BlockQuote>
+  \{
+  &#x20; "content": \[
+  &#x20;   \{
+  &#x20;     "id": "z-33333333-...-333333333333",
+  &#x20;     "tenantId": "t-11111111-...-111111111111",
+  &#x20;     "floorId": "f-44444444-...-444444444444",
+  &#x20;     "buildingId": "b-55555555-...-555555555555",
+  &#x20;     "siteId": "s-66666666-...-666666666666",
+  &#x20;     "name": "West Wing",
+  &#x20;     ...
+  &#x20;   }
+  &#x20;   ...
+  &#x20; ]
+  }
+</BlockQuote>
+
+### Client Configs — List
+
+<BlockQuote>
+  GET /api/v1/client-configs-list
+</BlockQuote>
+
+Returns JSON data that includes a list of (device) client configurations within a given tenant. Multiple attributes can be used for filtering, including:      &#x20;
+
+- tenantId
+- macAddress
+- lockToPort
+- Geo Scope IDs (e.g., site\_id, building\_id, floor\_id, etc.)
+
+**Sample execution and output (truncated)**
+
+<BlockQuote>
+  curl -s -H "Authorization: Bearer $NILE\_API\_KEY" \\
+  -H "Accept: application/json" \\
+  "https\://u1.nile-global.cloud/api/v1/client-configs-list?filter=macAddress==aa\:bb\:cc\:dd\:ee\:ff" | jq .
+
+  \[
+  &#x20; \{
+  &#x20;  ...
+  &#x20;   "clientConfig": \{
+  &#x20;     "id": "t-11111111-...-111111111111-aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "macAddress": "aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "tenantId": "t-11111111-...-111111111111",
+  &#x20;     "segmentId": "s-22222222-...-222222222222",
+  &#x20;     "zoneId": "950da0f5-...-a9cbeca229de",
+  &#x20;     "floorId": "f-44444444-...-444444444444",
+  &#x20;     "buildingId": "b-55555555-...-555555555555",
+  &#x20;     "siteId": "s-66666666-...-666666666666",
+  &#x20;     "state": "AUTH\_WAITING\_FOR\_APPROVAL"
+  &#x20;   }
+  &#x20;   ...
+  &#x20; }
+  ]
+</BlockQuote>
+
+### Client Configs — Update
+
+Use this endpoint to update a device’s MAC address authentication state.
+
+<BlockQuote>
+  PATCH /api/v1/client-configs
+</BlockQuote>
+
+
+
+**Required fields (per MAC)**
+
+- id — the full ID returned by **client-configs-list** (tenant + MAC)
+- macAddress — the device’s MAC address
+- segmentId — the ID of the segment to assign
+- state — new state value
+- description — optional free text note
+
+**Valid state values**
+
+<table isTableHeaderOn="true" columnWidths="220,220,221">
+  <tr>
+    <td>
+      State
+    </td>
+    <td>
+      Meaning
+    </td>
+    <td>
+      Typical use
+    </td>
+  </tr>
+  <tr>
+    <td>
+      AUTH\_OK
+    </td>
+    <td>
+      Device approved
+    </td>
+    <td>
+      Approve IoT/headless
+    </td>
+  </tr>
+  <tr>
+    <td>
+      AUTH\_DENIED
+    </td>
+    <td>
+      Device denied access
+    </td>
+    <td>
+      Block rogue or unwanted
+    </td>
+  </tr>
+  <tr>
+    <td>
+      WAITING\_FOR\_APPROVAL (if shown)
+    </td>
+    <td>
+      Pending admin action
+    </td>
+    <td>
+      Default for new devices
+    </td>
+  </tr>
+</table>
+
+**Single-device example**
+
+Create mac.json:
+
+<BlockQuote>
+  \{
+  &#x20; "macsList": \[
+  &#x20;   \{
+  &#x20;     "id": "t-11111111-...-111111111111-aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "macAddress": "aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "segmentId": "s-22222222-...-222222222222",
+  &#x20;     "state": "AUTH\_OK",
+  &#x20;     "description": "Approved via MAB Onboarding API"
+  &#x20;   }
+  &#x20; ]
+  }
+</BlockQuote>
+
+Run the PATCH:
+
+<BlockQuote>
+  curl -s -X PATCH \\
+  &#x20; -H "Authorization: Bearer $NILE\_API\_KEY" \\
+  &#x20; -H "Accept: application/json" \\
+  &#x20; -H "Content-Type: application/json" \\
+  &#x20; -d @mac.json \\
+  &#x20; "https\://u1.nile-global.cloud/api/v1/client-configs"
+</BlockQuote>
+
+**Bulk update (multiple devices)**
+
+You can update more than one MAC in a single request by adding multiple objects to the macsList array.
+
+<BlockQuote>
+  \{
+  &#x20; "macsList": \[
+  &#x20;   \{
+  &#x20;     "id": "t-11111111-...-111111111111-aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "macAddress": "aa\:bb\:cc\:dd\:ee\:ff",
+  &#x20;     "segmentId": "s-22222222-...-222222222222",
+  &#x20;     "state": "AUTH\_OK",
+  &#x20;     "description": "Approved via MAB Onboarding API"
+  &#x20;   },
+  &#x20;   \{
+  &#x20;     "id": "t-11111111-...-111111111111-11:22:33:44:55:66",
+  &#x20;     "macAddress": "11:22:33:44:55:66",
+  &#x20;     "segmentId": "s-22222222-...-222222222222",
+  &#x20;     "state": "AUTH\_DENIED",
+  &#x20;     "description": "Blocked via MAB Onboarding API"
+  &#x20;   }
+  &#x20; ]
+  }
+</BlockQuote>
+
+**Response codes**
+
+- 204 No Content → update succeeded (most common)
+- Errors return JSON body with code and message
+
+**Best practices**
+
+- Always **GET the device first** using client-configs-list to confirm the id and segmentId before PATCHing.
+- Use a JSON file (-d @mac.json) rather than inline JSON to avoid quoting issues.
+
+***
+
+## Example Scripts
+
+<CodeblockTabs>
+  ```python
+  #!/usr/bin/env python3
+  # Usage: export NILE_API_KEY=... python3 mab_approve.py <macAddress> <segmentId>
+
+  import os, sys, json, requests
+
+  BASE_URL = "https://u1.nile-global.cloud/api/v1"
+  API_KEY = os.environ.get("NILE_API_KEY")
+  if not API_KEY:
+      sys.stderr.write("❌ Missing NILE_API_KEY environment variable\n")
+      sys.exit(1)
+
+  def h():
+      return {
+          "Authorization": f"Bearer {API_KEY}",
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+      }
+
+  def get_client_config(mac: str):
+      url = f"{BASE_URL}/client-configs-list?filter=macAddress=={mac}"
+      r = requests.get(url, headers=h(), timeout=30)
+      r.raise_for_status()
+      data = r.json()
+      if isinstance(data, list):
+          return data[0] if data else None
+      if isinstance(data, dict) and isinstance(data.get("data"), list):
+          return data["data"][0] if data["data"] else None
+      return None
+
+  def approve_mac(cfg_id: str, mac: str, segment_id: str):
+      body = {
+          "macsList": [
+              {"id": cfg_id, "macAddress": mac, "segmentId": segment_id, "state": "AUTH_OK"}
+          ]
+      }
+      r = requests.patch(f"{BASE_URL}/client-configs", headers=h(), json=body, timeout=30)
+      if r.status_code not in (200, 204):
+          raise RuntimeError(f"PATCH failed ({r.status_code}): {r.text}")
+
+  def main():
+      if len(sys.argv) != 3:
+          sys.stderr.write("Usage: NILE_API_KEY=... python3 mab_approve.py <macAddress> <segmentId>\n")
+          sys.exit(1)
+
+      mac, segment_id = sys.argv[1], sys.argv[2]
+
+      row = get_client_config(mac)
+      if not row:
+          sys.stderr.write(f"❌ No client-config found for MAC {mac}\n")
+          sys.exit(1)
+
+      # normalize possible shapes
+      cfg = row.get("clientConfig") or row.get("attributes") or row
+      cfg_id = cfg.get("id")
+      if not cfg_id:
+          sys.stderr.write("❌ Missing id in client-config response\n")
+          sys.exit(1)
+
+      approve_mac(cfg_id, mac, segment_id)
+      print(f"✅ Approved {mac} (id={cfg_id}) into segment {segment_id}")
+
+  if __name__ == "__main__":
+      main()
+  ```
+
+  ```nodejs
+  // This script:
+  // 1. GETs the client-config for a MAC to retrieve its id
+  // 2. PATCHes the client-config to set state=AUTH_OK and assign it to the target segment
+  // Usage: node mab_approve_native.js <macAddress> <segmentId>
+
+  const https = require("https");
+
+  const BASE = "u1.nile-global.cloud";
+  const API_KEY = process.env.NILE_API_KEY;
+
+  if (!API_KEY) {
+    console.error("❌ Missing NILE_API_KEY environment variable");
+    process.exit(1);
+  }
+
+  const mac = process.argv[2];
+  const segmentId = process.argv[3];
+
+  if (!mac || !segmentId) {
+    console.error("Usage: NILE_API_KEY=... node mab_approve_native.js <macAddress> <segmentId>");
+    process.exit(1);
+  }
+
+  // Helper to run HTTPS requests
+  function doRequest(options, body = null) {
+    return new Promise((resolve, reject) => {
+      const req = https.request(options, res => {
+        let data = "";
+        res.on("data", chunk => (data += chunk));
+        res.on("end", () => resolve({ status: res.statusCode, data }));
+      });
+      req.on("error", reject);
+      if (body) req.write(body);
+      req.end();
+    });
+  }
+
+  // GET client-config to pull the id
+  async function getClientConfig(mac) {
+    const options = {
+      hostname: BASE,
+      port: 443,
+      path: `/api/v1/client-configs-list?filter=macAddress==${encodeURIComponent(mac)}`,
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${API_KEY}`,
+        "Accept": "application/json"
+      }
+    };
+    const { status, data } = await doRequest(options);
+    if (status !== 200) throw new Error(`GET failed (${status}): ${data}`);
+
+    let parsed;
+    try {
+      parsed = JSON.parse(data);
+    } catch {
+      throw new Error(`Failed to parse GET response: ${data}`);
+    }
+
+    if (Array.isArray(parsed) && parsed.length > 0) return parsed[0];
+    if (parsed.data && Array.isArray(parsed.data) && parsed.data.length > 0) return parsed.data[0];
+    throw new Error(`No client-config found for MAC ${mac}`);
+  }
+
+  // PATCH client-config (approve into target segment)
+  async function approveMac(id, macAddress, segmentId) {
+    const payload = JSON.stringify({
+      macsList: [{ id, macAddress, segmentId, state: "AUTH_OK" }]
+    });
+
+    const options = {
+      hostname: BASE,
+      port: 443,
+      path: "/api/v1/client-configs",
+      method: "PATCH",
+      headers: {
+        "Authorization": `Bearer ${API_KEY}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Content-Length": Buffer.byteLength(payload)
+      }
+    };
+
+    const { status, data } = await doRequest(options, payload);
+    if (![200, 204].includes(status)) {
+      throw new Error(`PATCH failed (${status}): ${data}`);
+    }
+  }
+
+  (async () => {
+    try {
+      // Step 1: GET to pull id
+      const row = await getClientConfig(mac);
+      const cfg = row.clientConfig || row.attributes || row;
+      const id = cfg.id;
+
+      if (!id) throw new Error("Missing id in client-config response");
+
+      // Step 2: PATCH into specified segment
+      await approveMac(id, mac, segmentId);
+      console.log(`✅ Approved ${mac} (id=${id}) into segment ${segmentId}`);
+    } catch (e) {
+      console.error("❌ Error:", e.message || e);
+      process.exit(1);
+    }
+  })();
+  ```
+
+  ```powershell
+  # Usage:
+  # $env:NILE_API_KEY="YOUR_TOKEN"
+  # win: $env:NILE_API_KEY="YOUR_TOKEN" 
+  #.     .\mab_approve.ps1 -Mac "64:62:66:21:c2:04" -SegmentId "<segmentId>"
+  # macOS: pwsh ./mab_approve.ps1 -Mac "<macAddress>" -SegmentId "<segmentId>"
+
+  param(
+    [Parameter(Mandatory = $true)][string]$Mac,
+    [Parameter(Mandatory = $true)][string]$SegmentId
+  )
+
+  $ApiKey = $env:NILE_API_KEY
+  if (-not $ApiKey) { Write-Error "Missing NILE_API_KEY environment variable"; exit 1 }
+
+  $BASE = "https://u1.nile-global.cloud/api/v1"
+  $Headers = @{
+    "Authorization" = "Bearer $ApiKey"
+    "Accept"        = "application/json"
+    "Content-Type"  = "application/json"
+  }
+
+  function Get-ClientConfig {
+    param([string]$MacAddr)
+    $url = "$BASE/client-configs-list?filter=macAddress==$MacAddr"
+    $resp = Invoke-RestMethod -Headers $Headers -Uri $url -Method GET
+    if ($resp -is [System.Array]) {
+      if ($resp.Length -gt 0) { return $resp[0] } else { return $null }
+    } elseif ($resp.data -and $resp.data.Count -gt 0) {
+      return $resp.data[0]
+    } else {
+      return $null
+    }
+  }
+
+  function Approve-Mac {
+    param([string]$CfgId, [string]$MacAddr, [string]$SegId)
+    $body = @{
+      macsList = @(
+        @{
+          id         = $CfgId
+          macAddress = $MacAddr
+          segmentId  = $SegId
+          state      = "AUTH_OK"
+        }
+      )
+    } | ConvertTo-Json -Depth 5
+
+    # Invoke-RestMethod returns $null for 204 No Content; that's OK.
+    try {
+      $null = Invoke-RestMethod -Headers $Headers -Uri "$BASE/client-configs" -Method PATCH -Body $body
+    } catch {
+      throw "PATCH failed: $($_.Exception.Message)"
+    }
+  }
+
+  $row = Get-ClientConfig -MacAddr $Mac
+  if (-not $row) { Write-Error "No client-config found for $Mac"; exit 1 }
+
+  $cfg = if ($row.clientConfig) { $row.clientConfig } elseif ($row.attributes) { $row.attributes } else { $row }
+  $cfgId = $cfg.id
+
+  if (-not $cfgId) { Write-Error "Missing id in client-config response"; exit 1 }
+
+  Approve-Mac -CfgId $cfgId -MacAddr $Mac -SegId $SegmentId
+  Write-Host "✅ Approved $Mac (id=$cfgId) into segment $SegmentId"
+  ```
+</CodeblockTabs>
+

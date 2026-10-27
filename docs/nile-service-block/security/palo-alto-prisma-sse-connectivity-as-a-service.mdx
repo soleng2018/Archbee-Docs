@@ -1,0 +1,40 @@
+---
+title: Palo Alto Prisma SSE Connectivity as a Service
+slug: palo-alto-prisma-sse-connectivity-as-a-service
+createdAt: Fri Apr 25 2025 23:28:12 GMT+0000 (Coordinated Universal Time)
+---
+
+# Feature Summary
+
+The new service capability facilitates resilient connectivity from Nile Service Blocks to Palo Alto Prisma Access service PoPs for customer-selected segments. This enables customers to enhance security posture and protect users, devices (IT/IoT/OT), and applications from Internet-based threats. The connectivity-as-a-service is fully automated with minimal configuration and elmiinates the operational burden of setting up and maintaining the service connectivity. It also helps customers ensure uniform security policies across remote and on-premise users.
+
+# Enabling SSE Connectivity
+
+Customers interested in forwarding NIle Service Block traffic to Palo Alto Prisma Access sevice first configure their Prsima account credentails. This is necessary for enabling NSB to fully automate the discovery of the Prisma Access PoPs, provisioning of secure connectivity using IPsec, and monitoring of the connectivity service, all without any further configuration.  The connectivity service is designed with resiliency built-in, ensuring automated service recovery in the event of a failure.
+
+The first step is configuring the Prisma account credentials so a secure connection to Prisma Access APIs can be established. This can be done by going to Global Settings -> Integrations -> Setup integration with thrid party solutions -> SSE. Here you name the integration connector and identify Palo Alto Networks as the Provider. Another window will appear where account credentials can be entered, as shown below.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8CWfQ4VA6gmVRxWWm0E1N_image.png)
+
+Once the Palo Alto Prisma Access account credentials are added, a test of the API can be performed using the TEST option, prior to saving the account configuration.
+
+Once Prisma Access API access is configured, customers can configure security policies that can selectively forward traffic from any network segment from the Nile Service Block directly to the Prisma Access service. This is accomplshed by going to Global Settings -> Access Engine -> Create Rule -> Create External Rule. &#x20;
+
+From there, administrators can select any segment for which traffic should be forwarded to Prisma Access, select All Internet Bound Traffic, and then configure the forwarding behvaior in the event that the Prisma Access service becomes unavailable.&#x20;
+
+Finally, the administrator can specify whether this rule should be Active or Inactive.  When activated, any flows orginated from the identified segment(s) will be forwarded over the secured IPsec tunnel to Prisma Access service.  Resiliency in the connectivity-as-a-service is automatically configured to automate recovery in the event of connectivity failure or service unavailability.&#x20;
+
+The below screenshot shows the creation of an External Rule to forward the Nile Segment's traffic to Prisma Access.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/M-G7UpK4_7A5_di7z-gah_image.png)
+
+When completed, the forwarding rule shows up in the list of External Rules and can be edited or deleted. The Edit action will open up a screen where the rule can be updated, as well as an option to View Rule Log.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/0RUDhlX4EnogcNoVEW-9K_image.png)
+
+To view the rules log, select the View Rule Log option and a view of a fitlered rule log will appear.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/vDyo8Z_xv0Mk6M01wawEv_image.png)
+

@@ -1,0 +1,71 @@
+---
+title: Monitoring Latency on Infrastructure Services
+slug: monitoring-latency-on-infrastructure-services
+createdAt: Thu May 09 2024 20:55:49 GMT+0000 (Coordinated Universal Time)
+---
+
+## Navigating the Nile Portal Dashboard
+
+See Figure 1. for a typical Nile Dashboard view. The SLAs on this instance are grayed out because SLAs are disabled on lab test instances of the Nile Service Block (NSB).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/klYDtK0NkRjiL9JLMtjSm_qktome0iekc7n21smlzwkr5ogmtdjql6ka.png)
+
+To check for Latency in Infrastructure (DHCP, DNS, Radius, or Internet connectivity you can click on the Infrastructure tile or click on Infrastructure on the left-hand navigation. To check for Latency on Applications you can click on Applications. See Figure 2. for where to click.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/OEsda7NFXenfdB-BX7MeO_ppvxf3avfqgya55lr7ecytfb300cko-kyw.png)
+
+## Viewing Infrastructure Latency
+
+Clicking on Infrastructure in the Left-hand navigation brings you right to details of Infrastructure Experience for the last 2 hours. If you click on the Infrastructure Tile, you then need to select the site you want to look at in order to reach this view. Figure 3. shows how the Infrastructure experience view is shown before you select one of the Infrastructure components to drill down into the details for.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FAsA1aBWoPBfVGd0kx8wK_yppguuja4syntljmofkbs-fuk9xfbswpba.png)
+
+To view details of a specific Infrastructure component click on the Name of the component.
+
+When you select a component it will open a time-based graph of Availability and Experience for that Infrastructure type. Figure 5. shows how the DNS Experience over the last two hours has been. In this case, some spots of higher latency are seen on the graph and marked by "bad experience" along with dips in latency showing improvement. Note that on this graph, "Now" is on the right side and as you look further left, you are looking farther back in time.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UkwGHrcPbVWRROb7AzT-Y_y82thcjowunq6an8udmtt9sv5jrgkf7jpw.png)
+
+To change the time duration to see longer (or shorter) time periods, you can adjust the time settings on the top right of the Nile Portal screen.
+
+## Viewing Application Latency
+
+In order to view Application latency in more detail, from the Nile Portal Dashboard you click on the Application Tile. Then navigate on the map and click on the site where you want to view Application Latency for. See Figure 7.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ARbzy4-9uXv2eOVx_jgyS_ipy5zkdds9k2hpbqdftfrgtnaxsdktg4nq.png)
+
+Once the site is selected, you can see the performance of all the applications. The red on any application bar shows problems and green shows good performance. See Figure 8.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jx7dMmu2ZytZNjqG224Wq_vhd9fdvgyhmy0ldjknsbghszjfehfccokg.png)
+
+In Figure 8. we can see several of the Applications had some issues. Selecting GCP, we can dive into the details of what happened. Once again you will click on the Name of the Application.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6NvMefL-D7Q6U2HSX1W8R_jba6ckip5-wosghq6ebinmsrg6copa1zbq.png)
+
+This opens a time-based graph view of GCP Availability and Performance (Latency). In a few cases you can see that the application has high latency and those spots are marked in red as a bad experience.
+
+If you hover your mouse pointer over the bad spot you can get a bit more detail on the Experience of the GCP application at that point in time, as shown in Figure 11.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/JExUO5rvwY7AoNeHebTWx_fdaqcwxp6d2tsyj38jdbbzafkflnt0e6jg.png)
+
+Here you see the latency went from an average of 250 ms up to 396 ms, triggering the alert. Application performance is tested from our Headend Controller northbound out to the Internet, so performance recorded here reflects the state of that Application Experience over the Internet at that point in time.
+
+## How is Latency Calculated by Nile for Infrastructure and Applications?
+
+For DNS, DHCP, Internet, RADIUS and Application latency, Nile monitors and compares individual transaction times to prior collected latency data during the last 8 hours. If the current latency number is above the baseline moving average (from the last 8 hours), then Nile will label the number a bad experience point. For example if the baseline is 8 msecs (calculated based on the data from the last 8 hours) and the latency in the current minute t is 10 msecs, then we have a bad experience point at time t. The baseline is calculated for each server. If there are two DHCP servers, each DHCP server has its own baseline based on the past data. If 10 msecs becomes norm for 8hrs continuously, then 10 msecs will become the baseline and as long as the value after t+8 hours is at or less than 10 msecs, everything will be good.
+
+## What transactions are used to Calculate Latency?
+
+The following transactions are used to calculate latency:
+
+DHCP: Testing DHCP is performed from the Headend Controller, using a synthetic DHCP transaction, acting as if it were a client requesting a new IP address. This tests both server availability, and DHCP Service availability on the server.
+
+DNS: Testing DNS is performed from the Headend Controller, using script that creates an actual DNS request from the Server and calculates the response time. This tests both server availability, and DNS Service availability on the server.
+
+RADIUS: Testing Radius is performed from the Headend Controller, using a Synthetic Radius Authentication request from the Server and calculating the response time. The Synthetic transaction requires setting up a test authentication account on the actual Radius server. This tests both server availability, and DNS Service availability on the server.
+
+Internet: Testing Internet is performed from the Headend Controller, using ICMP Pings to Google.com and calculating the response time. This tests the path from the Headend Northbound to Google and Back, so does include additional infrastructure on prem like routers and firewalls that it transits.
+
+Applications: Testing Applications is performed from the Headend Controller, using a "curl" command to try to load the initial Application website page, and calculating the response time. In some cases if the Application website refuses "curl" commands, we can change this to ICMP pings instead. One exception like this is Skype which is tested via ICMP pings.
+
+

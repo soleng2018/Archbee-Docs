@@ -1,0 +1,51 @@
+---
+title: Firewall Policies with the Nile Access Service
+slug: firewall-policies-with-the-nile-access-service
+createdAt: Fri Jul 26 2024 16:00:20 GMT+0000 (Coordinated Universal Time)
+---
+
+### Introduction
+
+This document provides firewall policy recommendations when the Nile Access Service gateways are Layer 3 connected to the enterprise firewall. In this scenario, the Nile Access Service 1G/10G uplink ports are directly connected to one or a pair of firewalls, with the firewall interface IP addresses acting as the default gateways for the Nile gateways.
+
+### Firewall Networking Design
+
+Firewalls are typically connected to the enterprise network in one of two ways:
+
+1. **VLAN/Subnet Termination**:
+   - **Direct**: The firewall acts as the core routing switch, with VLANs/subnets mapped directly to firewall zones. This design is common in small-to-medium enterprises due to its simplicity.
+   - **Indirect**: All VLANs terminate on a core switch, which then connects to the firewall via a trunk. This offers more flexibility in subnet exposure to the firewall, while other subnets are routed directly on the core switch.
+2. **Layer 3 Termination**:
+   - All VLANs/subnets are terminated on the core/distribution switch, which acts as the routing engine. The firewall is connected at Layer 3 as the default gateway to access the "Untrusted" / Internet and "DMZ" zones.
+   - This design offers VLAN scalability at the cost of internal segmentation, and the core/distribution switch shields the firewall from Layer 2 anomalies.
+
+### Nile Access Service Design
+
+The Nile Access Service is provided through the Nile Service Block (NSB), which connects to the enterprise network through a pair of Layer 3 gateways (L3 Switches). The preferred connectivity is a direct Layer 3 connection to the enterprise firewall(s), which act as the default gateways for the NSB.
+
+The Nile Access Service design can be considered a hybrid, combining subnet scalability and subnet segmentation through the built-in Policy-Based Routing (PBR) that directs all Nile client traffic to the firewall for traffic policing and segmentation. Additionally, the NSB design is inherently broadcast and Spanning Tree Protocol (STP) free.
+
+### Firewall Policies with the Nile Access Service
+
+Since the Nile NSB connects to the firewall through two gateways, it consumes two physical interfaces/ports per firewall. For full redundancy with a pair of Active/Standby firewalls, four physical interfaces will likely be used.
+
+Given that the NSB supports Equal-Cost Multi-Path (ECMP) routing, it is recommended to combine both interfaces to the NSB in a single security zone, which could be named "NSB".
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/RLpzh3XKk2FefSe2k1V8T_image.png)
+
+With a Layer 3 termination to the firewall, client subnets enter the firewall from the same NSB zone. It is recommended to leverage the firewall's "Objects" construct to name subnets by their Nile segment, making the security policy rules easier to read and monitor in logs.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GjyiCYLPPHLnDpYTfLJlB_image.png)
+
+For example, in a Palo Alto Networks firewall, the use of Nile segment names in the source or destination addresses of a policy rule would make the rule much clearer when segmenting traffic originating from the Nile NSB:
+
+<BlockQuote>
+  from: NSB
+  source: Nile-Segment-A
+  destination: Nile-Segment-B
+  action: allow
+</BlockQuote>
+
+This guidance applies to most firewall vendors, as the use of segment-based naming conventions can significantly improve the readability and manageability of the firewall policies in a Nile Access Service deployment.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xstF_OE8eJN9kSApUKGpi_image.png)

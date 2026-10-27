@@ -1,0 +1,101 @@
+---
+title: Migration Overview
+slug: migration-overview
+createdAt: Thu Oct 16 2025 07:55:56 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+The **Migration Overview** provides guidance for transitioning existing Nile Access Service deployments to the new Nile Trust Service powered by the Trust Engine. This process ensures that customer networks retain existing functionality while gaining the benefits of zero trust enforcement, identity-based policies, and microsegmentation.
+
+## Migration Goals
+
+The migration process is designed to achieve three primary objectives:
+
+1. Preserve existing network connectivity and policies during the transition.&#x20;
+2. Automatically enable the Trust Engine for improved traffic control and visibility.&#x20;
+3. Minimize operational disruption while introducing zero trust capabilities.&#x20;
+
+## What to Expect During Migration
+
+Once the Nile Service Block software is upgraded to the version supporting the Trust Engine, the Nile Trust Service is automatically activated. The migration workflow ensures that traffic handling remains consistent with prior configurations until administrators define new policies.
+
+### Key Outcomes
+
+- **Automatic Enablement:** The Core Trust tier is activated for all customers after the upgrade. No manual activation is required.&#x20;
+- **Preservation of Existing Policies:** Current segment-based rules are automatically converted into equivalent policy-based constructs.&#x20;
+- **No Immediate Service Impact:** Traffic flows continue as configured pre-upgrade until new policies are applied.&#x20;
+- **Enhanced Visibility:** Administrators gain access to policy logs and classification details via Nile Control Center.&#x20;
+
+## Migration Process
+
+The Trust Engine upgrade introduces identity-driven microsegmentation while maintaining compatibility with legacy configurations. Migration occurs in phases to ensure a smooth transition.
+
+### Phase 1 – Preparation
+
+Before initiating migration, administrators should:
+
+- Validate that all sites are running compatible Nile Service Block software.&#x20;
+- Document current network segments, VLANs, and firewall rules.&#x20;
+- Confirm upstream integrations such as SSE or firewall connectivity.&#x20;
+- Review expected traffic patterns and any performance-sensitive applications.&#x20;
+
+### Phase 2 – Automatic Conversion
+
+During upgrade, the system automatically converts existing configurations into the new Trust Service framework:
+
+- **Segment-Based Rules:** Translated into Policy Groups (User, Device, Application) and Policies.&#x20;
+- **Firewall Forwarding Rules:** Retained as upstream forwarding policies.&#x20;
+- **Guest Segments:** Automatically converted into Guest Policy Groups and associated policies for Internet access.&#x20;
+- **DNS, DHCP, and Onboarding Rules:** Preserved through default Infrastructure and DNS Service Profiles.&#x20;
+
+### Phase 3 – Post-Migration Review
+
+After the upgrade, administrators should:
+
+1. Review automatically generated Policy Groups in Nile Control Center.&#x20;
+2. Verify that classification criteria (such as identity or network segment) are accurate.&#x20;
+3. Inspect the Global Policy Set to ensure policies reflect expected behavior.&#x20;
+4. Remove or disable redundant rules that are no longer relevant.&#x20;
+5. Test key workflows including authentication, Internet access, and intra-site communication.&#x20;
+
+## Migration Example Scenarios
+
+### Customers Without Trust Engine 1.0
+
+For customers using earlier versions that forwarded all traffic to an upstream firewall, the migration automatically creates segment-based Policy Groups and Policies to forward traffic upstream. Administrators can later refine these policies for microsegmentation.
+
+### Customers With Trust Engine 1.0
+
+For customers already using basic Trust Engine functionality, migration upgrades their enforcement model to identity-based microsegmentation. Existing internal and external policies are retained but expanded with the new constructs:
+
+- Network segments are mapped to User and Device Groups.&#x20;
+- Internal and external communication rules are auto-generated in the Global Policy Set.&#x20;
+- Default deny behavior remains consistent with previous Trust Engine versions.&#x20;
+
+### Guest and Quarantine Groups
+
+Guest segments are automatically converted to dedicated Guest Policy Groups with default Internet access policies. Quarantine policies are carried over, maintaining isolation for non-compliant or unvalidated devices.
+
+## Administrator Validation Checklist
+
+After migration, administrators should perform the following checks:
+
+- Confirm all Policy Groups (User, Device, Application) appear as expected.&#x20;
+- Review and test default and custom policies for intended behavior.&#x20;
+- Verify that unclassified and quarantine devices behave according to security posture.&#x20;
+- Confirm that upstream forwarding rules operate as designed.&#x20;
+- Review Policy Logs in Nile Control Center for accuracy and completeness.&#x20;
+
+## Best Practices for Migration
+
+- Perform migration during a scheduled maintenance window to minimize user impact.&#x20;
+- Validate configurations in a pilot site before applying changes network-wide.&#x20;
+- Maintain the default deny posture until new policies are reviewed and approved.&#x20;
+- Communicate upcoming policy changes to IT and security teams for awareness.&#x20;
+
+## Summary
+
+Migrating to the Nile Trust Service is an automated and seamless process that enhances enterprise network security without disrupting existing operations. By leveraging identity-based policy groups, microsegmentation, and continuous validation, the Trust Engine enables organizations to evolve from legacy network segmentation to a modern, zero trust architecture.
+
+**End of Section:** The documentation set for the Nile Trust Service is now complete, encompassing all aspects from conceptual understanding to operational deployment and migration.

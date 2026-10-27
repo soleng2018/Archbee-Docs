@@ -1,0 +1,417 @@
+---
+title: Cato Sockets integration with Nile
+slug: cato-sockets-integration-with-nile
+createdAt: Wed Apr 29 2026 05:23:58 GMT+0000 (Coordinated Universal Time)
+---
+
+This document describes the steps to integrate **Cato Networks Socket X1600 SD-WAN&#x20;**&#x61;ppliances in a redundant configuration with the **Nile Service Block (NSB)** using **BGP** as the routing protocol. The goal is a seamless integration between the **Nile Access Service** and the customer’s extended network and internet, with **ECMP**-style redundancy across four independent /30 L3 transit links.
+
+## Prerequisites
+
+- **Cato Networks**
+  - A Cato site with Sockets and administrative access to the Cato management portal (Network > Sites > Site Configuration).
+  - Cato site AS number: **65001** (Cato ASN).
+  - Customer/NSB AS number: **65002** (peer ASN on Cato side).
+- **IP addressing**
+  - Four unique **/30** point‑to‑point subnets for NSB–Cato transit (example values used in this guide):
+    - 192.168.10.0/30 – NSB GW1 ↔ Cato Socket (native on GW1 port)
+    - 192.168.10.4/30 – NSB GW1 ↔ Cato Socket (sub‑interface)
+    - 192.168.10.8/30 – NSB GW2 ↔ Cato Socket (native on GW2 port)
+    - 192.168.10.12/30 – NSB GW2 ↔ Cato Socket (sub‑interface)
+- **Routing design**
+  - BGP is used between **each NSB gateway** and the Cato Socket over two parallel /30 links, resulting in **4 total BGP sessions** and up to 4 equal‑cost paths for Nile–Cato traffic.
+  - Cato advertises a **default route (0.0.0.0/0)** to NSB; NSB advertises all NSB and downstream user subnets to Cato.
+
+## Topology
+
+Two Nile gateways connect to a single Cato Socket X1600 over dedicated LAN ports. Each physical NSB–Cato connection is split into **two logical /30 networks** (native + direct “sub‑interface”), giving **four independent L3 transit segments**.
+
+### High‑level topology
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/EaaJ35kzup2a3L1RiKpGd-20260429-052514.png "Redundant Cato Socket X1600 to dual Nile Service Block gateways with four BGP transit paths and downstream access infrastructure.")
+
+Traffic between Nile gateways and Cato uses all available /30 transit links. If any link or gateway fails, the remaining BGP sessions continue to carry traffic.
+
+## IP and BGP Design
+
+### Transit IP plan
+
+<table isTableHeaderOn="true" columnWidths="110,110,110,110,110,111">
+  <tr>
+    <td align="left">
+      **Link ID**
+    </td>
+    <td align="left">
+      **Nile Gateway**
+    </td>
+    <td align="left">
+      **Cato Network Object**
+    </td>
+    <td align="left">
+      **Subnet**
+    </td>
+    <td align="left">
+      **NSB IP (Peer)**
+    </td>
+    <td align="left">
+      **Cato IP (Local)**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      L1
+    </td>
+    <td align="left">
+      NSB GW1
+    </td>
+    <td align="left">
+      **NSB GW1 (Native)**
+    </td>
+    <td align="left">
+      192.168.10.0/30
+    </td>
+    <td align="left">
+      192.168.10.2
+    </td>
+    <td align="left">
+      192.168.10.1
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      L2
+    </td>
+    <td align="left">
+      NSB GW1
+    </td>
+    <td align="left">
+      **NSB GW1\_2 (Direct)**
+    </td>
+    <td align="left">
+      192.168.10.4/30
+    </td>
+    <td align="left">
+      192.168.10.6
+    </td>
+    <td align="left">
+      192.168.10.5
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      L3
+    </td>
+    <td align="left">
+      NSB GW2
+    </td>
+    <td align="left">
+      **NSB GW2 (Native)**
+    </td>
+    <td align="left">
+      192.168.10.8/30
+    </td>
+    <td align="left">
+      192.168.10.10
+    </td>
+    <td align="left">
+      192.168.10.9
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      L4
+    </td>
+    <td align="left">
+      NSB GW2
+    </td>
+    <td align="left">
+      **NSB GW2\_2 (Direct)**
+    </td>
+    <td align="left">
+      192.168.10.12/30
+    </td>
+    <td align="left">
+      192.168.10.14
+    </td>
+    <td align="left">
+      192.168.10.13
+    </td>
+  </tr>
+</table>
+
+The Cato side configuration reflects these as Native and Direct IP ranges for the NSB GW1/GW2 network.
+
+### BGP sessions
+
+On the **Cato** side, configure four neighbors (one per /30):
+
+<table isTableHeaderOn="true" columnWidths="104,99.42857142857142,99.42857142857142,99.42857142857142,99.42857142857142,99.42857142857142,99.42857142857142,99.42857142857144">
+  <tr>
+    <td align="left">
+      **Neighbor Name**
+    </td>
+    <td align="left">
+      **NSB GW**
+    </td>
+    <td align="left">
+      **NSB ASN (Peer)**
+    </td>
+    <td align="left">
+      **Cato ASN**
+    </td>
+    <td align="left">
+      **Peer IP (NSB)**
+    </td>
+    <td align="left">
+      **Cato IP (auto from network)**
+    </td>
+    <td align="left">
+      **Advertise**
+    </td>
+    <td align="left">
+      **Accept**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NSB GW1
+    </td>
+    <td align="left">
+      GW1
+    </td>
+    <td align="left">
+      65002
+    </td>
+    <td align="left">
+      65001
+    </td>
+    <td align="left">
+      192.168.10.2
+    </td>
+    <td align="left">
+      192.168.10.1
+    </td>
+    <td align="left">
+      Default route
+    </td>
+    <td align="left">
+      Accept all
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NSB GW1\_2
+    </td>
+    <td align="left">
+      GW1
+    </td>
+    <td align="left">
+      65002
+    </td>
+    <td align="left">
+      65001
+    </td>
+    <td align="left">
+      192.168.10.6
+    </td>
+    <td align="left">
+      192.168.10.5
+    </td>
+    <td align="left">
+      Default route
+    </td>
+    <td align="left">
+      Accept all
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NSB GW2
+    </td>
+    <td align="left">
+      GW2
+    </td>
+    <td align="left">
+      65002
+    </td>
+    <td align="left">
+      65001
+    </td>
+    <td align="left">
+      192.168.10.10
+    </td>
+    <td align="left">
+      192.168.10.9
+    </td>
+    <td align="left">
+      Default route
+    </td>
+    <td align="left">
+      Accept all
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NSB GW2\_2
+    </td>
+    <td align="left">
+      GW2
+    </td>
+    <td align="left">
+      65002
+    </td>
+    <td align="left">
+      65001
+    </td>
+    <td align="left">
+      192.168.10.14
+    </td>
+    <td align="left">
+      192.168.10.13
+    </td>
+    <td align="left">
+      Default route
+    </td>
+    <td align="left">
+      Accept all
+    </td>
+  </tr>
+</table>
+
+Additional BGP settings use:
+
+- **Metric**: 100
+- **Hold time**: 10 seconds
+- **Keepalive interval**: 5 seconds
+- **MD5 Auth**: disabled
+
+## Cato Socket Configuration
+
+### 1. Configure Socket interfaces for NSB transit
+
+On the Cato portal:
+
+1. Navigate to **Network > Sites > *Your Site* > Site Configuration > Socket**.
+2. Edit the ports connected to Nile gateways (e.g., **Port 4 = NSB GW1**, **Port 5 = NSB GW2**).
+3. For each port:
+   - **Destination**: LAN
+   - **Interface Subnet (Native Range)**:
+     - **NSB GW1 port**: Subnet 192.168.10.0/30, Local IP 192.168.10.1
+     - **NSB GW2 port**: Subnet 192.168.10.8/30, Local IP 192.168.10.9
+   - DHCP: disabled.
+
+In the UI, this appears as editing the Socket interface with a native /30 range and local IP on the Cato side.
+
+The Socket interface for **NSB GW1** is shown in the following images:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5juqq7EtIpjJMnbPNtN6T-20260429-052757.png "Socket interface for NSB GW1 using 192.168.10.0/30 with local IP 192.168.10.1.")
+
+The Socket interface for **NSB GW2** is shown below:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/y6f6MzV4N9Uy3H3h3J6Wr-20260429-052856.png "Socket interface for NSB GW2 using 192.168.10.8/30 with local IP 192.168.10.9.")
+
+### 2. Define NSB transit networks and sub‑interfaces
+
+Next, define the logical networks associated with these interfaces.
+
+1. Go to **Network > Sites > Networks**.
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/CGnxfOMsRJ78eHeESGP49_screenshot-2026-04-29-at-50420apm.png)
+2. Under **NSB GW1**, create/verify:
+   - **Native** range: 192.168.10.0/30, Local IP 192.168.10.1 (already created by the Socket interface).
+   - **Direct** range **NSB GW1\_2**:
+
+     ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/cQx2OzpIyF7-4_e9M16wK_screenshot-2026-04-29-at-50537apm.png)
+
+     - Type: Direct
+     - Subnet: 192.168.10.4/30
+     - Local IP: 192.168.10.5
+3. Under **NSB GW2**, create/verify:
+   - **Native** range: 192.168.10.8/30, Local IP 192.168.10.9.
+   - **Direct** range **NSB GW2\_2**:
+
+     - Type: Direct
+     - Subnet: 192.168.10.12/30
+     - Local IP: 192.168.10.13
+
+     ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/66F9gnB33i-mM0BSCFra7_screenshot-2026-04-29-at-50632apm.png)
+
+### 3. Configure BGP neighbors toward NSB
+
+1. Navigate to **Network > Sites > BGP**.
+2. Click **New** to add a BGP Neighbor (Figure 6).
+3. Under **General**:
+   - **Name**: NSB GW1, NSB GW1\_2, NSB GW2, NSB GW2\_2 (one neighbor per /30).
+   - **ASN Settings**:
+     - **Peer**: 65002 (NSB ASN)
+     - **Cato**: 65001
+   - **IP > Peer**: set to the NSB IP on that /30 (192.168.10.2, 192.168.10.6, 192.168.10.10, 192.168.10.14, respectively).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/O6cJ2nSgVaZfNeSAVv0_n-20260429-054041.png)
+
+1. Under **Policy**:
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uf6k2dYpPi60bjfoywp44_screenshot-2026-04-29-at-50727apm.png)
+
+   - **Advertise**: select **the default route**.
+   - **Accept**: **Accept All**.
+   - Leave **Perform Hide SNAT** unchecked (routing is handled via the transit /30s and NAT policy separately).
+2. Under **Additional Settings**:
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DG6pHuOLI5XfmzvtM-AiH_screenshot-2026-04-29-at-50814apm.png)
+
+   - **Metric**: 100
+   - **Hold time**: 10
+   - **Keepalive interval**: 5
+   - **MD5 Auth**: disabled (leave unchecked unless you configure matching MD5 on NSB).
+3. Repeat for all four neighbors so that the BGP summary table resembles the image below
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nKHj95qjzXEiepKz8Xlx6-20260429-054304.png)
+
+### 4. Configure NAT for LAN to WAN traffic
+
+If NSB traffic should reach the internet via Cato’s breakout, configure a NAT rule:
+
+1. Go to **Network > Sites > NAT**.
+2. Create a rule similar to **“NAT to WAN”**:
+   - Match: any source/destination/protocol (or constrain as needed).
+   - **Translated Source IP**: the public or internal egress IP allocated by Cato (example: 10.1.250.177).
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/p3UqG9uaS4_Q28Upub5Ib-20260429-054510.png" size="100" width="1915" height="952" position="center" darkWidth="1915" darkHeight="952" showCaption="false" indent="1"></Image>
+
+### 5. Configure Bypass rules for NSB and Nile Sensor traffic
+
+To ensure NSB transit and Nile sensor traffic is forwarded as pure L3 routed traffic (not subject to additional inspection or optimization within Cato Cloud PoP), configure **Bypass** rules:
+
+1. Go to **Network > Sites > Bypass**.
+2. Under **Source**, define objects such as:
+   - **NSB Transit** – covering the 192.168.10.0/27 or equivalent aggregate for all four /30s.
+   - **NSB Subnet** – the NSB internal subnet(s).
+   - **Nile Sensor Subnet** – sensor IP ranges.
+3. Leave **Destination** empty or default, so these sources are bypassed regardless of destination.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QvuOGgYRZ5nDj-LepLQKy-20260429-054559.png" size="100" width="1916" height="951" position="center" darkWidth="1916" darkHeight="951" showCaption="false" indent="1"></Image>
+
+## Configuring BGP on NSB Gateways
+
+NSB gateways will mirror the four-neighbor BGP design, and this configuration is currently performed by Nile Support. Please reach out to our Technical Support team to configure eBGP peering with the Cato Sockets. Self-service configuration through the Nile Portal will be available soon.
+
+## Verification
+
+### On Cato
+
+- In **Network > Sites > BGP**, verify all four neighbors are in **the Established** state and learning prefixes from NSB (user/NSB subnets).
+- Confirm that the Cato routing table shows NSB prefixes reachable via all four transit networks.
+
+### On Nile Gateways
+
+- Check BGP neighbor status for all four Cato peers (192.168.10.1, .5, .9, .13).
+- Verify that the Nile routing table has:
+  - Four ECMP default routes via the NSB–Cato transit interfaces.
+  - No unintended routes from Cato (if you filter to default only).
+
+### End-to-end tests
+
+1. From a client behind NSB, ping a resource reachable via Cato (e.g., an internet host or Cato‑connected site).
+2. Shut down individual NSB–Cato links (e.g., disable one Socket port or NSB sub‑interface) and confirm traffic continues via remaining BGP sessions.
+3. If using the NAT to WAN rule on Cato, verify that egress traffic from NSB appears sourced from the configured translated IP.

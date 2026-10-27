@@ -1,0 +1,130 @@
+---
+title: Passive Device Management and Handling (Wired)
+slug: passive-device-management-and-handling-wired
+createdAt: Wed Jan 22 2025 22:56:28 GMT+0000 (Coordinated Universal Time)
+---
+
+## Passive device (wired)
+
+Nile's default architecture is built for security. It is based on Layer 3 and that means we limit the use of broadcast flooding, which is traditionally used to poll for connected wired devices
+
+Nile switches discover a device on a port based on DHCP packets seen from it once plugged in. If a device performs DHCP IP, it is not considered 'Passive' since Nile is able to learn the device and keep it alive as long as it is connected
+
+The definition of 'Passive' in Nile's architecture is a 'statically IP addressed device' that does not initiate any traffic or DHCP packet upon first connection and remains silent unless solicited by another device or application.
+
+⚠️ The assumption is, the passive device is typically using a Static IP address
+
+## Passive Device Management and Handling (Wired)
+
+Nile provides tools to not only handle passive wired devices but also to manage them through a centralized access management system. These tools also support the discovery of devices that may remain silent during Day 1 migration to Nile and on an ongoing basis from Day 2 forward.
+
+## Key Features
+
+### Discovery for Day 1 Migration to Nile
+
+- Day 1 migration is simplified through the **Discovery** feature.
+- Administrators must know the static IP or subnet used by the passive device.
+- With a single click on **Discover**, all passive devices in that subnet or IP range are presented for approval.
+
+### Ease of Management
+
+- All passive devices are clearly flagged as **Passive**.
+- This helps bring order to previously unorganized networks, where IT teams may have lost track of devices with static IP addresses.
+- After discovery, a list of MAC addresses is presented for administrators to approve in bulk.
+- The discovery process intelligently excludes devices already using DHCP IP addresses.
+
+### Day 2 Keep Alive
+
+- Nile switches send keepalive probes to devices identified as passive, reducing reliance on broadcast based learning.
+
+### Per Device Discover and Wake Up
+
+- If a device appears offline, even though it is still connected, administrators can navigate to the device details page in the Nile Control Center.
+- A **Discover** or **Wake Up** option is available to recheck and reactivate the device.
+
+## Day 1 Migration to Nile – Adding a Passive Device
+
+1. Log in to the Nile Control Center (Nile Portal).
+2. Navigate to **Network Setup > Access Management**.
+3. Select **Add Device**.
+4. Choose **Static IP**. This activates the **Passive** option.
+   - Passive requires Static IP to be selected, since passive devices are assumed to use static IP addresses.
+5. Provide the following:
+   - MAC address
+   - Segment
+   - Geographical scope
+   - IP address (mandatory for passive devices)
+6. Note: Organizationally Unique Identifier (OUI) is not supported. The full MAC address must be provided.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kR66v-0saaU-YL8Q9eNUS_screenshot-2025-01-22-at-32941-pm.png" size="60" width="700" height="578" position="center" showCaption="false"></Image>
+
+
+
+1. Optionally, use **Bulk Upload** to import a CSV list of MAC addresses to be marked as Static IP and Passive.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YjKdkfiAwBmyVAhyZ5Vq4_screenshot-2025-01-22-at-33523-pm.png)
+
+### Day 1 Migration to Nile – Auto Discovery
+
+1. Log in to the Nile Control Center.
+
+
+
+1. ![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-0365rRl0X7WG9vRTssJAI-20250122-234127.png)
+2. Navigate to **Network Setup > Access Management**.
+3. Select the **Passive Device Discovery** icon.
+4. In the drawer that opens, specify an IP address, an IP range, or a subnet up to /24 that passive devices are using within the defined geographical scope.
+5. Select **Scan**.
+
+
+
+1. <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-4XwDKfUSWGvZwqLRfDayj-20250122-234442.png" size="60" width="672" height="526" position="center" showCaption="false"></Image>
+2. The NSB initiates auto discovery on switches in that scope and presents a list of MAC addresses for review.
+3. Approve the discovered devices. Once approved, they are automatically marked as **Static IP** and **Passive**.
+
+<BlockQuote>
+  If the IP range provided does not match any subnet mapped to configured segments, the discovery tool will generate an error. Ensure the range matches one of the existing segments.
+
+
+</BlockQuote>
+
+1. <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-5c6eByhe7Qm94aKQ1AO0F-20250122-235452.png" size="60" width="799" height="797" position="center" showCaption="false"></Image>
+
+The IP addresses for passive devices are populated in the MAB (MAC Authentication Bypass) list once they are fully learned by Nile switches.
+
+
+
+1.
+
+
+
+<Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-5c6eByhe7Qm94aKQ1AO0F-20250122-235452.png" size="60" width="799" height="797" position="center" showCaption="false"></Image>
+
+**Discovery Process**
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xo-zZHvHiZSdFETVkdybf_image.png "Auto Discovery Work Flow")
+
+### Day 2 Per Device Discovery Tool
+
+At times, passive devices may appear offline even though they remain physically connected. In this case:
+
+1. Go to **Devices** in the Nile Control Center.
+2. Select the offline wired device.
+3. Open the device details page.
+4. Use the **Discover** option.
+
+This triggers a one-time auto discovery on the specific switch and port where the device was last connected, using its last known IP address.
+
+![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-grcFugwkthRTtqGLhwJRo-20250123-001405.png)
+
+**Day 2 Discovery Tool - background process**
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/2yGtikOSG_TRfzbKKO-m-_image.png)
+
+## Feature Constraints
+
+- The Nile Service Block software must be upgraded to a supported version. Contact Customer Support to schedule the upgrade.
+- Only subnets up to /24 in size (a maximum of 254 IP addresses) can be used for initial discovery at one time.
+

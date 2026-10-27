@@ -1,0 +1,77 @@
+---
+title: Setup a UPSK SSID
+slug: setup-a-upsk-ssid
+createdAt: Fri May 24 2024 07:37:59 GMT+0000 (Coordinated Universal Time)
+---
+
+A Unique Passphrase (UPSK) SSID lets every user or device connect to the same Wi-Fi network using its own passphrase. If a passphrase is shared accidentally or a device is lost, you can revoke or change that passphrase without affecting other users or devices.&#x20;
+
+By consolidating devices onto a single SSID, UPSK can reduce the number of PSK SSIDs and associated beacon and other management frames, helping reduce RF overhead and improve Wi-Fi airtime efficiency.
+
+**Use UPSK for:**
+
+- Devices that cannot authenticate with a username and password (802.1X), such as cameras, printers, TVs, and meeting-room equipment.
+- Employee-owned devices, where employees authenticate through your identity provider and create a unique passphrase for each device.
+
+## Prerequisites
+
+Complete the following steps before creating a UPSK SSID, with SSO setup being optional. Each step has a dedicated page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+- **Configure SSO.** Integrate your identity provider (IdP) with Nile. For IdP integration, refer to Integrations > Identity Providers (IdP): Google Workspace, Okta, Microsoft Entra ID, or Azure Active Directory.
+
+## Configuration Steps
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select **Network Setup > Wireless**, click the '**+**' sign, and choose **Personal**.
+3. **Name**: Enter the SSID name.
+4. Select the **Hide SSID** checkbox to hide the SSID.
+5. **Security**: Select **WPA2**.
+   - **Note:** The **Unique passphrase** option is available only with WPA2. WPA3 is not available for a UPSK SSID.
+6. Select the **Unique passphrase** checkbox to assign a unique passphrase per user or device for the SSID.
+7. **Optional:** Select the **Enable SSO** checkbox to let employees sign in through your identity provider (IdP) and create passphrases for their own devices.
+8. **Segments**: Select one or more segments/subnets for this SSID to separate device groups, such as cameras and printers. Each passphrase maps devices to its associated segment/subnet. For example, with Nile-UPSK, camera, printer, and meeting room passphrases can map to the Cameras, Printers, and Devices segments, respectively. All devices use the same SSID.
+9. Click **Save** to complete configuration.
+
+**Note:** UPSK networks operate only on the 2.4 GHz and 5 GHz bands. They do not support WPA3 due to current security protocol limitations, and the 6 GHz band requires WPA3 security.
+
+## Create Unique Passphrases
+
+### Option 1: Create passphrases as an administrator
+
+Use this option for headless devices (devices that cannot use 802.1X), such as cameras and printers.
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Access Management, and open the **Wireless** tab.
+3. Click on the '**+**' icon and enter the following details:
+   - **Select**: Choose **UPSK**.
+   - **Name / User**: Enter a name for the device or person (for example, Lobby cameras).
+   - **Tag**: Optional. Enter a label for your reference.
+   - **OUI/MAC**: Optional. Enter the MAC address of the device.
+   - **SSID**: Select the UPSK SSID that the passphrase will work on.
+   - **Segments**: Select the segment the device joins when it uses this passphrase. Choose one of the segments selected on the SSID.
+   - **UPSK**: Click the refresh icon to have Nile generate a passphrase, or enter one manually. Passphrases follow the same rules as a PSK SSID and must be between 8 and 64 characters long.
+4. Click **Save** to complete configuration.
+5. Share the passphrase with the user, or enter it on the device.
+
+**Notes:**&#x20;
+
+- If you enter a MAC address, turn off the private (random) Wi-Fi address on that device for this network first. Otherwise, the device may connect with a different address from the one you entered.
+- CSV upload is not currently supported for UPSK passphrase creation.
+
+### Option 2: Employee self-registration
+
+Use this option for employee-owned devices such as laptops, phones, and tablets. It requires the **Enable SSO** checkbox on the SSID and an SSO integration (see Setup SSO).
+
+1. When SSO and a UPSK SSID are enabled, Nile generates a self-registration link.
+2. Share the link with your employees. The link is available in the following places:
+   - The my.nilesecure.com page, for users connected to the Nile network.
+   - The Nile-hosted guest page.
+   - The Nile Portal, where you can copy it and share it from anywhere.
+3. Employees open the link and sign in through your identity provider.
+4. Employees create a passphrase for their device and connect to the SSID with it.
+
+**Note:** Wireless devices that employees register join the segment selected on the SSID. By default, each user can have up to 3 passphrases and up to 5 devices. These limits can be changed for your organization.
+

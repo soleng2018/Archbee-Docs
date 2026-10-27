@@ -1,0 +1,50 @@
+---
+title: DNS Alerts for Client Devices
+slug: dns-alerts-for-client-devices
+createdAt: Thu Sep 19 2024 14:01:17 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The Nile Access Service continuously monitors the DNS transactions across all connected client devices. When a significant percentage of clients encounter DNS failures, the Nile Access Service generates alerts to notify the network administrators.
+
+## DNS Alert Thresholds
+
+The Nile Access Service uses the following thresholds to determine when to generate DNS alerts:
+
+### 5% to 10% Client Failures
+
+If 1% to 10% of the clients attempting DNS transactions in the last 15 minutes (with a sliding window of 5 minutes) have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **DNS Alert: 5% \<= Clients \< 10%**
+  &#x20;\<# number> of clients attempting DNS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+### 10% to 25% Client Failures
+
+If 10% to 25% of the clients attempting DNS transactions in the last 15 minutes have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **DNS Alert: 10% \<= Clients \< 25%**
+  &#x20;\<# number> of clients (>10%) attempting DNS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+### 25% to 100% Client Failures
+
+If 25% to 100% of the clients attempting DNS transactions in the last 15 minutes have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **DNS Alert: 25% \<= Clients \<= 100%**
+  &#x20;\<# number> of clients (>25%) attempting DNS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+## Alert Lifecycle
+
+The DNS alert is "closed" when the condition is cleared, i.e., when less than 1% of the clients are encountering DNS failures.
+
+## Alert Categorization and Visibility
+
+The DNS alerts are categorized as "Client Devices" in the Nile Cloud Services Portal's alert table. When a user clicks on the alert, they are taken to the "Devices" page, which displays the filtered list of devices with the corresponding DNS errors.
+
+By providing these DNS alerts, the Nile Access Service helps network administrators quickly identify and address any issues related to DNS authentication, ensuring the seamless operation of the network infrastructure.
