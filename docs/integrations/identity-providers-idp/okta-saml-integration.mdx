@@ -1,0 +1,228 @@
+---
+title: Okta SAML Integration
+slug: okta-saml-integration
+createdAt: Fri May 24 2024 17:27:29 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+This document covers the setup of the SAML (Security Assertion Markup Language) federation between Nile (Okta) as a Service Provider (SP) and Okta as an Identity Provider (IdP), for the purpose of leveraging the Nile wired and wireless SSO feature.
+
+### Requirements
+
+- Administrator rights to the Nile Portal.
+- Administrator rights to Okta.
+- The same Nile Portal administrator needs to be an Okta user.
+
+### Users and Groups
+
+- Login to the Okta portal and go to **Directory > People** to manage Okta users
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jFbjk7YZt8LDKH3xY-V9F_okta-directory1.png" size="34" width="526" height="866" position="center" showCaption="false"></Image>
+
+
+
+###
+
+###
+
+### Okta App Setup
+
+Login to your Okta portal
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture1.png)
+
+Go to **Applications > Applications** page
+
+In the **Create a new app integration**, select **SAML 2.0:**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture2.png)
+
+Click the **Create App Integration** button
+
+
+Scroll down the same page and add ‘Attribute Statements’ for the following as per the illustrated screenshot:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture5.png)
+
+
+In the **SAML Settings** section, fill out dummy placeholders for the ‘**Single sign on URL**’ and ‘**Audience URI**’:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture4.png)
+
+
+In the **Create SAML Integration**, enter an appropriate name for the application and click **Next**:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture3.png)
+
+- firstName
+- lastName
+- displayName
+- mail
+- mobile
+
+Take note of the following Identity Provider URLs and then click on the Download certificate button to save the X.509 certificate:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture10.png)
+
+Go to the **Sign On** tab on the same page and click **The View SAML setup instruction** button to display important parameters that will be used in the Nile Portal Provider configuration:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture9.png)
+
+Go to the **Assignments** tab and assign users and groups to the application to complete the App Integration setup:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture8.png)
+
+Click **Next** and select the following options to finish the setup:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture7.png)
+
+Scroll down further on the same page and add “Group Attribute Statements’ for the following:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture6.png)
+
+IdP Single Sign-on URL:
+&#x20;[https://dev-33770651.okta.com/app/dev-33770651\_nileoktasamlapp\_1/exk6ujkvecEQz9YKb5d7/sso/saml](#)
+
+
+
+Go to the next section to collect the parameters needed by the Okta app, and complete Nile Portal configuration.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture11.png)
+
+IdP Issuer:
+&#x20;[http://www.okta.com/exk6ujkvecEQz9YKb5d7](#)
+
+NOTE
+
+**Note: An Okta group named ‘NileAdmin’ assigned to the user and application has been previously created to be returned as a value to the ‘memberOf’ attribute.**
+
+### Nile Portal Identity Provider Setup
+
+Click on **ADD A NEW PROVIDER** and fill out the form as follows:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture12.png)
+
+Login now to the Nile Portal with the same Okta administrator at https\://www\.nile-global.cloud, and navigate to **Settings -> Global Settings -> Identity** page:
+
+
+On the same form, click on **SELECT CERTIFICATE** to upload the okta.cert certificate downloaded earlier
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture13.png)
+
+- **Name**: OKTA SSO
+- **IdP Issuer URI**: IdP issuer from step 12
+- **IdP SSO URL**: IdP Single Sign-on URL from step 12
+- **Destination URL**: IdP Single Sign-on URL from step 12
+
+Add two group rules to assign a Nile Portal group to the user by evaluating the ‘memberOf’ attribute value coming in the SAML assertion:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture18.png)
+
+Click the ADD GROUP RULE button to display the ADD rule form:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture17.png)
+
+Fill out the form as shown below to setup the group mapping attribute and click the SAVE button:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture16.png)
+
+Click the **ADD GROUP MAPPING** button to configure the group mapping attribute:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture15.png)
+
+Click the **Group Rules** tab to proceed with group mapping:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture14.png)
+
+Click the **SUBMIT** button to complete adding the Okta provider:
+&#x20;
+
+In this example: You will need to copy and paste the below URLs in the next step
+
+
+**Location** = “https\://login.u1.nile-global.cloud/sso/saml2/0oa6ukka1wsFVvTQr5d7”
+&#x20;**entityID** = ”https\://www\.okta.com/saml2/service-provider/spxwtsbbcwrugshwfckm”
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture24.png)
+
+Search the Metadata.xml file for the **entityID** and **Location** string values:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture23.png)
+
+Go to the **Providers** tab and click the down arrow button present on the right side of the created identity provider bar, and click on the **METADATA** download button at the bottom to download the metadata file. Use the information to complete the Okta App creation:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture22.png)
+
+Activate the group rules by clicking the **INACTIVE** button:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture21.png)
+
+Click **SAVE** to complete the rules addition:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture20.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture19.png)
+
+- **Name**: An appropriate name
+- **Mapping Value**: Okta group name sent in the ‘memberOf’ attribute
+- **Assigned groups**: Nile Portal ‘Administrator’ and ‘Monitor’ groups
+  &#x20;
+
+NOTE
+
+**Note: You may have to change the upload file type to “all files” in order to get the certificate file uploaded**
+
+### Second Pass at the OKTA App Integration Setup
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture26.png)
+
+
+Click the **Edit** button and replace the dummy entries as follows:
+&#x20;**Single Sign On URL**: Location
+&#x20;**Audience URI**: entityID
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture25.png)
+
+Go back to the Okta portal and open the Nile-Okta-SAML-app:
+
+
+### PSK-SSO SSID Setup
+
+Login to the Nile Portal
+
+Go to the **Settings -> Wireless** page to create the PSK SSO SSID:
+
+- Select the ‘Personal’ radio button
+- Type the desired SSID name
+- Select the Security option
+- Check off the ‘Enable SSO’ box
+- Enter the Pre-shared key
+- Select the previously created PSK-SSO segment
+
+Click the SAVE button to complete the PSK-SSO SSID creation
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Picture38.png)
+

@@ -1,0 +1,61 @@
+---
+title: Webhook Enhancements
+slug: webhook-enhancements
+createdAt: Wed Mar 11 2026 17:33:59 GMT+0000 (Coordinated Universal Time)
+---
+
+The Nile Portal now includes the following webhook enhancements.
+
+**Custom hostname for Nile Elements (NE)**
+
+- You can now configure a custom hostname for Nile Elements.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-yHwK1bM-zsFdxl5RYIaW_image.png)
+
+<Paragraph indent="1">
+  Click the device hostname to configure a custom hostname for the device.
+</Paragraph>
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_eJEDslSanMN59Bzg0Zav_image.png)
+
+- Update the device with the custom hostname
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mDEFDa9F3Z26JBPlJ3_tM_image.png)
+
+Once the custom hostname is saved, a pop-up notification appears confirming that the change was applied successfully.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MXSctg4JHy5Hks4uty_HX_image.png)
+
+- In addition, the **Download** function on the **Nile Device Inventory** page now includes the operator/admin-modified hostname alongside other device parameters and also retains the original default device name for cross-reference.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/iQSVLlfMgGHqQTxiwBWkB_image.png)
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mk2wGvhHzRnOFAv0QZGbn_image.png)
+
+- The configured hostname is reflected in webhook notifications, enabling better alignment with your internal naming conventions and downstream systems.&#x20;
+
+****
+
+**Closet added to location hierarchy**
+
+- The **Closet** level is now included in the location hierarchy and is visible in the **Location** column on the **Inventory&#x20;**&#x70;age. This provides more granular physical context for device placement.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-Cd6Snt-VWa5cn5yPMilV_image.png)
+
+**Additional webhook payload attributes as separate fields**
+
+- The webhook notification JSON body now exposes several attributes as dedicated fields, simplifying parsing and integration. Newly available fields include:
+  - Custom NE name
+  - device\_type
+  - Serial Number (**SN**)
+  - severity
+  - deviceId (a Nile-generated unique identifier for continued reference and correlation)
+
+
+
+**Webhook “Test Connection” button in Nile Portal**
+
+- A **Test Connection** button is now available for webhook configurations in the Nile Portal. This allows you to quickly validate endpoint reachability and confirm that your receiving system can successfully accept and process webhook payloads before using the webhook in production workflows.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/JJQs6MjCfSXdsTh-3OmP1_image.png)
+

@@ -1,0 +1,400 @@
+---
+title: Guest Access
+slug: guest-access
+createdAt: Fri Jul 26 2024 05:23:51 GMT+0000 (Coordinated Universal Time)
+---
+
+The Nile Access Service offers three different options for providing guest network access:
+
+1. Integration with an external Captive portal, such as ClearPass and ISE
+2. Nile-hosted Guest Portals
+3. Nile Secure Guest Service
+
+# Integration with External Captive Portal
+
+:Comment[This soluti]{docCommentId="iQEvh1HkFFXoA5ZBCZF7L" resolved="true"}on is ideal for customers who already have a Cisco ISE or Aruba ClearPass implementation with their existing WLAN. In this model, the Nile Access Service acts as a pass-through, relying on the external captive portal server to authenticate the guest devices.&#x20;
+
+There are two modes of operation:
+
+1. Server-initiated flow
+2. Static URL
+
+## Server Initiated flow
+
+In the server-initiated flow, the captive portal server is configured with the redirect URL and hosts the captive portal page. When a guest device connects to the captive portal SSID:
+
+1. The Nile Access Service assigns the device to a guest segment and provides an IP address from the DHCP server.
+2. The Nile Access Service initiates a MAC authentication request to the captive portal server.
+3. If the MAC address is not in the captive portal server's database, it responds with an Access-Accept message and embeds the redirect URL.
+4. The Nile Access Service then redirects the user to the URL provided by the captive portal server.
+5. The user communicates with the captive portal server and provides the necessary authentication (e.g., accept and connect, social login, password).
+6. Once authenticated, the captive portal server initiates a Change of Authorization (CoA), and the Nile Access Service re-initiates the MAC authentication. This time, the server responds with an Access-Accept without the redirect URL.
+7. The Nile Access Service then allows the device onto the network.
+
+To configure this flow, navigate to the "Settings" > "Authentication" section in the Nile Cloud Services Portal and add a RADIUS server.&#x20;
+
+### Static URL
+
+In the static URL mode, the administrator configures the redirect URL in the Nile Cloud Services Portal when adding the RADIUS server. The captive portal server does not provide the URL via the MAC authentication process.&#x20;
+
+# Nile Hosted Guest Portals
+
+This solution is ideal for customers who do not have an external captive portal server. The Nile Access Service hosts the captive portal server in the cloud and provides it as part of the service, free of charge. Nile supports two authentication methods for onboarding guest users:
+
+1. **Click-Through**
+2. **Email Approval**
+3. **Access Codes**
+
+## Click Through
+
+The click-through feature requires the guest user to accept the terms and conditions to access the network. This is the most basic form of authentication. Once accepted, the user is granted access to the network.&#x20;
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-bVBd-wSuQWUsUBzYyUPQs-20240826-090143.png)
+
+## Email Approval
+
+The email approval feature displays a form that the guest user must fill out, and then the request must be approved. The form includes the following fields:
+
+1. Guest User's Name
+2. Guest User's Email
+3. Visiting Employee's Name
+4. Visiting Employee's Email
+
+Once the form is filled out, an email is sent to the visiting employee, who must approve the request for the guest user to gain access.
+
+Nile will only send the email if the domain of the visiting employee's email entered by the guest is a valid domain for the tenant. The administrator can add multiple domains if needed.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-qUF1wc_j8BqmxcmubNn2H-20240826-090245.png)
+
+To configure the Nile-hosted guest portals, navigate to the "Settings" > "Authentication" section in the Nile Cloud Services Portal and select the "Guest" option when adding a RADIUS server.&#x20;
+
+## Access Codes
+
+### Feature Value
+
+Nile Guest Wi-Fi Access Codes provide flexible options for granting temporary network access to visitors.
+&#x20;Customers can choose between **simple, shared access codes** for short events or **user-specific access codes** for personalized, auditable guest access.
+
+Both options are available through:
+
+- The **Nile Portal** for manual administration&#x20;
+- **Nile APIs** for automation and integration with external systems&#x20;
+
+This flexibility allows customers to match the access model to their operational needs without changing network configuration.
+
+### Feature Description
+
+Nile Guest Portals support Access Code–based authentication.
+&#x20;When using Access Codes, customers can choose between **two access models**:
+
+**Option 1: Generic Access Code**
+
+A **single shared access code** that can be used by multiple guests.
+
+**Characteristics:**
+
+- The administrator has the option to define a custom access code, or Nile can automatically generate one
+- One access code shared across all guests&#x20;
+- Not tied to an individual guest&#x20;
+- Time-bound (start and end time)&#x20;
+- Simple to distribute verbally, via signage, or email&#x20;
+
+**Typical Use Cases:**
+
+- Short-duration events&#x20;
+- Meetings or training sessions&#x20;
+- Temporary guest access where individual tracking is not required&#x20;
+
+**Option 2: User-Specific Access Code**
+
+A **unique access code per guest**, tied to user identity.
+
+**Characteristics:**
+
+- One access code per guest. The administrator has the option to define a custom access code, or Nile can automatically generate one&#x20;
+- Associated with the guest's **Name** and **Email Address**&#x20;
+- Time-bound (start and end time)&#x20;
+- Enables traceability and personalized distribution&#x20;
+
+**Typical Use Cases:**
+
+- Employee-hosted visitors&#x20;
+- Contractors or partners&#x20;
+- Conferences and events requiring individual access control&#x20;
+- Integration with helpdesk or registration systems&#x20;
+
+### How It Works
+
+**Step 1: Identify the Guest Portal**
+
+- Admin selects a Guest Portal of type **Access Code**&#x20;
+- Guest Portal may be mapped to one or more geo scopes (sites or locations)&#x20;
+
+**Step 2: Create Access Codes**
+
+Access codes can be created in **two ways**, regardless of whether they are generic or user-specific.
+
+Option A: Nile Portal (Manual)
+
+Admins can manually create:
+
+- A **generic access code** shared by all guests, or&#x20;
+- **User-specific access codes** with name and email&#x20;
+
+Admins configure:
+
+- Access code value (optional auto-generation)&#x20;
+- Start and end time&#x20;
+- Guest name and email (user-specific option only)&#x20;
+
+Option B: Nile APIs (Automated)
+
+External systems can programmatically create access codes using Nile APIs.
+
+The API supports **both access models**:
+
+- **Generic access codes** (no guest identity)&#x20;
+- **User-specific access codes** (name and email included)&#x20;
+
+API payloads can include:
+
+- Access code (or allow auto-generation)&#x20;
+- Start and end time&#x20;
+- Optional guest name and email&#x20;
+
+This enables automation, bulk provisioning, and integration with existing workflows.
+
+**Step 3: Guest Authentication**
+
+- Guest connects to the SSID associated with the Guest Portal&#x20;
+- Guest is redirected to the captive portal&#x20;
+- Guest enters the access code&#x20;
+- Access is granted based on validity and portal policy&#x20;
+
+### Example Use Cases
+
+**Use Case 1: Short Event with Shared Access**
+
+```none
+Admin → Nile Portal or API → Generic Access Code → All Guests
+```
+
+- Single access code created&#x20;
+- Code shared with all attendees&#x20;
+- Access expires automatically after the event&#x20;
+
+**Use Case 2: Employee-Hosted Guests**
+
+```none
+Employee → Helpdesk (ServiceNOW) → Approval → Nile API → Guest Wi-Fi
+                              ↓
+                     User-specific access codes emailed
+```
+
+- Unique access code per guest&#x20;
+- Guest name and email captured&#x20;
+- Codes automatically distributed&#x20;
+
+**Use Case 3: Conference Attendees**
+
+```none
+Registration System → [API / CSV Upload] → Nile Platform → Guest Wi-Fi
+                     ↓
+           Badge Number = User-Specific Access Code
+```
+
+- Badge number used as access code&#x20;
+- Identity captured per attendee&#x20;
+- Supports large-scale, automated provisioning&#x20;
+
+### Summary: Access Code Options
+
+<table isTableHeaderOn="true" columnWidths="220,220,222">
+  <tr>
+    <td align="left">
+      Capability
+    </td>
+    <td align="left">
+      Generic Access Code
+    </td>
+    <td align="left">
+      User-Specific Access Code
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Shared Across Guests
+    </td>
+    <td align="left">
+      ✅
+    </td>
+    <td align="left">
+      ❌
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Guest Name & Email
+    </td>
+    <td align="left">
+      ❌
+    </td>
+    <td align="left">
+      ✅
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Time-Bound Access
+    </td>
+    <td align="left">
+      ✅
+    </td>
+    <td align="left">
+      ✅
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Manual Creation (Portal)
+    </td>
+    <td align="left">
+      ✅
+    </td>
+    <td align="left">
+      ✅
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      API-Based Automation
+    </td>
+    <td align="left">
+      ✅
+    </td>
+    <td align="left">
+      ✅
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Best for Events
+    </td>
+    <td align="left">
+      ✅
+    </td>
+    <td align="left">
+      ✅ (Large / Managed Events)
+    </td>
+  </tr>
+</table>
+
+## FAQ&#x20;
+
+**Q. What is the default session time of guest?**
+
+A. The default session timeout is 24hrs and it can be changed
+
+**Q. As an admin, can I customize the branding of the page?**
+
+A. Nile offers the ability to brand the page using background images, colors, and logos
+
+## Nile Secure Guest Service
+
+The Nile Secure Guest Service is an optional component of the Nile Access Service that provides secure internet access for guest devices, including those belonging to customers, partners, and employees, while isolating them from the organization's internal network resources.
+
+For more information on the Nile Secure Guest Service, please refer to the :Link[Nile Guest Service]{label="Nile Guest Service" spaceId docId="Ew03p5GEc2ntplXkKiPZz" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../../../premium-services/nile-guest-service.mdx"} documentation.
+
+## Guest PoP Details
+
+For deployments that require IP-based or FQDN-based allowlisting, Nile publishes the regional Guest PoP IP addresses and FQDN addresses used by the Nile Guest Service.&#x20;
+
+Use the following table to allow required guest traffic by region.
+
+<table isTableHeaderOn="true" columnWidths="115,100.51014869800768,202.7114664202267,244.7783848817656">
+  <tr>
+    <td align="left">
+      Region
+    </td>
+    <td align="left">
+      Nile Cloud
+    </td>
+    <td align="left">
+      Guest PoP IP address
+    </td>
+    <td>
+      FQDN Address
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      US-East
+    </td>
+    <td align="left">
+      AWS
+    </td>
+    <td align="left">
+      129.213.106.74
+    </td>
+    <td>
+      east-us.guest.nilesecure.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      US-West
+    </td>
+    <td align="left">
+      AWS
+    </td>
+    <td align="left">
+      192.9.141.254
+    </td>
+    <td>
+      west-us.guest.nilesecure.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Singapore
+    </td>
+    <td align="left">
+      AWS
+    </td>
+    <td align="left">
+      140.245.49.110
+    </td>
+    <td>
+      apac.guest.nilesecure.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      London
+    </td>
+    <td align="left">
+      AWS
+    </td>
+    <td align="left">
+      132.145.22.121
+    </td>
+    <td>
+      eu.guest.nilesecure.com
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      KSA (Riyadh)
+    </td>
+    <td align="left">
+      GCP
+    </td>
+    <td align="left">
+      145.241.104.158
+    </td>
+    <td>
+      me.guest.nilesecure.com
+    </td>
+  </tr>
+</table>
+

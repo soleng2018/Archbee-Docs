@@ -1,0 +1,392 @@
+---
+title: Microsoft NPS
+slug: microsoft-nps
+createdAt: Fri May 17 2024 18:37:30 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+Configuring a Microsoft RADIUS server provides superior authentication security: enables group policy enforcement for network segmentation, and provides record event logs for accounting purposes.
+
+Combining a secure Microsoft RADIUS server with certificate solutions creates a network environment that is strongly protected, and a straightforward experience for users.
+
+### Prerequisites
+
+- Microsoft NPS RADIUS Server
+- Identity Provider
+- Administrator rights to Nile Portal
+- Administrator rights to Microsoft NPS
+
+### Configuring Nile Authentication Server (RADIUS)
+
+- Log onto Nile Portal:&#x20;
+
+  <u>https\://u1.nile-global.cloud/</u>
+- Navigate to&#x20;
+- Click on the + (add authentication button) to create a new Microsoft NPS RADIUS authentication configuration:
+
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KIDvtEELlNhBTVc3qALm1_image.png" size="66" width="814" height="564" position="center" showCaption="false"></Image>
+
+- Fill in the Microsoft NPS server information:&#x20;
+  - RADIUS server Name (Any name example SE HQ NPS)
+  - Up to three RADIUS IP addresses
+  - RADIUS Authentication Port; default 1812/UDP
+  - RADIUS Shared secret (pre-shared key that need to same NPS client pre-shard key)
+  - Nile Geo scope (Site): Nile supports one RADIUS server per Geo scope.
+- Click on DISPLAY NAS IP’S to get Nile Service Block NAS IP address that need to be added as Microsoft NPS client.
+
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/04/nps2.png" size="94" width="928" height="699" position="center" showCaption="false"></Image>
+
+- The result is shown in the entry panel:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/nps3.png)
+
+- Click on Save and verify the server added to the Authentication device list
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/nps4.png)
+
+### Configuring NPS Server
+
+- Go to&#x20;
+- In the Console, navigate to&#x20;
+- In the Add/Remove Snap-in window, select&#x20;
+- In the&#x20;
+- Click the&#x20;
+- In the Add/Remove Snap-in window, click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/23.png)
+
+****
+
+
+- In the Console, navigate to NPS (Local) side menu
+- In the “Standard Configuration” panel, select “RADIUS server for 802.1x Wireless or Wired Connections” from the pull-down list
+- Click on “+ Configure 8201.X” link: this launches the 802.1x configuration wizard.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/24.png)
+
+- Select&#x20;
+- Add “Nile” to the beginning of the name
+- Click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/25.png)
+
+- Click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/26.png)
+
+- Use “Nile NSB” as the Friendly name
+- Fill in “Address (IP or DNS)” with the NAS IP address provided by the Nile Portal
+- Click the&#x20;
+- Enter the secret that matches the one in the Nile Portal Authentication settings.
+- Click on&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/27.png)
+
+- This policy example allows only domain users;, to add these three conditions
+  &#x20;click the Next button
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/28.png)
+
+- Select Authentication Type – Microsoft: Protected EAP (PEAP) and click on Next
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/29.png)
+
+- Windows Groups – select user groups for the policy. In our example, we will select “Domain Users” groups. Then click on Next.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/30.png)
+
+- For traffic controls, just click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/31.png)
+
+- Click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/32.png)
+
+Note: This is just an example. You can modify the policy to meet your requirements.
+
+For Machine Authentication or user authentication using a certificate, please select “Microsoft: Smart Card or other certificates.”
+
+- In the left-hand menu, under “Policies” select “Connection Request Policies”
+- Click the entry “Nile Secure Wireless Connections”.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/33.png)
+
+- In the left-hand menu, under “Policies”, select “Network Policies”.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/34.png)
+
+- Verify the information as shown.
+
+### RADIUS Service Monitoring and Troubleshooting
+
+- Nile supports RADIUS transaction monitoring for service availability, For monitoring, Nile will send an authentication request with a dummy user account “user name nile-network-test”, RADIUS will respond with a rejection which confirms RADIUS service is available.
+- An administrator has the option to use an active directory user for monitoring or can run a one-time verification for troubleshooting only, Nile supports MS-CHAPv2 for RADIUS monitoring and requires an NPS policy for verification.
+  &#x20;Example: to allow Nile account verification, we need to have an NPS policy that allows MS-CHAP for local NPS (127.0.0.1)
+- Create a new connection request policy name Nile\_Host\_Verifcation
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/38.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/37.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/36.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/35.png)
+
+- Create a new Network policy name Nile\_Host\_Verifcation
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/43.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/42.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/41.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/40.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/39.png)
+
+- To verify RADIUS authentication, log onto Nile Portal:&#x20;
+
+  <u>https\://u1.nile-global.cloud/</u>
+- Navigate to&#x20;
+- Click on the blue RADIUS hostname (Example SE HQ NPS)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/44.png)
+
+- From RADIUS configuration modification page, click on&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/46.png)
+
+
+A new pop-up window opens.
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/45.png)
+
+- User Id: MS Windows AD User account
+- Password: User account password
+- Save credentials for monitoring (Optional to use the account for Nile availability monitoring) if the testing account is not saved, Nile will use a dummy account for monitoring.
+- Click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/47.png)
+
+- If authentication is successful, a green circle with an arrow will display beside RADIUS host IP.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/48.png)
+
+- You can verify Windows NPS logs for success or failure authentication.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/50.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/49.png)
+
+### Configuring Nile Segments and Wireless SSIDs (RADIUS)
+
+- Log onto Nile Portal:&#x20;
+
+  <u>https\://u1.nile-global.cloud/</u>
+- Navigate to&#x20;
+- Click on  button; this opens a new Segment configuration panel
+- In the&#x20;
+- Navigate to&#x20;
+- Click the&#x20;
+- Select (1) all sites, (2) one site, or (3) one zone, using the radio buttons and associated lists
+- Select the authentication server from the Authentication pull-down list.
+- Select the DHCP server from the DHCP pull-down list.
+- Select the subnet(s) from the Subnet pull-down list — you may select one or more
+- Click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/51.png)
+
+- Navigate to&#x20;
+- Click on ? button; this creates a new SSID
+- Click the Enterprise radio button
+- Enter the Name for the SSID: this will be what the APs will use as a beacon
+- Select the security type from the Security pull-down list
+- Select the segment created earlier. (Example ND\_Employee segment)
+- Verify that you have entered the correct information
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/52.png)
+
+- Press the&#x20;
+
+### Microsoft NPS Wireless 802.1x Connection Test
+
+- From a Wireless-capable client device, select Nile 802.1x SSID; log in using a domain user member; and, verify that device connects to the SSID.Note: First-time clients need to accept the certificate and connect to the network using 802.1x; user needs to click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/53.png)
+
+- Verify sign-in info and IP address. IP needs to be from segment subnet range; in our example 192.168.112.0/26 for ND\_Employee
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/54.png)
+
+Verify NPS logs:
+
+- Open Event Viewer, and then, under Custom views, select
+- If needed, filter for events that have Event ID 6273 or 6274. Most authentication failures produce these events.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/55.png)
+
+### Nile Segment mapping with Microsoft NPS Radius Server
+
+- Log onto Nile Portal:&#x20;
+
+  <u>https\://u1.nile-global.cloud/</u>
+- Navigate to&#x20;
+- Click on the ? (edit) icon next to the name of the SSID, to edit the wireless SSID
+- Add an additional segment from the drop-down list.
+
+
+
+
+You may need to go back at look at the definitions of the segments in your list. In this example
+&#x20;(Nile Portal **® Settings** button →**&#x20;Segments** tab → edit ssi&#x64;**&#x20;“**&#x4E;D\_Employee” **® Service area** subtab),
+&#x20;“segment ND\_Employee” is configured with Microsoft NPS as an authentication server and IP address Subnet 192.168.112.0/26:
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/56.png)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/57.png)
+
+and
+&#x20;(Nile Portal **® Settings** button **® Segments** tab **®&#x20;**&#x65;dit ssi&#x64;**&#x20;“**&#x4E;D\_Contractor” **® Service area** subtab)
+&#x20;segment “ND\_Contractor” is configured with Microsoft NPS as an authentication server and IP address Subnet 192.168.116.0/26:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/58.png)
+
+- In the Console, navigate to NPS (Local)&#x20;
+- Click on the Edit button.
+- Select Setting&#x20;
+- click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/59.png)
+
+- From the&#x20;
+- Click on attribute&#x20;
+- This will use the tunnel group ID RADIUS standard attribute to assign Nile segment name to policy members.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/60.png)
+
+- In Attribute Information, click the&#x20;
+- Enter the segment name into the value field for the attribute. The segment name is case sensitive.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/61.png)
+
+- Click on the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/62.png)
+
+- Click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/63.png)
+
+- Verify RADIUS standard attributes.
+- Click the&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/64.png)
+
+- Verify sign-in info and IP address. IP needs to be from segment subnet rang (in our example 192.168.116.0/26 for ND\_Contractor)
+
+
+
+****
+**Note**: NPS is a Microsoft Windows service. Adding or changing configs might require restarting the service. To restart, in the Console, navigate to NPS (Local), right-click on NPS (local), select Stops NPS Service to stop NPS and then select Start NPS Service.
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/65.png)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/04/66.png)
+

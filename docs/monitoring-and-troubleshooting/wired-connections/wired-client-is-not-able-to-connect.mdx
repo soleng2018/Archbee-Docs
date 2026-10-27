@@ -1,0 +1,29 @@
+---
+title: Wired client is not able to connect
+slug: wired-client-is-not-able-to-connect
+createdAt: Wed Jul 24 2024 20:16:19 GMT+0000 (Coordinated Universal Time)
+---
+
+This article is created to help with self troubleshooting Wired Client connection and data collection for further support escalation.
+
+1\. Verify from Nile Portal Device dashboard history of particular MAC address that device has been ever connected to NIle NSB:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xesPZS7JqRuJYXISQY_lU_e12iuf07l3avhjb-qpuau9oi6paynxhzrq.png)
+
+Please note, If there are not device information found, that means device was not never connected to Nile AS Switch or pending MAB approval.
+
+2\.  Click on Device details to check Events and validated if Device is Dot1x or MAB connected as well as device information as IP address, Segment Name, Last seen time etc. data is correct.
+
+![Advance page: Advance details of Client ](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nMd2Rdk7jO8E9s1QHXF6A_ppndnx5nxwv7o7k9imi1wsam-lqty4fetq.png "Advance page: Advance details of Client ")
+
+3\. Verify is device is MAB approved in case of device is connected without Dot1X authentication:
+
+![MAB: MAB Status of the End Device.](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1RDHBuRaqa57d3wJqmVTM_8ammgl6argchibecotmnkyj7vjgxcibbsw.png)
+
+4\. If above action are successful, try to run RUN TEST to validate client network connectivity:
+
+![Validation: RUN TEST](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3ExmQt69UEXduOXiOf7EY_gcbd1pma4pjm1eljpybncgkl0ame9amzuw.png "Validation: RUN TEST")
+
+Based on Run Test results we could validate whether device is currently connected to the network, Internet reachability, connection etc. 
+
+Please note: Ping test could fail for PCs where ICMP traffic is blocked by PC's Firewall

@@ -1,0 +1,388 @@
+---
+title: Webhook Integration : Send alerts to ServiceNow
+slug: webhook-integration-send-alerts-to-servicenow
+createdAt: Fri May 24 2024 17:18:04 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+This guide shows how to use webhook to export Nile Service Block (NSB) Alerts to ServiceNow — for log analysis and archiving.
+
+Alerts that export via webhook to ServiceNow are:
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td>
+      SLAs
+    </td>
+    <td>
+      Nile service availability, coverage, and capacity alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Infrastructure
+    </td>
+    <td>
+      Infrastructure DHCP, DNS, RADIUS, and Internet availability alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Applications
+    </td>
+    <td>
+      Application availability and latency alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Security
+    </td>
+    <td>
+      Wireless Intrusion Detection (WIDS) alerts
+    </td>
+  </tr>
+</table>
+
+### Prerequisites
+
+- ServiceNow cloud instance, with access from Nile cloud
+- Administrator rights to the Nile Portal.
+
+### ServiceNow Setup:
+
+### Create ServiceNow Development Instance for testing
+
+- Login to ServiceNow\.You can create a new account if you don’t have one yet.
+- ServiceNow provides a developer instance (for free) that can be used for NSB integration tests. This document uses a developer instance for this purpose. The steps will be the same in creating a production ServiceNow instance.
+- To create a developer instance, go to https\://developer.servicenow\.com/dev.do
+- Create a developer account, then log in to build a developer ServiceNow.
+  To create a developer instance, click on **Start Building,** then **Request an Instance**.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/qsnzIm6crehJEUXcg4DGH_image.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/3.png)
+
+
+After building the developer instance, you will be provided an **instance URL**, **login user name**, and **password**. (In our example, the developer instance URL is https\://dev119912.service-now\.com and the username/password is “admin/=EZ\*g23IjdTi”)
+&#x20;
+
+**Important Note**: If you do not access the developer instance for a few days, the instance state will be changed to **hibernate**. After some additional time, the instance will be **deleted**.
+
+- Login to the new instance using your admin account
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/4.png)
+
+### Create a ServiceNow New Field for Nile Service
+
+- ServiceNow provides default fields for Incidents, and these can be extended. We will need to add a new field, “External Id” as an example to the **Incident** table. This field will be used to correlate Nile alerts to ServiceNow Incidents.
+- &#x20;From the **All&#x20;**&#x74;ab, click the down-caret to expand **System Definition**; under System Definition, select **Tables**
+
+![](https://nilesecure.wpenginepowered.com/wp-content/uploads/2024/02/5-2.webp)
+
+- The list of tables (model) in the ServiceNow is shown below:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/6.webp)
+
+- Search for **Incident&#x20;**&#x74;able by keying “incident” in the Search field. From the search results, click on the link “Incident”.&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/7-1.webp)
+
+- In the “Columns” tab, add the label “Incident”, the name “Incident”, then click **New&#x20;**&#x74;o update the table schema/model with the Nile incident column.&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/8-1.webp)
+
+- From the column option, set **Type** as “**String**”, make the **Column Label** as “**External Id**” and the **column name** will **auto generated “u\_external\_id”**. we will use the **column name** for the integration with Nile webhooks. In this example, the **column\_name&#x20;**&#x69;s “**u\_external\_id**” . Specify the max length as **32** and click “**Submit**”.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/9-1.webp)
+
+### Create ServiceNow New Field for Nile Service
+
+- The next step is to create a Java scripted Rest APIs which handles the Webhooks requests from Nile notification-services. Below is the Java script that we will use to create the API:
+
+
+
+<BlockQuote>
+  (function process( /\*RESTAPIRequest\*/ request, /\*RESTAPIResponse\*/ response) \{
+  request.body.data;
+  var alert = request.body.data;
+  var state = 2;
+  if (alert.alertStatus == 'Resolved') \{
+  state = 6;
+  }
+  var inc = new GlideRecord('incident');
+  inc.addQuery('u\_external\_id', '=', alert.id);
+  inc.query();
+
+  if (inc.next()) \{
+  inc.state = state;
+  if (state == 6) \{
+  inc.close\_code = 'Closed/Resolved By Caller';
+  inc.close\_notes = 'Closed by API';
+  }
+  inc.update();
+  } else \{
+  inc.initialize();
+  inc.u\_external\_id = alert.id;
+  inc.short\_description = alert.alertSubject;
+  inc.description = alert.alertSummary + " for " + alert.duration;
+  inc.insert();
+  }
+  response.setStatus(200);
+  })(request, response);
+
+</BlockQuote>
+
+Note: you can customize the script.
+&#x20;For more information on ServiceNow API scripts use the following URL:
+&#x20;:Link[https://docs.servicenow.com/bundle/rome-application-development/page/integrate/custom-web-services/reference/r\_ScriptedRESTServiceScriptExamples.html]{href="https://docs.servicenow.com/bundle/washingtondc-application-development/page/build/custom-application/concept/build-applications.html" newTab="true"}
+
+- To add the script API to ServiceNow, navigate to **All** and filter on “**Scripted Rest APIs**” and click the link. Script REST APs link will show the list of existing REST APIs. Click on **New&#x20;**&#x74;o create a new API for Nile Webhooks.
+
+  ![](https://nilesecure.com/wp-content/uploads/2024/02/10.webp)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/01/11.png)
+
+
+
+
+- In the **Name** field, provide an API name. In our example, we used “**nile\_alert**”. Click on **Submit**.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/12.webp)
+
+- Search REST APIs name “**nile\_alert**” and double click on the link to open the API URL
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/13.png)
+
+- To add the API script, under the **Resources** tab click **New**.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/14.png)
+
+- Select **HTTP Method&#x20;**&#x61;s **POST.&#x20;**&#x49;n the **Script&#x20;**&#x73;ection, copy and paste the Nile script.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/15.webp)
+
+- Under the Security tab, make sure the **Requires Authentication&#x20;**&#x63;heckbox is enabled.
+  Click on **Submit**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/16.webp)
+
+- Make a note of the resource path URL; it’s needed for integration and API testing.&#x20;
+  In our example API resource URL is “**/api/832604/nile\_alert**” , this completes the **ServiceNow setup**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/17.webp)
+
+### Testing ServiceNow API using Postman
+
+- We will need a fully qualified REST API path. For ServiceNow, the fully qualified path is&#x20;
+
+**https\:// + \<instance name> + \<resource path>**
+
+In our example, it will be https\://dev119912.service-now\.com/api/832604/nile\_alert. You will need the URL for API postman verification and Nile integration.
+
+Open **Postman** application.
+Select **POST**,and provide the API URL.
+Click on **Authorization&#x20;**, select **Type Basic Auth, &#x20;**&#x61;ndprovide ServiceNow instance admin credentials (user/password admin/=EZ\*g23IjdTi)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/18.png)
+
+- Nile portal required a basic token for integration. Postman will generate a basic token from authentication, and you will need the key (token) to configure Nile webhook ServiceNow Integration. To view and copy the basic token, click on **Headers,&#x20;**&#x69;t will show you all headers including **Authorization**, copy Authorization header key values **including “Basic” keyword&#x20;**
+- Example: the authorization token will be ”**Basic YWRtaW46PUVaKmcyM0lqZFRp**
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/19.webp)
+
+- To test the API, we will need to generate a test incident, we can use a simple JSON alert payload that simulates “Alert Notifier” / “Notification Services”, below is a simple schema to generate a simple alert. All the fields in the JSON are String type.
+
+
+
+<BlockQuote>
+  \{
+  "id": "9c4a3f89-327f-4100-8cc0-d1bcd90a71ac",
+  "alertStatus": "Created",
+  "alertSubject": "New Nile Alert \[Radius]",
+  "alertSummary": "Detected delay with Radius server 10.1.2.10 responses",
+  "startTime": "Dec 28, 2020 7:07:00 AM",
+  "duration": "5 minutes",
+  "site": "Site-1",
+  "building": "Building-1",
+  "floor": "Floor-1"
+  }
+
+
+</BlockQuote>
+
+- To generate the test alert, select the **Body** option, click on **raw** , change format to **JSON**, and copy and paste the incident JSON example as below:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/20.png)
+
+- Click on **Send&#x20;**&#x61;nd verify the status, the status should be **200 OK**, this means the REST API request was completed without any error.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/21.png)
+
+- Verify the incident is created under ServiceNow, from the ServiceNow instance, under **All,** filter on **Service Desk**, then click on **Incidents,&#x20;**&#x49;ncident table will be opened, first Incident will be the test incident that we generate using Postman
+
+
+
+<Image src="https://nilesecure.com/wp-content/uploads/2024/02/22.webp" size="50" width="528" height="351" position="center" showCaption="false"></Image>
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/23.webp)
+
+![](https://nilesecure.com/wp-content/uploads/2024/01/24.png)
+
+
+
+
+### Nile Control Center Setup:
+
+### Add ServiceNow Webhooks to Nile Portal
+
+- Login to Nile portal using an admin account, and navigate to Settings
+  &#x20;Select Global Settings. Select Integration; click on “**+**” sign to add ServiceNow webhooks.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/25.png)
+
+- Fill out ServiceNow Webhooks info:
+
+**Name**: Webhooks name example “**Service-Now**”
+
+**URL** : ServiceNow API URL “**https\://instance name + resource path**”.
+&#x20;In our example, it will be
+&#x20;https\://dev119912.service-now\.com/api/832604/nile\_alert
+
+**Token**: Basic Authentication token generated by Postman
+&#x20;In our example
+&#x20;“**Basic YWRtaW46PUVaKmcyM0lqZFRp**”
+
+Click on **SAVE&#x20;**&#x74;o save the config.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/26.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/27.png)
+
+
+&#x20;
+
+### Enable Webhooks alert subscription
+
+- Nile portal has options to send specific alert to admin via email or to Webhooks. These alert groups are:
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td>
+      **SLAs**
+    </td>
+    <td>
+      Nile service availability, coverage, and capacity alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Infrastructure**
+    </td>
+    <td>
+      Infrastructure DHCP, DNS, RADIUS, and Internet availability alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Applications**
+    </td>
+    <td>
+      Application availability and latency alerts
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Security**
+    </td>
+    <td>
+      Wireless Intrusion Detection (WIDS) alerts
+    </td>
+  </tr>
+</table>
+
+- Login to Nile portal using an admin account and navigate to **Global Settings**.
+- Select Integrations-->Setup Integrations****
+  Selecting **Email&#x20;**&#x77;ill enable alerts to be sent to a logged-in admin.
+  Selecting **Webhooks** will send alerts via Webhook (in our example Service-Now). Note: the selected options are saved automatically
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/28.png)
+
+### Webhook :Comment[Enhancements]{docCommentId="i403s1WCXbOEc7StCf3xC" resolved="false"}:
+
+The Nile Portal now includes the following webhook enhancements.
+
+- **Custom hostname for Nile Elements (NE)**
+  You can now configure a custom hostname for Nile Elements. The configured hostname is reflected in webhook notifications, enabling better alignment with your internal naming conventions and downstream systems. In addition, the **Download** function on the **Nile Device Inventory** page now includes the operator/admin-modified hostname alongside other device parameters and also retains the original default device name for cross-reference.
+
+
+
+- **Closet added to location hierarchy**
+  The **Closet** level is now included in the location hierarchy and is visible in the **Location** column on the **Inventory&#x20;**&#x70;age. This :Comment[provides]{docCommentId="behpdC5aqYvGI-It_QDWR" resolved="false"} more granular physical context for device placement.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/tZ1qw8yLpGxhE8_zlF9AW_.blob "Figure 1: Example view showing custom hostname for a Nile Element and Closet in the location hierarchy on the Inventory page.")
+
+- **Additional webhook payload attributes as separate fields**
+  The webhook notification JSON body now exposes several attributes as dedicated fields, simplifying parsing and integration. Newly available fields include:
+  - Custom NE name
+  - device\_type
+  - Serial Number (**SN**)
+  - severity
+  - deviceId (a Nile-generated unique identifier for continued reference and correlation)
+
+<Paragraph indent="1">
+
+</Paragraph>
+
+- **Webhook “Test Connection”&#x20;**:Comment[**button**]{docCommentId="_O-RsGer4XsdH3nPHpFwv" resolved="false"}**&#x20;in Nile Portal**
+  A **Test Connection** button is now available for webhook configurations in the Nile Portal. This allows you to quickly validate endpoint reachability and confirm that your receiving system can successfully accept and process webhook payloads before using the webhook in production workflows.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/okmkmwHfxdAkNG4FQmrk0_image.png)
+
+### Verify Nile Events under ServiceNow and Report:
+
+- Login to Nile Portal as an admin.
+- Click on **Alert icon** (triangle on left side)
+  Click on **Alerts** tab
+  Verify Nile alerts
+  Browse to Nile **Alert & Audit**
+  Under **Alerts** list, verify Nile CREATED alerts
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/29.webp)
+
+- Login to ServiceNow instance as an admin.
+- Verify Nile alerts are created as incidents under ServiceNow: from the ServiceNow instance, under All, filter on Service Desk, then click on Incidents, the Incident table will be opened.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/31.webp)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/30.png)
+
+- Click on the blue link of the incident number to see the detail:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/32.png)
+

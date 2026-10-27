@@ -1,0 +1,195 @@
+---
+title: Wi‑Fi Security Operating Modes
+slug: wifi-security-operating-modes
+createdAt: Wed Dec 17 2025 06:13:53 GMT+0000 (Coordinated Universal Time)
+---
+
+### Transition Mode SSIDs in WPA3-Personal and WPA3-Enterprise Tri‑Band Networks:
+
+Transition mode SSID is designed to support legacy clients by allowing them to connect with lower security settings while still using the same SSID.
+
+**WPA3-Personal (Transition mode) SSID:** On a tri-band AP, this mode allows 2.4 GHz and 5 GHz clients to connect using either WPA3-SAE or WPA2-PSK, while 6 GHz clients are restricted to WPA3-SAE only.
+
+**WPA3-Enterprise (Transition mode) SSID:** On a tri-band AP, this mode allows 2.4 GHz and 5 GHz clients to connect using either WPA3-802.1X or WPA2-802.1X authentication. The SSID will not broadcast on the 6 GHz radio when using Transition mode.
+
+**WPA3-Enterprise (192-bit Strict mode) SSID:&#x20;**&#x46;or WPA3-Enterprise deployments, the RADIUS server must present X.509 certificates that comply with contemporary cryptographic best practices and the stricter requirements of WPA3-Enterprise. In practice, this generally means using RSA keys of at least 2048 bits (with 3072 bits or larger recommended for long-lived certificates or 192-bit security profiles), or elliptic-curve (ECDSA) certificates based on strong curves such as P-256 or stronger. Certificates should be signed using SHA-256 or a stronger hash function, and deprecated parameters such as 1024-bit RSA keys or SHA-1 signatures must be avoided.
+
+<BlockQuote>
+  **Note:&#x20;**&#x44;eployments that continue to use legacy or weak certificates are likely to encounter WPA3‑Enterprise authentication failures.
+</BlockQuote>
+
+This table summarizes how different Wi‑Fi security operating modes are applied and broadcast across the 2.4 GHz, 5 GHz, and 6 GHz bands.
+
+<table isTableHeaderOn="true" columnWidths="397,397,397,397">
+  <tr>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="transparent" align="left">
+      **Security Mode**
+    </td>
+    <td>
+      **Wi‑Fi configuration on 2.4 GHz&#x20;**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="transparent" align="left">
+      **Wi‑Fi configuration on 5 GHz&#x20;**
+    </td>
+    <td lightBackgroundColor="#F9FAFB" darkBackgroundColor="transparent" align="left">
+      **Wi‑Fi configuration on 6 GHz&#x20;**
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Legacy open&#x20;
+    </td>
+    <td>
+      Open&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Open&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      No SSID will be configured on the 6 GHz radio
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      OWE (Strict mode)&#x20;
+    </td>
+    <td>
+      OWE (Strict)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      OWE (Strict)&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      OWE (Strict)&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      OWE (Transition mode)&#x20;
+    </td>
+    <td>
+      OWE (Transition)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      OWE (Transition)&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      The SSID will be converted to OWE (Strict) and broadcast
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA2‑Personal (UPSK supported)&#x20;
+    </td>
+    <td>
+      OWE (Transition)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA2‑Personal&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      No SSID will be configured on the 6 GHz radio
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA2‑Enterprise&#x20;
+    </td>
+    <td>
+      WPA2‑Enterprise
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA2‑Enterprise&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      No SSID will be configured on the 6 GHz radio
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Personal (Strict mode) – UPSK not supported due to standards limitation&#x20;
+    </td>
+    <td>
+      WPA3‑Personal (Strict)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Personal (Strict)&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Personal (Strict)&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Personal (Transition mode) – UPSK not supported due to standards limitation&#x20;
+    </td>
+    <td>
+      WPA3‑Personal (Transition)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Personal (Transition)&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      The SSID will be converted to WPA3-Personal (Strict) and broadcast
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Enterprise 192‑bit (Strict mode)&#x20;
+    </td>
+    <td>
+      WPA3‑Enterprise 192‑bit (Strict)
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Enterprise 192‑bit (Strict)&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Enterprise 192‑bit (Strict)&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Enterprise (Transition mode)
+    </td>
+    <td>
+      WPA3‑Enterprise (Transition) – 128‑bit&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      WPA3‑Enterprise (Transition) – 128‑bit
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      No SSID will be configured on 6 GHz&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Captive portal with legacy open SSID&#x20;
+    </td>
+    <td>
+      Captive portal with legacy open SSID
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Captive portal with legacy open SSID&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      No SSID will be configured on 6 GHz
+    </td>
+  </tr>
+  <tr>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Captive portal with OWE transition SSID – Guest SSID defaults to OWE transition, not open&#x20;
+    </td>
+    <td>
+      Captive portal with OWE transition SSID&#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Captive portal with OWE transition SSID &#x20;
+    </td>
+    <td lightBackgroundColor="transparent" darkBackgroundColor="transparent" align="left">
+      Captive portal with OWE (Strict) SSID will be used
+    </td>
+  </tr>
+</table>
+
+###
+

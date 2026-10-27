@@ -1,0 +1,746 @@
+---
+title: Palo Alto Networks NGFW
+slug: palo-alto-networks-ngfw
+createdAt: Mon Sep 30 2024 19:53:21 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+:Comment[The Nile Service Block (NSB) connects to one or two upstream Palo Alto Next Generation Firewall (NGFW) appliances, over point-to-point layer 3 links, and pushes all client traffic (north-south or east west) to the NGFW appliance. Such design puts the customer in full control of the NSB traffic, to implement the desired security policies.]{docCommentId="WBDUxENQDMHrtsA3LmRsU" resolved="true"}
+
+The purpose of this document is to assist with the seamless integration between the Nile NSB and the Palo Alto NGFW appliance.
+
+### Requirements
+
+- Administrator rights to the Nile Portal.
+- **NSB IP pool**:
+  This is the IP pool used for the management plane of the NSB Elements to communicate with the Nile Cloud.
+- **Sensor IP pool**:
+  This is the IP pool used for the management plane of the Nile Sensors to communicate with the Nile Cloud.
+- **Four /30 subnets**:
+  These are the four (4) Equal Cost Multi-Path (ECMP) L3 links between the Nile gateways and the Palo Alto NGFW appliance, to achieve a High-Definition and Always-On service.
+- **Client subnets**:
+  These are the subnets defined on the Nile Portal and used by wired and wireless devices connected to the Nile Service.
+- **Servers Addresses**:
+  These are the IP addresses of the customer DHCP, DNS, and RADIUS servers that are to be defined on the Nile Portal.
+
+### To:Comment[pology Diagra]{docCommentId="E_NBVfx14TVJ2X8zQyvwI" resolved="false"}m
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-oKqmCF2fSkEGTh5_zHSuR-20241022-122045.jpg)
+
+NOTE
+
+**Note: It is important to diagram the interface IP assignments. For illustration purposes, this document uses the following interfaces and IP subnets:**
+
+### Uplink subnets:
+
+PA-1 to GW-1 link: 172.16.7.0/30
+
+PA-1 to GW-2 link: 172.16.7.4/30
+
+PA-2 to GW-1 link: 172.16.7.8/30
+
+PA-2 to GW-2 link: 172.16.7.12/30
+
+### PAN Interfaces:
+
+ethernets: 1/1 to 1/4 NSB uplinks (only two are needed for a single PAN)
+
+ethernet1/5 LAN (on-prem Servers network)
+
+ethernet1/6 High Availability (HA2)
+
+ethernet1/7 WAN1
+
+ethernet1/8 WAN2
+
+Mgmt HA1
+
+### Setup
+
+Multiple sections need to be set up on the Palo Alto Next-Generation Firewall:
+
+1. Zones
+2. Profiles
+   1. Management
+   2. LLDP
+3. Interfaces
+   1. NSB Interfaces
+   2. WAN Interfaces
+   3. LAN Interface
+4. Routing
+   1. Static (WAN)
+   2. OSPF or Static (NSB)
+5. Firewall Rules
+6. NAT Rules
+7. High Availability (Active – Passive)
+
+Before starting, log into the administrator web page of your Palo Alto NGFW appliance.
+
+### A. Single/Active Firewall
+
+### 1. Zones
+
+To define the Internet, LAN, and NSB zones, go to **Network g Zones:**
+
+
+Figure 1
+
+![network g zones](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/B61aYXsK4o6wxCNfrH_yH_network-g-zones.jpeg)
+
+**NSB**
+
+Click on the **+Add** button (at the bottom of the Zone screen) to create a new zone:
+
+1. **Name:** NSB
+2. **Log Setting:** SNMP traps or syslog could be defined as needed.
+
+(drop-down menu)
+
+1. **Type:** Layer3 (drop-down menu)
+2. **Interfaces:** Add the NSB-assigned interfaces 1/1 to 1/4.
+
+(**+ Add** button at bottom of Interfaces panel for each.)
+
+1. **Zone Protection Profile:** Define to match your environment.
+
+
+Figure 2
+
+![NSB](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/rQBwZSIqj90eZXgpgIW3P_nsb.jpeg)
+
+**Internet**
+
+Click on **+Add** button (at the bottom of the Zone screen) to create another new zone:
+
+1. **Name:** Internet
+2. **Log Setting:** SNMP traps or syslog could be defined as needed.
+3. **Type:** Layer3
+4. **Interfaces:** Add the WAN interfaces 1/7 and 1/8.
+5. **Zone Protection Profile:** Define to match your environment.
+
+
+Figure 3
+
+![internet](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/n8AYzPf-CWdKByNslAb68_internet.jpeg)
+
+**LAN**
+Repeat the Add Zones step to create the LAN zone and add the assigned interface 1/5 to it:
+
+
+Figure 4
+
+![LAN](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/YDqLCA46itjZSrPGU2Khr_lan.jpeg)
+
+Once the above setup steps are complete, the Zones page looks like this:
+
+
+Figure 5
+
+![figure 5](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/GfUXaZRlUQPHrQcET7EzE_figure-5.jpeg)
+
+### 2. Profiles
+
+**Management Profile**
+
+Go to **Network → Network Profiles → Interface Mgmt**:
+
+Click on **+ Add** button, and enable the desired services with security concerns in mind.
+The following screenshots illustrate two profiles: NSB and WAN:
+
+
+Figure 6
+
+![figure 6](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/06ZU6gZ3VBjsBOw1jTtTy_figure-6.jpeg)
+
+
+Figure 7
+
+![figure 7](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/KSrKvzwJHuXnICXQqisoW_figure-7.jpeg)
+
+**LLDP Profile**
+
+Go to **Network → Network Profile → LLDP Profile**
+Click on the **+ Add** button:
+
+- **Name:** LLDP Enable
+- **Mode:** transmit-receive
+- **Optional TLVS:** Enable all 4 options (Port Description, System Name, System Description, System Capabilities)
+
+
+Figure 8
+
+![figure 8](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/ZzxRVet1zqBdEPYecCMp4_figure-8.webp)
+
+### 3. Interfaces
+
+To set up Interfaces,
+go to **Network → Interfaces → Ethernet:**
+
+### NSB Interfaces
+
+Two interfaces (2) are needed for a single firewall, and four (4) for an Active-Passive set of two firewalls. This document is using Ethernet1/1 to Ethernet1/4 as the four uplinks to the NSB:
+
+**Ethernet1/1:**
+
+Click the Interface ethernet1/1, and set the following:
+
+1. **Comment:** Link to Nile GW-1
+2. **Interface type:** Layer3
+3. **Config** tab:
+   1. **Virtual Router:** default
+   2. **Security Zone:** NSB
+
+
+Figure 9
+
+![nine](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/esUEVCmrVAInby3b4hh_K_9.jpeg)
+
+4\. **IPv4** tab:
+
+a. **Type:** Static
+
+b. **IP:** 16.7.1/30
+
+
+Figure 10
+
+![ten](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/S1C9xNA-jAj8UsljAOAIu_10.jpeg)
+
+5\. **Advanced** tab:
+
+a. **Management Profile:** Select the NSB profile.
+
+
+Figure 11
+
+![ele](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/p00lvKWZAJ28FSQLFDTom_11.jpeg)
+
+a. **LLDP**: Enable LLDP and Select the ‘LLDP enable’ profile
+
+
+Figure 12
+
+![twe](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/H7mtI1lYksDKy93IWDAeb_12.jpeg)
+
+Repeat the same procedure for Ethernet1/2 through Ethernet1/4:
+
+Ethernet1/2: 172.16.7.5/30
+Ethernet1/3: 172.16.7.9/30
+Ethernet1/4: 172.16.7.13/30
+
+This completes the setup for the four uplink interfaces to the NSB.
+
+### WAN Interfaces
+
+In this document, the firewall(s) is/are connected to two ISPs through interfaces Ethernet1/7 and Ethernet1/8, for redundancy purposes.
+
+**Ethernet1/7:**
+
+Click the Interface ethernet1/7, and set the following:
+
+
+Figure 13
+
+![figure 13](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/7utR8rbJqES7AH7dAqIAo_figure-13.jpeg)
+
+**Ethernet1/8**:
+
+Click the Interface ethernet1/8, and set the following:
+
+1. **Comment:** Link to Nile ISP2
+2. **Interface type:** Layer3
+3. **Config** tab:
+   1. **Virtual Router:** default
+   2. **Security Zone:** Internet
+4. **IPv4** tab:
+   1. **Type:** Static
+   2. **IP:** 1.252.236/27
+5. **Advanced** tab:
+   1. **Other Info:**
+      1. **Management Profile:** WAN
+
+
+Figure 14
+
+![figure 14](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/uLg_FoU6YwJlM5Xwc23Qg_figure-14.jpeg)
+
+### LAN subnet
+
+This setting specifies the interface to a directly-attached server farm, or the core network. It is shown here for completion purposes:
+
+
+Figure 15
+
+![figure 15](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/EMg4yiS13ItDOqrUM617S_figure-15.jpeg)
+
+### 3. Routing
+
+To set up routing on the PAN firewall, go to **Network → Virtual Routers**.
+
+
+Figure 16
+
+![figure 16](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/BQqCqRph5JKFT6_ueDEZS_figure-16.jpeg)
+
+The virtual router **default** is used in this document, and all interfaces have already been added in the previous section. Click on “default” link to see the settings:
+
+
+Figure 17
+
+![figure 17](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/kIRs7Ou_3kx5zSeIi6c8i_figure-17.jpeg)
+
+**WAN Routing (static)**
+
+Static routing is used on the WAN with two (2) default routes added, for ISP1 and ISP2. ISP1 is the primary and receives a metric of 10. ISP2 acts as a backup with a metric of 100.
+
+Click the ‘**Static Routes**’ selector in the Virtual Router panel.
+
+
+Figure 18
+
+![figure 18](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/vVIXOeVdJ7075ePIggKGx_figure-18.jpeg)
+
+Click the ‘**+ Add**’ button in the pop-up to add 2 static routes as follows:
+
+**ISP1**:
+
+
+Figure 19
+
+![figure 19](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/fnI-NzLAqBe0HgLIMzqwN_figure-19.jpeg)
+
+**ISP2**:
+
+- Name: Backup Default Route
+- Destination: 0.0.0/0
+- Interface: ethernet1/8
+- Next Hop: IP Address – 10.1.252.225
+- Metric: 100
+- Route Table: Unicast
+
+
+Figure 20
+
+![figure 20](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/rNtF8hxyPYUjANXk4Cc_B_figure-20.jpeg)
+
+**NSB Routing**
+
+**Important:**
+For the Nile service to operate correctly, it is critical that the following subnets are routed back by the PAN firewall to the NSB gateways:
+
+- NSB subnet
+- Sensor subnet
+- All client subnets
+- Servers (DHCP, Radius, DNS) hosts/subnets
+
+Two routing options to the Nile NSB are supported: **static** or **dynamic (OSPF)**
+
+Option 1: Static routing with ECMP&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+In this document, the following subnets:
+
+- NSB subnet: 16.8.0/24
+- Sensor subnet: 16.9.0/24
+- Client subnets: 16.10.0/24 – 172.16.15.0/24
+
+Therefore, four (4) static routes are added to the aggregated subnet: 172.16.8.0/21, one for each of the downlinks to the Nile Gateways.
+
+Since Nile traffic to the PAN firewall uses flow based ECMP routing through both Nile Gateways, it is important to enable ECMP on the firewall:
+
+**1.1 ECMP setup:**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+Go to **Virtual-Router g default g Router Settings g ECMP**
+Select the following:
+
+- **Enable**
+- **Max Path:** 4
+- **Load Balance Method:** Weighted Round Robin
+- Add all interfaces to the NSB, namely ethernet1/1 to ethernet1/4
+
+
+Figure 21
+
+![figure 21 1](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/Qu9NC1YzdBBK8aEcawB8X_figure-21-1.jpeg)
+
+**1.2 Static routes:**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+Add four (4) **equal cost** static routes for the aggregated subnet in this example:
+
+
+Figure 22
+
+![figure 22](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/x4zZYTvu-LC0cQE49Q768_figure-22.jpeg)
+
+**1.3 Route validation**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+Inspect the routing table and forwarding table to validate the static routes to the aggregate subnet 172.16.8.0/21, by clicking **More Runtime Stats** under **Network g Virtual Routers:**
+
+
+Figure 23
+
+![figure 23](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/tJkJbYVVD5M7w6vjfnxcU_figure-23.jpeg)
+
+Routing table:&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+
+Figure 24
+
+![figure 24](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/p0mqueDysy26vJFoI6PGg_figure-24.jpeg)
+
+Forwarding table:&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+
+Figure 25
+
+![figure 25](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/hCfx0ZHs9-E9oQEluDCjQ_figure-25.jpeg)
+
+Option 2: Dynamic routing (OSPF)&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+**2.1 ECMP setup:**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+The setup is the same as has been defined in the static routing section.
+
+**2.2 OSPF setup:**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+Go to **Network g Virtual Routers g default g OSPF**
+Set the following:
+
+- **Enable:** checked
+- **Reject Default Route:** unchecked
+- **Router ID:** 0.0.1 in this example (unique IP address)
+
+
+Figure 26
+
+![figure 26](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/0jctgu72sarZFNoiyja4s_figure-26.jpeg)
+
+Add the interfaces connected to the NSB (ethernet1/1 to ethernet1/4), one by one:
+
+- **Areas:** Click **+** **Add**
+  - **Area ID:** 0.0.0
+  - **Type:** Normal
+  - **Interface:** click **+** **Add**
+
+
+Figure 27
+
+![figure 27](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/ofpOiHlqwspGmcOUue340_figure-27.jpeg)
+
+
+Figure 28
+
+![figure 28](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/oB3VjRUkcm5AbVCfnlteQ_figure-28.jpeg)
+
+- Repeat the above for the other three (3) interfaces.
+
+![figure 29](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/QG_uyKQYE1FMShk-2nxRg_figure-29.jpeg)
+
+Figure 29
+
+- **Export Rules:**
+  - Click the ‘**Export Rules**’ tab
+  - **Allow Redistribute Default Route:** checked
+
+
+Figure 30
+
+![figure 30](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/73i5d-t5zTzEFfBEqvdEI_figure-30.jpeg)
+
+- Click **+** **Add**
+  - **Name:** 0.0.0/0
+  - **New Path Type:** Ext 1 (radio button)
+  - **Metric:** 10
+
+
+Figure 31
+
+![figure 31](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/Z-JDsBynYpq7E7JYFf28n_figure-31.jpeg)
+
+A summary of the virtual router ‘default’ setup is illustrated below:
+
+
+Figure 32
+
+![figure 32](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/8r0wT7G8ahSo_ghGOipTl_figure-32.jpeg)
+
+![icon](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/rK3m5oasK0lW10E5e0Ynb_info.svg)
+
+NOTE
+
+**If no aggregation is used, then four (4) equal-cost routes are needed for the NSB, sensors, and client subnets.**
+
+### 4. Firewall Rules
+
+By default, Palo Alto Next Gen firewall allows intrazone (within the same zone) traffic and denies / blocks interzone (between two different zones) traffic.
+
+As three zones were created in this document – (1) Internet, (2) NSB and (3) LAN – rules are needed to allow traffic from the LAN and NSB zones to the Internet zone, and between the NSB and LAN zones.
+
+
+Figure 33
+
+![figure 33](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/n78AWcKouvSDsJxQ_W9YK_figure-33.jpeg)
+
+**4.1 LAN/NSB Access to the Internet**
+
+Go to **Policies g Security**
+Click on **+ Add** to create the policy as follows:
+
+- **Name:** LAN-NSB to Internet
+- **Rule Type:** Universal
+- **Source** column set:
+  - **Source Zone:** LAN and NSB
+  - **Source Address:** Any
+  - **Source User:** Any
+  - **Source HIP Profile** Any
+- **Destination** column set:
+  - **Destination Zone:** Internet
+  - **Destination Address:** Any
+- **Application:** Any
+- **Service/URL Category:** Any
+- **Action:** Allow
+
+**4.2 NSB/LAN Access**
+
+Go to **Policy g Security**
+Click on **+ Add** to create the policy as follows:
+
+- **Name:** NSB-LAN
+- **Rule Type:** Universal
+- **Source:**
+  - **Source Zone:** LAN and NSB
+  - **Source Address:** Any
+  - **Source User:** Any
+  - **Source HIP Profile** Any
+- **Destination:**
+  - **Destination Zone:** LAN and NSB
+  - **Destination Address:** Any
+- **Application:** Any
+- **Service/URL Category:** Any
+- **Action:** Allow
+
+![icon](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/rK3m5oasK0lW10E5e0Ynb_info.svg)
+
+NOTE
+
+**The above rules are provided as an example; it is up to customers to change them according to the requirements of their security policies.**
+
+### 5. NAT Rules
+
+By default, the Palo Alto Next Gen Firewall does not NAT traffic. Source NAT rules are needed for internal traffic using private addresses to reach the Internet.
+
+Since this document covers a dual ISP environment, two source NAT rules are needed for each ISP.
+
+Go to **Policies g NAT**
+Click on **+ Add** to create the Source NAT rules:
+
+
+Figure 34
+
+![figure 34](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/6ED2q5RALJ6XgQuoK5zOJ_figure-34.jpeg)
+
+**4.2 NSB/LAN Access**
+
+
+Figure 35
+
+![figure 35](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/HsLwYWiBFM8hrEkRFGT2T_figure-35.jpeg)
+
+- **Source Zone:** NSB and LAN (check boxes)
+- **Destination Zone:**      Internet (from pull-down list)
+- **Destination Interface:** ethernet1/7 (from pull-down list)
+- **Service:** Any (from pull-down list)
+- **Source Address:** Any (check box)
+- **Destination Address:** Any (check box)
+- Translated Packet tab:
+
+
+Figure 36
+
+![figure 36](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/WqoyP3o42y9ZFyOk6EQyx_figure-36.jpeg)
+
+- **Source Address Translation:**
+  - **Translation Type:** Dynamic IP and Port (from drop-down list)
+  - **Address Type:** Interface Address (from drop-down list)
+  - **Interface:** ethernet1/7 (from drop-down list)
+  - **IP Address:** 1.251.236/27 (from drop-down list)
+
+**4.2 NSB/LAN Access**
+Repeat the previous step using interface **ethernet1/8**, with the **Translated Packet** tab reflecting the following:
+
+
+Figure 37
+
+![figure 37](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/NW7d2o5hStOAIYLwACGQ__figure-37.jpeg)
+
+### B. Two firewalls
+
+### 1. HA (Active-Passive)
+
+It is important to abide by the Palo Alto prerequisites for Active/Passive HA (high availability), as detailed in the following URL:
+
+[https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/high-availability/set-up-activepassive-ha/prerequisites-for-activepassive-ha#id78977437-fe66-4204-9690-5a673fc8dd35](https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/high-availability/set-up-activepassive-ha/prerequisites-for-activepassive-ha#id78977437-fe66-4204-9690-5a673fc8dd35)
+
+**HA Ports**
+
+The HA ports could be dedicated or assigned based on the firewall model
+
+In this document the following HA ports are utilized:
+
+**Control Link (HA1):** Management
+**Data Link (HA2):** ethernet1/6
+
+**Active Firewall**
+
+**General Setup**
+
+Go to **Device → High Availability → General**
+where the setup is divided into sections accessible through their own setup button.
+
+
+Figure 38
+
+![figure 38](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/6_ykTDG11eMUBn3K9eMdW_figure-38.jpeg)
+
+Click the config button within each section to access the settings, starting with the **Setup** section:
+
+- **Setup** (config button)
+
+
+Figure 39
+
+![figure 39](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/Q-meh3TxE1wNYqToIYwTT_figure-39.jpeg)
+
+
+Figure 40
+
+![figure 40](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/HDAP61wzlAKt6YsBw-plg_figure-40.jpeg)
+
+- **Passive Link State:** Auto
+- **Control Link (HA1)** (config button)
+  - The management port is used in this document
+- **Data Link (HA2)** (config button)
+
+
+Figure 41
+
+![figure 41](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/zHQHkxaVcuWRAafUfFWCS_figure-41.jpeg)
+
+
+Figure 42
+
+![figure 42](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/r8-XI0cO_-54IKURPHfzy_figure-42.jpeg)
+
+**Link and Path Monitoring**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+This setup defines the failover conditions and could use link and/or path monitoring to determine what causes a PAN firewall to fail over.
+
+This document covers link monitoring of the NSB and WAN interfaces.
+
+Two groups are defined: NSB and WAN
+
+The NSB link monitoring comprises the active interfaces on each firewall, namely:
+
+- Ethernet1/1 and ethernet1/2 on the Active firewall
+- Ethernet1/3 and ethernet1/4 on the Passive firewall
+
+The WAN link monitoring has both ISP1 and ISP2 interfaces (Dual ISP).
+
+To set up HA link monitoring,
+go to **Device → High Availability → Link and Path Monitoring**,
+Define as shown:
+
+
+Figure 43
+
+![figure 43](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/XAx_ZiBPIRtJ8KVvLDieE_figure-43.jpeg)
+
+**Passive Firewall**
+
+**General Setup**
+
+Repeat the setup steps taken in the Active firewall section to define HA on the Passive firewall paying attention to the following:
+
+- Same group ID: 10
+- Peer HA1 IP Address Active firewall management port IP
+- Higher Device priority in Election Settings
+- Data Link (HA2) IP Address: 192.168.224.2
+
+
+Figure 44
+
+![figure 44](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/cEkLXEAoVd-uhJK5itHTH_figure-44.jpeg)
+
+**Link and Path Monitoring**&#x20;
+
+<Iframe code="<u>">
+
+</Iframe>
+
+
+Figure 45
+
+![45b](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/lqizP2_tUKaZC4SmQ-nU3_45b.jpg)
+
+Click the Commit button on each firewall to save the setup and make it operational.
+
+Once synchronized, the High Availability widget on each firewall should reflect their state and that their setup is in sync:
+
+
+Figure 46
+
+Figure 47
+
+![fs](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/QsWHFJVJr-VIhCRoMOBB9_47.jpeg)
+
+![figure 46](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/pAmbN97v0kUfS6az3XrSD_figure-46.jpeg)
+
+![icon](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/rK3m5oasK0lW10E5e0Ynb_info.svg)
+
+NOTE
+
+\*\*-   The management ports of both firewalls have ip connectivity.
+
+- Ping is enabled and permitted on the management interface.
+- HA2 ports are connected via an ethernet cable.\*\*
+

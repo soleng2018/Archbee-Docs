@@ -1,0 +1,45 @@
+---
+title: Setup Switch Hostname and Port  Auth
+slug: setup-switch-hostname-and-port-auth
+createdAt: Thu Oct 22 2026 19:02:43 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+**Switch Hostname + Port Authentication** is a location-based rule rather than an identity-based rule. Instead of identifying each device by its MAC address, OUI, or fingerprint, you select a switch and one or more of its ports. Any device connected to those ports is automatically approved and assigned to the segment you choose, such as a VLAN.
+
+### Typical Use Cases
+
+- Trade show booths
+- Tenant spaces in shared buildings
+- Training labs
+- Pop-up or temporary offices
+- Laptop imaging ports
+
+**Recommendation:** This rule is not recommended for corporate devices.
+
+**Highest Priority Rule:** Devices connected to designated ports are assigned to the segment specified by this rule, even if they were previously configured for a different segment.
+
+### Configuring Switch Hostname + Port Authentication
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Access Management > Wired**, and click '**+**' to Add Device.
+2. From the **Select** dropdown, select **Switch Host Name**.
+3. Configure the following:
+   - **Select segment**: Select the segment these ports should use. A segment is required.
+     - **Geo scope**: Select the site, building, or floor where the switch is located (for example, a specific floor).
+     - **Switch Host Name**: Select the hostname of the switch from drop down.
+     - **Ports**: Select one or more ports by selecting respective checkboxes. At least one port must be selected. Greyed-out ports are not available for selection.
+     - **Tag** (optional): Enter a tag to help identify the rule.
+4. Confirm the fixed settings:
+   - **Lock To Port** is selected automatically and cannot be changed.
+     - **Status** is set to **Approved** and cannot be changed.
+     - **Static IP** and **Passive** are not available for this rule. Leave **Allow all MACs** cleared.
+5. Click **Submit**.
+
+### Rule behavior
+
+- **Status**: Always **Approved**. **Lock To Port** is always on, so a device is tied to the mapped port it connects to. Allow all MACs, Wired SSO, Static IP, and Passive do not apply to this rule.
+- **Existing device entries**: If a device already exists in another segment and plugs into a mapped port, its segment is updated. The event "Device auto approved by switch hostname rule" is shown on the device details page.
+- **Disconnect and reconnect**: When a device is unplugged, Nile removes its entry. If it is plugged in again, it is approved again.
+- **Rule order**: Switch hostname + port is evaluated first, before exact MAC address, fingerprint, OUI, and catch-all rules.
+

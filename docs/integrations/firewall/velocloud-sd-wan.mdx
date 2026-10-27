@@ -1,0 +1,119 @@
+---
+title: Velocloud SD-WAN
+slug: velocloud-sd-wan
+createdAt: Fri May 24 2024 17:12:40 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview&#x20;
+
+This document describes the steps to integrate VeloCloud SD-WAN Edge appliances in High-Availability (HA) configuration with the Nile Service Block (NSB). The desired result is a seamless integration between the Nile Access Service and the customer’s extended network and thus with the Internet.
+
+### Prerequisites&#x20;
+
+- Four unique /30 Subnets – To implement a High-Definition and Always-On service, the setup uses Equal Cost Multi-Path (ECMP) routing to configure four point-to-point links, to provide Layer 3 transit between the NSB and the VeloCloud Edge appliances.
+- Administrative access to the VeloCloud Orchestrator.
+
+<hint type="info">
+  We will use the OSPF routing example in this guide. We recommend using OSPF for dynamic routing between the NSB and the Velocloud Edge
+</hint>
+
+### :Comment[Topology]{docCommentId="3UWnykx6_k8jP5C3owJJ4" resolved="false"}
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-hvGGUzETsQBB3bLQkZyu_-20241022-121845.jpg)
+
+Both Nile gateways are active-active devices. Four unique ports (two each) are required to connect to the upstream edges. VeloCloud is in Active/Standby mode; it requires two unique ports on the active appliance and two unique ports on the standby appliance.
+
+### VeloCloud Interface Assignment&#x20;
+
+| GE1                  | VeloCloud HA Link |
+| -------------------- | ----------------- |
+| GE3, GE4             | WAN Interfaces    |
+| GE5, GE6, SFP1, SFP2 | LAN Interfaces    |
+
+
+
+### Configure the WAN side Interface&#x20;
+
+• Log into your VeloCloud Orchestrator
+• Navigate to Edges
+• Select your site-specific Edge Device
+• Click on Configure
+• Navigate to Interfaces
+• Click on GE3
+This example uses GE3 as the WAN Interface
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/14.png)
+
+• In the IPv4 Settings Addressing Type drop-down list, choose one of DHCP, Static, or PPPoE. If “static” is chosen, use either (1) a private IP address with a NAT device in front of the edge, or (2) a public IP address. This example shows a public point-to-point IP link
+
+• Scrolling down, set the NAT Direct Traffic checkbox if a public IP address is specified in the Addressing Type data. Otherwise (1) uncheck this checkbox for a private IP address, and (2) provide a firewall or router that can NAT traffic outbound to the Internet
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/15.png)
+
+![](https://api.archbee.com/api/optimize/cuHIuY4qSmMO832kLtXzA-0hXHnChEc98tfZ41R16z3-20241014-220152.png)
+
+- Click the SAVE button
+- If you have a second WAN (Internet) interface, repeat the same steps for that interface. Use GE4 for the second WAN Interface.
+
+### Configure the LAN side interface
+
+- Navigate to Interfaces and click on GE5. In this example, we have used GE5 as the LAN side Interface connecting to the Nile Gateways. You will need to repeat the below config on the other 3 interfaces (GE6, SFP1 and SFP2)
+- Once you have selected the routed port, **uncheck** the checkboxes Underlay Accounting and Enable WAN Link
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/18.png)
+
+IP Address:
+Provide the IPv4 IP address to the interface. It is typically a /30 subnet.
+• Click on the OSPF checkbox so that it’s checked.
+• Click the Trusted Source checkbox so it’s checked.
+• In the Reverse Path Forwarding drop-down, select “Not Enabled”. These two settings enable asymmetric routing among all the LAN-side interfaces.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/19.png)
+
+###
+
+### Enable OSPF&#x20;
+
+- • Log into your VeloCloud Orchestrator
+  • Navigate to Profiles
+  • Click on the Branch Profile which is assigned to the Branch Edge that we are going to configure in this setup.
+  • Navigate to OSPFv2 and enable it, as shown below.
+
+![](https://api.archbee.com/api/optimize/cuHIuY4qSmMO832kLtXzA-jH06eQRllRSAwI_Y5zJKr-20241014-221955.png)
+
+### Configure OSPF settings
+
+
+• On the same LAN interface configuration (GE1 and GE2) that we set earlier, click on Advanced Settings under OSPF
+• Keep the default settings as they are.
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/20.png)
+
+### Inbound Route Learning
+
+- Click on OSPF
+- Configure the settings as shown below.&#x20;
+- This configuration blocks the appliances from learning a default route inbound and allows everything else. The VeloCloud Edge appliances learns all the NSB and user subnets as they are advertised by the Nile Gateways.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/21.png)
+
+### Route Advertisement
+
+- Click on Route Advertisement
+- Configure the settings as shown below.&#x20;
+- The VeloCloud Edge appliances advertise a default route to the Nile GW. This setting attracts all traffic towards itself.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/05/22.png)
+
+- Repeat the steps above for GE6, SFP1, and SFP2 LAN side interfaces. Make sure the /30 subnets are unique for each of these LAN side interfaces.
+

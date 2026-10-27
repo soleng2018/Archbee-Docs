@@ -1,0 +1,92 @@
+---
+title: Nile Cloud Radius Integration with Entra ID SCIM
+slug: nile-cloud-radius-integration-with-entra-id-scim
+createdAt: Tue Nov 18 2025 20:45:34 GMT+0000 (Coordinated Universal Time)
+---
+
+# What is SCIM?
+
+- SCIM stands for **S**ystem for **C**ross-domain **I**dentity **M**anagement
+- It consists of a REST/JSON-based protocol to simplify user identity management between Identity Providers (IdP) and cloud-based Service Providers (SP)
+- An IdP that supports SCIM (Azure, Okta, ..) acts as a SCIM client and sends identity information and changes to the SP (Nile) acting as a SCIM server
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jHe3qexjqTbrBoxdm80m2-20260107-214704.png)
+
+# Requirements
+
+- Entra ID user with application admin role to create enterprise applications
+- Administrator access to the Nile Control Center (Nile Portal)
+
+# Configuration
+
+The integration of Cloud Radius with Entra ID SCIM consists of the following tasks:
+
+- Generate a SCIM API key on the Nile Control Center IdP page
+- Create an Enterprise application in Entra ID and provision it for SCIM
+- Assign users/groups to the application
+- Enable the provisioning to trigger the Entra ID sync
+
+## Nile SCIM API Key
+
+- Log in to the Nile Control Center :Link[https://www.nile-global.cloud]{href="https://www.nile-global.cloud" newTab="true" hasDisabledNofollow="false"} with Administrator rights
+- Navigate to **GLOBAL SETTINGS > Identity** to view the IDP page
+- Click on **ADD A NEW PROVIDER** to create a new IdP SAML provider as per the Nile IdP Integration documents
+
+**Note:** <u>Currently, the SCIM configuration is available once an IdP provider has been created</u>
+
+- Under the SCIM Configuration section, click the **ADD SCIM KEY** button to generate a SCIM key
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FRY8C7qGpx2oaRdzZIXiM_screenshot-2026-01-29-at-71457apm.png)
+
+- A .json file (scim\_api\_key-xxxxxxxxxxxxxx.json) containing the **SCIM API key** is created, and the admin is prompted to save it on his/her local computer
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DDnyMK3aDBbhO8O8zINlh_screenshot-2026-01-29-at-72038apm.png)
+
+## Entra ID SCIM provisioning
+
+- Sign in to the Microsoft Entra ID portal: :Link[https://entra.microsoft.com]{href="https://entra.microsoft.com" newTab="true" hasDisabledNofollow="false"}
+- In the left pane, expand the Entra ID menu option, and click "**Enterprise apps**"
+- The Admin has the option of using an existing Enterprise SAML app with Nile, if configured, or creating a new application by clicking on **+ New Application&#x20;**&#x61;bove the application list
+- If creating a new app, click on **+ Create your own application** in the App Gallery
+- Enter a name and click the **CREATE** button
+- From here, the same steps are followed when using an existing SAML app. Under the **Manage** menu, click **Provisioning**
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6-VjfQ934KKsxeOtZlRsQ_screenshot-2026-01-29-at-72632apm.png" size="78" width="1182" height="990" position="center" showCaption="false"></Image>
+
+- Follow the new version of the Provisioning user experience and start by clicking the **Connect your application** button
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UqHBqrVDBiKQyeRw2RPbF_screenshot-2025-11-19-at-15904apm.png)
+
+- Enter the SCIM URL and SCIM API key collected earlier from the Nile Control Center, then click the **Test connection** button for validation, before clicking on the **Create** button
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/HOYJBki8htx7Enh9rfrxK_screenshot-2025-11-19-at-20602apm.png" size="80" width="544" height="819" position="center" showCaption="false"></Image>
+
+- Click the **Overview (Preview)&#x20;**&#x6C;ink at the top of the page and **the Get started** menu option to continue the Provisioning steps. Alternatively, the left pane menu options could also be leveraged to navigate through the provisioning options
+- Click **Add scoping filters** to review and validate that Groups and Users provisioning are enabled
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/y6PuwFm7UDxMNvHfSB9wU_screenshot-2025-11-19-at-33328apm.png" size="90" width="1029" height="276" position="center" showCaption="false"></Image>
+
+- Click the Users and groups option in the left pane menu to access the page where groups can be assigned
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ts4nhhbWYZP80xMb95h5k_screenshot-2025-11-19-at-33852apm.png)
+
+- Click **+Add user/group** to assign the desired groups, and click **Assign** to complete. An illustration is presented below
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/7dQ8pNJ52pda_jYapTyCR_screenshot-2025-11-19-at-34830apm.png)
+
+- Click the **Provisioning** option in the left pane menu and validate the following:&#x20;
+  - **Provisioning Mode&#x20;**&#x69;s Automatic
+  - Under **Settings**, the **Scope** is t&#x6F;**&#x20;sync only assigned users and groups**
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/XotVSSnQ_oeQEDGT713CG_screenshot-2025-11-19-at-40203apm.png)
+
+- The last step is to start the provisioning by navigating to the **Overview (Preview)** page, and clicking **Start provisioning,&#x20;**&#x74;hen clicking YES to the prompt
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8IESrMo4XitTO6EPG1U0-_screenshot-2025-11-19-at-41015apm.png)
+
+- The **Current cycle status** provides a provisioning update
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3dmpYwAkqMCSf_SM5Q4Jq_screenshot-2025-11-19-at-41745apm.png)
+

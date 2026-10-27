@@ -1,0 +1,94 @@
+---
+title: 
+slug: 3PgErpUwj03WkQlQyVItM
+createdAt: Fri Sep 12 2025 01:08:54 GMT+0000 (Coordinated Universal Time)
+---
+
+# Radius Authentication - Alerts for Multiple Clients
+
+## Overview
+
+This feature introduces alerting capabilities for scenarios where multiple client devices attempt RADIUS authentication using the same credentials. Designed to enhance network security and visibility, it helps administrators identify potential credential sharing, policy violations, or compromised accounts by detecting when a single user account is used across multiple endpoints. The system ensures network operators receive timely notifications to respond to these events proactively.
+
+## Quick Start
+
+1. Access the Nile Network Portal and navigate to **Settings** > **Authentication** > **RADIUS Alerts**.
+2. Enable the **Multiple Clients Detection** feature by toggling the switch labeled "Alert when same credentials are used by multiple clients."
+3. Save changes and verify setup by reviewing the RADIUS Alerts dashboard. Confirm that test logins from more than one device with the same credentials trigger an alert notification in the portal.
+
+# Configuration & Usage
+
+
+
+<table isTableHeaderOn="true" columnWidths="165,165,165,166">
+  <tr>
+    <td>
+      Setting
+    </td>
+    <td>
+      Description
+    </td>
+    <td>
+      Default
+    </td>
+    <td>
+      Example
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Multiple Clients Detection
+    </td>
+    <td>
+      Enables alerts for simultaneous RADIUS authentications from multiple devices using identical credentials.
+    </td>
+    <td>
+      Off
+    </td>
+    <td>
+      On
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Alert Threshold
+    </td>
+    <td>
+      Number of distinct client devices required to trigger an alert.
+    </td>
+    <td>
+      2
+    </td>
+    <td>
+      3
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Notification Channels
+    </td>
+    <td>
+      Methods used to notify administrators (e.g., portal, email, webhook).
+    </td>
+    <td>
+      Portal
+    </td>
+    <td>
+      Portal, Email, Webhook
+    </td>
+  </tr>
+</table>
+
+
+
+- To configure detection, adjust the "Alert Threshold" to match your security policy (e.g., set to '3' to trigger after three devices use the same credentials).
+- Select preferred notification channels: check **Email** or **Webhook** if required for your organization.
+- Administrators can view live and historical alerts in the **RADIUS Alerts Dashboard** to track credential usage anomalies.
+
+## Constraints
+
+- Limits and quotas: The minimum threshold for multiple client detection is 2 clients; maximum is 100. Maximum alert payload size is 500 KB.
+- Compatibility/versioning: Supported on Nile platform version 2025.2 and above. Requires RADIUS authentication integration enabled.
+- Availability: Included in Nile Enterprise plan and above; available in all supported regions upon feature rollout.
+- Known limitations: Alerts are available only for authentication events processed via RADIUS. Does not prevent authentication; only alerts administrators. Credential reuse within the same device does not trigger an alert.
+

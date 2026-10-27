@@ -1,0 +1,317 @@
+---
+title: Aruba Clearpass - RADIUS
+slug: aruba-clearpass-radius
+createdAt: Fri May 17 2024 18:30:51 GMT+0000 (Coordinated Universal Time)
+---
+
+Introduction
+
+This document provides a validated step-by-step configuration of a wireless Dot1x SSID on the Nile Service Block (NSB) with Aruba ClearPass.
+&#x20;The configuration was tested in a lab environment with a Nile NSB (22.1.5) and ClearPass 6.9.4
+
+### Prerequisites
+
+It is assumed that a public/private digital server certificate, trusted by the dot1x clients, along with its CA has been uploaded to the ClearPass Policy Manager Certificate Store for RADIUS/EAP usage.
+&#x20;It is also assumed that ClearPass has joined an Active Directory domain for the purpose of authentication and authorization against AD.
+
+### Configuration
+
+This document covers two components of 802.1x authentication:
+
+A. Nile Portal, the authenticator (Nile NSB)
+&#x20;B. The authentication server (ClearPass Policy Manager)
+
+### A. Nile Portal
+
+It is assumed that the Nile Portal ‘Service Areas’ and ‘DHCP’ are already configured. The following will illustrate the configuration of:
+
+1. ClearPass as the radius server
+2. The Nile Segments
+3. The 802.1x SSID
+
+### 1. ClearPass as an Authentication Server
+
+a. Login to the Nile Portal and navigate to the ‘Authentication’ tab
+&#x20;b. Click on the ‘+’ sign to add a new Authentication server
+&#x20;c. Fill up the form with the name, IP address, Port, Secret, and Geo Scope as illustrated below:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/1-1.png)
+
+### 2. Segments
+
+a. Navigate to the ‘Segments’ tab
+&#x20;b. Add the desired segments as illustrated below:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/01/2-1.png)
+
+### 3. The 802.1x SSID
+
+a. Navigate to the ‘Wireless’ tab.
+&#x20;b. Click on the ‘+’ sign to add a new SSID as illustrated below:
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jjPpJ7bDSsqIl6HT0VeLn_screenshot-2024-08-13-at-100901-pm.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/3-2.png)
+
+NOTE
+
+**Important Note: Adding two or more segments requires the radius server to return with the Access-Accept the Nile VSA ‘netseg’ with the appropriate segment name. \[clarify]&#x20;**
+
+### B. ClearPass Policy Manager
+
+### 1. Import the Nile Dictionary
+
+**XML Nile dictionary**
+
+Using a text editor, copy the following Nile dictionary in XML format and paste it to a file. In this example, the file is called CPPM-Nile-Dictionary.xml
+
+
+
+The file is also available from the support site at:
+
+&#x20;**Import**
+
+The Nile dictionary in XML format is imported into ClearPass Policy Manager as follows:
+
+a. Go to **Administration > Dictionaries > RADIUS**
+
+b. Click the ‘**Import**’ button to open the ‘Import from file’ window
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/6-1.png)
+
+
+Once imported, the Nile dictionary attributes could be displayed by clicking the Nile dictionary:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/5-2.png)
+
+c. Select the Nile dictionary XML file, and click on the ‘**Import**’ button
+
+Here is the content of an XML file. You can create an XML file with this content and import&#x20;
+
+<BlockQuote>
+  \<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  \<TipsContents xmlns=http\://www\.avendasys.com/tipsapiDefs/1.0>
+  &#x20; \<TipsHeader exportTime="Thu Feb 20 11:15:40 CST 2025" version="6.10"/>
+  &#x20; \<Dictionaries>
+  &#x20;   \<Vendor vendorEnabled="false" prefix="Nile" name="Radius\:Nile" id="58313">
+  &#x20;     \<RadiusAttributes>
+  &#x20;       \<Attribute profile="in out" type="String" name="netseg" id="2"/>
+  &#x20;       \<Attribute profile="in out" type="String" name="nile-avpair" id="3"/>
+  &#x20;       \<Attribute profile="in out" type="String" name="redirect-url" id="1"/>
+  &#x20;     \</RadiusAttributes>
+  &#x20;   \</Vendor>
+  &#x20; \</Dictionaries>
+  \</TipsContents>
+</BlockQuote>
+
+### 2. Add the Nile NSB as a Network Device
+
+The NSB IP address communicating with ClearPass is typically of the format:
+&#x20;aa.bb.cc.**6** if we assume the NSB subnet is aa.bb.cc.0/24.
+
+In ClearPass Policy Manager:
+
+a. Go to **Configuration > Network > Devices**
+
+b. Click on ‘**Ad**d’ to open the ‘Add Device’ popup
+
+c. Enter the following information, and click ‘**Add**’:
+
+1. c.1 Name:
+2. c.2 IP address
+3. c.3 Radius secret
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/7-2.png)
+
+### 3. Create the 802.1x wireless service
+
+In this document, the 802.1x wireless service will leverage the Active Directory server for authentication and authorization of the Nile dot1x wireless clients.
+
+- Navigate to **Configuration > Services:**
+- Click on the ‘**Add**’ button, to add a new service.
+- Select the Type as ‘**1X Wireless**’.
+- Type a name for the new dot1x service. Example: Nile 802.1x wireless
+- Fill up the new enforcement policy form:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/11-2.png)
+
+
+Click ‘**Next**’ twice to go to the ‘**Enforcement**‘ tab, and click on ‘**Add New Enforcement Policy**’:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/10-1.png)
+
+
+Click ‘**Next**’ to move to the ‘**Authorization**‘ tab and validate that the AD entry is present:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/9-1.png)
+
+
+Validate that the correct AD entry is present:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/9-1.png)
+
+
+Click ‘**Next**’ to move to the ‘**Authentication**’ tab to select the Authentication Methods and Sources:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/8-1.png)
+
+Add a third service rule to the existing two rules to leverage the Nile SSID sent as part of the ‘Called-Station-Id’ attribute, where the string could be either the full SSID name or a subset as illustrated below:
+&#x20;
+
+1. Type a ‘Name’: Nile 802.1x Enforcement Policy
+2. Select a ‘Default Profile’: \[Deny Access Profile]
+3. Keep the ‘Enforcement Type’ as: Radius
+4. Click: ‘Add New Enforcement Profile’
+
+
+
+
+Fill up the form to create a new enforcement profile:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/12-2.png)
+
+- Select the ‘Template’: Radius Based Enforcement
+- Type a ‘Name’: Nile 802.1x Employee Profile
+- Leave the ‘Action’ as: Accept
+- Click ‘Next’
+
+Fill up the Attributes form as follows:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/13-2.png)
+
+- Type: Radius\:Nile (the example shows Nilesecure dictionary)
+- Name: netseg
+- Value: type a string matching the desired Nile Portal Segment
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/15-2.png)
+
+
+Click ‘Next’ to display the Summary, and then press ‘Save’ to save the first of two enforcement profiles needed in this document:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/14-2.png)
+
+Repeat steps i to k to create the second enforcement profile, where an illustration of the Summary is as shown below:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/16-2.png)
+
+
+
+
+Fill up the conditions by selecting the following, and press ‘Save’ when done:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/17-2.png)
+
+The next step is to add two rules to complete the ‘Nile 802.1x Enforcement Policy’ by pressing the ‘Add Rule’ button:
+&#x20;
+
+- Type: Authorization:
+- Name: memberOf
+- Operator: Contains
+- Value: (‘Employee’ in this example)
+- Profile Names: Nile 802.1x Employee Profile
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/18-2.png)
+
+
+
+
+Press the ‘Next’ button to review the Summary of the new service ‘Nile 802.1x wireless’:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/20-2.png)
+
+
+Once back to the Services > Enforcement page, press the ‘Modify’ button to select the Enforcement policy completed in the previous step: ‘Nile 802.1x Enforcement Policy’:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/19-2.png)
+
+Repeat the previous step to add a second rule for ‘Contractors’. Once both rules are in place, press ‘Next’ to display the summary, and then press ‘Save’ to complete the creation of the “Nile 802.1x Enforcement Policy’:
+&#x20;
+
+
+
+
+Press the ‘Save’ button to complete the creation of the ‘Nile 802.1x wireless’ service.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/21-2.png)
+
+It is recommended to reorder this service and move it up the list of ClearPass services as needed.
+
+### 4. Create the 802.1x wired service
+
+The 802.1x wired service configure is very similar to the wireless dot1x service and will also leverage the Active Directory server for the purpose of authentication and authorization of the Nile dot1x wired clients.
+
+Navigate to **Configuration > Services:**
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/23-2.png)
+
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/dggbx.png)
+
+
+Follow the guidance in the previous section to configure the rest of the tabs and create the service:
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/22-2.png)
+
+- Click on the ‘**Add**’ button, to add a new service.
+- Select the Type as ‘**1X Wired**’.
+- Type a name for the new dot1x service. Example: Nile 802.1x wired
+- Add a third service rule to the existing two rules to leverage the Nile string sent as part of the ‘Called-Station-Id’ attribute, where the string should contain “WiredDot1x” as shown below:
+
+
+
+NOTE
+
+**Note: Unlike the 802.1x wireless service, it is imperative that the Enforcement Policy returns the Nile ‘netseg’ attribute with a value that reflects the Nile segment where the dot1x wired user would acquire a DHCP IP address from, as illustrated below:&#x20;**
+
+### C. Validation Tests
+
+Two test users are created in Active Directory:
+
+1. ‘se1’ is a domain user that belongs to the ‘Employee’ group.
+2. ‘se2’ is another domain user belonging to the ‘Contractor’ group.
+
+### 1. se1 connection test
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/25-1.png)
+
+A connection of a client machine to the Nile ‘SE-HQ2-Dot1x’ SSID with the **se1** user credentials results in the client receiving an IP address from the ‘**HQ2-Dot1x-Employees**’ segment, when ClearPass Policy Manager returns the Nile attribute ‘netseg’ with the segment name as illustrated by ClearPass Access Tracker:
+&#x20;
+
+### 2. se2 connection test
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/27-1.png)
+
+A connection of a client machine to the Nile ‘SE-HQ2-Dot1x’ SSID with the **se2** user credentials results in the client receiving an IP address from the ‘**HQ2-Dot1x-Contractors**’ segment, when ClearPass Policy Manager returns the Nile attribute ‘netseg’ with the segment name as illustrated by ClearPass Access Tracker:
+&#x20;

@@ -1,0 +1,107 @@
+---
+title: Traffic Enforcement with the Nile Trust Engine
+slug: traffic-enforcement-with-the-nile-trust-engine
+createdAt: Thu Oct 16 2025 07:45:56 GMT+0000 (Coordinated Universal Time)
+---
+
+## Introduction
+
+The **Nile Trust Engine** is the enforcement core of the Nile Trust Service. It applies zero trust policies to all network traffic, whether between endpoints inside a Nile Service Block (East-West) or traffic entering and leaving the network (North-South). Every flow is evaluated against defined policies before it is allowed, denied, or redirected, ensuring continuous adherence to the principle of least privilege.
+
+## Security Posture and Policy Enforcement
+
+The Trust Engine enforces a **Default Deny** posture — no traffic flows without an explicit policy. This model protects enterprises from unauthorized communication and minimizes the risk of lateral movement inside the network. Every permitted flow is governed by a policy that defines the source, destination, applicable service profile, and enforcement action.
+
+## Traffic Directions
+
+The Trust Engine operates on traffic in all directions:
+
+### East-West Traffic
+
+Traffic between endpoints within a Nile Service Block, such as between users and devices on the same site. These flows can be locally enforced by the Trust Engine or forwarded upstream for centralized inspection.
+
+### North-South Traffic
+
+Traffic entering or leaving the Nile Service Block, such as communication to the internet or corporate data centers. The Trust Engine can locally enforce these flows or forward them to an upstream firewall or Secure Service Edge (SSE) platform for advanced analysis.
+
+## Enforcement Models
+
+The Trust Engine supports multiple deployment models, giving organizations flexibility in how traffic is handled:
+
+1. **Local Enforcement:** Both East-West and North-South traffic are enforced directly within the Nile Service Block.&#x20;
+2. **Hybrid Enforcement:** East-West traffic is enforced locally, while North-South traffic is forwarded upstream to a firewall or SSE.&#x20;
+3. **Centralized Enforcement:** Both East-West and North-South traffic are directed to upstream enforcement systems.&#x20;
+
+Each option allows network architects to balance performance, visibility, and compliance requirements while maintaining zero trust integrity.
+
+## Actions
+
+Each policy defined in the Trust Engine includes an action that determines how traffic is treated:
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td>
+      Action
+    </td>
+    <td>
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Allow**
+    </td>
+    <td>
+      Permits traffic flow between source and destination as defined in the policy.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Deny**
+    </td>
+    <td>
+      Blocks traffic matching the policy. This is the default when no policy exists.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Forward Upstream**
+    </td>
+    <td>
+      Sends the traffic to an upstream enforcement system (e.g., firewall or SD-WAN). Useful for centralized inspection or interworking.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Forward to SSE**
+    </td>
+    <td>
+      Directs traffic to a Secure Service Edge for cloud-based policy enforcement and inspection. Available in future releases.
+    </td>
+  </tr>
+</table>
+
+Administrators can use these actions to fine-tune enforcement at any level—from simple segment-based control to identity-based microsegmentation.
+
+## Policy Evaluation
+
+When a flow is detected, the Trust Engine evaluates it against the active **Global Policy Set**. Each flow must match one policy based on the combination of source, destination, and service profile. Once matched, the specified action is applied, and the event is logged.
+
+If no matching policy is found, the traffic is denied by default. This ensures every flow in the network has explicit intent and traceability.
+
+## Integration with Upstream Systems
+
+The Trust Engine is designed to work seamlessly with third-party firewalls and SSE platforms. Administrators can forward specific traffic types upstream for deeper inspection or regulatory compliance, while keeping intra-site traffic locally enforced for performance efficiency. Nile automatically manages routing and encapsulation between enforcement points to maintain operational simplicity.
+
+## Best Practices for Policy Design
+
+- Define policies with **least privilege** in mind. Only allow necessary communication paths.&#x20;
+- Use **service profiles** to limit access by protocol and port instead of broad rules.&#x20;
+- Centralize sensitive or regulated traffic for inspection in an **upstream firewall or SSE**.&#x20;
+- Monitor the **policy logs** in Nile Control Center to validate rule effectiveness and detect anomalies.&#x20;
+
+## Summary
+
+The Nile Trust Engine delivers flexible, distributed zero trust enforcement that adapts to each organization’s architecture. By combining local and upstream enforcement, enterprises gain both control and visibility over every connection - without compromising performance or simplicity.
+
+**Next:** Trust Engine Constructs and Policy Model — Learn how policies, groups, and service profiles define how traffic is classified and enforced.

@@ -1,0 +1,124 @@
+---
+title: What is the Nile Access Service?
+slug: what-is-the-nile-access-service
+createdAt: Thu Apr 04 2024 19:56:14 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile delivers always-on, secure, high-performance wired and wireless connectivity as a service. The Nile Access Service is a cloud-native platform that streamlines enterprise connectivity, enforces zero-trust principles, and ensures an exceptional user experience.
+
+This document provides an overview of the Nile Access Service architecture, its key features, and its deployment model within modern enterprise networks.
+
+### Key Architecture Components:
+
+**Nile Service Blocks**
+Purpose-built edge infrastructure that brings cloud-inspired Infrastructure-as-a-Service (IaaS) principles to secure wired and wireless connectivity across enterprise campuses and branches.
+
+**Nile Services Cloud**
+Powered by real-time data collected from Nile Service Blocks, the Services Cloud enables observability and continuous optimization through both model-centric and data-centric AI.
+
+**Nile AI Applications**
+Built on Nile’s integrated data model, these applications provide intuitive visibility and control to IT administrators, end users, and Nile’s production engineering team. They orchestrate network lifecycle management through simple, user-friendly interfaces.
+
+<ContentSnippet docRefId="8_KAKO4D9tVaYE3SWRlHH">
+
+</ContentSnippet>
+
+<hint type="info">
+  Nile is not a Managed Service Provider (MSP). Nile provides connectivity infrastructure in the same way Amazon, Google, and Microsoft deliver Infrastructure as a Service. Unlike an MSP model, you retain control and visibility over the network deployed at your site, with the flexibility to customize it as your needs evolve. Similar to IaaS providers managing data centers, Nile ensures the underlying network infrastructure is secure, always available, and meets capacity requirements.
+</hint>
+
+## Nile Service Block
+
+The Nile Service Block consolidates more than ten traditionally separate products and services into a single solution for wired and wireless access. The networking hardware, built specifically for cloud orchestration, is powered by cloud-native software and enables comprehensive data collection across all layers.
+
+Networks are deployed with a standardized design for both wired and wireless underlays, following high-density and high-resiliency principles. This standardized approach eliminates unique “snowflake” installs and the operational challenges they create.
+
+The solution integrates physical and virtual sensors with deep instrumentation in every hardware and software component, enabling continuous data collection. It extends zero trust principles to the enterprise campus and branch by enforcing Layer 3–only user and device isolation, identity-based access with continuous authentication, hardened hardware with TPM security, and MACSec encryption across control and data paths.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-2VrdcdTu6rndiqS1iTdGx-20241022-120731.jpg)
+
+Some of the key building blocks of Nile Service block are:
+
+- **Deterministic system design** with high-performance hardware and built-in redundancy
+- **Campus zero trus**t security enforcing L3-only device isolation on hardened hardware
+- **Comprehensive data collection** with deep instrumentation and physical/virtual sensors at every layer
+
+## Nile Services Cloud
+
+As a full-stack access solution, Nile collects a broad set of data points to validate every layer of its technology architecture. This foundation enables the Nile Services Cloud, powered by an integrated data model, to integrate network operations from day 1 through day N directly into the platform. The Services Cloud enables closed-loop automation that eliminates manual tasks for IT administrators, rather than simply summarizing them.
+
+Nile Services Cloud utilizes a comprehensive set of data sources across hardware installation, software status, and lifecycle management services:
+
+- Design data: Floorplans, building materials, and attenuation modeling
+- Build data: Network closet locations and specifications of the physical space
+- Install data: Fulfillment logs and photos from the pre-and post-installation
+- Telemetry data: Real-time data collection from the Nile Service Block
+- Management data: Granular network telemetry via physical/virtual sensors
+- Consumption data: User profiles, device fingerprints, and application patterns
+
+By unifying disparate data sources into a scalable analytics engine, Nile gains comprehensive insight into network state and user needs.&#x20;
+
+## Nile AI Applications
+
+Nile AI Applications deliver intuitive interfaces for IT administrators, end users, and Nile’s customer success and engineering teams. These applications accelerate network design, installation, management, and maintenance. They fall into two primary categories:
+
+### Nile Copilot
+
+Designed for IT teams and end users, Copilot provides real-time visibility into service outcomes and supports secure onboarding of users and IoT devices.
+
+**For IT Administrators:**
+
+- **Simplified provisioning:** Deploy full-stack wired and wireless networks in a few clicks, integrate external IT systems, and provision L3 network segments with zero trust isolation.
+- **Embedded zero trust policies:** Enforce user and device authentication, approve or deny device access, and manage guest authentication workflows.
+- **Full stack visibility:** Monitor coverage, capacity, and SLAs; view device and application health; leverage real-time tests, profiling data, and wireless IDS.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-ZUQsPUgR-vAn_DcA147OB-20240828-165240.png)
+
+**For End Users:**
+
+- Test device and application performance
+- Monitor network, Internet, and cloud application availability
+- Self-diagnose connectivity issues and compare with peer results
+- Submit IT tickets with snapshots of test results and location
+- Onboard IoT devices and provide credentials for guest access
+
+![https://my.nilesecure.com/](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-f1yL0UdvpAJEwRazAFJQm-20240829-091850.png)
+
+### Nile Autopilot
+
+Designed for Nile’s customer success and engineering teams, Autopilot automates network operations.
+
+- **Day 0/1 Operations:** Automate topology design, bill-of-material creation, installation validation, and cloud activation.
+- **Day N Operations:** Continuously validate system health, visualize on-premises installs, and conduct automated root cause analysis.
+- **Maintenance:** Predict and resolve software issues, orchestrate updates and security patches, and automate network changes
+
+## Shared Responsibility
+
+Nile’s model simplifies operations by providing cloud-delivered connectivity with a clear division of responsibilities.
+
+**Nile’s Responsibilities:**
+
+- **Connectivity Infrastructure:** Design, deployment, and continuous operation of the Nile Service Block (switches, APs, sensors).
+- **Platform Management:** All software updates, new features, and cloud platform configuration.
+- **Reliable Connectivity:** Enforcing SLAs for availability, coverage, and capacity.
+- **Proactive Monitoring:** 24/7 service health monitoring with proactive resolution.
+
+**Customer/Partner/MSP Responsibilities:**
+
+- **Network Setup:** Provision intent on top of Nile’s standard design, integrating with firewalls, WAN connectivity, NAC/SASE, DHCP, and RADIUS infrastructure.
+- **Endpoint Security:** Manage device-level security policies and solutions.
+
+![](https://api.archbee.com/api/optimize/ReIIyo2IYJr1OlkiF2fUR-QedRD2hv6x33E92KQYRFd-20250418-214340.png)
+
+### Collaborative Support
+
+Nile provides end-to-end support for the Nile Access Service. In cases requiring coordination between Nile infrastructure and customer-managed components, clear communication channels and escalation processes ensure rapid issue resolution.
+
+Optional services such as DHCP or DNS can be managed by customers, while tasks like site surveys or cabling can be handled by customers or partners, provided Nile’s standards are followed.
+
+Nile’s shared responsibility model begins with joint planning of the deployment and continues throughout the lifecycle of the service. Nile does not function as an MSP but empowers customers, partners, and MSPs with comprehensive control and visibility.
+
+***
+

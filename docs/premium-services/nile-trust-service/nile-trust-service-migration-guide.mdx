@@ -1,0 +1,731 @@
+---
+title: Nile Trust Service Migration Guide
+slug: nile-trust-service-migration-guide
+createdAt: Tue Mar 31 2026 11:08:30 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+This document explains how to migrate to Nile Trust Service, Nile’s micro-segmentation capability for controlling both east–west and north–south traffic. It focuses on migration strategy and policy mapping, and assumes that the base Trust Service configuration is performed using the :Link[Nile Trust Service Setup Guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.
+
+- **Greenfield deployments** – New site rollouts.
+- **Brownfield migration from firewalls** – Migrating an existing firewall-based network to Nile Trust Service.
+- **Brownfield migration from Trust Service 1.0 to 1.6** – Upgrading from an earlier version of Nile’s micro-segmentation to the latest release.
+
+***
+
+# Greenfield Deployment
+
+Nile recommends using **identity-based** policies when doing a greenfield deployment. The goal is to minimize the number of underlying segments while using Trust Service policy groups and service profiles to enforce least-privilege access.
+
+### 1. Segregate your clients into policy groups.
+
+At a new site, start by designing which policy groups you need. In most environments, this includes:
+
+- User Groups – Endpoints tied to an authenticated user identity (for example, Employees, Guests, Contractors, Students/Faculty).
+- Device Groups – Infrastructure or IoT endpoints not associated with user identities (for example, Printers, Cameras, VoIP phones, BMS, NVRs).
+- Application Groups – Destination endpoints that represent private or public applications (for example, Internet, Intranet, Call Manager, DVR, SaaS apps).
+
+Use the :Link[Nile Trust Service Setup Guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"} to create user, device, and application policy groups, including:
+
+- Creating custom user, device, and app groups.
+- Using Device Check for critical device groups where you want automatic quarantine on failed validation.
+- Understanding and using system groups such as Unclassified, Quarantine, Internet, Intranet, and External.
+
+### &#x20;2. Design target policy groups and service profiles
+
+Next, decide which **service profiles** you need to enforce least-privilege traffic between these groups (for example, *Printing Service*, *Internet Service*, *Admin-to-Printer Service*).
+
+**Configuration:**
+For detailed steps on creating service profiles (port/protocol rule sets, default deny behavior, and profile ordering), see the **“Service Profiles”** section in the :Link[**Nile Trust Service Setup Guide**]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.
+
+### 3. Policy Creation
+
+Once policy groups and service profiles are defined,
+
+1. **Create policies between groups**
+   - Use Trust Engine policies to allow, deny, or **forward to firewall/SSE** between user, device, and app groups.
+   - Keep policies as simple, identity-driven flows (for example, *Employees → Printers (Printing Service → Allow)*, *Guests → Internet (Internet Service → Allow)*, *Cameras → Internet (All Service → Deny)*).
+   - For step-by-step instructions on creating policies like those in the table below—including matrix view, policy sets, service profile selection, and actions such as Allow, Deny, or Forward to firewall—refer to the “Policy Creation” section of the :Link[**Nile Trust Service Setup Guide**]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.
+
+<table isTableHeaderOn="true" columnWidths="132,132,132,132,133">
+  <tr>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Source**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Service Profile**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Destination**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Direction**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Action**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      Printing Administration
+    </td>
+    <td align="left">
+      Printer
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      DVR
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Call Manager
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Employee
+    </td>
+    <td align="left">
+      Printing
+    </td>
+    <td align="left">
+      Printer
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Employee
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Guest
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Camera
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      DVR
+    </td>
+    <td align="left">
+      Bi
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      Bi
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Call Manager
+    </td>
+    <td align="left">
+      Bi
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      Bi
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      Uni
+    </td>
+    <td align="left">
+      Allow
+    </td>
+  </tr>
+</table>
+
+### 4. Plan and execute cutover
+
+<Paragraph listStyleType="disc" indent="2">
+  Start with a **monitor/observe** phase where Trust Service is enabled, but critical flows still go through the existing firewall (for example, via **Forward to firewall** policies).
+</Paragraph>
+
+<Paragraph listStyleType="disc" listStart="2" indent="2">
+  Gradually migrate specific flows (or segments) from “firewall-only” enforcement to “Trust Service + firewall” to leverage Trust Service as the primary enforcement point for both east–west and north–south traffic. Use Forward to firewall/SSE only where you must preserve existing upstream inspection or meet specific compliance requirements, rather than limiting Trust Service to east–west traffic only.
+</Paragraph>
+
+### 5. Validate using policy logs
+
+<Paragraph listStyleType="disc" indent="2">
+  Use **policy logs** in Trust Service and logs from the firewall to compare **allowed/denied** flows before and after cutover.
+</Paragraph>
+
+<Paragraph listStyleType="disc" listStart="2" indent="2">
+  Keep a simple rollback plan: if an issue is detected, temporarily revert routing or disable the affected Trust Service policy, then reapply after correcting the rule.
+</Paragraph>
+
+***
+
+# Brownfield Deployment&#x20;
+
+## Scenario 1 - Migration from Firewalls to Nile Trust Service
+
+Use this scenario when you are replacing an existing firewall‑based segmentation design with Nile Trust Service, while initially preserving equivalent policy behaviour.
+
+### Assumptions
+
+- A site is already onboarded to **Nile Access Service**, and segments/DHCP pools are in place.
+- An on‑prem firewall is currently enforcing both east–west and north–south policies.
+- You have access to the firewall configuration and logs.
+
+### Migration options:
+
+1.     **Option 1 – One-to-One Migration (No firewall changes)**
+
+- Use **Nile Trust Service** as the primary enforcement point for **east–west** traffic inside the Nile Service Block.
+- For north–south flows (Internet, data center, SSE, etc.), create policies that **forward to firewall/SSE**, so your existing upstream stack continues to inspect and log traffic.
+- This option minimizes risk by keeping current N/S behavior while you introduce Trust Service for micro-segmentation.
+
+2.     **Option 2 – Extend to North/South enforcement**
+
+- Start from the same design, but gradually shift both **east–west and north–south** access control to Nile Trust Service, using upstream firewalls/SSE only where deep inspection or compliance is required.
+- Design appropriate **user/device/app groups** and **service profiles** for all key flows (Internet, Intranet, data center, SSE, partner networks, etc.).
+- Create the corresponding N/S policies in the global policy set.
+- &#x20;For step-by-step UI guidance (matrix view, policy sets, service profile selection, and actions such as **Allow**, **Deny**, or **Forward to firewall**), use the **“Policy Creation”** section of the :Link[Nile Trust Service Setup Guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.
+
+**Migration workflow:**
+
+### 1.  Inventory existing firewall rules
+
+- Export all rules in priority order into a normalized table (**source type**, **source subnet**, **destination type**, **destination subnet**, **ports/protocols**, **direction**).
+- Keep this table as your single source of truth for validating the new Trust Service policies.
+
+<table isTableHeaderOn="true" columnWidths="91,130.79310344827587,109.55274063648447,127.03026101746761,93.65689630807901,108.96699858969305">
+  <tr>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Source Type**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Source Subnet**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Destination Type**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Destination Subnet**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Ports / Protocols**
+    </td>
+    <td lightBackgroundColor="rgb(217, 217, 217)" darkBackgroundColor="rgb(217, 217, 217)" align="left">
+      **Direction**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      Printer
+    </td>
+    <td align="left">
+      10.10.1.0/24
+    </td>
+    <td align="left">
+      TCP-9100
+      HTTPS-443
+      <Paragraph>
+        SSH-22
+      </Paragraph>
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      10.10.4.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      DVR
+    </td>
+    <td align="left">
+      172.16.2.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      10.10.3.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      Call Manager
+    </td>
+    <td align="left">
+      172.16.3.10/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Admin
+    </td>
+    <td align="left">
+      192.168.10.0/24
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      !192/!172/!10
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Employee
+    </td>
+    <td align="left">
+      192.168.20.0/24
+    </td>
+    <td align="left">
+      Printer
+    </td>
+    <td align="left">
+      10.10.1.0/24
+    </td>
+    <td align="left">
+      TCP-9100
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Employee
+    </td>
+    <td align="left">
+      192.168.20.0/24
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      !192/!172/!10
+    </td>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Guest
+    </td>
+    <td align="left">
+      192.168.254.0/24
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      !192/!172/!10
+    </td>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Camera
+    </td>
+    <td align="left">
+      10.10.2.0/24
+    </td>
+    <td align="left">
+      DVR
+    </td>
+    <td align="left">
+      172.16.2.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Bi
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      10.10.3.0/24
+    </td>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      10.10.3.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Bi
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      VOIP
+    </td>
+    <td align="left">
+      10.10.3.0/24
+    </td>
+    <td align="left">
+      Call Manager
+    </td>
+    <td align="left">
+      172.16.3.10/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Bi
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      10.10.4.0/24
+    </td>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      10.10.4.0/24
+    </td>
+    <td align="left">
+      All
+    </td>
+    <td align="left">
+      Bi
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Zoom Rooms
+    </td>
+    <td align="left">
+      10.10.4.0/24
+    </td>
+    <td align="left">
+      Internet
+    </td>
+    <td align="left">
+      !192/!172/!10
+    </td>
+    <td align="left">
+      HTTPS
+    </td>
+    <td align="left">
+      Uni
+    </td>
+  </tr>
+</table>
+
+### 2. Design target policy groups and service profiles
+
+- Map firewall source/destination objects (users, VLANs, subnets, device types, application networks) to **user**, **device**, and **app** policy groups in Nile.
+- Map firewall service objects/port lists to **service profiles** in Nile (for example, printing, admin access, Internet access, VoIP signaling).
+- **Configuration:** Use the :Link[**Nile Trust Service Setup Guide**]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}:
+  - **“Policy Groups”** – to create/adjust user, device, app, and system groups (including Internet, Intranet, External, Quarantine, Unclassified).
+  - **“Service Profiles”** – to define port/protocol rules corresponding to firewall services.
+
+### 3.  Define Nile policies that mirror firewall behaviour
+
+- For each row in your firewall rule table, create an equivalent Trust Engine policy (source group, destination group, service profile, direction, action).
+- Decide, per flow, whether Trust Service should:
+  - **Allow locally** (enforced inside the Nile Service Block), or
+  - **Forward to the firewall** for upstream inspection (for example, Internet and certain Intranet flows).
+- **Configuration:** Follow the **“Policy Creation”** section in the **Nile Trust Service Setup Guide** to:
+  - Use the global policy set or matrix view,
+  - Select source/destination groups and service profiles,
+  - Choose actions (**Allow**, **Deny**, **Forward to firewall**).
+
+### 4. Plan and execute cutover
+
+- Start with a **monitor/observe** phase where Trust Service is enabled, but critical flows still go through the existing firewall (for example, via **Forward to firewall** policies).
+- Gradually migrate specific flows (or segments) from “firewall-only” enforcement to “Trust Service + firewall” and, where appropriate, to pure Trust Service enforcement.
+
+### 5. Validation and rollback
+
+- Use **policy logs** in Trust Service and logs from the firewall to compare **allowed/denied** flows before and after cutover.
+- Keep a simple rollback plan: If an issue is detected, temporarily revert routing or disable the affected Trust Service policy, then reapply after correcting the rule.
+
+***
+
+## Scenario 2 - Migration from Trust Service 1.0 (Access Engine) to 1.6 (Trust Engine)&#x20;
+
+Use this scenario when you already run Trust Service 1.0 (Access Engine with segment-based rules and east–west enforcement only) and want to move to Trust Service 1.6 (Trust Engine) with policy groups, service profiles, and optional north–south enforcement.
+
+### Assumptions
+
+- Trust Service 1.0 is enabled and actively enforcing segment‑based rules.
+- You have a backup/export of the current internal and external rules.
+- You understand whether you only need a one-to-one migration or also want to consolidate N/S rules.
+
+### Migration options:
+
+1.     **Option 1 – One-to-One Migration (No firewall changes)**
+
+- Contact Nile Support to enable the **Trust Service 1.6 Micro-segmentation** feature flag and to upgrade your environment to Trust Service 1.6 and migrate your existing Trust Service 1.0 rules to the new policy model.
+- Verify that the generated policy groups and policies reflect the original segment rules.
+- For any additional tuning (e.g., splitting segments into identity‑based groups), use the “Policy Groups” and “Policy Creation” sections of the :Link[Nile Trust Service Setup Guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.&#x20;
+
+2.     **Option 2 – Extend to North/South enforcement**
+
+- Start from the 1:1 baseline above.
+- Design **user/device/app groups** and **service profiles** for N/S flows (Internet, data center, SSE, etc.).
+- Create additional N/S policies in the global policy set using the same policy creation workflow described in the :Link[Nile Trust Service Setup Guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-trust-service" newTab="true" hasDisabledNofollow="false"}.
+- Note that Trust Service 1.0 SASE forwarding patterns that are not supported in 1.6 must be redesigned here, typically using a combination of Forward to firewall/SSE actions and app groups such as Internet, Intranet, or specific SSE gateways.
+
+### Validation
+
+- Confirm that all original 1.0 east–west flows still work (same segment pairs, same outcomes).
+- Validate any new north–south flows against expected behavior and logging (both Trust Service policy logs and upstream firewall/SSE logs).

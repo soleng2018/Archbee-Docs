@@ -1,0 +1,31 @@
+---
+title: Zero Trust Network
+slug: zero-trust-network
+createdAt: Fri Jul 05 2024 21:15:30 GMT+0000 (Coordinated Universal Time)
+---
+
+## What is Zero Trust Network?
+
+Securing the network traditionally usually resulted in making a complexity vs risk tradeoff. Zero Trust Network by Nile protects data by default by ensuring all components powering the network infrastructure are authenticated and the data passing through the service are encrypted end-to-end to protect against attacks like MitM.
+
+### Immutable Security Posture
+
+A secure network begins by ensuring that the underlying elements of the network are secure. Security begins in the supply chain long before a Nile component is deployed into the user environment. Every Nile device has a unique device certificate that is created during manufacturing and is burned into the Trusted Platform Module (TPM) of the device. All software is signed using this certificate. As a result, each device can verify the integrity of its hardware, firmware, and software on every startup and a device will not start if it has been compromised or tampered with. Likewise, each device is uniquely tied to an individual Nile customer and will only work in that customer’s environment.
+
+Additionally, by delivering a network as a service, Nile was free to rigorously reduce each element (access, point, switch, etc.) to its most necessary services. Fewer services mean fewer opportunities for vulnerabilities. Nile designed deep instrumentation and sensors into every hardware and software component, and Nile’s cloud-based AI uses this insight to ensure that the network is continuously and automatically optimized.
+
+## Zero Infrastructure Access
+
+The Nile design completely removes the need for a human to connect to a device, allowing the removal of SSH, Telnet, or other remote services, which can be accidentally left open or exploited by attackers. In fact, there is no management or console port that could potentially be abused by attackers. Likewise, all network configurations are fully automated by Nile, removing the potential for human errors. Each device leverages Nile’s custom-hardened OS and all code is updated automatically.
+
+:Link[Ransomware]{href="https://arstechnica.com/information-technology/2020/01/unpatched-vpn-makes-travelex-latest-victim-of-revil-ransomware/" newTab="true"} and :Link[advanced]{href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-283a" newTab="true"} threat actors have heavily targeted networking infrastructure both as a way of gaining initial access into an organization and to further distribute additional malicious payloads to other hosts within the network. Vulnerabilities within network devices will often be overlooked by standard vulnerability scans, or teams may delay updating them due to concerns about impacting the network… Furthermore, as the complexity of a network grows, so do the opportunities for configuration errors and mistakes. Human error can easily leave devices, segments, and services unprotected or at risk without the security team’s knowledge. Nile removes all of these risks without staff having to do anything or ever even having to think about them at all.
+
+## Encryption of All Traffic
+
+In addition to securing each individual element, Nile ensures that every connection and all traffic between Nile elements is secure. Nile implements TLS between all network elements to ensure that only devices tied to that specific customer are allowed on the network, and all traffic is encrypted via MACSec (802.1AE). All traffic on a customer’s Nile network is encrypted and can’t be sniffed or modified regardless of user, device, application, or whether the asset is on the wired or wireless network. Nile also lets organizations bring their own key (BYOK), ensuring that not even Nile can see the customer’s actual data.
+
+Encryption can be handled in many ways by many components depending on the network, application, and user device. Any enterprise wireless network will likely implement strong encryption as a standard practice for traffic over the air, but the same is not true once that traffic hits the wire or for the wired Ethernet side of the network. Any unencrypted traffic can allow attackers to sniff traffic and to steal data or even capture login credentials in transit. The well-known :Link[Emotet ]{href="https://www.comparitech.com/blog/information-security/sniffing-attack/" newTab="true"}trojan is just one example of malware that will attempt to sniff traffic, and in some cases, even when the application implements its own encryption.
+
+Unencrypted traffic can also allow an attacker to intercept and manipulate traffic in transit using man-in-the-middle (MITM) techniques. Even when encryption is implemented between a user and application, attackers can use MITM connections by taking advantage of vulnerabilities or weak implementations of encryption by performing SSL stripping, hijacking, and other techniques.
+
+With Nile, all traffic on the network is encrypted by default including access to internal resources that may not encrypt traffic as well as applications that may have vulnerable implementations of encryption.

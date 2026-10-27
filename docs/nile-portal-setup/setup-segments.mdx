@@ -1,0 +1,46 @@
+---
+title: Setup Segments
+slug: setup-segments
+createdAt: Tue May 21 2024 15:12:39 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+A segment is a logical network construct in the Nile Zero Trust Fabric that defines the network context for wired and wireless users and devices, including IP address assignment and related network configuration. In a traditional network, the closest equivalent is a VLAN and its associated IP subnet. Devices in the same VLAN share a Layer 2 broadcast domain and may communicate with one another unless additional controls restrict that communication.
+
+The Nile Zero Trust Fabric takes a different approach. Devices are individually isolated through host-based segmentation, while access to other devices and resources is governed by identity-based Trust Engine policies rather than segment membership alone. As a result, two devices in the same segment can have different access permissions based on their identities and applicable policies.
+
+A single segment can extend across multiple locations or be applied enterprise-wide. Each location can use its own authentication server, DHCP server, and subnets. Each SSID is mapped to one or more segments, and the SSID is broadcast only at the locations included in those segments.
+
+## Prerequisites
+
+Complete the following before you create a segment:
+
+1. **Service Areas.** Define the sites, buildings, or zones where the segment will apply. Go to Network Setup > Service Areas to add them.
+2. **DHCP server and subnets.** Set up the DHCP server for each site, either Nile Cloud DHCP or your own DHCP server (for example, Windows Server or Infoblox). Create the subnets you want to use, because you select them from a dropdown during segment creation.
+3. **RADIUS server.** If the segment will use 802.1X or another authentication method that needs RADIUS, configure your custom RADIUS server under Network Setup > Authentication first. You can also use the default Nile RADIUS.
+
+## Configuring Segments
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Segments.
+3. Click the '**+**' sign to create a new segment.
+4. Configure the following:
+   - **General Info:** Enter a name for the segment.
+     - **Service Areas:** Select one or multiple sites, buildings, or zones. For example, a Corporate segment can span all corporate sites, with each site using its own authentication method and subnet.
+     - **Authentication:** For each site, select a custom RADIUS server or the default Nile RADIUS from the dropdown.
+       - Authentication is not required for PSK SSIDs (including PSK SSO and UPSK), Open SSIDs (including Open with SSO), Nile captive portal SSIDs, Nile wired MAB (rules based on MAC address, OUI, fingerprint, or switch hostname and port), and fingerprinting. It is required for 802.1X SSIDs, own-hosted captive portal SSIDs, and MAB through an external RADIUS server.
+     - **DHCP:&#x20;**&#x53;elect the DHCP server (Nile DHCP or External) to use for each site.
+     - **Subnets:** For each site, select the subnets configured on the selected DHCP server from the dropdown.
+       - Most segments need only one subnet per site.
+       - A segment also supports multiple subnets. If a site needs more IP addresses, add more subnets to the same segment instead of creating extra segments.&#x20;
+     - **Advanced (optional):** Skip this section unless you need one of the options below.
+       - **Wired Self Register:** Allows wired users to self-register their devices without administrator intervention. Use it when you want wired users to register their own devices instead of having an administrator approve each one.
+       - **Walled Garden:** Define the list of URLs (websites) that devices can open before they log in (for example, help pages and login portals). Until a user signs in, everything else is blocked.
+         - Use it for segments with a login page, such as guest captive portal or PSK SSO, when users need to reach a website before they can sign in. For example, add the domain of an external login provider or a company help page.
+5. Click Save to complete configuration.
+
+<CtaButton label="Next: Setup Wireless" externalHref="https://docs.nilesecure.com/setup-wirelessssid" openInNewTab="true">
+
+</CtaButton>
+

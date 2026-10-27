@@ -1,0 +1,69 @@
+---
+title: Setup Authentication
+slug: setup-authentication
+createdAt: Tue May 21 2024 14:44:04 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile supports RADIUS (Remote Authentication Dial-In User Service), a client-server protocol that enables network access devices to communicate with a centralized server to authenticate users, authorize network access, and exchange configuration information.
+
+Nile offers RADIUS as a cloud service (Nile RADIUS) you can use immediately, or you can use your own RADIUS server (for example, Cisco ISE or Aruba ClearPass).
+
+## Option 1: Nile RADIUS
+
+:Link[Nile RADIUS]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} is a cloud-based RADIUS service that is built into the Nile Access Service. You do not need to deploy or maintain a RADIUS server, and you do not need to add NAS IPs or exchange a shared secret. Nile RADIUS authenticates wired and wireless clients using EAP-TLS (certificate-based 802.1X) or EAP-PEAP (username and password).
+
+Setting up Nile RADIUS involves minimal configuration steps. These steps are covered in a :Link[separate setup guide]{href="https://docs.nilesecure.com/setup-guide-for-nile-cloud-radius" newTab="true" hasDisabledNofollow="false"}.
+
+Nile RADIUS also integrates with :Link[Microsoft Intune]{href="https://docs.nilesecure.com/nile-cloud-radius-integration-with-intune" newTab="true" hasDisabledNofollow="false"} and :Link[Microsoft Entra ID (SCIM)]{href="https://docs.nilesecure.com/nile-cloud-radius-integration-with-entra-id-scim" newTab="true" hasDisabledNofollow="false"} to incorporate device compliance and user group information into RADIUS policies.
+
+## Option 2: Bring Your Own RADIUS Server
+
+Use this option if you want Nile to authenticate clients against your existing RADIUS server, such as Cisco ISE, Aruba ClearPass, or Microsoft NPS.
+
+### Prerequisites
+
+- Ensure that you have defined the Service Areas.
+- Ensure that you have the IP addresses or FQDNs of all RADIUS servers you plan to use in your enterprise.
+- Ensure that network routing and connectivity are configured between the RADIUS servers and the core router/firewall connected to the Nile Service Gateway.
+- Ensure that you have the RADIUS shared secret required to configure the connection in the Nile Portal.
+
+### Configuring Authentication
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup > Authentication**.
+2. Open the **Radius** tab. (The **Nile Guest** tab is used for guest authentication.)
+3. On the **Add authentication** page, configure the fields in the **Identity** section:
+   - **Name&#x20;**: Enter a name for the RADIUS server.
+   - **Geo scope&#x20;**: Select the locations that will use this RADIUS server to authenticate clients. Use the location and tag icons next to the field to choose the scope by location or by tag.
+4. In the **Connection Settings** section, configure the following fields:
+   - **Host 1** : Enter the IP address or FQDN of the primary RADIUS server.
+   - **Host 2** and **Host 3** (optional): Enter the IP address or FQDN of the secondary RADIUS servers (failover).
+   - **Shared secret** : Enter the shared secret.
+   - **Port&#x20;**: Specify the port used by the RADIUS server.
+   - **Wired Dot1X** (optional): Turn on this toggle to enable 802.1X authentication for wired devices.
+5. In the **Utilities** section, use the following tools as needed:
+   - **NAS IPs**: Click **Display NAS IP's** to view the NAS IP addresses. Whitelist these as RADIUS clients on your RADIUS server. For vendor-specific steps, see Configuring the RADIUS Server.
+   - **Verify Hosts**: Click **Verify Hosts** to run connectivity and shared-secret checks on the configured hosts.
+6. (Optional) In the **Guest portal URLs** section, click **+ Add URL** to enter a static URL for the RADIUS server's guest portal. If no URL is added, Nile uses the dynamic URL returned by the RADIUS server.
+7. Click **Save** to complete configuration.
+
+### Configuring the RADIUS Server
+
+The steps above configure only the Nile side of the integration. You must also configure your RADIUS server by adding the Nile NAS IP addresses as RADIUS clients, configuring the same shared secret, and importing the Nile dictionary if you use CoA for dynamic segment assignment. For vendor-specific configuration instructions, refer to the following RADIUS integration guides in the Nile documentation.
+
+- :Link[Cisco Identity Services Engine (ISE)]{href="https://docs.nilesecure.com/cisco-identity-service-engine-ise-radius" newTab="true" hasDisabledNofollow="false"}
+- :Link[Aruba ClearPass]{href="https://docs.nilesecure.com/aruba-clearpass-radius" newTab="true" hasDisabledNofollow="false"}
+- :Link[Microsoft NPS]{href="https://docs.nilesecure.com/microsoft-nps" newTab="true" hasDisabledNofollow="false"}
+- :Link[SecureW2 Cloud RADIUS]{href="https://docs.nilesecure.com/secure-w2-cloud-radius-integration" newTab="true" hasDisabledNofollow="false"}
+
+
+
+<CtaButton label="Optional Next: Setup Guest Auth" externalHref="https://docs.nilesecure.com/setup-guest-portal" openInNewTab="true">
+
+</CtaButton>
+
+<CtaButton label="Next: Setup Segments" externalHref="https://docs.nilesecure.com/setup-segments" openInNewTab="true">
+
+</CtaButton>
+

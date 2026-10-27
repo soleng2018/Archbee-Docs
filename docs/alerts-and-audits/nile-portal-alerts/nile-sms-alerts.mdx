@@ -1,0 +1,94 @@
+---
+title: Nile SMS Alerts
+slug: nile-sms-alerts
+createdAt: Fri Jun 27 2025 05:56:46 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+Nile’s SMS Alerts service provides critical outage notifications directly to users’ mobile phones via SMS, significantly enhancing the speed and reach of urgent communications. This documentation outlines the message content, subscription, workflows, compliance, and UI references.
+
+### Brief:&#x20;
+
+- Nile will send SMS notifications for critical “Internet Down” events, delivering real-time alerts to subscribers’ mobile phones.
+- Initially, SMS alerts are supported for the USA region and delivered, with plans for international support in future phases.
+- Customers control their alert preferences through the Nile Portal—opt in or opt out at any time.
+- SMS alert supplements existing channels (email, Slack, webhooks), providing an immediate, out-of-band communication path for severe incidents.
+
+# Alert Flow & Logic
+
+- **Trigger**: A critical “Internet Down” event is detected (e.g., Nile Service Block is not reachable from Nile Cloud for 10+ minutes).
+- **Message Text**: SMS content is assembled (see below for exact text and character constraints).
+- **Delivery**: SMS is sent to all opted-in users.
+- **Compliance Logging**: All messages are linked to a registered third-party campaign as per A2P 10DLC requirements; metadata is maintained for audit purposes.
+- **Unsubscribe Management**: Users can opt out of alerts or unsubscribe via Nile Portal UI.
+
+# SMS Message Text (Examples & Formatting)
+
+- **Open Alert Text**: `Nile Alert[OPEN]: Nile Service Block is not reachable from Nile Cloud at HQ for 10 min. More details at Nile Portal `
+- **Closed Alert Text**: `Nile Alert[CLOSED]: Nile Service Block is not reachable from Nile Cloud at HQ for 10 min. More details at Nile Portal`
+  - **Note**: The site name is trimmed to a maximum of 32 characters.
+- **Example**:&#x20;
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/r4YqNmIpUH-3f51KN-H0t_image.png" size="50" width="1242" height="2208" position="center" caption="iPhone Screen with Nile SMS" showCaption="true"></Image>
+
+- **Time Unit Abbreviations Used**:
+  - Day: “d”
+  - Hour: “h”
+  - Minute: “min”
+- **Phase 1 Limitation**: No shortened URL in the message; recipients are directed to log into the Nile Portal for full details. URL shortening and expansion are planned for future phases.
+
+# User Subscription Management
+
+- Users subscribe or unsubscribe to SMS Alerts via dedicated screens in the Nile Portal.
+- Phone number ownership is relying on profile creation validation.
+- Subscriptions are region-specific; only eligible users in supported countries can enable SMS alerts.
+- When a user is deactivated, their SMS subscriptions are automatically removed.
+
+# Delivery Status & Support
+
+- Delivery status of each SMS (sent, delivered, failed) is tracked for operations and support purposes.
+- Failed deliveries with logs maintained for diagnostics.
+
+# Compliance & Regulation
+
+- Full compliance with Third Party's A2P 10DLC for SMS campaign registration: all campaigns used for SMS are registered, auto-managed, and auditable.
+- Phone numbers are managed securely; consideration is given to privacy and searching requirements.
+- Opt-out and opt-in audit logs are part of infrastructure and compliance goals.&#x20;
+
+# UI References & Screens
+
+To subscribe/unsubscribe SMS:&#x20;
+
+1. Login to your Nile Portal with your credentials.
+2. Goto Global Settings → Integrations.
+3. Click “Setup integration with third party solutions” and Select SMS.
+
+
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BZIVl870O7jOSeKfQFmxz_image.png)
+4. In the next screen, verify the phone the number and agree to the Disclaimer.&#x20;
+
+
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/vAp6baezaHICC2DjEq0kT_image.png)
+5. Select “Nile Service Block is not reachable from the Nile Cloud” option and then Save.
+
+
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uXJuq72qaUQYV8GznoMwb_image.png)
+6. You may verify your SMS subscription on "Integrations" page.&#x20;
+
+**`NOTE`**`: This capability is available for limited users in USA region only. To enable this kindly connect with the Nile Customer Support.`
+
+# Limitations
+
+- SMS Alerting is USA-only in Phase 1; support for other countries is being evaluated based on regulations and costs.
+
+**`NOTE`**`: Existing email and Slack alert mechanisms remain available and are recommended as complements.`
+
+# Support & Troubleshooting
+
+- For issues with SMS delivery, users can check the mobile network or contact Nile Customer Support for detailed diagnostics.
+- System errors and failed deliveries are logged; repeated failures notify the Nile operations team automatically.
+

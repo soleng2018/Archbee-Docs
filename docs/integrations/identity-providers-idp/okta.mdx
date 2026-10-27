@@ -1,0 +1,191 @@
+---
+title: Okta
+slug: okta
+createdAt: Tue Apr 08 2025 20:21:45 GMT+0000 (Coordinated Universal Time)
+---
+
+This document covers the setup of SAML (Security Assertion Markup Language) federation between Nile (Okta) as a Service Provider (SP) and Okta as Identity Provider (IdP), for the purpose of leveraging Nile wired and wireless SSO.
+
+# Requirements
+
+- Administrator rights to the Nile Portal.
+- Administrator rights to Okta.
+- The same Nile Portal administrator needs to be an Okta user.
+
+# Configure
+
+## Okta Groups
+
+- Sign-in to Okta portal
+- Navigate to **Directory > Groups&#x20;**&#x6F;n the side menu
+- Click on **Add group&#x20;**&#x74;o add a new group ‘NileAdmin’
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_l1DcQ8n7OGBKxYVvNOT-_image.png" size="80" width="1014" height="232" position="center" darkWidth="1014" darkHeight="232" showCaption="false"></Image>
+
+- Similarly, add another group called ‘NileMonitor’
+
+## Okta People
+
+- Navigate to **Directory > People** on the side menu
+- Click on **Add person&#x20;**&#x74;o add a new user
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/IGVI9pedKgVv18-XsNP1__image.png" size="80" width="1014" height="264" position="center" darkWidth="1014" darkHeight="264" showCaption="false"></Image>
+
+- Add a person as illustrated
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/IeFMKIEeO5R1AkymZ0F9Q_image.png" size="80" width="484" height="566" position="center" darkWidth="484" darkHeight="566" showCaption="false"></Image>
+
+- Edit the person’s profile and add their mobile number, as it is a Nile SSO requirement that Okta users pass the following non-empty attributes to Nile via SAML:
+  first name, last name, email and mobile phone
+- Assign that person to the ‘NileAdmin’ group, only if a Nile Portal admin access is desired.
+
+## Okta app Setup
+
+- Sign-in back to Okta portal
+- Navigate to **Applications > Applications page&#x20;**&#x6F;n the side menu
+- Click the **Create App Integration** button
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/EANRhaNDKwE2N_aJB4kde_image.png" size="80" width="1014" height="276" position="center" showCaption="false"></Image>
+
+- Select the **SAML 2.0** radio button, and click **Next**
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Tf4L9-SPWQcJWEPWoH6ek_image.png" size="80" width="870" height="516" position="center" showCaption="false"></Image>
+
+- On the **Create SAML Integration** page, under **General Settings**, type an **App name**, and click **Next,&#x20;**&#x61;s illustrated
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Mb42CXU113H0SBvDrddkd_image.png" size="80" width="870" height="462" position="center" showCaption="false"></Image>
+
+- Under **Configure SAML > SAML Settings**, enter dummy placeholders for the two parameters:
+  *‘Single sign on URL’* and ‘*Audience URI’*, as illustrated
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xlN-OQTvg6r22f4n_pfqh_image.png" size="80" width="806" height="554" position="center" showCaption="false"></Image>
+
+- Scroll down the same page and add five (5) attributes under **Attribute Statements**:
+  *firstName, lastName, displayName, mail and mobile*, as illustrated
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8Y3L_QlY5MOwJS6Pkt73W_image.png" size="80" width="806" height="594" position="center" showCaption="false"></Image>
+
+- Scroll down further and add one attribute ‘*memberOf*’ under **Group Attribute Statements**, that contains the string ‘Nile’ that will match the Okta group ‘NileAdmin’ previously created, and click **Next**
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/E6Jn3prlAooixQ-DFbWjf_image.png" size="80" width="808" height="302" position="center" showCaption="false"></Image>
+
+- Under **Feedback**, select the illustrated options below and click **Finish** to complete the SAML app
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VtyANBdC8AszVLoSiDmLj_image.png" size="80" width="810" height="438" position="center" showCaption="false"></Image>
+
+- Go to the **Assignments** tab, select ‘NileAdmin’ group in **Groups** and click the **Assign** button
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/SSdWhL5nD7QvDAAFOUj6p_image.png" size="80" width="630" height="302" position="center" showCaption="false"></Image>
+
+- Go to the **Sign On** tab on the same page. Locate and click on **View SAML setup instructions** to display parameters relevanr to the Nile Portal Provider configuration
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/HsH9b4xxPgB66wcYPN6HD_image.png" size="80" width="756" height="224" position="center" showCaption="false"></Image>
+
+- Two actions are to be taken:
+
+&#x20;    1\.   Copy and safeguard the following parameters to be pasted in the upcoming Nile Portal Provider configuration:
+&#x20;             ***Identity Provider Single Sign-On URL***
+***&#x20;               Identity Provider Issuer*****
+&#x20;          In this document, a sample of those parameters is provided for illustration only
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/HVKt1Mv8RhHbmiPBb728d_image.png" size="80" width="652" height="254" position="center" showCaption="false"></Image>
+
+&#x20;    2\.   Download the X.509 certificate file by clickin the **Download certificate** button
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uEsJDo06Yl03sp9FdRGaq_image.png" size="80" width="556" height="458" position="center" showCaption="false"></Image>
+
+## Nile Portal Identity Provider Setup
+
+- Log in to the Nile Portal with the same Okta administrator at https\://www\.nile-global.cloud
+- Navigate to **GLOBAL SETTINGS** -> **Identity** to access the **Providers** page
+- Click on **ADD A NEW PROVIDER** to start configuring Okta as an IdP
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/lMWby0BRBdn93HUhtgyT4_screenshot-2025-04-09-at-93907-am.png" size="80" width="849" height="509" position="center" showCaption="false"></Image>
+
+- Fill out the 'Add a new provider' form from the Okta data saved in the previous step:
+  &#x20;   **IdP Issuer URI**:     \<Identity Provider Issuer>
+  &#x20;   **IdP SSO URL**:       \<Identity Provider Single Sogn-On URL>
+  &#x20;   **Destination URL**: \<Identity Provider Single Sogn-On URL>
+  &#x20;   **IdP Certificate**:    Copy and paste the contents of the X.509 certificate previously downloaded
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GVAB_QPm8NKRjYG2b9bbT_image.png" size="80" width="496" height="418" position="center" showCaption="false"></Image>
+
+- Click **SUBMIT** button to complete adding Okta as an IdP provider
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AR6yNyjrmLXV1zHxzXw80_image.png" size="80" width="770" height="452" position="center" showCaption="false"></Image>
+
+- Click on the **METADATA** button to download the xml metadata file
+- Open the downloaded metadata file with a text editor and collect the **entityID** and **Location**
+  Their values will be used to replace the dummy parameters in the Okta app and complete its setup.
+
+  For illustration purposes, here is an example of such parameters:
+  &#x20;   *entityID:     https\://www\.okta.com/saml2/service-provider/sptticcpcztszhxuqqqs*&#xA;*&#x20;   Location:   https\://dev-344858.okta.com/sso/saml2/0oa1iwzz0gkku6ndn358*
+
+****
+
+**The following steps will configure Nile Portal Group rules to map Okta groups to Nile Portal groups:**
+
+- Click on the **Group Rules** tab, then click on the **ADD GROUP MAPPING** button to create a ‘memberOf’ Group Mapping rule
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/foFAvy4IJ8fw4o-Nd7MBn_image.png" size="80" width="560" height="266" position="center" showCaption="false"></Image>
+
+- Add the ‘memberOf' string in both the ‘Friendly name’ and ’External name’ fields, and select the ‘Type’ as ARRAY from the dropdown list, as illustrated:
+- Click the **SAVE** button to complete the GROUP MAPPING
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rrnpTs4642VPQPngmMr_0_image.png" size="80" width="400" height="342" position="center" showCaption="false"></Image>
+
+- Click on the **ADD GROUP RULE&#x20;**&#x6C;ink to start creating group rules
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Wa0meraRO-GpTUQ4lYGq8_image.png" size="80" width="586" height="418" position="center" showCaption="false"></Image>
+
+- Create two rules for the Nile Administrator and Nile Monitor:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dgvDrZ31IECdkawazErkn_image.png" size="80" width="562" height="222" position="center" showCaption="false"></Image>
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/WKf2xGGBZruIW7zHE5-EZ_image.png" size="80" width="554" height="210" position="center" showCaption="false"></Image>
+
+- Once the two rules are created, click the **INACTIVE** button for each rule to change it to **ACTIVE**:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/d3NXeOn4qOC0aG6qxbdj3_image.png" size="80" width="798" height="282" position="center" showCaption="false"></Image>
+
+## Second pass at the Okta app Setup
+
+- Log in back to the Okta portal
+- Open the ‘Nile -Okta-SAML-app’
+- In the **General** tab, scroll down to the **SAML Settings** section and click the **Edit** button
+- In **General Settings&#x20;**&#x73;ection, click **Next**
+- In **Configure SAML&#x20;**&#x73;ection, replace the dummy entries as follows:&#xA;**&#x20;      Single Sign On URL**: \<Nile Portal **Location**>
+  &#x20;     Check off the option to ‘**Use this for Recipient URL and Destination URL**’&#xA;**&#x20;     Audience URI**: \<Nile Portal **entityID**>
+- Scroll down to the bottom of the page and click **Next**
+- In the **Feedback** section, click **Finish** to complete editing the Okta SAML app
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FLsWl-YQs3faXZJAIcwg0_image.png" size="80" width="742" height="756" position="center" showCaption="false"></Image>
+
+#
+
+# PSK-SSO SSID Setup
+
+- Login to Nile Portal URL: [https://www.nile-global.cloud](https://www.nile-global.cloud)
+- Go to **NETWORK SETUP -> Segments** tab page to create the PSK SSO Segment:
+- Click on the '+' to add a new segment
+- Type a meaningful segment name (Demo PSK SSO)
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/SGgqBDOOBNwrh2TZpVAx7_image.png" size="80" width="654" height="214" position="center" showCaption="false"></Image>
+
+- Click the **Service area&#x20;**&#x74;ab and click on **SELECT SERVICE AREAS&#x20;**&#x74;o select the appropriate site and/or building, then click **OK** to continue
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QAQbAk20yUH34d4Y62v0B_image.png" size="80" width="654" height="394" position="center" showCaption="false"></Image>
+
+- Select the DHCP server and Subnet:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-uStqTYBIB0AlLv5vngyP_image.png" size="80" width="646" height="262" position="center" showCaption="false"></Image>
+
+- Click the SAVE button to complete the addition of the new segment
+- Go to the **NETWORK SETUP -> Wireless** page to create the PSK SSO SSID
+- Click on the '+' to add a new SSID
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YmmaxYyqa11s1AogKrR0F_image.png" size="80" width="894" height="456" position="center" showCaption="false"></Image>
+
+- Select the following:&#xA;**&#x20;   Type**: Personal (radio button)&#xA;**&#x20;   Name**: Type the desired SSID name&#xA;**&#x20;   Security**: Select WPA2 from pull-down list&#xA;**&#x20;   Enable SSO**: Click checkbox to Checked&#xA;**&#x20;   Passkey**: Enter the Pre-shared key&#xA;**&#x20;   Segments:&#x20;**&#x53;elect the previously created Demo-PSK-SSO segment from the pull-down list
+- Click the **SAVE** button to complete the PSK-SSO SSID creation.
+

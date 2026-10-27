@@ -1,0 +1,308 @@
+---
+title: Slack Integration
+slug: slack-integration
+createdAt: Wed Sep 02 2026 20:50:42 GMT+0000 (Coordinated Universal Time)
+---
+
+## Integrate Nile Alerts with Slack
+
+Nile can deliver alert notifications to a Slack channel using a Slack incoming webhook. You create the webhook in Slack, add it as a webhook integration in the Nile Portal, and then enable the alert categories you want delivered.
+
+## Overview
+
+<BlockQuote>
+  Nile alert → Slack incoming webhook → Slack channel
+</BlockQuote>
+
+Slack is configured as a webhook destination in the Nile Portal. No API calls or scripting are required. If you also send alerts to another system such as ServiceNow, that is configured as a separate webhook destination with its own subscriptions.
+
+## Prerequisites
+
+- Administrator rights to the Nile Portal.
+- Permission to create apps and incoming webhooks in your Slack workspace.
+- The Slack channel that should receive Nile alert notifications.
+
+<BlockQuote>
+  Treat the Slack webhook URL as a secret. Anyone with the URL can post to the channel. Do not publish it, commit it to source control, or include it in support tickets.
+</BlockQuote>
+
+## Step 1: Create a Slack incoming webhook
+
+1. Sign in to Slack and go to https\://api.slack.com/apps. Any apps already created in your account are listed here.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/76SszMoIDXvqaRNgb9i4X_screenshot-2021-03-22-at-83732-am.png" size="100" isUploading="false" width="2072" height="906" darkWidth="2072" darkHeight="906" showCaption="false" indent="1"></Image>
+
+2. Click **Create New App**, or open an existing app used for alert notifications.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rE5xwawbKtBA700nIWP2S_screenshot-2021-03-22-at-84003-am.png" size="90" isUploading="false" width="1178" height="958" darkWidth="1178" darkHeight="958" showCaption="false" indent="1"></Image>
+
+3. Enter an app name, select the target Slack workspace, and click **Create App**.
+4. Under **Features**, click **Incoming Webhooks** and toggle the feature on.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1Mr4PwPnJDCkgPaQU5KK2_screenshot-2021-03-22-at-84218-am.png" size="100" isUploading="false" width="2196" height="1268" darkWidth="2196" darkHeight="1268" showCaption="false" indent="1"></Image>
+
+5. Click **Add New Webhook to Workspace**.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/RSTRw6MYzEZqV0OhczAGj_screenshot-2021-03-22-at-84445-am.png" size="90" isUploading="false" width="1548" height="1036" darkWidth="1548" darkHeight="1036" showCaption="false" indent="1"></Image>
+
+6. Select the channel that should receive Nile alerts, then click **Allow**.
+7. Copy the generated webhook URL and store it securely.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Adl83rnwJaBIBmlUOyKUk_screenshot-2021-03-22-at-84806-am.png" size="90" isUploading="false" width="1352" height="1018" darkWidth="1352" darkHeight="1018" showCaption="false" indent="1"></Image>
+
+An incoming webhook posts only to the channel selected during authorization. To deliver alerts to more than one channel, add a separate incoming webhook for each channel. A single Slack app can hold multiple webhooks.
+
+## Step 2: Add the Slack webhook to the Nile Portal
+
+1. Log in to the Nile Portal with an administrator account.
+2. Navigate to **Global Settings > Integrations**.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uDeuh3X0K1A9FoNPcgQ-Z_screenshot-2026-09-03-at-115949-am.png" size="100" isUploading="false" width="2760" height="672" darkWidth="2760" darkHeight="672" showCaption="false" indent="1"></Image>
+
+3. Click the **+** icon to add a webhook.
+4. Complete the following webhook details and click save to confirm that the new destination appears in the integrations list.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/SaFIAYmg2uw7fFSu3BYVC_screenshot-2026-09-03-at-115959-am.png)
+
+<table isTableHeaderOn="true" columnWidths="183,478">
+  <tr>
+    <td align="left">
+      Field
+    </td>
+    <td align="left">
+      Value
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Name
+    </td>
+    <td align="left">
+      A descriptive name for the destination, for example Slack - Network Operations
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      URL
+    </td>
+    <td align="left">
+      The Slack incoming webhook URL copied in Step 1
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Token
+    </td>
+    <td align="left">
+      Leave empty. Slack incoming webhook URLs already carry the authorization Slack requires
+    </td>
+  </tr>
+</table>
+
+Repeat these steps for each Slack channel that needs its own destination.
+
+## Step 3: Enable alert subscriptions
+
+1. In the Nile Portal, go to **Global Settings > Integrations > Setup Integration**.
+2. Select **Webhook** as the delivery method.
+3. Enable the alert categories you want delivered to Slack.
+
+Available alert categories are:
+
+- Nile Infrastructure
+- Nile Service — Service availability, coverage, and capacity
+- Infrastructure — DHCP, DNS, RADIUS, and Internet availability
+- Application — Application availability and latency
+- Security — Wireless intrusion detection
+- Client Devices
+
+Subscription selections are saved automatically.
+
+Only alerts that are visible in the Nile Portal are eligible for subscription. Webhook subscriptions apply to the destination, whereas email alert subscriptions are per administrator and must be enabled by each admin individually.
+
+## Notification behavior
+
+Nile notifies Slack when an alert is created and again when it is resolved. Repeat notifications for an alert that stays open depend on its severity.
+
+Nile classifies alerts into four severity levels:
+
+<table isTableHeaderOn="true" columnWidths="187,474">
+  <tr>
+    <td align="left">
+      Severity
+    </td>
+    <td align="left">
+      Meaning
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Severity 1
+    </td>
+    <td align="left">
+      Critical issues requiring immediate attention
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Severity 2
+    </td>
+    <td align="left">
+      High priority issues
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Severity 3
+    </td>
+    <td align="left">
+      Moderate priority issues
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Severity 4
+    </td>
+    <td align="left">
+      Low priority or informational alerts
+    </td>
+  </tr>
+</table>
+
+For a Severity 1 alert, Nile follows an escalating notification schedule: an initial notification when the alert is triggered, then at 2, 6, 14, 24, 48, 72, 96, and 120 hours, and every 24 hours after that until the alert is resolved. Severity 1 alerts that are already open continue to notify every 24 hours.
+
+For Severity 2, 3, and 4 alerts, a single notification is sent when the alert is first triggered. No repeat notifications are sent, and repeat notifications are not sent for lower-severity alerts that are already open.
+
+This severity-based approach keeps critical issues visible while limiting overall notification volume.
+
+## What the notification contains
+
+Each notification is posted to the Slack channel as a formatted message. The notification includes:
+
+<table isTableHeaderOn="true" columnWidths="180,481">
+  <tr>
+    <td align="left">
+      **Field**
+    </td>
+    <td align="left">
+      **Description**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Alert Status
+    </td>
+    <td align="left">
+      Whether the alert was created or resolved
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      What Happened
+    </td>
+    <td align="left">
+      Description of the detected condition, including the affected device and serial number where applicable
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Impact
+    </td>
+    <td align="left">
+      Expected effect of the condition on the network or users
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Severity
+    </td>
+    <td align="left">
+      Severity level of the alert (1–4)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Customer
+    </td>
+    <td align="left">
+      Nile customer (tenant) name
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Location
+    </td>
+    <td align="left">
+      Site, building, and floor where the condition was detected
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Start Time
+    </td>
+    <td align="left">
+      When the condition was first detected
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Duration
+    </td>
+    <td align="left">
+      How long the condition has been active
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      For more information
+    </td>
+    <td align="left">
+      Link to the alert details in the Nile Portal
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      How to fix
+    </td>
+    <td align="left">
+      Recommended remediation steps. Included only for some alert types
+    </td>
+  </tr>
+</table>
+
+**Example notification:**
+
+<BlockQuote>
+  Alert Status: Created
+  What Happened: Power supply unit PWR2 on device DS1 Serial Number: XXXXXXXXXXXX seems to have lost power.
+  Impact: Device is operating without a backup. Network availability may be impacted if the device loses its main power supply.
+  Severity: 4
+  Customer: Example\_Customer
+  Location: Main Campus / Building A / Floor 1
+  Start Time: Jul 14, 2026 07:50:27 AM ADT
+  Duration: 3 minutes
+  For more information: Click here
+</BlockQuote>
+
+## Verify the integration
+
+1. In the Nile Portal, open the Slack webhook configuration and click **Test connection**. This validates that the endpoint is reachable and that the receiving system accepts the payload.
+2. Confirm that the test message arrives in the intended Slack channel.
+3. Go to **Alerts** and open the alerts list to confirm that Nile is generating alerts in a subscribed category.
+4. Confirm that a new alert in a subscribed category produces a Slack message.
+5. Confirm that resolving the alert produces a follow-up notification.
+6. Confirm that the Slack message contains no credentials or other sensitive values.
+
+Run the test connection before relying on the integration for production workflows.
+
+## Troubleshooting
+
+### No Slack message is received
+
+- Use **Test connection** in the Nile Portal to confirm the endpoint is reachable.
+- Confirm the webhook URL was copied in full and has not been revoked in Slack.
+- Confirm the Slack app is still installed in the workspace and authorized for the channel.
+- Confirm at least one alert category is enabled for the webhook delivery method.
+- Confirm the alert you expected belongs to an enabled category.
+- For Severity 2, 3, and 4 alerts, remember that only one notification is sent per alert.
+

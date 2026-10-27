@@ -1,0 +1,45 @@
+---
+title: Setup Access Engine Policies
+slug: setup-access-engine-policies
+createdAt: Tue Jun 30 2026 06:29:07 GMT+0000 (Coordinated Universal Time)
+---
+
+Access Engine helps with simple segment-based L3 policy, such as intra-segment or inter-segment allow/deny rules, with optional external forwarding for SSE.
+
+1. First, make sure micro-segmentation is enabled for the tenant or site. Once enabled, policy rules are received from cloud, and enforcement starts after the first rule is pushed to the dataplane.
+2. Open Global Settings → Access Engine and review the defaults. The default internal behavior is ANY to ANY = Deny, and the default external behavior is ANY to INTERNET = Forward to upstream Firewall/Router.
+
+Figure 1 below shows the default Access Engine rule view with one internal rule and one external rule already present.
+
+![](https://nile-be.glean.com/api/v1/downloadchatfile/a217fd65d15f4387b4794599ae3ce427)
+
+*Figure 1: Access Engine rules page showing the default internal deny policy and default external forward-to-firewall policy.*
+
+1. To create an internal L3 policy, go to Create Rule → Create Internal Rule. Start by selecting the source segment, then choose the destination segment, and finally set the action to Allow or Deny based on the required intra-segment or inter-segment behavior. Legacy Access Engine 1.0 rules are segment-based.
+
+<Paragraph indent="2">
+  Figure 2 below shows the internal rule workflow starting with segment selection.
+</Paragraph>
+
+<Image src="https://nile-be.glean.com/api/v1/downloadchatfile/8c564374bca64d9e85bade11227a4803" size="100" width="2884" height="708" isUploading="false" darkWidth="2884" darkHeight="708" showCaption="false" indent="2"></Image>
+
+<Paragraph indent="2">
+  *Figure 2: Internal rule creation flow where you begin by selecting the source segment.*
+</Paragraph>
+
+2. If the customer needs SSE forwarding, go to Create Rule → Create External Rule. Select the source segment, set the destination to All Internet Bound Traffic, choose Forward as the action, optionally select the configured SASE provider, add rule name and description, and save.
+
+<Paragraph indent="2">
+  Figure 3 below shows the external rule example for forwarding internet-bound traffic.
+</Paragraph>
+
+<Image src="https://nile-be.glean.com/api/v1/downloadchatfile/52db456730de4c898580baa9c584f9a3" size="100" width="2880" height="1528" isUploading="false" darkWidth="2880" darkHeight="1528" showCaption="false" indent="2"></Image>
+
+<Paragraph indent="2">
+  *Figure 3: External rule creation flow for forwarding a segment’s internet-bound traffic to an SSE provider.*
+</Paragraph>
+
+3. After saving, confirm the rule appears in the Access Engine table and use Rule Log to validate behavior during testing.
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/lKi_m9cXxSS1q8gUzYg_N_screenshot-2026-06-30-at-120322-pm.png)
+

@@ -1,0 +1,87 @@
+---
+title: Getting Started with Trust Service
+slug: getting-started-with-trust-service
+createdAt: Thu Oct 16 2025 07:54:03 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+The Nile Trust Service can be activated on both new (greenfield) and existing (brownfield) deployments to provide zero trust enforcement across the enterprise network. This section outlines the prerequisites, configuration steps, and best practices to help administrators enable and operationalize the Trust Service efficiently.
+
+## Preparing for Deployment
+
+Before enabling the Nile Trust Service, administrators should review their network design, existing policy configurations, and upstream integrations. Preparation ensures a smooth transition from traditional segmentation models to identity-based zero trust enforcement.
+
+### Prerequisites
+
+- Ensure all sites are running the latest Nile Service Block software version that supports the Trust Engine.
+- Confirm that essential network services such as DHCP, DNS, RADIUS, and Identity Providers (IdP) are reachable and configured.&#x20;
+- Verify that users and devices can be identified through either SCIM, RADIUS, or device fingerprinting.&#x20;
+- For Enterprise tier deployments, review plans for continuous validation and upstream firewall or SSE integrations.&#x20;
+
+### Recommended Setup Sequence
+
+1. **Review Network Segments:** Document existing network segments and associated user/device categories.&#x20;
+2. **Define Policy Groups:** Create baseline user, device, and application groups representing the enterprise environment.&#x20;
+3. **Set Up Infrastructure Services:** Validate that DNS, DHCP, RADIUS, and IdP IP addresses are included in the Infrastructure Services application group.&#x20;
+4. **Create Initial Service Profiles:** Configure profiles for onboarding, DNS, and essential protocols.&#x20;
+5. **Build Initial Policies:** Establish basic connectivity rules such as employee access to the Internet or IoT devices to intranet applications.&#x20;
+
+## Enabling Trust Service in New Deployments
+
+For new Nile sites, the Trust Service Core tier is automatically enabled as part of the Nile Access Service. Administrators can further configure and refine zero trust policies through Nile Control Center.
+
+### Key Setup Tasks
+
+- **Network Infrastructure Configuration:** Ensure that infrastructure app groups are properly defined to support client onboarding.&#x20;
+- **Quarantine Policy Setup:** Modify or create policies defining what quarantined devices can access (for example, remediation servers). The default quarantine policy blocks Internet access until remediation is complete.&#x20;
+- **Intranet and Internet Groups:** Confirm that the Intranet group accurately reflects the organization’s RFC 1918 address space. All other destinations are treated as Internet by default.&#x20;
+- **User and Device Groups:** Define employee, guest, contractor, and IoT device groups. Properly defined groups allow immediate classification upon onboarding.&#x20;
+- **Initial Policies:** Create policies for essential communications such as:&#x20;
+  - Employees to Internet (controlled by Internet Service Profile)&#x20;
+  - IT staff to printers or IoT management interfaces&#x20;
+  - Guests to Internet (restricted protocols)&#x20;
+
+Once configured, these policies apply automatically across all Service Blocks in the tenant.
+
+## Migrating Existing Deployments
+
+Existing Nile Access Service customers can migrate to the Trust Service with minimal disruption. The Trust Engine automatically preserves essential operations during the upgrade process.
+
+### Migration Overview
+
+- **Automatic Activation:** The Trust Engine is enabled upon software upgrade. Existing traffic continues to flow based on prior configurations until explicit policies are defined.&#x20;
+- **Policy Conversion:** Segment-based rules from previous versions are automatically converted into equivalent policy group-based rules.&#x20;
+- **Validation Checks:** The system performs compatibility checks to ensure throughput and performance expectations align with the new Trust Engine capabilities.&#x20;
+- **Administrator Review:** After upgrade, administrators can refine or remove automatically created rules to optimize policy sets.&#x20;
+
+### Migration Steps
+
+1. Review auto-generated Policy Groups and validate their match criteria.&#x20;
+2. Review migrated policies and adjust Service Profiles or actions as needed.&#x20;
+3. Test critical workflows (e.g., user onboarding, device connectivity, and Internet access).&#x20;
+4. Enable Enterprise-tier features such as microsegmentation or SSE forwarding once baseline connectivity is verified.&#x20;
+
+## Monitoring and Verification
+
+After enabling the Trust Service, use Nile Control Center to validate configuration and monitor activity.
+
+### Key Verification Tasks
+
+- Confirm that all expected users and devices are classified correctly into their Policy Groups.&#x20;
+- Verify that default policies (infrastructure, quarantine, Internet access) are active and functional.&#x20;
+- Review Policy Logs for denied flows or misclassifications.&#x20;
+- Validate connectivity to upstream systems if using hybrid or centralized enforcement models.&#x20;
+
+## Best Practices for Initial Rollout
+
+- Start with a minimal set of policies focused on critical business workflows.&#x20;
+- Gradually expand policies to cover additional applications or devices once validation is complete.&#x20;
+- Avoid overly broad Open Service Profiles; refine them to least-privilege configurations as you stabilize operations.&#x20;
+- Regularly review Unclassified and Quarantine lists to address anomalies early.&#x20;
+
+## Summary
+
+The Nile Trust Service simplifies the journey to Zero Trust by automating classification, onboarding, and policy enforcement across all network layers. Whether deployed in a new environment or integrated into an existing one, it provides a secure and flexible foundation for modern enterprise connectivity.
+
+**Next:** Migration Overview — Learn how existing Nile Access Service deployments transition to the new Trust Engine with identity-based microsegmentation.

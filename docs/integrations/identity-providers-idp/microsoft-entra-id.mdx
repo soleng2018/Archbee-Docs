@@ -1,0 +1,332 @@
+---
+title: Microsoft Entra ID
+slug: microsoft-entra-id
+createdAt: Tue Oct 21 2025 18:49:23 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+This document covers the setup of SAML (Security Assertion Markup Language) federation between Nile (Okta) as a Service Provider (SP) and Azure Entra ID as an Identity Provider (IdP).
+
+# Requirements
+
+·      Have administrator rights to the Nile Portal.
+
+·      Have administrator rights to Entra ID.
+
+·      The same Nile Portal administrator needs to be a user in Entra ID.
+
+# Configuration
+
+## Entra ID Groups
+
+The purpose of this section is to create/highlight Entra ID groups to be subscribed to the Nile SAML enterprise app. Two group categories are to be created/reviewed:
+
+A.    Groups to be newly created whose members are granted administrator privileges (read/write, read-only) to the Nile Portal
+
+B.    Group(s) of employees to be identified that can leverage the Nile SSO feature
+
+### Nile-Admin and Nile-Monitor group creation
+
+- Sign in to the Microsoft Entra Portal: https\://entra.microsoft.com
+- Navigate to the **Groups** page and click on ‘**New group**’
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/clN11I-BPlKh_dxOifiw3_image.png" size="100" isUploading="false" width="768" height="364" showCaption="false" indent="1"></Image>
+
+- Fill up the group name (ex: Nile-Admin), group description, and select the desired members of this group; then click on **Create**
+
+
+
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/h39ojeFeEjEFyDpCbEY6R_image.png" size="56" width="460" height="560" position="center" showCaption="false"></Image>
+
+- Repeat the previous group creation operation to create a second group (ex: Nile-Monitor) that could be displayed afterward as illustrated
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Y9WAcQNS4MJbydDxjWsbs_image.png)
+
+- An existing group (Nile-SSO) with 4 members that represent the employees that can sign-in to the Nile SSO SSID is presented for illustration:
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_hIoR8lbv5ypX9d3pLUdi_image.png" size="94" width="778" height="380" position="center" showCaption="false"></Image>
+
+## Entra ID Enterprise App Configuration
+
+<Heading depth="3" indent="1">
+  Nile app creation
+</Heading>
+
+- ·On the Microsoft Entra admin Center or Entra ID accessed through the Azure portal, navigate to the ‘**Enterprise applications**’ page
+- Click on ‘**New application**’
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DFvmC59RlQ-KaAQyZEeQM_image.png)
+
+- On the Browse Microsoft Entra Gallery page, click the **Create your own application&#x20;**&#x6C;ink
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NAd92JZHMnvjSAF0ISvwv_image.png)
+
+Enter the following
+**Name:** “Nile”
+
+**radio button**: Select “Integrate any other application…”&#x20;
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FIpuYmflvPk5fALyWlhI7_image.png" size="66" width="586" height="432" position="center" showCaption="false"></Image>
+
+- Click the **Create** button
+
+### Assign users and groups
+
+- On the Nile **Overview** page:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NhX9ynsjpyzEVDSy7iNy2_image.png)
+
+- Click the **Assign users and groups&#x20;**&#x6C;ink
+- On the **Users and groups&#x20;**&#x70;age, click on the **+Add user/group&#x20;**&#x6C;ink
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DyY_IIdQYRh9vhL6TVq6h_image.png)
+
+- On the **Add Assignment&#x20;**&#x70;age, click the **None Selected&#x20;**&#x68;yperlink to users and/or groups to assign to the app Nile:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ExJa4jKXXg7bgRNWUz4iL_image.png)
+
+- Click the **Groups&#x20;**&#x74;ab and enter ‘Nile-’ in the Search field to display the groups that contain the string ‘Nile-’
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6rZNb0OLezoD0xsD02dRV_image.png" size="66" width="748" height="608" position="center" showCaption="false"></Image>
+
+- Check off those groups, namely ‘Nile-Admin’ and ‘Nile-Monitor’, as well as <u>any user groups that will be signing in to the Nile SSO SSID</u>. In this document, the Nile-SSO is one example of such groups and click on the **Select** button to confirm the selection.
+- Click the **Assign** button to complete the addition of the groups to the Nile app.
+
+  **Note:** Individual users can also be assigned to the Nile SAML app by selecting the **Users&#x20;**&#x74;ab in the illustration above.
+
+### Set up single sign on
+
+- Click **Single sign-on** in the left menu
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/lnCKVQjzR0zLxML7CRuhK_image.png)
+
+- Click the **SAML&#x20;**&#x70;anel
+- On the **Set UP Single Sign-On with SAML** page, in the **Basic SAML Configuration&#x20;**&#x73;ection, click the **Edit** link
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6xK20CF11cGjl5V7I8BL2_image.png" size="88" width="638" height="584" position="center" showCaption="false"></Image>
+
+- Enter temporary values for **Identifier (Entity ID)&#x20;**&#x61;nd **Reply URL (Assertion Consumer Service URL)&#x20;**&#x74;o generate the certificate for download.&#x20;
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/zslJXUcH6TRse8CvYlpAA_image.png)
+
+- Click on **Save** (top bar, left) to save the changes.
+  **Note**: After Entra ID is made an identity provider in the next section, the actual values for Identifier and Reply URL can be updated.
+- Back on the **Set up Single Sign-On with SAML** page, in the **Attributes & Claims&#x20;**&#x73;ection, click the **Edit** button
+- The **Attributes & Claims page** is presented
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sONkC2h1vT87lRemY0UKF_image.png)
+
+Edit each claim one by one as follows:
+
+- Click on the **user.mail** claim line to open it for editing, delete the contents of **Namespace** and
+  change the **Name** to “mail”. Then click the **Save** button (top, left)
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nZ5qFRH-SdCUiYCkY1PrX_image.png" size="66" width="518" height="260" position="center" showCaption="false"></Image>
+
+- Similarly, edit user.givenname: delete the contents of Namespace, change **Name&#x20;**&#x66;rom “givenname” to “firstName”. Then click the **Save&#x20;**&#x62;utton
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/0JC71Rbu4GUK6RlBxzCwN_image.png" size="80" width="518" height="294" position="center" showCaption="false"></Image>
+
+- Edit user.userprinciplename by deleting the contents of **Namespace,&#x20;**&#x61;nd click the **Save&#x20;**&#x62;utton&#x20;
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/M1XaoneoAGdDT6p-VOabz_image.png" size="78" width="522" height="302" position="center" showCaption="false"></Image>
+
+- Edit user.surname by deleting the contents of **Namespace**, and changing the **Name** from ‘surname’ to ‘lastName’. Click the **Save** button
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kHDBqEpA5VSlV2JSOVznB_image.png" size="80" width="526" height="300" position="center" showCaption="false"></Image>
+
+- Click **+ Add New Claim&#x20;**&#x6C;ink, add a new claim for the **mobile&#x20;**&#x61;ttribute as shown. Click the **Save&#x20;**&#x62;utton
+
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fY33OrYp_CPo2EHRgMyQu_image.png" size="80" width="520" height="308" position="center" showCaption="false"></Image>
+
+- Click **+ Add New Claim** link, add a new claim for the **displayName&#x20;**&#x61;ttribute. Then click the **Save&#x20;**&#x62;utton
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Pa8sG-5NVgyTbFzOSPgp8_image.png" size="78" width="528" height="318" position="center" showCaption="false"></Image>
+
+- Click **+ Add a Group Claim&#x20;**&#x6C;ink, and add a group claim for the **memberOf&#x20;**&#x61;ttribute as illustrated. Then click the **Save&#x20;**&#x62;utton
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8XNL5tjHyqNpa6JLMlipC_image.png" size="70" width="582" height="840" position="center" showCaption="false"></Image>
+
+### SAML Certificate
+
+- ·Back on the **Set up Single Sign-On with SAML** page, in the **SAML Certificates** section
+- Download the ‘SAML Signing Certificate’ (to be uploaded later to the Nile Portal when adding Entra ID as a provider):|
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QlS-BTcFqjlhxP3rl02ak_image.png)
+
+### Microsoft Entra ID and Login URL
+
+- Make a note of the **Microsoft Entra Identifier** and the **Login URL** (to be used on the Nile Portal provider setup):
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Wylm-kTGQHcEUi65Avfnj_image.png" size="90" width="722" height="188" position="center" showCaption="false"></Image>
+
+<u>**To be done after completing the next section:&#x20;**</u>Update the ‘Identifier’ and ‘reply URL’ in the ‘Basic SAML Configuration’ section of the Nile app from the metadata.xml file downloaded after completing the Nile Portal provider configuration in the next section.
+
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NOzo5NHYuo3qXcBy3T42a_image.png" size="82" width="1702" height="452" position="center" showCaption="false"></Image>
+
+## Nile Portal Identity Provider Configuration
+
+- Log in to the Nile Portal (https\://www\.nile-global.cloud) as an administrator.
+
+***Note****: It is assumed that the administrator credentials belong to a domain in Microsoft Entra ID. This domain would already be an allowed domain on the Nile Portal.*
+
+- Navigate to **Global Settings** → **Identity**
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/w2x8pUNUEe2b7SKfs2ymq_image.png" size="54" width="410" height="374" position="center" showCaption="false"></Image>
+
+- Click on **ADD A NEW PROVIDER** link
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Vps4EmZvuQNMJoZqqbIWJ_image.png" size="54" width="358" height="482" position="center" showCaption="false"></Image>
+
+Fill up the fields in the new provider window as follows:
+
+**IdP Issuer URI**:	Microsoft Entra Identifier noted in the previous section
+**IdP SSO URL:**	Login URL noted in the previous section
+**Destination URL**:Login URL noted in the previous section
+**SELECT CERTIFICATE**: Upload the text content of the downloaded SAML Base64certificate&#x20;
+
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_QOdgMDjernb6s67vu1H-_image.png" size="66" width="722" height="608" position="center" showCaption="false"></Image>
+
+Click the **SUBMIT&#x20;**&#x62;utton to save the changes and add the new Microsoft Entra ID provider
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MF2R93m2wS95hPs4M8UsP_image.png" size="88" width="742" height="280" position="center" showCaption="false"></Image>
+
+- Click the **METADATA** button to download the file.
+- Open the downloaded file with a text editor, and search for the ‘entityID’ and ‘Location’ strings.
+- **NOTE**: Save the **entityID** and **Location** values.  Those values are used later to&#x20; <u>complete the Entra ID enterprise app configuration </u>
+
+  For illustration purposes only, the values used in this example:
+  entityID:
+  &#x9;**https\://www\.okta.com/saml2/service-provider/spchehmcqiylhitxumru**
+  Location:
+  &#x9;**https\://login.u1.nile-global.cloud/sso/saml2/0oaah83qpuT5TRtMY5d7**
+- Go back to the enterprise app (Nile) created on Microsoft Entra ID to edit the ‘**Basic SAML Configuration**’:
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/xRtUCdVr4NIwHg7Llu3UE_image.png)
+
+- Click on **Edit**
+- Replace the temporary values of Entity ID and Reply URL with the values of entityID and Location collected earlier
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DrXrejMSomuj3sJM0Z7ju_image.png" size="80" width="650" height="384" position="center" showCaption="false"></Image>
+
+- Click the **Save** button to save the changes and thus complete the Azure Entra ID enterprise app (Nile) configuration.
+- Verify your changes:
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/pjOaD_Zut97-YD5YKLf3x_image.png" size="82" width="812" height="396" position="center" showCaption="false"></Image>
+
+**Note**<u>**s**</u>**: &#x20;**<u>****</u> <u>1. </u>The Entra ID provider configuration is completed for SSO users&#x20;
+to gain Internet access after signing-in using their Entra ID credentials. <u></u> <u>2. </u>Entra ID<u> user profiles should contain </u>all previously mapped attributes including <u>emails and mobile phones in order to connect successfully to the Nile SSO SSID.</u>
+
+### Group Mapping
+
+The group mapping is used to map a designated Entra ID group to the Nile Portal Administrator group. A **Group** rule is needed and can be added on the Nile Portal as illustrated in the following steps.
+
+The example that follows maps an AD admin group “Nile-Admin” to the Nile Portal **Administrator** group, and a ‘Nile-Monitor’ group to the Nile Portal **Monitor** Admin group
+
+Click the **Group rules&#x20;**&#x74;ab:
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8-uqKNnsmzoKzULB9cmlr_image.png" size="54" width="434" height="392" position="center" showCaption="false"></Image>
+
+Click **ADD GROUP MAPPING&#x20;**&#x62;utton
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ZmU8GsWCYW3Z_x9s9wizo_image.png" size="60" width="430" height="392" position="center" showCaption="false"></Image>
+
+- Add <u>‘memberOf’ as “Friendly name” and “External name” of type “ARRAY”</u>
+- Press the **SAVE** button
+- Click the **ADD GROUP RULE** link
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/v6Cdw6C0CqKc5XoEEvJRp_image.png" size="54" width="450" height="412" position="center" showCaption="false"></Image>
+
+Add the first of two group rules to map Entra ID desired Nile Portal admin users
+
+<u>,</u>
+
+&#x20;members of two Entra ID groups (Nile-Admin and Nile-Monitor in this example) to the Nile Portal Administrator and Monitor groups respectively, by evaluating the ‘memberOf’ attribute value received in the SAML assertion from Entra ID:
+
+**Name:&#x20;**&#x41;n appropriate rule name
+**Mapping Value:	E**ntra ID Group object ID
+**Assigned groups:**&#x53;elect “Administrator” from the drop-down list
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_JxOWG8pq5sgKQtN7DQBc_image.png)
+
+Click the **SAVE&#x20;**&#x42;utton
+
+Add the second <u>group (Nile Monitor in this example) to map it to the Nile Portal Monitor group:</u>
+
+**Name:&#x20;**&#x41;n appropriate rule name
+**Mapping Value:	&#x20;**&#x45;ntra ID Group object ID
+**Assigned groups:&#x20;**&#x53;elect “Monitor” from the drop-down list
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/y5lGzMJzlmW8UbRdBhW8G_image.png" size="72" width="580" height="292" position="center" showCaption="false"></Image>
+
+Click the **SAVE&#x20;**&#x62;utton
+After adding the two rules, this pane is displayed:
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uoqQ6bbSM_xQaF75DlWWV_image.png" size="84" width="830" height="288" position="center" showCaption="false"></Image>
+
+Activate the two rules by clicking on the **INACTIVE&#x20;**&#x62;utton to change the state to **ACTIVE**
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YJ_a07MjrO0soih_sr0TG_image.png)
+
+## PSK-SSO SSID Configuration
+
+- Log back in to the Nile Portal
+- Go to the **NETWORK SETUP ->Segments&#x20;**&#x74;ab page to create the PSK SSO Segment:
+- Click on the + sign to add a new segment
+- Type a meaningful segment name (Demo PSK SSO)
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/wG9h793j5MrVGiFSxuHd-_image.png" size="82" width="694" height="234" position="center" showCaption="false"></Image>
+
+- Click the Service area tab to select the DHCP server and scope:
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/cxhe2-0QVrgILaffCyMbi_image.png" size="80" width="698" height="244" position="center" showCaption="false"></Image>
+
+Go to the ‘**Advanced**’ tab and check off the ‘URL Allow List’ and click on + to add the following DNS names one at a time:
+
+azure.microsoft.com
+amp.azure.net
+dev.azure.com
+\*.amcdn.msftauth.net
+\*.trafficmanager.net
+\*.omegacdn.net
+\*.azureedge.net
+\*.aadcdn.msftauth.net
+\*.msidentity.com
+\*.dev.azure.com
+\*.aadcdn.msauth.net
+\*.t-msedge.net
+
+- When finished, this is what the page looks like
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3BKTk8ZgrfIx4jFIxzMCi_image.png" size="72" width="608" height="476" position="center" showCaption="false"></Image>
+
+- Click the **SAVE** button to complete the addition of the new segment
+- **Go to NETWORK SETUP-->Wireless&#x20;**&#x70;age to create the PSK SSO SSID
+- Click onthe + sign to add a SSID
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-b_qNJybOpasb7nl82eG7_image.png" size="82" width="626" height="336" position="center" showCaption="false"></Image>
+
+- Enter this data
+  **Type**:	Personal (radio button)
+  **Name**:	Type the desired SSID name
+  **Security**:	Select <u>WPA2 </u>from pull-down list
+  **Enable SSO**:Click checkbox to Checked
+  **Passkey**:	Enter the Pre-shared key
+  **Segments:&#x9;**&#x53;elect the previously created PSK-SSO segment
+  &#x9;	from the pull-down list
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Z2k88YN3FHGgTdZhJxSZY_image.png" size="84" width="614" height="386" position="center" showCaption="false"></Image>
+
+- &#x20;Click the **SAVE** button to complete the PSK-SSO SSID creation.

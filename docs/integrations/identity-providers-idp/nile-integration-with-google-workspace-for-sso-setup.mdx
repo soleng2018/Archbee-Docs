@@ -1,0 +1,108 @@
+---
+title: Nile Integration with Google Workspace for SSO Setup
+slug: nile-integration-with-google-workspace-for-sso-setup
+createdAt: Mon May 25 2026 06:09:07 GMT+0000 (Coordinated Universal Time)
+---
+
+This document covers the setup of SAML federation between Nile (Okta) as a Service Provider (SP) and Google Workspace as an Identity Provider (IdP).
+
+## Requirements
+
+Administrator rights to the Nile Portal.
+
+Administrator rights to Google Workspace.
+
+The same Nile Portal administrator needs to be a Google Workspace user.
+
+## Create a Google group and map users to the group for Nile App (Optional)
+
+<BlockQuote>
+  Note: This is required if Admin user(s) use SSO to authenticate to Nile Portal.
+</BlockQuote>
+
+1. Sign in to the Google Workspace portal: (https\://admin.google.com/ in this example).  HC Consulting is the sample organization used in this document for demonstration purposes only.
+2. Go to **Directory** > **Groups**.
+3. Click **Create group** to create a **NileAdmin** group and enter a group e-mail address.  Assign a Group owner.  Click **NEXT**.
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/RtnHLAjuh0CLRVypvUmYk_screenshot-2026-05-25-at-114215aam.png)
+4. Select Access Type and click **CREATE GROUP**
+5. Click Directory > Users:
+   - Click on a User in the list to open it for editing
+   - Select **Groups** and click **Add user to groups**
+   - Select the **NileAdmin** group
+6. Click **ADD**
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/OlDHUZJDCPpTh69zQzsV1_screenshot-2026-05-25-at-114601aam.png)
+
+## Google Workspace SAML app Configuration
+
+1. Sign in to the Google Workspace portal: (https\://admin.google.com/ in this example). &#x20;
+2. In the Admin console, go to **Menu&#x20;**> **Apps&#x20;**> **Web and mobile apps**<u>.</u>
+3. Click **Add app** > **Add custom SAML app**<u>.</u>
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/j-m7z0rRVy6kqbJEF4Gwg_screenshot-2026-05-25-at-114709aam.png)
+4. A new window will appear.  Enter a name for the App, for example, Nile SSO or Nile Global.  Then click **CONTINUE**.
+5. Two options are available to obtain Google Identity Provider details: &#x20;
+   - **Option 1:** You may download the Metadata file and search for the entity ID and Location URL from the Metadata file.  Copy and paste into a clipboard or text editor for later use on the Provider page of the Nile Portal.  The Location URL is also referred to as the SSO URL.
+   - **Option 2:&#x20;**&#x43;opy the SSO URL and entity ID to a clipboard or text editor for use later on the Provider page of the Nile Portal.
+6. Download the certificate.  Then click CONTINUE
+
+   <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/qoYHDNOF0l5dEGxcmK-Gt_screenshot-2026-05-25-at-114950aam.png" size="60" width="1216" height="1412" position="center" darkWidth="1216" darkHeight="1412" showCaption="false"></Image>
+7. The certificate may present a .pem file extension.  Change the file extension from .pem to .cert
+8. Do not close this browser window.  We will complete this process after configuring the Nile Portal.
+
+## Nile Portal Identity Provider Configuration
+
+1. Now, open a new browser window and log in to Nile Portal with the same Google Workspace administrator at https\://www\.nile-global.cloud, and navigate to **Settings** -> **Global Settings** -> **Identity page**.
+2. Click on **ADD A NEW PROVIDER** and fill out the form as follows:
+
+   - IdP Issuer URI:		\<Entity ID  (http)>  &#x20;
+   - IdP SSO URL:		\<SSO URL (http)>  &#x20;
+   - Destination URL:		\<SSO URL (http)>
+   - Click SELECT CERTIFICATE and upload the Google Workspace certificate downloaded earlier, and click on SUBMIT when done:
+
+     ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YpskW61MIIXmhvYAmjCgz_screenshot-2026-05-25-at-122301apm.png)
+
+   <BlockQuote>
+     Note: If the certificate file cannot be selected, either change the file type to “all files” and/or go to the file’s ‘get info’ and unlock it.
+   </BlockQuote>
+3. Before closing the Provider settings, click on the **METADATA** link to download the XML file, where the Nile Okta **entityID** and **location** could be extracted (to be entered to continue the Google Workspace SAML app setup).
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Qqskeij9blM4LEQAk1lT9_screenshot-2026-05-25-at-122339apm.png)
+4. Click on **Group Rules**, then on **ADD GROUP MAPPING** to create a ‘**memberOf**’ Group Mapping rule, and then click **SAVE** when done:
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YpypUClF1ij60DHasRUah_screenshot-2026-05-25-at-122353apm.png)
+
+   <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ud9lOoDMivBCVt1xXYmma_screenshot-2026-05-25-at-122400apm.png" size="52" width="704" height="650" position="center" darkWidth="704" darkHeight="650" showCaption="false"></Image>
+5. Click on **ADD GROUP RULE&#x20;**&#x74;o create one rule for the Nile Administrator:
+
+   <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Oq4z9mNrh_FEBPMIW_Kby_screenshot-2026-05-25-at-122408apm.png" size="92" width="1594" height="782" position="center" darkWidth="1594" darkHeight="782" showCaption="false"></Image>
+6. Once the rule is saved, it can be activated by clicking the **INACTIVE** button.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ohv_FFfWBQ_0qf3xqFLjC_screenshot-2026-05-25-at-122417apm.png" size="100" isUploading="false" width="1880" height="586" darkWidth="1880" darkHeight="586" showCaption="false" indent="1"></Image>
+
+## Second pass at the Google Workspace Custom SAML app Configuration
+
+1. Parse the Nile Portal provider **METADATA** XML file to extract the **entityID** and **location** URLs. Here is an example for illustration only:
+   *entityID: 	https\://www\.okta.com/saml2/service-provider/sppdejeumsqtplsczcjs*
+   *location:  	https\://login.u1.nile-global.cloud/sso/saml2/0oa5prpwodXxgB6mI5d7*
+2. Go back to the Google Workspace custom SAML app configuration window.  Copy and paste the location in the **ACS URL** field and the entity ID in the **Entity ID** field.       Change Name ID format to **EMAIL**.  Click **CONTINUE**.&#x20;
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jZoQ9Bd7i-EtqUbYytf-u_screenshot-2026-05-25-at-122426apm.png)
+3. Attribute mapping: the following Google Directory attributes are required to be mapped and sent to Nile:
+
+   - Primary email: email
+   - First name: firstName
+   - Last name: lastName
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Baja4wxNd4bO7K4lakHmJ_screenshot-2026-05-25-at-122446apm.png)
+4. Click **FINISH**.  You may view the mapped Google Directory attribute as shown below:
+5. Group mapping (Optional):  If an admin user uses SSO to authenticate to Nile Portal, map the NileAdmin group from Google groups to the Administrator App attribute.       Click **FINISH**
+
+   ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GlId6DhngFXpa0Jz18TYD_screenshot-2026-05-25-at-122435apm.png)
+6. If Group mapping is not required, just click **FINISH**
+
+You can now log in to the Nile Portal using your SSO credentials to validate your privileges. Please note that once SSO is activated, all local (non-SSO) accounts will be disabled, except for the root administrator.
+
+Additionally, you can set up SSO on a PSK SSID. For step-by-step instructions, please refer to the :Link[setup guide for the same.]{href="https://docs.nilesecure.com/setup-a-psk-sso-ssid" newTab="true" hasDisabledNofollow="false"}
+

@@ -1,0 +1,98 @@
+---
+title: mDNS Handling in Nile's Layer 3 Network
+slug: mdns-handling-in-niles-layer-3-network
+createdAt: Tue Aug 13 2024 20:37:18 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile’s Layer 3 network architecture introduces unique challenges for handling multicast traffic, particularly for service discovery protocols such as mDNS (Multicast DNS). This document explains how Nile addresses these challenges to provide seamless service discovery across isolated network segments.
+
+# NSB Gateway as mDNS Proxy
+
+The Nile Service Block (NSB) Gateway acts as a proxy for mDNS and other discovery protocols. This approach enables:
+
+- Service discovery within and across segments
+- Centralized control and management of multicast traffic
+- Efficient handling of multiple discovery protocols
+
+# Supported Discovery Protocols
+
+While mDNS is the primary focus, Nile also supports additional discovery protocols including:
+
+- **mDNS:** Used by AppleTV, Chromecast, Printers, NEAT Bar, Oculus
+- **uPNP/SSDP:** Used by Sonos
+- **SOAP/WS-Discovery**
+- **ONVIF Discovery**
+- **BACnet**
+- **DIAL**
+- **Proprietary protocols:** Such as Polycom X50 and Poly TC8
+
+# Technical Implementation
+
+## Multicast Learning and Control
+
+- The NSB Gateway learns multicast destinations for discovery packets.
+- Administrators can approve or deny services through the Nile Portal for granular control.
+
+## Cross-Segment Discovery
+
+To enable service discovery across isolated Layer 3 segments, the NSB Gateway:
+
+- Intercepts multicast discovery packets
+- Replicates and forwards packets to relevant segments based on policy
+- Maintains a database of discovered services and their locations
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-VbDKjSSvInqtBoWpMVjF1-20241022-120948.jpg)
+
+
+
+
+### Proximity and Application-Based Filtering
+
+The NSB Gateway applies intelligent filtering based on:
+
+- **Proximity (for wireless devices):** Services are filtered by RF neighborhood. Casting and streaming services are shown only to nearby devices.
+- **Application type:** Certain services, such as printers, can be made visible across wider areas such as a floor or building.
+
+# Discovery Process
+
+The discovery workflow involves four main components:
+
+1. **Service Requestor:** The client device
+2. **Service Proxy:** The NSB Gateway
+3. **Service Provider:** A device advertising services (for example a printer or casting device)
+4. **Nile Cloud**
+
+**Process Flow:**
+
+- The client sends a discovery request while the service provider advertises its services.
+- The NSB Gateway intercepts both the request and advertisements and forwards metadata to the Nile Cloud.
+- Nile Cloud creates a database of devices and services, along with their locations. It also includes telemetry such as RF neighborhood, building, and floor data.
+- The NSB Gateway queries the service database and applies filtering rules based on service type and proximity.
+- A filtered list of available services is returned to the client.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-nYEo5z8mPukKhImHa0af2-20241104-082428.jpg)
+
+
+
+## Considerations for Network Design
+
+When deploying Nile’s multicast and mDNS solution, consider the following:
+
+- For optimal proximity filtering, service devices should connect through Wi-Fi. This provides finer control using RF neighborhood data. Wired services are filtered at the broader level of floor or building.
+- Evaluate the impact on network bandwidth, especially in large-scale environments.
+- Regularly review and update service discovery policies to maintain efficiency and security.
+- Limit multicast protocols to only those required for service advertisement and discovery, since protocols like mDNS can be chatty and increase unnecessary network traffic.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DLiTr5TpyArJxDdoZNIkX_image.png" size="60" width="928" height="188" position="center" showCaption="false"></Image>
+
+## Considerations for Network Design
+
+When deploying Nile’s multicast and mDNS solution, consider the following:
+
+- For optimal proximity filtering, service devices should connect through Wi-Fi. This provides finer control using RF neighborhood data. Wired services are filtered at the broader level of floor or building.
+- Evaluate the impact on network bandwidth, especially in large-scale environments.
+- Regularly review and update service discovery policies to maintain efficiency and security.
+- Limit multicast protocols to only those required for service advertisement and discovery, since protocols like mDNS can be chatty and increase unnecessary network traffic.
+

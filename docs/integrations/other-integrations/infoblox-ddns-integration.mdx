@@ -1,0 +1,49 @@
+---
+title: Infoblox DDNS Integration
+slug: infoblox-ddns-integration
+createdAt: Wed Oct 07 2026 17:09:28 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+Nile Dynamic DNS (DDNS) keeps DNS records synchronized with DHCP so that device hostname-to-IP mapping stays accurate even when IP addresses change. When Nile DHCP assigns, renews, changes, releases, or expires a lease, it updates the corresponding DNS records automatically.
+
+In DNS, an A record is the forward lookup record that maps a hostname to an IPv4 address, and a PTR record is the reverse lookup record that maps an IP address back to a hostname.
+
+Together, these records allow Nile DDNS to maintain both forward and reverse name resolution automatically. This helps eliminate stale DNS entries, reduces manual administration, improves troubleshooting, and ensures applications, monitoring, and security tools can continue to identify and reach devices correctly even as their IP addresses change.
+
+## Configure DDNS integration
+
+Follow these steps to enable the DDNS feature with an Infoblox DNS server:
+
+1. Go to **Global Settings > Integrations**.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BInqdJEdvBU3VVBKU1DtZ_image.png)
+
+2. Click **+ Setup Integration**, then select **Infoblox** under **DNS**.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/TCxaDmrPwk7GkIZ867PrB_image.png)
+
+3. Click **+** to add a DNS server.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/smF4R1WMlUXSgk7o5uVW0_image.png)
+
+4. Enter the **DNS Server Name**, **DNS Server IP Address**, and select the **Geo Scope**.
+5. Under the **TSIG Authentication** section, enter the **Key Name**, **Secret Key**, and select the **Algorithm**.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/e5no5SwYO79Pp20LU3-4d_image.png)
+
+6. Click **Test Connection** to verify connectivity to the DNS server using a DDNS update record.
+7. Enter the **FQDN** and **IP Address**, then click **Run Test**.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/84hHNtl5Xdgv8A3TM6dYo_image.png)
+
+8. After the test completes successfully, the client DNS record for **hostname** and its **IP address** is dynamically updated on the DNS server.
+9. In the **Domain** section, click **+** to add the required **zone names** and select the appropriate **CIDR prefix** from the dropdown. Repeat this step to add additional domains as needed.&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ixg8LUGK0R5bqsqvcmmdM_image.png)
+
+10. Click **Save**.
+

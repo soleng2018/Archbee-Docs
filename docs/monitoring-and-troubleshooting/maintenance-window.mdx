@@ -1,0 +1,41 @@
+---
+title: Maintenance Window
+slug: maintenance-window
+createdAt: Thu Apr 09 2026 16:24:20 GMT+0000 (Coordinated Universal Time)
+---
+
+A **Maintenance Window** in Nile Portal is a scheduled period during which you expect planned work that may affect your Nile service, such as software upgrades, network reconfiguration, power outages, or broader facilities maintenance. By explicitly declaring this window, Nile treats any related impact as planned activity rather than an unexpected incident, so performance changes are interpreted in the correct context for both your team and Nile support.
+
+During an active maintenance window, Nile adjusts how service health is evaluated so that planned changes don’t appear as avoidable outages. Network service may still be interrupted, but alerts to your team are suppressed where appropriate, and the maintenance period is excluded from **SLA&#x20;**&#x63;alculations. This avoids unnecessary notifications, reduces noise for support staff, and prevents time being spent triaging issues that are already expected as part of scheduled work.&#x20;
+
+Create a new maintenance window&#x20;
+
+1. Go to **Network Setup → Service Areas → Sites**.
+   The Sites panel on the left shows all sites, and when collapsed, each site shows the number of buildings it contains for easier navigation.
+2. In the **Sites** list, hover over the site you want to review and click the **Edit** icon.
+   The main pane updates to show that site’s details with the **GENERAL INFO, MAINTENANCE, and TOPOLOGY** tabs at the top.
+3. Open the **Maintenance** section. You’ll see three tabs: Upcoming, Schedule, and Last 90 Days.&#x20;
+4. On the **Schedule** (or **Upcoming**) tab, click **Add** (the Add panel) to configure a new maintenance window.&#x20;
+5. In the **Add maintenance window** panel, fill in:&#x20;
+   - **Window Type** – e.g., planned maintenance/upgrade category.&#x20;
+   - **Geo Scope** – choose the scope (site/building/floor) to which the window applies.&#x20;
+   - **Start Time** and **End Time** – define when the maintenance starts and ends.&#x20;
+   - **Reason** – short description of what is being done (power work, router change, Nile devices upgrade, etc.).&#x20;
+6. Click **Save**. The new maintenance window appears in **Upcoming/Schedule**, and during that time, Nile will treat it as planned work (suppressing related alerts, pausing SLAs, etc., as documented).&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sksY16mCYHe1sY6klJskG_screenshot-2026-04-09-at-101103apm.png)
+
+### Edit or delete an existing maintenance window
+
+1. Open **Service Area → Sites**, hover the site, click **Edit** to reopen the **Site Details** slider.&#x20;
+2. Go to **Maintenance → Schedule** to see all configured windows.&#x20;
+3. **Select a maintenance entry**. The **Edit** and **Delete** actions become enabled for that entry.&#x20;
+4. To **edit**:&#x20;
+   - Click **Edit** → a secondary overlay opens.
+   - Update **Window Type, Geo Scope, Start Time, End Time, and Reason** as needed.
+   - Click **Save** to apply the changes.&#x20;
+5. To **delete**:&#x20;
+   - Click **Delete** and confirm. The maintenance window is removed from the schedule.&#x20;
+
+Please ensure your network teams schedule and configure maintenance windows in advance of any planned facility work or Nile Fabric/network changes. This helps keep alerts and SLA calculations accurate, reduces unnecessary notifications, and avoids unnecessary review effort by Nile Support.
+

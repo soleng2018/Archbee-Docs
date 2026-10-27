@@ -1,0 +1,206 @@
+---
+title: Nile Edge Service
+slug: nile-edge-service
+createdAt: Wed Aug 12 2026 20:09:11 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+The Nile Edge Service is an add-on for existing Nile customers, providing operational ownership of the branch WAN. Where a traditional SD-WAN appliance exposes dozens of operator-facing knobs, the Nile Edge engine collapses that same surface area into a service: customers describe the ISP circuit they procured, and the service handles path selection, monitoring, steering, IPSec termination, and alerting on their behalf.
+
+This document describes the capabilities that are available with the service:
+
+- **Adaptive Path Selection (APS):** Application-aware, Capacity-aware steering across multiple ISPs, with no operator-defined thresholds or rules.
+- **IPsec Hub connectivity:** IKEv2-based site-to-hub tunnels with primary/backup hub definitions and automatic failovers.
+- **Path Visibility:** Hop-by-hop telemetry for the top application in each SLA class across the transit ISPs.
+
+The service inherits its identity, telemetry, alerting, policy, and support model from the existing Nile Access Service.
+
+### Nile Access Service
+
+- Understands the device/user identity via 802.1X, SSO, or fingerprinting
+- Passes every session/flow through the built-in DPI, which classifies it into an application and the IP SLA class it belongs to
+- Runs the management plane — policy, telemetry sink, alerting fabric, portal
+
+### Nile Edge Service
+
+- Uses the data from Access Service, picks the top app per SLA class, and probes/monitors it for latency, packet loss, and jitter
+- Computes a MOS score from those metrics and factors it into deciding which WAN link is best suited for that SLA class
+- Terminates IPsec tunnels
+- Provides content filtering to block URLs
+- Terminates two or more ISP attachments per site (broadband, DIA, LTE/5G), configured at onboarding
+
+# Onboarding
+
+Navigate to Network Setup >> Service Areas >> Edit the site ":FontAwesome[]{icon="fa-solid fa-pencil"}" >> Topology >> ":FontAwesome[]{icon="fa-solid fa-pencil"}" on the ISP icon.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nhWVt5bW0m6QTro8CHqAw_edge-service-onboarding.png)
+
+Click on the individual link from the NSB Gateway to the ISP to add the IP information
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Sr2JPgFjFg-fAGn0l5umZ_edge-service-link-config.png)
+
+- **ISP Name & Circuit Number:** This is used or alerting when the circuits experience an outage or degradation.
+- **Contract Start Date:** Used to reset the Data Cap counters.
+- **MRC:** To understand the billing and help customers with credits in case of service degradation from the circuit provider.
+- **Link Type:** Dropdown-style selection to understand if the link is Broadband, Fiber, DIA, LTE, Satellite, etc.
+- **Contracted Link Speed:&#x20;**&#x55;sed to understand the link utilization of various circuits and feeds into the APS algorithm.
+- **Data Cap:&#x20;**&#x55;sed to understand the data capacity of the link and feeds into the APS algorithm.
+
+<hint type="info">
+  ***Notably absent from the form:****&#x20;SLA-class definitions, application categorizations, probe endpoints, threshold values, or steering rules. The Edge Service automates the fine-tuning of these values dynamically&#x20;*
+</hint>
+
+# Adaptive Path Selection (APS)
+
+APS is the closed control loop that monitors all flows on the branch's WAN links, classifies them, measures their quality on every viable path, and steers each class to the best link based on the current conditions. The loop runs continuously on the appliance; the customer never tunes a threshold.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/IUCbhC2xz_1IPWY5wrYPk_aps-flow.png "The five stages of the Adaptive Path Selection control loop")
+
+## Identify: SLA classification
+
+Every flow that is passing the Nile Access Service is passed through the DPI engine, this produces an application identity (e.g., microsoft.teams.audio, salesforce.api, apple-update)&#x20;
+
+<table isTableHeaderOn="true" columnWidths="322,676">
+  <tr>
+    <td align="left">
+      **IP SLA CLASS**
+    </td>
+    <td align="left">
+      **EXAMPLES OF APPLICATIONS MAPPED**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Real-Time
+    </td>
+    <td align="left">
+      Zoom, Webex, Teams, SIP, WebRTC (voice/video)&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Business-Critical
+    </td>
+    <td align="left">
+      ERP, Workday, HR, POS, Salesforce&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Transactional
+    </td>
+    <td align="left">
+      Web apps, authentication, dashboards, SaaS (HTTP/2, gRPC), SSH, RDP&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Bulk / Best-Effort
+    </td>
+    <td align="left">
+      Backups, file sync, software updates, OneDrive/Dropbox transfers&#x20;
+    </td>
+  </tr>
+</table>
+
+The mapping of SLA class to the applications is based on the information extracted in the DPI engine and is managed centrally by the Nile Cloud Service and is based on heuristics of the customer vertical, segment, etc., customers don't need to manually fine tune it.
+
+For each IP SLA class, the Edge Service picks a representative top application; the application generating the largest share of class-volume over a rolling window. This is the application used for path monitoring and visibility.
+
+## Probe: What we measure
+
+For each IP SLA class, the Edge Service maintains a per-class measurement of three metrics on each ISP link:
+
+- **Latency:** Round Trip Time (RTT) measured in milliseconds.
+- **Packet Loss:** Measured as a percentage over the probe window.
+- **Jitter:&#x20;**&#x4D;easured as the inter-packet variance
+
+The Edge service currently does active probing, i.e., each Edge Engine from all the available ISP links, generates a probe to the end point identified and deduces the metrics mentioned above. The probing cadence today is every 5 mins.
+
+## Score: MoS Computation
+
+Each path/class pair is scored with a Mean Opinion Score (MoS) approximation derived from the E-model (ITU-T G.107) with a class-specific weighting
+
+The resulting MoS is on the 1.0 - 4.5 range. A score of 4.0+ is indistinguishable from a good link for the IP SLA class; 3.5 - 4.0 is noticeable degradation but usable for certain SLA classes; below 3.5 is where it turns into a user complain.
+
+## Qualify: Dynamic Thresholds and Link Qualification
+
+Static thresholds do not hold true in todays day and age, a 100ms RTT maybe excellent for a transactional or interactive traffic going to a SaaS endpoint, but might be unacceptable for the Real-Time traffic. The Edge Service sets its qualification threshold per IP SLA class, per site, instead of one number for the whole path.
+
+When a link drops below threshold for a IP SLA class, it's disqualified for that class only; not pulled from service. If it still meets the thresholds for other classes, Edge keeps steering those applications onto it.
+
+To avoid flapping between links and resetting active connections, a link isn't marked qualified again until it's held above threshold for 3 consecutive probe cycles.
+
+### Capacity-Awareness
+
+Quality (MoS) is only one half of the steering decision. The other half is capacity, and capacity awareness begins the moment a circuit is onboarded.
+
+- **Circuit-level inputs at onboarding.** For every ISP circuit, the admin enters the contracted upload speed, contracted download speed, and (if applicable) the data cap, as part of the single ISP onboarding form.
+- **Continuous utilization tracking.** Once the circuit is live, the Edge Service continuously measures how much of that contracted upload and download capacity is actually being consumed, in both directions, in real time.
+- **Volume by IP SLA class.** Because every flow is already classified into an SLA class (Real-Time, Interactive, Bulk, Background) by the shared DPI engine, APS also knows whic&#x68;*&#x20;classes* are driving that utilization. In practice, Background/Bulk traffic (backups, updates, file sync) tends to be the heavy consumer of both bandwidth and data-cap, while Real-Time and Interactive traffic (voice, video, SaaS, transactional apps) typically consumes comparatively little.
+- **Feeding this into link selection.** This combination — contracted capacity from onboarding, current utilization, and per-class volume, becomes one of the inputs to the steering algorithm, alongside link quality (MoS). Before steering an IP SLA class to a given link, we check whether that link has enough headroom against its contracted speed (and, where a data cap exists, against remaining cap) to take that class's traffic. If not, the class is steered to the alternative link instead.
+- **Data-cap protection.** Because Bulk-class traffic is the class most likely to erode a data cap, this is where the capacity input has the most visible effect: as cumulative usage approaches the cap, Bulk traffic is the first to be moved off that circuit.
+
+<hint type="info">
+  **The net effect:** capacity is not a separate rule engine bolted onto quality scoring; it's a per-circuit, per-direction, per-class decision built from data the customer already gave Nile at onboarding, kept current in real time, and used as one of the deciding factors (alongside MoS) for which link a given SLA class should ride.
+</hint>
+
+## Steering
+
+The control loop produces one decision per (IP SLA class, path) pair every 5 mins. The decision is applied to new flows for that class. Existing flows are sticky to their original path until either:
+
+- The path is fully disqualified for the class (hard re-steer; existing flows are steered, disrupting the connections).
+- If the link is down, i.e., port or hardware failure
+
+### Failure modes and fallback behavior
+
+<table isTableHeaderOn="true" columnWidths="266,732">
+  <tr>
+    <td lightBackgroundColor="rgb(246, 248, 251)" darkBackgroundColor="rgb(246, 248, 251)" align="left">
+      **SCENARIO**
+    </td>
+    <td lightBackgroundColor="rgb(246, 248, 251)" darkBackgroundColor="rgb(246, 248, 251)" align="left">
+      **BEHAVIOUR**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      NSB cannot reach Nile Cloud
+    </td>
+    <td align="left">
+      Steering continues on last-known policy; telemetry buffers and replays on reconnect.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      All paths degraded for a class
+    </td>
+    <td align="left">
+      APS picks the least bad path (highest current MoS) and raises an alert.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Probing inconclusive for ≥ 2 cycles
+    </td>
+    <td align="left">
+      The (class, path) pair is treated as qualified — steering does not preemptively disqualify on absence of evidence.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Single ISP at a site
+    </td>
+    <td align="left">
+      APS still runs the loop; the path-selection output is trivial, but classification, capacity awareness and alerting all remain.
+    </td>
+  </tr>
+</table>
+
+# Path Visibility&#x20;
+
+For the top application in each IP SLA class, the Nile Edge service probes every hop on the path from the branch to the application's endpoint. The result is per-hop telemetry — IP, BGP AS, RTT, loss, jitter — usable for triage, observability and customer-facing diagnostics.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/TvCJfaM45H-DY4floQYkW_path-visibility.png)
+

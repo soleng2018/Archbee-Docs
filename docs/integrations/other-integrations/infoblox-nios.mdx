@@ -1,0 +1,149 @@
+---
+title: Infoblox NIOS
+slug: infoblox-nios
+createdAt: Fri May 24 2024 17:19:24 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+This document is designed to assist with integrating Infoblox NIOS to process incoming DHCP requests received from the Nile Service Block (NSB). The purpose of this guide is to help with seamless integration between the Nile Access service and the Infoblox DHCP service to help process IP requests from clients connected to the NSB.
+
+### Prerequisites
+
+1. Infoblox DHCP server to be up and running and reachable from the NSB.&#x20;
+   1. If the DHCP server is installed somewhere upstream from the NSB, make sure that the routing is configured appropriately on the upstream router/firewall such that the NSB can reach the server.
+   2. If the router/firewall is configured with OSPF, the NSB can automatically form the OSPF association and exchange the routes.
+
+### :Comment[Example topology diagram]{docCommentId="emzPoqffm_jaFC8dJ9A7U" resolved="false"}
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-roQvBAz8HNfk5RrQ1b47K-20240926-190449.jpg)
+
+NOTE
+
+**Note: IP addresses used above are for illustration purposes only.**
+
+### Packet flow
+
+Nile Access Service is a completely L3-based architecture. Typical DHCP transactions are Layer 2 packets. If the server resides in the same VLAN as the client, the DHCP Discover packet as a broadcast is laterally transmitted in the network until it reaches the server, and the server will respond back with an offer. But with Nile Access Services, as the lateral transmission of the network packets is not allowed, the system proxies DHCP packets to the server.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-VZEuZpR7DjYrpgt1pH61o-20240926-114916.jpg)
+
+For example, suppose the client is connecting to a segment that is set up with the subnet: 192.168.68.0/24, and the router IP is set up as 192.168.68.1. When the client is connecting to the network as it sends the Broadcast DHCP discover packet, the NSB Gateway will translate the packet into a Unicast DHCP discover packet and will be sent to the Infoblox server.
+&#x20;
+
+### Integration
+
+There are two main groups of settings needed to make this work.
+
+1. Settings on the Nile Portal&#x20;
+   1. Setting up a DHCP Server for the Geo Scope
+2. Settings on the Infoblox DHCP server&#x20;
+   1. Adding a network
+   2. Adding a netmask
+   3. Adding the grid member to serve the IP requests.
+   4. Adding options
+   5. Adding the range of available IP addresses
+
+### Settings on the Nile Portal
+
+- Log in to the Nile Portal.
+- Navigate to Settings >> DHCP and click on “+” to add a new DHCP Server
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/NP-DHCP1.png)
+
+- Configure the following parameters:
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/NP-DHCP2.png)
+
+- **Name:&#x20;**
+
+  Provide a name for the DHCP server, this is purely for identification.
+- **Host 1:**
+
+  &#x20;IP address of the Infoblox Server.
+- **Host 2, 3:**
+
+  &#x20;If there are multiple grid members serving the DHCP requests for the same subnet pool, please configure the IP addresses of the other grid members.
+- **Geo Scope:**
+
+  &#x20;This is the site where this DHCP server will be available.
+- **Subnets:**
+
+  &#x20;This is the subnet scheme in CIDR format that will be attached to a segment.
+- **Router:**
+
+  &#x20;The IP that is set here should be part of the subnet configured above and will be assumed by the NSB gateway.
+
+### Settings on the Infoblox NIOS server
+
+- Navigate to Data Management >> DHCP >> Networks and click on “+” to add a new network.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox3.png)
+
+- Go through the Setup wizard.
+- Select “Add Network”
+
+x
+
+- Add the netmask, in the example, it is /24.
+- Define the network, in this example 192.168.68.0, click “Next”.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox5.png)
+
+- Add the grid member that will respond to the DHCP requests.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox6.png)
+
+- Add options.&#x20;
+  - Lease time: Time that the client can hold the lease for
+  - Routers: This should match the router IP setup on the Nile Portal
+  - Domain name: Optional
+  - DNS Servers: Configure the DNS servers that can resolve the hostnames for the clients, you can use Infoblox threat defense to process the DNS requests too.
+  - Click “Next” and “Save”.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox7.png)
+
+- View the summary of the created network.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox8.png)
+
+- Click on the created network and continue with the setup by adding the IP range that can serve the DHCP requests.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox9.png)
+
+- Go through the setup wizard and add the range.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox10.png)
+
+- Enter the start IP and end IP.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox11.png)
+
+- Add the grid member that can serve requests for this range.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox12.png)
+
+- Check the options that were set up while configuring the network in the previous screens and save them.
+

@@ -1,0 +1,56 @@
+---
+title: Setup Own Hosted Captive Portal SSID
+slug: setup-own-hosted-captive-portal-ssid
+createdAt: Fri May 24 2024 07:37:59 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+This solution is ideal for customers who already use a network access control (NAC) or captive portal platform with their existing WLAN, such as Cisco ISE or Aruba ClearPass. In this model, the Nile Access Service acts as a pass-through, relying on the external captive portal server to authenticate guest devices.
+
+There are two modes of operation:
+
+- **Server-initiated flow:** the captive portal server sends the redirect URL.
+- **Static URL:** you enter the redirect URL in the Nile Portal.
+
+### Server-initiated flow
+
+In the server-initiated flow, the captive portal server is configured with the redirect URL and hosts the captive portal page.
+
+When a guest device connects to the captive portal SSID:
+
+1. The Nile Access Service assigns the device to a guest segment and provides an IP address from the DHCP server.
+2. The Nile Access Service sends a MAC authentication request to the captive portal server.
+3. If the server does not recognize the MAC address, it responds with an Access-Accept message that includes the redirect URL.
+4. The Nile Access Service redirects the user to the URL provided by the captive portal server.
+5. The user interacts with the captive portal page and provides the required authentication (for example, accept and connect, social login, or password).
+6. After successful authentication, the captive portal server sends a Change of Authorization (CoA), and the Nile Access Service sends the MAC authentication request again. This time, the server responds with an Access-Accept without a redirect URL.
+7. The Nile Access Service admits the device onto the network.
+
+### Static URL
+
+In the static URL mode, the administrator enters the redirect URL in the Nile Portal when adding the RADIUS server. The captive portal server does not send the URL in its MAC authentication response.
+
+## Prerequisites
+
+Complete the following before you create an own-hosted captive portal SSID. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Authentication.** Add your portal server as a RADIUS server under Network Setup > Authentication. A RADIUS server is required for an own-hosted captive portal SSID. In static URL mode, enter the redirect URL in the **Guest Portal URL** field. See :Link[Setup Authentication]{href="https://docs.nilesecure.com/setup-authentication" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+- **Prepare your captive portal server.** Set up the portal's splash page and choose the redirect mode: server-initiated or static URL.
+  - Add Nile as a network device (RADIUS client) on the portal server, using the same shared secret you will enter in the Nile Portal. The NAS IP addresses are shown when you add the RADIUS server in the Nile Portal (**Display NAS IP's**).
+  - Allow Change of Authorization (CoA) from the portal server to Nile.
+  - For server-initiated mode, configure the server to return the redirect URL in its MAC authentication response. Use the Nile dictionary file if your server needs it.
+  - Make sure there is a route between the portal server and your core router or firewall that connects to the Nile Service Gateway.
+
+## Configuration Steps
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Wireless, click the '+' sign, and choose the Type as Captive Portal.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - **Segments:** Select the guest segment that uses your RADIUS server and captive portal, and save your changes.
+4. Connect a test device to the SSID. The device should be redirected to your captive portal page. Complete the sign-in and confirm the device gets network access.

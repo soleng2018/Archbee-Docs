@@ -1,0 +1,406 @@
+---
+title: Nile Segments Mapping to FW Zones
+slug: nile-segments-mapping-to-fw-zones
+createdAt: Wed Nov 13 2024 00:34:22 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+This document provides a solution using a 3rd party intermediate L3 switch to satisfy both the Nile L3 design and the firewalls use of incoming tagged LAN traffic segmented by security zones.
+
+The following Proof of Concept breaks down the solution into three parts:
+
+- Nile NSB provisioning.
+- Palo Alto Firewall configuration of a trunk uplink interface and security zones mapped to each VLAN in the trunk.
+- Cisco 3750 configuration acting as the Nile NSB uplink and mapping Nile segments to  different VLANs on a trunk port to the Palo Alto firewall.
+
+# Topology
+
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9-5fBeCSTUbLTz6jKkCK3_nile-l3-to-l2.png" size="54" width="687" height="851" position="center" darkWidth="687" darkHeight="851" showCaption="false"></Image>
+
+# Nile NSB Configuration
+
+## NSB Provisioning
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5AqN7pB95Zs-RMhgYnsPl_screenshot-2024-11-12-at-32612-pm.png" size="62" width="2454" height="1196" position="center" darkWidth="2454" darkHeight="1196" showCaption="false"></Image>
+
+## Nile Segments
+
+<table isTableHeaderOn="true" columnWidths="308,100">
+  <tr>
+    <td align="center">
+      **Segment**
+    </td>
+    <td align="center">
+      **Subnet**
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      Nile-Dot1x
+    </td>
+    <td align="center">
+      192.168.100.0/24
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      Nile-PSK
+    </td>
+    <td align="center">
+      192.168.101.0/24
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      Nile-Guest
+    </td>
+    <td align="center">
+      192.168.102.0/24
+    </td>
+  </tr>
+</table>
+
+#
+
+# Palo Alto Firewall Configuration
+
+## UI Pertinent Screenshots
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/hYcZ-HMu3xE4DRwl-06oM_pan-interfaces.png" size="74" width="687" height="276" position="center" darkWidth="687" darkHeight="276" showCaption="false"></Image>
+
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Tnw1bw6XMZfWASsMdJMKn_pan-zones.png" size="72" width="401" height="192" position="center" caption="PAN Zones" darkWidth="401" darkHeight="192" showCaption="true"></Image>
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BBUb7scd0tlZCHAbGo8bJ_pan-static-routes.png "PAN Static Routes")
+
+## PAN CLI Pertinent Configuration
+
+set network interface ethernet ethernet1/1 layer3 ip 10.1.251.241/27&#x20;
+set network interface ethernet ethernet1/2 layer3 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 sdwan-link-settings upstream-nat enable no
+set network interface ethernet ethernet1/2 layer3 sdwan-link-settings upstream-nat static-ip&#x20;
+set network interface ethernet ethernet1/2 layer3 sdwan-link-settings enable no
+set network interface ethernet ethernet1/2 layer3 sdwan-link-settings ipv6-enable no
+set network interface ethernet ethernet1/2 layer3 lldp enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 sdwan-link-settings upstream-nat enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 sdwan-link-settings enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 sdwan-link-settings ipv6-enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 adjust-tcp-mss enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 ip 192.168.0.9/30&#x20;
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 tag 102
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.102 interface-management-profile Ping
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 sdwan-link-settings upstream-nat enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 sdwan-link-settings enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 sdwan-link-settings ipv6-enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 adjust-tcp-mss enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 tag 100
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 ip 192.168.0.1/30&#x20;
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.100 interface-management-profile Ping
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 sdwan-link-settings upstream-nat enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 sdwan-link-settings enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 sdwan-link-settings ipv6-enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 ndp-proxy enabled no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 adjust-tcp-mss enable no
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 ip 192.168.0.5/30&#x20;
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 tag 101
+set network interface ethernet ethernet1/2 layer3 units ethernet1/2.101 interface-management-profile Ping
+set network interface ethernet ethernet1/2 layer3 ip 172.16.10.1/30&#x20;
+set network interface ethernet ethernet1/2 layer3 interface-management-profile Ping
+set network virtual-router default interface \[ ethernet1/1 ethernet1/2 ethernet1/2.100 ethernet1/2.101 ethernet1/2.102 ]
+set network virtual-router default routing-table ip static-route primary-default nexthop ip-address 10.1.251.225
+set network virtual-router default routing-table ip static-route primary-default bfd profile None
+set network virtual-router default routing-table ip static-route primary-default metric 10
+set network virtual-router default routing-table ip static-route primary-default destination 0.0.0.0/0
+set network virtual-router default routing-table ip static-route Nile\_GTW1 nexthop ip-address 172.16.10.2
+set network virtual-router default routing-table ip static-route Nile\_GTW1 bfd profile None
+set network virtual-router default routing-table ip static-route Nile\_GTW1 interface ethernet1/2
+set network virtual-router default routing-table ip static-route Nile\_GTW1 metric 10
+set network virtual-router default routing-table ip static-route Nile\_GTW1 destination 172.16.0.0/30
+set network virtual-router default routing-table ip static-route Nile\_GTW1 route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile-Guest nexthop ip-address 192.168.0.10
+set network virtual-router default routing-table ip static-route Nile-Guest bfd profile None
+set network virtual-router default routing-table ip static-route Nile-Guest interface ethernet1/2.102
+set network virtual-router default routing-table ip static-route Nile-Guest metric 10
+set network virtual-router default routing-table ip static-route Nile-Guest destination 192.168.102.0/24
+set network virtual-router default routing-table ip static-route Nile-Guest route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile\_Infra nexthop ip-address 172.16.10.2
+set network virtual-router default routing-table ip static-route Nile\_Infra bfd profile None
+set network virtual-router default routing-table ip static-route Nile\_Infra interface ethernet1/2
+set network virtual-router default routing-table ip static-route Nile\_Infra metric 10
+set network virtual-router default routing-table ip static-route Nile\_Infra destination 172.16.1.0/24
+set network virtual-router default routing-table ip static-route Nile\_Infra route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile\_Sensors nexthop ip-address 172.16.10.2
+set network virtual-router default routing-table ip static-route Nile\_Sensors bfd profile None
+set network virtual-router default routing-table ip static-route Nile\_Sensors interface ethernet1/2
+set network virtual-router default routing-table ip static-route Nile\_Sensors metric 10
+set network virtual-router default routing-table ip static-route Nile\_Sensors destination 172.16.2.0/24
+set network virtual-router default routing-table ip static-route Nile\_Sensors route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile-PSK nexthop ip-address 192.168.0.6
+set network virtual-router default routing-table ip static-route Nile-PSK bfd profile None
+set network virtual-router default routing-table ip static-route Nile-PSK interface ethernet1/2.101
+set network virtual-router default routing-table ip static-route Nile-PSK metric 10
+set network virtual-router default routing-table ip static-route Nile-PSK destination 192.168.101.0/24
+set network virtual-router default routing-table ip static-route Nile-PSK route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile-Dot1x nexthop ip-address 192.168.0.2
+set network virtual-router default routing-table ip static-route Nile-Dot1x bfd profile None
+set network virtual-router default routing-table ip static-route Nile-Dot1x interface ethernet1/2.100
+set network virtual-router default routing-table ip static-route Nile-Dot1x metric 10
+set network virtual-router default routing-table ip static-route Nile-Dot1x destination 192.168.100.0/24
+set network virtual-router default routing-table ip static-route Nile-Dot1x route-table unicast&#x20;
+set network virtual-router default routing-table ip static-route Nile-GTW2 nexthop ip-address 172.16.10.2
+set network virtual-router default routing-table ip static-route Nile-GTW2 bfd profile None
+set network virtual-router default routing-table ip static-route Nile-GTW2 interface ethernet1/2
+set network virtual-router default routing-table ip static-route Nile-GTW2 metric 10
+set network virtual-router default routing-table ip static-route Nile-GTW2 destination 172.16.0.4/30
+set network virtual-router default routing-table ip static-route Nile-GTW2 route-table unicast&#x20;
+set network virtual-router default ecmp algorithm ip-modulo&#x20;
+set zone Untrust network layer3 ethernet1/1
+set zone Nile-NSB network layer3 ethernet1/2
+set zone Nile-Guest network layer3 ethernet1/2.102
+set zone Nile-PSK network layer3 ethernet1/2.101
+set zone Nile-Dot1x network layer3 ethernet1/2.100
+set rulebase security rules "Nile-NSB to Internet" to Untrust
+set rulebase security rules "Nile-NSB to Internet" from \[ Nile-Dot1x Nile-Guest Nile-NSB Nile-PSK ]
+set rulebase security rules "Nile-NSB to Internet" source any
+set rulebase security rules "Nile-NSB to Internet" destination any
+set rulebase security rules "Nile-NSB to Internet" source-user any
+set rulebase security rules "Nile-NSB to Internet" category any
+set rulebase security rules "Nile-NSB to Internet" application any
+set rulebase security rules "Nile-NSB to Internet" service any
+set rulebase security rules "Nile-NSB to Internet" source-hip any
+set rulebase security rules "Nile-NSB to Internet" destination-hip any
+set rulebase security rules "Nile-NSB to Internet" action allow
+set rulebase security rules "Nile-NSB to Internet" log-start no
+set rulebase security rules "Nile-NSB to Internet" log-end yes
+set rulebase security rules Block-Guest-to-Internal to \[ Nile-Dot1x Nile-NSB Nile-PSK ]
+set rulebase security rules Block-Guest-to-Internal from Nile-Guest
+set rulebase security rules Block-Guest-to-Internal source any
+set rulebase security rules Block-Guest-to-Internal destination any
+set rulebase security rules Block-Guest-to-Internal source-user any
+set rulebase security rules Block-Guest-to-Internal category any
+set rulebase security rules Block-Guest-to-Internal application any
+set rulebase security rules Block-Guest-to-Internal service application-default
+set rulebase security rules Block-Guest-to-Internal source-hip any
+set rulebase security rules Block-Guest-to-Internal destination-hip any
+set rulebase security rules Block-Guest-to-Internal action deny
+set rulebase security rules Block-Guest-to-Internal log-start no
+set rulebase security rules Block-Guest-to-Internal log-end yes
+set rulebase nat rules "Src-Nat to Internet" source-translation dynamic-ip-and-port interface-address ip 10.1.251.241/27
+set rulebase nat rules "Src-Nat to Internet" source-translation dynamic-ip-and-port interface-address interface ethernet1/1
+set rulebase nat rules "Src-Nat to Internet" to Untrust
+set rulebase nat rules "Src-Nat to Internet" from \[ Nile-Dot1x Nile-Guest Nile-NSB Nile-PSK ]
+set rulebase nat rules "Src-Nat to Internet" source any
+set rulebase nat rules "Src-Nat to Internet" destination any
+set rulebase nat rules "Src-Nat to Internet" service any
+set rulebase nat rules "Src-Nat to Internet" to-interface ethernet1/1
+set import network interface \[ ethernet1/2 ethernet1/2.102 ethernet1/2.100 ethernet1/2.101 ]
+
+# Cisco 3750 Configuration
+
+!
+version 15.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service unsupported-transceiver
+!
+hostname MM-3750
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition Mgmt
+&#x20;!
+&#x20;address-family ipv4
+&#x20;exit-address-family
+!
+logging buffered 51200
+logging console critical
+logging monitor informational
+!
+username admin privilege 15 password 0 nile123!
+no aaa new-model
+clock timezone pst -8 0
+clock summer-time pdt recurring
+switch 1 provision ws-c3750x-48p
+system mtu routing 1500
+!
+no ip source-route
+ip routing
+!
+ip vrf mgmt
+!
+!
+no ip domain-lookup
+ip domain-name mmoussa.com
+!
+!
+crypto pki trustpoint TP-self-signed-2643279232
+&#x20;enrollment selfsigned
+&#x20;subject-name cn=IOS-Self-Signed-Certificate-2643279232
+&#x20;revocation-check none
+&#x20;rsakeypair TP-self-signed-2643279232
+!
+!
+crypto pki certificate chain TP-self-signed-2643279232
+&#x20;certificate self-signed 01
+&#x20; 3082022B 30820194 A0030201 02020101 300D0609 2A864886 F70D0101 05050030&#x20;
+&#x20; 31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274&#x20;
+&#x20; 69666963 6174652D 32363433 32373932 3332301E 170D3036 30313032 30303032&#x20;
+&#x20; 30365A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649&#x20;
+&#x20; 4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 36343332&#x20;
+&#x20; 37393233 3230819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281&#x20;
+&#x20; 81008D52 563048F3 30480BDC 6FF17CDC CDA19804 A319B2B8 F1CF16DC 05D35026&#x20;
+&#x20; 0D558F97 48AA1C70 A8EBEE30 2741FD5B 7A7398EF 6320710C 70EC555C 03496731&#x20;
+&#x20; 6BA6B046 58472BA4 A6E88895 1E8AA645 9995919C CA2A97EF 35045CD8 6BE029BE&#x20;
+&#x20; 993C4722 450739CE C97AC621 25B362A3 5A87AB67 8E64F909 CAE159F3 1A28FDAA&#x20;
+&#x20; BEBD0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 301F0603&#x20;
+&#x20; 551D2304 18301680 141E4B20 49C74924 7916C386 8603A069 802A6AF5 68301D06&#x20;
+&#x20; 03551D0E 04160414 1E4B2049 C7492479 16C38686 03A06980 2A6AF568 300D0609&#x20;
+&#x20; 2A864886 F70D0101 05050003 8181003E 8257C458 D45AD4B2 EA28EDC3 3C0BCD4D&#x20;
+&#x20; E4C8C080 9D9BFD5A 27F9E581 F6D23DAA ABA778F6 47240E6F E166591F FBA952BF&#x20;
+&#x20; EF36E843 56C07D6C 55A53CEB D6B6DED9 96FC01B6 5D1B0367 06E5E4C9 E0635677&#x20;
+&#x20; 7000A9F6 52F05003 0261752E A827D9BA D5131EE7 563EA77F BD8BE6A3 2F6EB255&#x20;
+&#x20; 9F26D854 333BA225 E5CA4D73 818174
+&#x20;       quit
+license boot level ipservices
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+no spanning-tree vlan 10-12,31,38,253
+!
+!
+vlan internal allocation policy ascending
+no cdp run
+!
+!
+interface FastEthernet0
+&#x20;vrf forwarding Mgmt
+&#x20;ip address 10.1.250.84 255.255.255.0
+&#x20;no ip route-cache
+!
+!
+interface GigabitEthernet1/0/37
+&#x20;no switchport
+&#x20;ip address 172.16.0.1 255.255.255.252
+&#x20;ip policy route-map NSB\_MAP
+!
+interface GigabitEthernet1/0/38
+&#x20;no switchport
+&#x20;ip address 172.16.0.5 255.255.255.252
+&#x20;ip access-group BLACKOUT in
+&#x20;ip policy route-map NSB\_MAP
+!
+!
+interface GigabitEthernet1/0/48
+&#x20;switchport trunk allowed vlan 10,100-102
+&#x20;switchport trunk encapsulation dot1q
+&#x20;switchport trunk native vlan 10
+&#x20;switchport mode trunk
+&#x20;spanning-tree portfast edge
+!
+!
+interface Vlan1
+&#x20;no ip address
+!
+interface Vlan10
+&#x20;ip address 172.16.10.2 255.255.255.252
+!
+interface Vlan100
+&#x20;ip address 192.168.0.2 255.255.255.252
+!
+interface Vlan101
+&#x20;ip address 192.168.0.6 255.255.255.252
+!
+interface Vlan102
+&#x20;ip address 192.168.0.10 255.255.255.252
+!
+router ospf 10
+&#x20;network 172.16.0.0 0.0.0.3 area 0
+&#x20;network 172.16.0.4 0.0.0.3 area 0
+&#x20;default-information originate always route-map NSB\_MAP
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 172.16.10.1 10
+ip route vrf Mgmt 0.0.0.0 0.0.0.0 10.1.250.1
+ip ssh time-out 60
+ip ssh source-interface FastEthernet0
+ip ssh server algorithm encryption 3des-cbc aes128-cbc aes256-cbc aes256-ctr
+ip ssh server algorithm authentication password keyboard publickey
+!
+ip access-list standard MANAGEMENT
+&#x20;permit 10.127.134.0 0.0.0.255
+&#x20;permit 10.0.0.0 0.255.255.255
+!
+ip access-list extended BLACKOUT
+&#x20;permit ip 172.16.0.0 0.0.0.3 any
+&#x20;permit ip 172.16.0.4 0.0.0.3 any
+&#x20;permit ip 172.16.1.0 0.0.0.255 any
+&#x20;permit ip 172.16.2.0 0.0.0.255 any
+&#x20;permit ip 192.168.100.0 0.0.0.255 any
+&#x20;permit ip 192.168.101.0 0.0.0.255 any
+&#x20;permit ip 192.168.102.0 0.0.0.255 any
+&#x20;deny   ip any any
+ip access-list extended Dot1x\_ACL
+&#x20;permit ip 192.168.100.0 0.0.0.255 any
+ip access-list extended Guest\_ACL
+&#x20;permit ip 192.168.102.0 0.0.0.255 any
+ip access-list extended NSB\_ACL
+&#x20;permit ip 172.16.0.0 0.0.0.3 any
+&#x20;permit ip 172.16.1.0 0.0.0.255 any
+&#x20;permit ip 172.16.2.0 0.0.0.255 any
+&#x20;permit ip 172.16.0.4 0.0.0.3 any
+ip access-list extended PSK\_ACL
+&#x20;permit ip 192.168.101.0 0.0.0.255 any
+!
+logging trap warnings
+!
+route-map NSB\_MAP permit 10
+&#x20;match ip address NSB\_ACL
+&#x20;set ip next-hop 172.16.10.1
+!
+route-map NSB\_MAP permit 100
+&#x20;match ip address Dot1x\_ACL
+&#x20;set ip next-hop 192.168.0.1
+!
+route-map NSB\_MAP permit 101
+&#x20;match ip address PSK\_ACL
+&#x20;set ip next-hop 192.168.0.5
+!
+route-map NSB\_MAP permit 102
+&#x20;match ip address Guest\_ACL
+&#x20;set ip next-hop 192.168.0.9
+!
+!
+line con 0
+&#x20;password nile123!
+&#x20;logging synchronous
+&#x20;login local
+line vty 0 4
+&#x20;exec-timeout 30 0
+&#x20;logging synchronous
+&#x20;login local
+&#x20;transport preferred none
+&#x20;transport input ssh
+line vty 5 15
+&#x20;login
+!
+ntp server vrf Mgmt 152.70.159.102
+!        &#x20;
+end
+

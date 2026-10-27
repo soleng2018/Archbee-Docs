@@ -1,0 +1,90 @@
+---
+title: Wired Unified Authentication
+slug: wired-unified-authentication
+createdAt: Mon Aug 12 2024 22:52:03 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+The Nile Access Service introduces Parallel Authentication, a unified approach to network authentication that simplifies the traditionally complex process of managing multiple authentication methods. This feature streamlines the authentication process for both wired and wireless connections, reducing complexity and improving security.
+
+# Key Benefits
+
+1. **Unified Wired and Wireless Authentication**: Simplifies network management by using a single authentication framework for both wired and wireless connections.
+2. **Reduced Complexity**: Minimizes the number of settings administrators need to configure, making setup and maintenance easier.
+3. **Automatic Handling of Device Quirks**: Addresses common issues, such as VoIP phones defaulting to 802.1X, without administrator intervention.
+4. **Enhanced Security**: Ensures all devices are properly authenticated before gaining network access.
+5. **Flexible Authentication Options**: Supports various authentication methods, including MAC Authentication Bypass (MAB), 802.1X, and Single Sign-On (SSO).
+
+# How It Works
+
+The Nile Access Service's Parallel Authentication process operates as follows:
+
+## Simultaneous Authentication Attempts
+
+For wired connections, the system simultaneously attempts MAC Authentication Bypass (MAB) and 802.1X authentication (if a RADIUS server is configured).
+
+## Intelligent Decision Making
+
+- If a specific MAB rule exists for a device, it takes precedence.
+- If no specific MAB rule exists, the system uses the RADIUS server's decision.
+
+## Wired SSO Integration
+
+- Devices without specific MAC rules are placed in a temporary "allow" segment.
+- This segment provides a short-lease IP address, enabling the device to perform SSO.
+- After a successful SSO, the device moves to the designated "wired SSO" segment.
+
+<ExpandableHeading isOpen="true">
+  ### Flowchart of the Parallel Authentication process
+
+  ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-ofUAh6ONGXsgooRCiybR3-20240926-083257.jpg)
+</ExpandableHeading>
+
+# Configuration and Management
+
+The Nile Access Service simplifies the configuration process:
+
+1. **Simplified Settings**: Administrators need to configure fewer settings compared to traditional systems.
+2. **RADIUS Integration**: Choose between Nile's built-in MAC authentication or integrate with your existing RADIUS server for MAC authentication.
+3. **Automatic Precedence Handling**: The system automatically manages authentication precedence, eliminating the need for complex rule sets.
+
+# Use Cases
+
+## :Comment[VoIP Phone Authentication]{docCommentId="X7Y5qkriq7zLiuRphS_Ti" resolved="false"}
+
+Many VoIP phones default to using 802.1X, which can cause issues in networks not configured for it. The Nile Access Service's Parallel Authentication automatically handles this scenario:
+
+1. The phone attempts 802.1X authentication.
+2. Simultaneously, the system checks for a MAB rule for the phone.
+3. If a MAB rule exists, it takes precedence, allowing the phone to connect without 802.1X credentials.
+
+This process happens automatically, requiring no special configuration from the administrator.
+
+![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-5NIYwMjK_ISoVs0goREyv-20240926-083817.jpg)
+
+# Authentication Source
+
+A wired device connects to using either 802.1x or MAC Auth or SSO. Nile can display the stage the device is in when connected. Following are the states:
+
+SSO Session expired - When using wired SSO, this status indicates when a devices is connected to the network but the session has expired
+
+SSO initiated - This status indicates that a SSO session has been intiated but no response has been received from the IDP
+
+Admin enforced SSO re-authentication - If an admin enforced SSO for a user this status will be displaued
+
+SSO User deactivated
+
+SSO Pending
+
+SSO Denied
+
+SSO Approved
+
+802.1X Approved or Denied
+
+# Conclusion
+
+The Nile Access Service's Parallel Authentication feature significantly simplifies network authentication management. By unifying wired and wireless authentication, automatically handling device quirks, and providing flexible authentication options, it reduces the complexity of network management while enhancing security.
+
+For more information on configuring and optimizing Parallel Authentication for your network, please refer to the Nile Customer Portal or contact your Nile support representative.

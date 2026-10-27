@@ -1,0 +1,50 @@
+---
+title: RADIUS Alerts for Client Devices
+slug: radius-alerts-for-client-devices
+createdAt: Thu Sep 19 2024 13:48:54 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The Nile Access Service continuously monitors the RADIUS authentication transactions across all connected client devices. When a significant percentage of clients encounter RADIUS failures, the Nile Access Service generates alerts to notify the network administrators.
+
+## RADIUS Alert Thresholds
+
+The Nile Access Service uses the following thresholds to determine when to generate RADIUS alerts:
+
+### 5% to 10% Client Failures
+
+If 5% to 10% of the clients attempting RADIUS transactions in the last 15 minutes have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **RADIUS Alert: 5% \<= Clients \< 10%**
+  &#x20;\<# number> of clients attempting RADIUS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+### 10% to 25% Client Failures
+
+If 10% to 25% of the clients attempting RADIUS transactions in the last 15 minutes have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **RADIUS Alert: 10% \<= Clients \< 25%**
+  &#x20;\<# number> of clients (>10%) attempting RADIUS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+### 25% to 100% Client Failures
+
+If 25% to 100% of the clients attempting RADIUS transactions in the last 15 minutes have encountered failures, the following alert is generated:
+
+<BlockQuote>
+  **RADIUS Alert: 25% \<= Clients \<= 100%**
+  &#x20;\<# number> of clients (>25%) attempting RADIUS transactions in the last 15 minutes encountered failures at \<site> for \<x hrs/mins>
+</BlockQuote>
+
+## Alert Lifecycle
+
+The RADIUS alert is "closed" when the condition is cleared, i.e., when less than 5% of the clients are encountering RADIUS failures.
+
+## Alert Categorization and Visibility
+
+The RADIUS alerts are categorized as "Client Devices" in the Nile Cloud Services Portal's alert table. When a user clicks on the alert, they are taken to the "Devices" page, which displays the filtered list of devices with the corresponding RADIUS errors.
+
+By providing these RADIUS alerts, the Nile Access Service helps network administrators quickly identify and address any issues related to RADIUS authentication, ensuring the seamless operation of the network infrastructure.

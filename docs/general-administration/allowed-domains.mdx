@@ -1,0 +1,55 @@
+---
+title: Allowed Domains
+slug: allowed-domains
+createdAt: Mon Jul 22 2024 22:13:24 GMT+0000 (Coordinated Universal Time)
+---
+
+Allowed domains is a security function in Nile that is used for multiple different functions as described below:
+
+**Why do we need to add additional domain:**
+
+We enforce **domain verification** to ensure the customer actually owns the domain, block public email domains by default, and prevent impersonation or accidental exposure.&#x20;
+
+User creation and **Identity Provider&#x20;**&#x73;etup also validate against the tenant’s allowed domains, so attempts with unregistered domains are rejected until the domain is added/verified.
+
+
+
+- :Comment[:Link[Adding an administrator]{href="https://docs.nilesecure.com/setup-administrators" newTab="true" hasDisabledNofollow="false"}:]{docCommentId="OVtGsiF5bpJiQZTrhUiAv" resolved="false"}
+  - By default, if "john\@acme.com" has signed up for the Nile Portal, then John can add any other email that belongs to the domain "acme.com" as an administrator to the Nile Portal.
+  - But there will be cases:
+
+    **1:** Large organizations often operate multiple corporate domains (for example, **eu.acme.com** and **us.acme.com**) due to acquisitions or regional structures, so they may need to add several domains to their tenant.&#x20;
+
+    **Note**: A customer may also want to onboard a partner for management or visibility, where the customer might have onboarded a contractor or a consultant to work on behalf of them, in these case, we need to allow the domain first in order to add the email as an administrator.
+- Guest Em:Comment[ail approv]{docCommentId="Ja3Eu1vNGCyvwpLu9ej-q" resolved="false"}als:
+  - When configuring a captive portal for the guest segment or SSID, if the user selects the auth method as email approval instead of click-through, the approvers email that a user enters should be from one fo the allowed domains.
+
+To add a new allowed domain on the Nile Portal, please navigate to Account Management >> Domains >> Add Domain
+
+If you attempt to add a domain that already exists, an error message will be displayed.
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VfcI3V99at226CqYDG-o-_image.png)
+
+After entering the domain, click on the "**ADD**" button. A pop-up will appear.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kRCGePIOyBCnzLHOpnJzK_image.png)
+
+Once you have added the domain, copy the provided **TXT record** and paste it into your DNS settings for the domain you are adding.
+
+
+
+<Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/pSGt6cIYcenwrcKdc2ITf_image.png" size="60" width="748" height="958" position="center" showCaption="false"></Image>
+
+Domain will be added a&#x73;**&#x20;“unverified”** until it gets verified.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/bt1oQPGAAFZ3A5rtEEkok_image.png)
+
+Once the information is adeed into the DNS record and domain gets verified, the status will change to “**verified”.**
+
+![](https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/041oUkrcfi2rxCD3G9LVe_image.png)
+
+Once the domain is verified, you can start :Link[adding administrators]{href="https://docs.nilesecure.com/setup-administrators" newTab="true" hasDisabledNofollow="false"} belonging to that domain.
+
+Reach out to Nile Support Team in case of any issue.
+

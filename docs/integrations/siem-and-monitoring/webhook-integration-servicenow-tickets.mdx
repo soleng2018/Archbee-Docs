@@ -1,0 +1,263 @@
+---
+title: Webhook Integration : ServiceNow Tickets
+slug: webhook-integration-servicenow-tickets
+createdAt: Fri May 24 2024 17:16:17 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+The Nile Service Block (NSB) integrates with ServiceNow, via Webhook, to provide Nile users the ability to create helpdesk tickets from my.nilesecure.com page, destined to their Nile Portal Administrator.
+
+### Prerequisites
+
+- ServiceNow cloud instance with access from Nile cloud
+- Administrator rights to the Nile Portal.
+
+### ServiceNow Setup
+
+### Create ServiceNow Development Instance for testing
+
+- Log into ServiceNow. You can create a new account if you don’t have one yet.
+- ServiceNow provides the capability to create a developer instance, for free, that is useful for NSB integrations testing. This document describes how to create such a developer instance for this purpose. The steps will be the same in the production ServiceNow instance.
+- To create a developer instance, go to https\://developer.servicenow\.com/dev.do, create a developer account and log in to build a developer Service-Now.
+- To create a developer instance, click on&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/2-1024x721.webp)
+
+
+Click **Request an Instance.**
+&#x20;
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/1-1024x348.webp)
+
+After building the developer instance, you will be provided with the instance URL, login username, and password. In our example, the developer instance URL is https\://dev119912.service-now\.com and the username/password is admin/=EZ\*g23IjdTi
+
+
+**Important Note**: If you do not access the developer instance for a few days, the instance state will be changed to **hibernate**. After some time, it will be **deleted**.
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/3-1-1024x412.webp)
+
+- Switch to the admin role by clicking on the account at the top right to view the instance actions, and select ‘Change User Role’
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/4-1.webp)
+
+- Log in to the new instance using your admin account
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/5-1.webp)
+
+
+
+### Create ServiceNow New Fields for Nile Service
+
+- Service-now provides default fields for Incident, and this can be extendable.From “We will need to add a new field, “External Id” as an example to the Incident table. This field will be used to correlate Nile alerts to service-now Incidents.
+- From All , filter to locate System Definition, under System Definition, select Tables
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/5-1024x725.webp)
+
+- The list of tables (model) in the ServiceNow is shown below:
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/7-1-1024x287.png)
+
+Search for “Incident” table and click on it. In the "Columns" tab, click "New" to update the table schema/model with the Nile incident column
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/TIHAvTkk9T0W8HzL52nJi_image.png)
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/8-1024x428.webp)
+
+From the column option, set Type as “String”, make the Column Label as “ExternalId” and the column name will auto generated “u\_external\_id”. we will use the column name for the integration with Nile webhooks. In this example, the column\_name is “u\_external\_id” . Specify the max length as 32 and click “Submit”.
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/9-1024x405.webp)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/11-1-1024x557.webp)
+
+- Repeat the above action to create the “
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/12-1-1024x558.png)
+
+### Create Scripted REST APIs
+
+- The next step is to create a “Scripted Rest APIs”, which handles the Webhooks requests from Nile.&#x20;
+  - In the ServiceNow navigation bar, type “Scripted Rest APIs” and click the link. It shows a list of existing REST APIs
+  - Click&#x20;
+  - Search the created RESP API and click it. Under “Resources” tab, click ‘
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/13-1-1024x407.png)
+
+- In the “Script” section, copy and paste this script:
+
+
+
+<BlockQuote>
+  (function process(/\*RESTAPIRequest\*/ request, /\*RESTAPIResponse\*/ response) \{
+
+  var incident = request.body.data;
+  var inc = new GlideRecord('incident');
+  inc.initialize();
+  inc.u\_external\_id = incident.request\_id;
+
+  inc.short\_description = incident.title;
+  inc.u\_user\_email = incident.email;
+  inc.u\_external\_id = incident.id;
+  inc.u\_user\_name = incident.name;
+
+  var description = incident.description;
+
+  // append details to the description
+
+  description = description.concat("\n\n", "SSID: ", incident.ssid);
+  description = description.concat("\n", "MAC: ", incident.mac);
+  description = description.concat("\n", "IP: ", incident.ip\_address);
+  description = description.concat("\n", "Device Type: ", incident.device\_type);
+  description = description.concat("\n", "Segment: ", incident.segment);
+  description = description.concat("\n", "Location: ", incident.location);
+  description = description.concat("\n", "Incident Reported Time: ", incident.time);
+
+  inc.description = description;
+
+  var sys\_id = inc.insert();
+  gs.print("Newly created incident sys id is " +sys\_id);
+
+  // Now save the attachments
+  var StringUtil = new GlideStringUtil();
+  for(var i = 0; i \< incident.attachments.length; i++) \{
+  var sa = new GlideSysAttachment();
+  sa.write(inc, incident.attachments\[i].attachment\_name, incident.attachments\[i].content\_type, StringUtil.base64DecodeAsBytes(incident.attachments\[i].data));
+  }
+
+  var queried\_inc = new GlideRecord('incident');
+  queried\_inc.addQuery('sys\_id', '=', sys\_id);
+  queried\_inc.query();
+
+  var res = \{};
+  if (queried\_inc.next()) \{
+  res\['incident\_id'] = queried\_inc.number;
+  } else \{
+  res\["incident\_id"] = sys\_id;
+  }
+
+  response.setStatus(200);
+  response.setContentType('application/json');
+  response.setBody(res);
+
+
+</BlockQuote>
+
+- Under the Security tab, make sure that “
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/14-1-1024x477.png)
+
+- Once submitted, the resource name “
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/15-1.png)
+
+- This completes the ServiceNow setup.
+
+### Postman for the REST API Authentication Token
+
+- To set up the Webhook in the Nile Portal, the REST API authorization token is required.
+- Postman would be used to collect the token as follows:&#x20;
+  - Launch Postman
+  - Enter the REST API URL as a POST
+  - Select the ‘Authorization’ tab.
+  - Select&#x20;
+  - Enter the admin credentials as&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/16-1.png)
+
+- Click the&#x20;
+- **Headers**
+- Into the Authorization field, enter the value. In this example,
+  &#x20;“Basic YWRtaW46Q3ctWC96ZzI0dkpX”
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/17-1.png)
+
+### Nile Portal Setup
+
+### Add ServiceNow Webhooks to Nile Portal
+
+- Log into Nile Portal using an admin account.
+- Click on (Settings icon) on the left side.
+- Click on&#x20;
+- **Global Settings**
+- Click on Integration tab (second row)
+- Click on the“
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/18-1-1024x416.png)
+
+- Fill out the ServiceNow Webhooks info:&#x20;
+  - **Name**
+  - **URL**
+  - **Token**
+  - : Basic Authentication token generated by Postman.in our example: “Basic YWRtaW46Q3ctWC96ZzI0dkpX”
+  - Click on&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/19-1.png)
+
+### Enable Webhooks Subscriptions
+
+- The Nile Portal has the option to send user generated incidents from the nilesecure.com page to the Nile Portal admin via Webhooks to ServiceNow.
+- Login to the Nile Portal using an admin account
+- Click on (Settings icon) on the left side.
+- Click on&#x20;
+- **Global Settings**
+- Click on&#x20;
+- Select the Webhooks URL created earlier “MM Nile Incidents” from the dropdown list as the option to the “My Nile Incidents” feature.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/20-1.png)
+
+### Create a Nile Client Incident
+
+- As a user connected to the Nile service, launch a browser and connect to&#x20;
+- :Link[https://my.nilesecure.com]{href="https://my.nilesecure.com/" newTab="true"}
+- Click on the “Need more help?” link in the top right of the browser screen to launch the “Report incident” window.
+- Fill in the incident details to report to your Nile Admin. Attach a screenshot or another file as needed. Click the ‘SUBMIT” button to submit the incident.
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/21-1-1024x648.png)
+
+### Verify Nile Client Incident under ServiceNow
+
+- Login to ServiceNow instance as an admin.
+- Display the ServiceNow Incidents under&#x20;
+- **All**
+- Filter on&#x20;
+- Click on&#x20;
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/22-1.webp)
+
+
+
+![](https://nilesecure.com/wp-content/uploads/2024/02/23-1-1024x624.png)
+
+The Incidents table is then displayed. Verify your incident is shown here.
+&#x20;

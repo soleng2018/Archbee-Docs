@@ -1,0 +1,103 @@
+---
+title: Nile SLAs
+slug: nile-slas
+createdAt: Wed Jun 26 2024 17:49:43 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Overview]{docCommentId="Bv4Px_cT0qsWrS7WtqsmT" resolved="true"}
+
+The Nile Access Service provides a comprehensive set of Service Level Agreements (SLAs) to ensure the reliability and performance of the network infrastructure. Our goal is to eliminate complexity and provide a simple, scalable, and secure network that doesn’t need configuration (by humans). We want to ensure the service is *always-on*. To achieve this we have taken an outside-in approach using physical and virtual sensors that are deployed across the Nile network (including APs and switches). We call this the "outside-in approach" because of its simplicity and the ability to easily verify the Nile sensor data. Nile measures and guarantees these SLAs on a per-building basis, providing customers with visibility and accountability into service delivery. If a Nile network within a building does not meet its commitment, customers are eligible to receive service credits towards future monthly billing cycles as outlined in Nile’s service contract.
+
+
+
+## What SLAs does Nile Offer
+
+Nile’s performance guarantee is designed to continuously validate the following in real-time and is backed by a 99.95% commitment on a per-building basis:
+
+- Availability: The ability to pass traffic through the Nile Service Block (NSB), encompassing all wired and wireless network elements.
+- Coverage: Ensuring end users and IoT devices receive video or voice-grade quality wireless coverage while connected to the Nile network within the building.
+- Capacity: Determining that the deployment is designed to handle the total user, IoT, and application throughput, as well as latency requirements across the network.
+
+This allows Nile to take action, ensuring that service quality is proactively maintained per site, as each location is viewed and treated separately.
+
+## How does Nile measure SLAs?
+
+The first piece of the puzzle is the use of physical and virtual sensors deployed alongside Wi-Fi access points (APs). The sensors act like synthetic user devices providing us an outside-in view for a high degree of visibility. As a group, the sensors continuously run tests every minute to discover any issues related to network and application performance.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sEtXQFURNiXGa_zUN8Bys_image.png)
+
+### Availability
+
+In this instance, physical sensors are used to send probes throughout the network, identifying the availability of all connected network elements. When physical sensors are not being used, the dedicated radio in Nile APs assumes the responsibility of performing this health check and sending these probes.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/qSS1SlUgCJMFXOpJP_mfW_image.png)
+
+When responses are received, it is considered a “good” minute and if not, we record a “bad” minute. The number of good minutes per month is used in the following formula to determine if the Nile Access Service deployed within that environment has met its target:
+
+*Availability = (# good minutes / # total minutes) \* 100%*
+
+### Coverage
+
+The Coverage SLA measures the availability of voice-quality signal strength. Nile considers a signal strength of -67 dBm or above as the threshold for voice quality. Nile's wall-pluggable sensors measure the Received Signal Strength Indicator (RSSI) of the Nile APs. If the RSSI during a minute is equal to or better than -67 dBm, the sensors declare the minute as "good"; otherwise, they declare the minute as "bad". The number of good and bad minutes are aggregated across all the sensors in a building, and the Coverage is calculated as a percentage of good minutes out of the total minutes. Minute by minute coverage can be observed in Nile Portal by looking at the signal strength seen by sensors.&#x20;
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uqpqFSBDMeYbGgJP5jYAu_image.png)
+
+In the above image, the sensor on the top cannot see a single AP with -67 dBm or better (the best signal it can see is -70 dBm). This is reported as a bad minute
+
+### Capacity
+
+Similar to monitoring coverage performance, Nile’s sensors continuously scan the 5GHz band, reporting on each AP that is seen, along with its advertised BSSID (Basic Service Set Identifier).
+
+&#x20;Nile considers the availability of a defined number of access points (APs) as an indication of the wireless capacity. Nile's wall-pluggable sensors scan for Nile APs and report their availability to the Nile cloud. The Nile APs also send their availability by reporting their advertised BSSID (Basic Service Set Identifier) to the Nile cloud every minute. Nile combines these data points and counts the number of APs that are both advertised and seen by the Nile sensors. If the resulting number of APs seen is equal to the defined number, then Nile declares the minute as a "good" minute; otherwise, it is declared as a "bad" minute. The Capacity is calculated as the percentage of good minutes out of the total minutes.
+
+## How is the SLA calculated?&#x20;
+
+The Monthly Uptime Status Percentage is calculated as the average of the Availability, Capacity, and Coverage SLAs for the corresponding month. Nile currently guarantees a 99.95% monthly uptime across these three metrics.
+
+<ExpandableHeading isOpen="true">
+  ### Example SLA Calculation
+
+  Assume there are 6 sensors in a building, and over a 1-month period (31 calendar days):
+
+  - 2 sensors each had a total of 9 "bad" minutes from an availability perspective
+  - The other 4 sensors had no bad minutes
+
+  **Availability Calculation:**
+
+  Total Minutes = 6 sensors × 24 hours × 31 days × 60 mins = 267,840 minutes
+  &#x20;Bad Minutes = 2 sensors × 9 bad mins = 18 bad minutes
+  &#x20;Good Minutes = 267,840 - 18 = 267,822 minutes
+
+  Availability = (Good Minutes / Total Minutes) × 100% = (267,822 / 267,840) × 100% = 99.99%
+
+
+</ExpandableHeading>
+
+## Exceptions
+
+Nile does not guarantee SLAs during the following conditions:
+
+1. **Outdoor APs**
+   - Nile does not guarantee SLAs in the areas served by outdoor access points due to the lack of outdoor sensors to monitor them.
+2. **Maintenance Window**
+   - During pre-scheduled maintenance, windows agreed upon with the customer, where Nile performs routine software or hardware upgrades, the service availability may be interrupted, and the entire duration of the maintenance window is not considered for SLA calculation.
+3. **Disruptions to the Deployment**
+   - If Nile sensors are displaced from their original position, inadvertently powered off, or damaged, they will not be able to accurately measure the SLAs. Any disruptions to the physical connectivity of the Nile equipment may also hamper their ability to deliver the service. The time period during which these disruptions occur is not considered for SLA calculation.
+4. Disruptions to the Customer Environment
+   - Factors such as poor air quality, physical interference, or power supply issues in the customer's environment may hamper the ability of Nile sensors to measure the SLAs. The time period during which these disruptions occur is not considered for SLA calculation.
+
+By providing these comprehensive SLAs and clearly defining the exceptions, Nile ensures that customers can rely on the Nile Access Service to deliver a consistent and reliable network experience.
+
+## Summary
+
+Due to the rising demand for real-time applications like video conferencing, which require high-bandwidth connectivity for mobile users, today’s networks must prioritize availability, coverage, and capacity more than ever.
+
+- Nile’s Access Service offers high-performance wireless and wired network infrastructure in each of your buildings for optimum results.
+- More importantly, a Nile network continuously optimizes itself to enhance the user experience and overall predictability of your network.
+
+Nile is the only vendor that guarantees the service and provides service credits if it does not meet those guarantees that are measured from the end-user perspective.
+

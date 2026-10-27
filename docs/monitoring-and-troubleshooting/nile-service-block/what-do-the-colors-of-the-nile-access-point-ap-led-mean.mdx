@@ -1,0 +1,103 @@
+---
+title: What do the colors of the Nile Access Point (AP) LED mean?
+slug: what-do-the-colors-of-the-nile-access-point-ap-led-mean
+createdAt: Thu Jul 25 2024 15:41:47 GMT+0000 (Coordinated Universal Time)
+---
+
+The Nile Access Point (AP) is equipped with a single tricolor LED: Red, Green and Blue. The LED color reflects a system level status indicator that provides installers, IT admins and end users with adequate information on the running state of the Nile Service at a given Access Point.
+
+The following table lists the transient and persistent AP LED colors and their meaning:
+
+<table isTableHeaderOn="true" columnWidths="0,383">
+  <tr>
+    <td>
+      **LED Color state**
+    </td>
+    <td>
+      **Condition**
+    </td>
+    <td>
+      **Notes**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Off
+    </td>
+    <td>
+      AP is turned off
+    </td>
+    <td>
+      AP is turned off
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Red
+    </td>
+    <td>
+      If transient -> Initial power on
+      If persistent -> Faulty AP
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Blinking Green
+    </td>
+    <td>
+      Transient color that indicates System OS loading and initialization under way
+    </td>
+    <td>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Blinking Blue
+    </td>
+    <td>
+      if transient -> Service bringup and attempt to connect to active HeadEnd and Cloud.
+      If persistent -> unable to connect to cloud and active HeadEnd.
+    </td>
+    <td>
+      Bluetooth is turned ON and Ready to Pair
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Blue
+    </td>
+    <td>
+      Bluetooth paired
+    </td>
+    <td>
+      Bluetooth connection established with Mobile app
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Blinking Red
+    </td>
+    <td>
+      Case1: Unable to reach the cloud, while connected to active HeadEnd
+      Case2: Able to reach the cloud, but unable to connect to active HeadEnd
+    </td>
+    <td>
+      Case1: AP wireless service is Up , but Internet may be unavailable. No management and reporting from/to cloud
+      Case2: AP wireless is unavailable, but cloud is reachable
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Green
+    </td>
+    <td>
+      Nile Service fully operational
+    </td>
+    <td>
+    </td>
+  </tr>
+</table>
+
+

@@ -1,0 +1,28 @@
+---
+title: Setup a 802.1X SSID
+slug: setup-a-8021x-ssid
+createdAt: Fri May 24 2024 07:37:59 GMT+0000 (Coordinated Universal Time)
+---
+
+## Prerequisites
+
+Complete the following before you create an 802.1X SSID. Each step has its own page with detailed instructions.
+
+- **Configure a Service Area.** Define the sites, buildings, and floors where you need Nile connectivity. See :Link[Setup Service Areas]{href="https://docs.nilesecure.com/setup-service-areas" newTab="true" hasDisabledNofollow="false"}.
+- **Configure DHCP.** Choose Nile DHCP or an external DHCP server, and define the subnets your users will use. See :Link[Setup DHCP]{href="https://docs.nilesecure.com/setup-dhcp" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Authentication.** Add your RADIUS server under Network Setup > Authentication, or use the Nile RADIUS. See :Link[Setup Authentication]{href="https://docs.nilesecure.com/setup-authentication" newTab="true" hasDisabledNofollow="false"}.
+- **Configure Segments.** Create a segment for this SSID and select a RADIUS server for each site in the segment. See :Link[Setup Segments]{href="https://docs.nilesecure.com/setup-segments" newTab="true" hasDisabledNofollow="false"}.
+
+### Configuration Steps
+
+1. Log in to the Nile Portal.
+2. In the left navigation, select Network Setup > Wireless, click the '+' sign, and choose the Type as Enterprise.
+3. Configure the following:
+   - **Name:** Enter the SSID name.
+   - **Security:** Select WPA2 or WPA3 or WPA3 Enhanced.
+     - When WPA3 is selected, enable the Backward Compatibility checkbox to allow WPA2-only legacy clients to connect. This sets the SSID to WPA3 Transition Mode.
+     - If Backward Compatibility is not enabled, only clients that support WPA3 (128-bit) ciphers can connect to the SSID.
+     - When WPA3 Enhanced is selected, only clients that support WPA3 192-bit (Suite-B) ciphers can connect to the SSID.
+   - Optionally, select the **Hide SSID** checkbox if you wish to hide the SSID.
+   - **Segments:** If you have configured RADIUS authentication for a segment, it will appear in the dropdown. Select the appropriate segment for this SSID and save your changes.
+     - You can select more than one segment for a single SSID (for example, a teacher segment and a student segment). In this case, the RADIUS server must send the exact segment name, matching the name in the Nile Portal (case-sensitive), for each user or device when it authenticates. Use the Nile "netseg" attribute or the standard Tunnel-Private-Group-ID attribute. If the name is missing or does not match, authentication fails.

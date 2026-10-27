@@ -1,0 +1,78 @@
+---
+title: Nile Guest Service
+slug: nile-guest-service
+createdAt: Fri May 10 2024 20:05:10 GMT+0000 (Coordinated Universal Time)
+---
+
+## :Comment[Introduction]{docCommentId="ym_XFOX1lf6u9wMxf9Lc9" resolved="false"}
+
+In today's digital landscape, offering secure and seamless Internet access to guests is a fundamental expectation in various environments, including enterprises, retail spaces, educational institutions, and public venues. Traditional guest network setups often involve creating separate SSIDs, VLANs, and login portals, which can be cumbersome and insecure. These setups often expose sensitive data and leave networks vulnerable to lateral movement and other threats.
+
+**Nile Guest Service** provides a modern, secure solution as part of the **Nile Access Service (Network as a Service, NaaS)**. This service allows a wide range of guest devices—including those belonging to customers, partners, and employees—to access the internet securely while keeping them isolated from the organization's internal network.
+
+<Image src="https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-2a_M379edYsn6iD3eRM2W-20240926-104021.jpg" size="60" width="1425" height="2104" position="center" showCaption="false"></Image>
+
+## Why Choose Nile Guest Service?
+
+Nile Guest Service offers a range of benefits, enhancing both security and user experience:
+
+- **Zero Trust Security**
+- All guest traffic is completely isolated from corporate resources, preventing lateral movement and ensuring no unauthorized access.
+- **User-Friendly Experience**
+- Provides a smooth, hassle-free experience for guests, minimizing the need for help desk support.
+- **Operational Efficiency**
+- Simplifies the management of guest networks by eliminating the need for on-premises NAC, VLANs, DHCP, subnetting, and other complex firewall configurations.
+- **Scalable Solution**
+- Easily adapts to meet the demands of multi-site deployments without adding complexity.
+- **Compliance Made Easy**
+  Offload concerns about DMCA and other compliance issues with secure guest access management.
+
+&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/tQSksPVNwQfmruTpF0_fP_image.png)
+
+### How Does It Work?&#xA;&#xA;Nile Point of Presence (PoP)
+
+The Nile Guest Service leverages a cloud-based Point of Presence (PoP) closest to your location, ensuring low latency and optimal performance for activities like video conferencing. Guest traffic is securely tunneled from your site to the Nile PoP and then directly to the internet, keeping your internal network safe.
+
+### Simple Configuration
+
+Setting up the Nile Guest Service is straightforward. Once you sign up, essential components like the DHCP server, client subnets, segment, and SSID are automatically provisioned through the **Nile Customer Portal**. You simply need to edit the SSID name on the wireless page and save the settings. Additionally, you can use your own DNS server IP addresses if preferred.
+
+**Note**: Ensure that UDP port 6081 and port 443 are open (outbound) on firewalls for necessary communication between the Nile Service Block (NSB) Gateway and the Nile Portal.
+
+### Guest User Connectivity and Access Control
+
+Guests connecting to the Nile Guest Service SSID are securely authenticated and isolated from your corporate network. All guest traffic is tunneled from the customer site to the Nile PoP before being sent to the internet.
+
+The Nile Guest Service offers the following authentication modes:
+
+- **Click-Through**
+- Guests simply accept the terms and conditions to connect.
+- **Sponsored Guest Login (Email Approval)**
+- Guests enter their names and email addresses, and a sponsor must approve their access via email.
+- **Access Code**
+- Admins can generate access codes and allocate them to attendees at events, with each access code featuring an associated expiration period.
+
+### Monitoring and Visibility
+
+Administrators can monitor connected guest devices and view detailed user and device information through the Nile Customer Portal. This visibility extends to traffic flow, similar to the monitoring available for employee traffic.
+
+### Nile Guest Service Enhancements
+
+Nile is continually improving its services. Below are some of the features that are also part of the Nile Guest Service
+
+- :Link[:Comment[URL filtering]{docCommentId="b8cU__Me0_kH56yJrtpWD" resolved="false"}]{href="https://docs.nilesecure.com/url-filtering" newTab="true" hasDisabledNofollow="false"}
+- :Link[Guest Portal customization with personal branding]{href="https://docs.nilesecure.com/nile-guest-services-options" newTab="true" hasDisabledNofollow="false"}
+
+By utilizing Nile Guest Service, organizations can provide secure and reliable internet access to guests without compromising the security and integrity of their internal networks.
+
+### Guest device location discrepancy
+
+Nile Secure Guest Service assigns **Nile-owned public IP addresses** to guest endpoints at customer sites. Guest traffic is securely tunneled to the **nearest Nile Point of Presence (PoP)**, where it egresses to the internet using the **PoP’s public IP address**.
+
+As a result, the **public IP location reflects the PoP location**, not the physical location of the user. For example, a guest user physically located at a customer site in **Utah** may have their traffic egress from a Nile PoP in **Silicon Valley, California**, causing external applications to see the IP location as Silicon Valley.
+
+At the same time, the **endpoint’s local location services** (GPS, Wi-Fi positioning, device sensors) correctly identify the device as being physically located in Utah. Some applications—particularly those performing **MFA or geo-based checks**—may observe this difference between IP-based location and device location.
+
+This behavior is **expected and normal** for endpoints connected to **Nile Secure Guest Service**, and is a result of Nile’s PoP-based secure egress architecture.

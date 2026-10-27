@@ -1,0 +1,36 @@
+---
+title: Traffic Enforcement with Nile Trust Engine
+slug: traffic-enforcement-with-nile-trust-engine
+createdAt: Wed Jan 28 2026 18:58:00 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+The **Zero Trust Fabric Engine** is the enforcement core of the Nile Trust Service. It applies zero trust policies to all network traffic, whether between endpoints inside a Zero Trust Fabric (**East-West**) or traffic entering and leaving the network (**North-South**). Every flow is evaluated against defined policies before it is **allowed**, **denied**, or **redirected&#x20;**&#x74;o another enforcement point, ensuring continuous adherence to the principle of least privilege.
+
+## Security Posture and Policy Enforcement
+
+The Trust Engine enforces a **Default Deny** posture—no traffic flows without an explicit policy. This model protects enterprises from unauthorized communication and minimizes the risk of lateral movement and malware propagation inside the network. Every permitted flow is governed by a policy that defines the source, destination, applicable service profile, and enforcement action.
+
+## Traffic Enforcement Directions
+
+The Zero Trust Fabric Engine operates on traffic in all directions and evaluates each and every flow.&#x20;
+
+### East-West Traffic
+
+Traffic between endpoints within a Zero Trust Fabric, such as between users and devices at the same site, is considered East-West traffic. These flows can be locally enforced locally within the Zero Trust Fabric or forwarded upstream for centralized inspection.
+
+### North-South Traffic
+
+Traffic entering or leaving the site, such as communication to the internet or corporate data centers or cloud SaaS services, is considered North-South traffic. These flows can be  locally enforced or forwarded to an upstream firewall or to a Secure Service Edge (SSE) platform for advanced inspection.
+
+## Enforcement Modes
+
+The Zero Trust Fabric Engine supports multiple deployment options, giving organizations flexibility in how traffic is handled and balance performance, visibility, and compliance requiements while maintaining zero trust integirty.&#x20;
+
+1. **Local Native Enforcement:** Both East-West and North-South traffic can be enforced directly within the Zero Trust Fabric.&#x20;
+2. **Hybrid Enforcement:** in a typical hybrid enforcement model, East-West traffic is enforced locally within the Zero Trust Fabric, while North-South traffic is forwarded upstream to a firewall or SSE for enforcement or inspection.
+3. **Upstream Firewall Enforcement:** Both East-West and North-South traffic are directed to upstream enforcement systems.&#x20;
+
+**Important Note**: When an upstream firewall is utilized, it is important to understand that for North/South traffic, enforcement may be performed **independently&#x20;**&#x62;y each system. Inbound traffic will be evaluated by the firewall rule set and subsequently by the Trust Engine policy set. See the section on Actions for more information.
+

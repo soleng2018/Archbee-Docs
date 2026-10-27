@@ -1,0 +1,114 @@
+---
+title: Nile SIEM Integration Pull Mode
+slug: nile-siem-integration-pull-mode
+createdAt: Thu Jul 09 2026 09:15:11 GMT+0000 (Coordinated Universal Time)
+---
+
+## Overview
+
+The SIEM Events Pull model is designed for customers whose SIEM platform polls Nile APIs from within their environment to retrieve SIEM events.
+
+This workflow uses an API key generated in Nile Portal. Before the SIEM starts polling for events, you must create the API key and enable the SIEM Events Pull integration.
+
+This model supports Audit, User Device Events, Alerts, and Access Engine Rule Logs.
+
+## Prerequisites
+
+- Access to Nile Portal with permission to manage API keys and SIEM integration settings.
+- A SIEM platform that supports API-based polling.
+- A dedicated API key created in Nile Portal at Global Settings > API Key Management > Add Key.
+- If the maximum number of API keys has been reached, revoke an unused key before creating a new one.
+- Events are retained for 1 day, so configure the polling frequency accordingly.
+- API keys are valid for 365 days. Regenerate the key before it expires.
+
+<hint type="warning">
+  Please note that API Option is only available for Administrator role.&#x20;
+</hint>
+
+## Setup Steps
+
+1. Go to Global Settings > API Key Management.&#x20;
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5aFp3ZRW-w__BFhfcZRCQ_1.png" size="100" isUploading="false" width="2274" height="1164" darkWidth="2274" darkHeight="1164" showCaption="false" indent="1"></Image>
+
+2. Click the + icon to create a new key.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Qtl67VWFC1QbnWTKi4AaM_screenshot-2026-07-09-at-25119-pm.png" size="100" isUploading="false" width="2214" height="482" darkWidth="2214" darkHeight="482" showCaption="false" indent="1"></Image>
+
+3. From the Select workflow list, choose SIEM Events Pull.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/jfvHFXT92nyOMgSPnZ6iL_screenshot-2026-07-09-at-25326-pm.png" size="100" isUploading="false" width="2188" height="1192" darkWidth="2188" darkHeight="1192" showCaption="false" indent="1"></Image>
+
+4. Click Save to create the API key.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KGnQZEPrSuKXpHIxPC8t__screenshot-2026-07-09-at-25142-pm.png" size="100" isUploading="false" width="2196" height="1178" darkWidth="2196" darkHeight="1178" showCaption="false" indent="1"></Image>
+
+5. Download the API key and store it securely.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/aKKAiz3_P3rNF8N6AkISA_screenshot-2026-07-09-at-25624-pm.png" size="100" isUploading="false" width="2538" height="1208" darkWidth="2538" darkHeight="1208" showCaption="false" indent="1"></Image>
+
+6. Confirm that the key appears in Global Settings > API Key Management.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5EtziHEeQ5fukvmaIH4Zm_screenshot-2026-07-09-at-25743-pm.png" size="100" isUploading="false" width="2212" height="498" darkWidth="2212" darkHeight="498" showCaption="false" indent="1"></Image>
+
+7. Go to Global Settings > Integrations.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/aEhaIpx-4QAhtg-p6xlwI_6-1.png" size="100" isUploading="false" width="1866" height="804" darkWidth="1866" darkHeight="804" showCaption="false" indent="1"></Image>
+
+8. Click + Setup Integration, then select SIEM Events Pull under SIEM.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/XPINIAq7bZ_iYTNSKDjLo_7.png" size="100" isUploading="false" width="1881" height="774" darkWidth="1881" darkHeight="774" showCaption="false" indent="1"></Image>
+
+9. Enter "default" as the configuration name, then click Next.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VV5kNKyNIf1piJqymCdPw_screenshot-2026-07-09-at-30042-pm.png" size="100" isUploading="false" width="2190" height="1012" darkWidth="2190" darkHeight="1012" showCaption="false" indent="1"></Image>
+
+10. Enable the required subscriptions and click Save.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MzKP3GRttMLeTpQ48jMhJ_screenshot-2026-07-09-at-30057-pm.png" size="100" isUploading="false" width="1606" height="1046" darkWidth="1606" darkHeight="1046" showCaption="false" indent="1"></Image>
+
+11. Confirm that the integration appears in Global Settings > Integrations.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Wgol4K1tz0arDf8GDx-Jf_screenshot-2026-07-09-at-31003-pm.png" size="100" isUploading="false" width="1396" height="606" darkWidth="1396" darkHeight="606" showCaption="false" indent="1"></Image>
+
+## Steps to verify SIEM integration:
+
+1. Click the Test icon to validate the event.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BlJiZUYFUjzkb1uQpea41_screenshot-2026-07-09-at-31013-pm.png" size="100" isUploading="false" width="1396" height="608" darkWidth="1396" darkHeight="608" showCaption="false" indent="1"></Image>
+
+2. Confirm that Alerts > Audit Trail shows events such as API key creation, SIEM Events Pull integration creation, and the test connection event.
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9-27cQh2lkqQS_7r0OI6C_screenshot-2026-07-09-at-31013-pm.png" size="100" isUploading="false" width="1396" height="608" darkWidth="1396" darkHeight="608" showCaption="false" indent="1"></Image>
+
+### API call to retrieve SIEM events:
+
+Use this call for the initial request if you do not yet have an offset.
+
+<BlockQuote>
+  curl -H "Authorization: Bearer \<api\_token>" "https\://\<nile-portal-url>/api/v1/siem/events?count=\<count-value>"
+</BlockQuote>
+
+**Response:**
+
+<BlockQuote>
+  \{"events":\[\{"time":1783499803,"event":\{"version":"1.0","id":"59be7c2b-8b7f-46e1-ad0f-e574c070dc3f","clientMac":"94\:ea:32\:b1\:df:1d","clientEventSeverity":"INFO","clientEventTimestamp":"2026-07-08T08:36:43+00:00","clientEventDescription":"Client Triggered Disassociation","connectedSsid":"Nile-Dot1x","connectedBssid":"26:15:10:2a:02:4a","connectedPort":"","connectedSwitch":"","clientUsername":"","clientLastKnownIpAddress":"NOT AVAILABLE","clientEventAdditionalDetails":\{"direction":"STA\_INITIATED"},"eventType":"end\_user\_device\_events"}}],"count":1,"lastEventOffset":"862613162606272857"}
+</BlockQuote>
+
+For subsequent requests, pass the offset (862613162606272857) of the last event returned by the previous response:
+
+<BlockQuote>
+  curl -H "Authorization: Bearer \<api\_token>" "https\://\<nile-portal-url>/api/v1/siem/events?lastEventOffset=\<**offset-value**>\&count=\<count-value>"
+</BlockQuote>
+
+- **Count**: Number of events to retrieve. Allowed values are 1 to 500. If omitted, the default value is 100.
+- **lastEventOffset**: Offset of the last event returned in the previous response. If omitted, the API returns the earliest available pull events.
+
+**Note:** Store the latest returned offset after each poll and use it in the next request to continue retrieving new events without re-reading older events.
+
+This SIEM test event was generated by clicking the **Test** icon:
+
+<BlockQuote>
+  \{"time": 1781688210, "event": \{ "test-message": true, "eventType": "test"}}
+</BlockQuote>
+

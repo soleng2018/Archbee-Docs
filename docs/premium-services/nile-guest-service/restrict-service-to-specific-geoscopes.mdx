@@ -1,0 +1,66 @@
+---
+title: Restrict Service to specific geoscopes
+slug: restrict-service-to-specific-geoscopes
+createdAt: Tue Sep 09 2025 18:43:23 GMT+0000 (Coordinated Universal Time)
+---
+
+Use Case: Why the Advanced Option Was Needed
+
+For our "Guest as a Service" offering, we provide an easy-to-setup solution where customers need only to configure the SSID and select the authentication method. This solution works well for most customers, as it automatically handles IP addresses, segmentation, and routing, with all traffic sent to the PoP and then to the Internet. The SSID is typically broadcast across all sites, making deployment simple for large-scale environments.
+
+However, some of our larger customers have specific needs. They may have different types of sites, such as carpeted office spaces versus warehouses, and want more control over where the SSID is broadcast and the type of authentication used on each site. For example, they may prefer a click-through experience at their office locations but require access code authentication at their warehouse sites.
+
+To meet these advanced requirements, we introduced a new **Advanced Mode** that provides more granular control over both the geoscopes where the SSID beacons and the type of authentication used. This gives administrators the flexibility to customize their guest access experience based on site-specific needs.
+
+### What is the Advanced Mode Feature?
+
+The **Advanced Mode** enables admins to:
+
+1. **Restrict the Guest Service to specific geoscopes** (locations).
+2. **Select different authentication types** for different geoscopes/sites.
+
+This allows customers to tailor the guest access experience by location, such as using click-through authentication at one set of sites and access codes at others.
+
+Step-by-Step Setup Guide\:Step 1: Enable Advanced Mode
+
+1. **Navigate to** Global Settings → Advanced.
+2. **Check the options** for **Guest Service Auth and Geo Control**. This will enable the advanced features for geo-restriction and authentication type selection.
+
+![](https://api.archbee.com/api/optimize/ReIIyo2IYJr1OlkiF2fUR-Mo3ZqhNnQUdbNcl8Mspx5-20250909-195924.png)
+
+Step 2: Create Guest Portals Per Geoscope
+
+1. **Navigate to** Network Setup → Authentication.
+2. **Add an Authentication Source** and select **Nile Guest**.
+3. Choose the **Authentication Type** (e.g., Click-Through or Access Code) for each site and apply the relevant **Geoscope** (location). Click **Save**.
+4. Repeat this step for any additional Authentication Types you'd like to enable for other geoscopes. Note that **a geoscope cannot have two different Auth Types**. If you try to add a second Auth Type, the previously used geoscopes will be grayed out.
+
+Step 3: Enable Guest Portals
+
+1. **Navigate to** Network Setup → Wireless → Nile Guest SSID.
+2. A toggle button for **"Guest Service Auth and Geo Control"** will appear once enabled in Step 1. **Toggle the button ON**.
+3. The default options will disappear, and a new option will appear to **select the Guest Portals**.
+4. As an admin, **select all the Guest Portals** you want to enable and click **Add**.
+5. Once added, a table will display the Guest Portals and the corresponding geoscopes they apply to.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/s8qzmKJQB6TwlLJgoRuDo_image.png)
+
+### Frequently Asked Questions
+
+**Q: We have different types of sites (carpeted space vs warehouses) and would like to have different guest Auth types for those sites. Is that possible?**
+
+**A:** Yes, this is possible. By default, Secure Guest Service is enabled everywhere, making setup easy. We are introducing an **Advanced Mode** where admins can restrict Guest Service to specific geoscopes and optionally choose different Auth types for each site.
+
+**Q: As an admin, if I have enabled guest portals on only two geoscopes, what will happen?**
+
+**A:** Nile Access Service will only be available at those two geoscopes. If you want the service on other geoscopes, you’ll need to add those geoscopes manually.
+
+**Q: As an admin, do I have to add all sites one by one?**
+
+**A:** No, Guest Portals can be aggregated using **Tags**. Tags allow you to group multiple sites. For example, you can tag all carpeted sites under an "enterprise" tag and all warehouse sites under a "retail" tag. This simplifies the process of managing guest access across large numbers of sites.
+
+**Q: Will we have the ability to revert to the default guest PoP service at all sites (i.e., the default behavior)?**
+
+**A:** Yes. To revert to the default Guest Service at all sites, first remove the mapped Guest Portals and then toggle the **"Guest Service Auth and Geo Control"** button OFF. You can then set up the Guest Service as it was originally.
+
+This new feature enhances flexibility and control for customers with complex site-specific requirements, allowing them to maintain the simplicity of the default setup while adding more granular configurations when necessary.

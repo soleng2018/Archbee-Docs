@@ -1,0 +1,37 @@
+---
+title: How to detect Rogue AP in NSB
+slug: how-to-detect-rogue-ap-in-nsb
+createdAt: Wed Jul 24 2024 20:16:19 GMT+0000 (Coordinated Universal Time)
+---
+
+Rogue APs utilize the Nile network and can spoof Nile SSID to make wireless clients to get connected to those Rogue APs. This might cause connectivity/Security issues to the end devices. 
+
+- Login to Nile Portal. [https://u1.nile-global.cloud/](https://u1.nile-global.cloud/)
+- Navigate to Nile Portal → Devices
+
+
+
+![Devices page (no rogue access points in this image)](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/s7WTNJ08TqltHAzXAUWKU_ki3sjt1msjgsklc-gefqrsmpjjnmgwwdpw.png)
+
+Nile detects these Rogue APs and will be shown in the Nile portal under "Devices" tab as shown below:
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/eVjIqXHs0Z_ReAyCyn-jg_euo9xorlwv9nz-p7hodltuhx05b5xyuq4g.png" size="56" width="670" height="476" position="center" showCaption="false"></Image>
+
+
+
+![Rogue : Rogue Access points Information and count](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/iI40xdckKqxmkNDK3F70W_sfpx5iy8c0g62ghe1hxhgalpcczevydxuq.png "Rogue : Rogue Access points Information and count")
+
+Rogue access point alerts can also be detected in Alerts page in Nile portal:
+
+- Navigate to **Nile Portal → Alerts** button **→ Alerts** tab
+- Type "rogue" in the Search tool; this restricts the listing to only detected rogue access points.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kULVJ10LDz5sc14ASaFLs_mij9qrk-thpb9diiirh-tntfhcyqkxgvng.png)
+
+To see details about the rogue access point, click on the line containing the alert.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/m9FuBYKY6AtFob0vaaeIT_18mebsbexiqemkf9okynyolcxgmo6uocpg.png)
+
+The device detail panel shows the physical Ethernet connection being used by the rogue access point.
+
+So, by tracking the device location and details, you should be able to find the rogue access points, and disconnect from the network if not needed.

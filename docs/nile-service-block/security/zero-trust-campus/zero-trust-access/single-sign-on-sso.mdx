@@ -1,0 +1,221 @@
+---
+title: Single Sign-On (SSO)
+slug: single-sign-on-sso
+createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
+---
+
+## Integrating SSO for a Zero Trust Campus
+
+The Nile Access Service is built on the principles of a "Zero Trust Campus," ensuring that no user or device is implicitly trusted. As part of this security model, the Nile Access Service supports the integration of Single Sign-On (SSO) to streamline user authentication and authorization across multiple applications and :Comment[resources]{docCommentId="U62362tZwi_Z8VCV4r9ph" resolved="false"}.
+
+By implementing SSO, organizations can leverage their existing identity providers (IdPs) to centrally manage user credentials and enforce consistent access policies. This approach aligns with the Zero Trust principle of verifying user identity or device before granting access, reducing the risk of unauthorized access and enhancing overall security.
+
+![NIle SSO Login process Diagram](https://api.archbee.com/api/optimize/x645AFhkNM_1_GWNpLhQC-qj41hmCZE3beXAHCAJW34-20240801-204612.png "NIle SSO Login process Diagram")
+
+## Why Use SSO with the Nile Access Service?
+
+The Nile Access Service's support for SSO integration offers several key benefits:
+
+1. **Improved User Experience**: SSO allows users to access multiple applications and resources with a single set of credentials, reducing password fatigue and improving productivity.
+2. **Centralized User Management**: By integrating with existing IdPs, the Nile Access Service enables organizations to manage user identities and access privileges from a central location, simplifying user provisioning and deprovisioning.
+3. **Consistent Policy Enforcement**: SSO integration ensures that access policies defined within the IdP are consistently applied across the Nile Access Service, ensuring a unified security posture.
+4. **Enhanced Security**: The Nile Access Service's SSO integration, combined with its Zero Trust principles, helps mitigate the risks of password-based authentication by verifying user identity and device posture before granting access.
+
+## Integrating Identity Providers with Nile Access Service
+
+The Nile Access Service supports integration with various identity providers (IdPs) using the SAML protocol. This allows users to authenticate to the Nile platform using their existing corporate credentials, providing a seamless single sign-on experience.
+
+The general steps to integrate an IdP with the Nile Access Service are as follows:
+
+1. **Configure the IDP Application**:
+   - Log in to the administration portal of your IdP (e.g., Azure AD, Google Workspace, Okta, OneLogin).
+   - Create a new SAML application or custom integration for the Nile Access Service.
+   - Provide the necessary configuration details, such as the Assertion Consumer Service (ACS) URL and Entity ID.
+   - Download the IdP's SAML signing certificate.
+2. **Configure the Nile Identity Provider**:
+   - Log in to the Nile Customer Portal as an administrator.
+   - Navigate to the "Settings" > "Global Settings" > "Identity" page.
+     - Click "Add a New Provider" and fill out the form with the details from the IDP configuration:
+       - IDP Issuer URI
+       - IDP SSO URL
+       - Destination URL
+     - Upload the IDP's SAML signing certificate.
+     - Configure any necessary group mapping rules to assign users to segments based on IDP group membership.
+3. **Test the SSO Integration**:
+   - Verify that users can successfully log in to the Nile Access Service using their IDP credentials.
+   - Ensure that the user is being placed in the correct segment based on your configured policies.
+
+Refer to the provider-specific integration guides for detailed steps on configuring Azure AD, Google Workspace, Okta, and OneLogin as identity providers for the Nile Access Service.
+
+## :Comment[Integrating IDP Groups with Nile Access Service]{docCommentId="ohZ4srvftAe0ltu-YxsiM" resolved="false"}
+
+When configuring the single sign-on (SSO) integration between the Nile Access Service and the customer's identity provider (IDP), such as Azure AD, the IDP group membership plays a crucial role in determining the user's access privileges.
+
+The groups are defined in the IDP. For example, in Azure AD, the administrator may have configured groups like "Admin", "Monitor", and "Guest". When a user authenticates through the IDP, the Nile Access Service receives information about the user's group membership.
+
+Nile leverages the IDP group information in the following ways:
+
+1. **Nile Cloud Services Portal Access**:
+   - If the customer wants to allow users to access the Nile Cloud Services Portal, the IDP must send the "Admin" or "Monitor" group information.
+   - Users belonging to the "Guest" group will not be able to log in to the Nile Cloud Services Portal, but they can still perform SSO for network access.
+2. **Network Access Privileges**:
+   - The Nile Access Service can use the IDP group information to assign users to the appropriate network segments and apply the corresponding access policies.
+   - For example, users in the "Admin" group may be granted access to sensitive network resources, while "Guest" users are isolated in a restricted segment.
+
+By integrating the IDP group information, the Nile Access Service can provide a seamless and secure single sign-on experience while enforcing granular access controls based on the user's role and privileges within the organization.
+
+This integration between the IDP groups and the Nile Access Service is a crucial aspect of implementing a robust zero-trust security model, ensuring that only authorized users and devices can access the appropriate network resources.
+
+## :Comment[SSO Options]{docCommentId="O5c-wDTocl1cBIZkBjmDP" resolved="false"}
+
+Once your IDP is successfully configured you are able to utilize a number of SSO powered authentication methods.
+
+### Open SSO - Wireless Only
+
+This configuration allows the creation of an open WiFi network with SSO login. A typical use case would be a network that allows employees to access the Internet on their personal devices.&#x20;
+
+To use Open SSO, follow these steps.
+
+1. **Create an Open Wireless network:**
+   - In the Nile Customer Portal, navigate to "Settings" > "Wireless".
+   - Select Open SSID type and enable the SSO option.
+2. **Connect devices to the Open SSID:**
+   1. Users can select the newly created open wireless network.
+   2. Enter SSO Login info.
+
+### :Comment[BYOD SSO]{docCommentId="QYIuj0iw00t24wCozZj5w" resolved="false"}
+
+Wireless best practices ecourage limiting the number of SSID's in air. Each beacon is like a bicycle on a freeway taking up bandwidth and slowing things down. For use cases where enterprises want to provide internet only access to employees personal devices, they can leverage this feature on an existing Guest SSID. This eliminates the need for a dedicated SSID.
+
+When a user connects to the Guest SSID, a login button is displayed at the top right hand corner of the page as seen in the screenshot below
+
+
+
+<Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ZRE9LODjzDj3PdExW0Vtc_image.png" size="80" width="1522" height="1241" position="center" caption="Nile Guest Login Page" alt="Nile Guest Login Page" showCaption="true"></Image>
+
+**Guest User Workflow -&#x20;**&#x41; guest user will fill the form and once approved will get access to the network for the duration of time defined in the SSID settings
+
+**Employee User Workflow** - An employee user will click on the login button on the top right hand corner. On clicking they will be navigated to the IDP for authentication. Once authenticated their personal device will have access to the network for a longer duration unlike guest users. These devices will be on the same segment as the guest users and all guest policies defined will be applicable.
+
+To use Open SSO, follow these steps.
+
+1. **Create an Guest Portal :**
+   - In the Nile Customer Portal, navigate to "Settings" > "Authentication".
+   - Add a guest portal and enable the SSO option.
+2. **Create an Captive Portal Wireless network:**
+   1. In the Nile Customer Portal, navigate to "Settings" > "Wireless".
+   2. Select Captive Portal SSID
+3. **Connect devices to the Open SSID:**
+   1. Users can select the newly created captive portal wireless network.
+   2. Enter SSO Login info.
+
+### PSK SSO
+
+We created this option for customers who want to use a Pre-Shared Key but do not have RADIUS. Similar to Open SSO, this method prevents any unauthorized access to the network, even if a PSK is compromized.
+
+To use PSK SSO, follow these steps.
+
+- Create PSK-SSO Segment
+  - Click the + icon to add a new segment.
+  - Give the segment a name like Employee PSK-SSO.
+  - Then, enter the 'Service Area' tab.
+  - Select the Service Area where this network will be available.
+  - Select the DHCP server from dthe dropdown list and select the appropriate subnet to be used by the segment.
+  - Click 'Save' to complete.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VvBSIQO_B74lwgriYBhxt_create-segment.png "Add a Segment")
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YzLtn0tyw_39pBQxyYL9o_create-segment-dhcp.png "Set Service Area, DHCP & Subnet")
+
+- **Create an PSK Wireless network:**
+  - In the Nile Customer Portal, navigate to "Settings" > "Wireless".
+  - Select Personal, Pre-shared Key SSID type and enable the SSO option.
+  - Select the PSK-SSO segment you created.
+  - Click 'Save' to complete.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Mg1-6ocksxkaJyxcjbfi__sso-create-psk-ssid.png "Add PSK-SSO SSID")
+
+1. **Connect devices to the PSK SSID:**
+   - Users can select the newly created PSK wireless network.
+   - Enter the PSK.
+   - Enter SSO Login info.
+
+### Unique Passphrase (UPSK) + SSO
+
+Unique Passphrase (UPSK) is a feature of the Nile Access Service that enhances the security of traditional pre-shared key (PSK) wireless networks. Unlike a typical PSK network, where a single key is shared among all devices, UPSK assigns a unique key to every authenticated user.
+
+To use UPSK, follow these steps:
+
+1. **Create a UPSK-enabled SSID**:
+   - In the Nile Customer Portal, navigate to "Settings" > "Wireless".
+   - Select the "Personal" SSID type and enable the "Enable SSO" option.
+   - Enter a pre-shared key and select the appropriate network segment.
+2. **Register Devices**:
+   - Provide users with a unique registration link, which can be obtained from the Nile Customer Portal or the my.nilesecure.com website.
+   - Users will be redirected to an SSO login page to authenticate.
+   - After successful login, users can generate a unique passphrase for their device.
+3. **Connect Devices to the UPSK SSID**:
+   - Users can connect their devices to the UPSK-enabled SSID using the generated passphrase.
+   - Alternatively, users can scan a QR code from the self-registration page to automatically connect their device.
+
+:Comment[Screenshot required: Nile UPSK User Login]{docCommentId="lw30OES7-SPQ7f9HryHNr" resolved="false"}
+
+![](http://docs.electricstreams.tv/uploads/images/gallery/2024-03/scaled-1680-/nile-upsk.png "nile_upsk.png")
+
+The UPSK feature ensures that each user and device has a unique set of credentials, enhancing the overall security of the wireless network and aligning with the Nile Access Service's zero-trust principles.
+
+For more information on configuring identity provider integration or the Unique Passphrase feature, refer to the provider-specific guides and the Nile Access Service documentation.
+
+### :Comment[Wired SSO]{docCommentId="LOKFTtTn3A4f_p5-imlI0" resolved="false"}
+
+The Nile Access Service extends its SSO capabilities to wired network access, providing a seamless and secure authentication experience for employees connecting to the corporate network.
+
+### Wired SSO Overview
+
+By default, all ports on a Nile switch are blocked. When a device connects to the wired port for the first time and is not capable of 802.1X authentication, the Nile Access Service looks up the MAC Auth table to check if the device is authorized by IT.
+
+If the device is not authorized and is identified as a common endpoint (e.g., Apple, Windows, Linux, or Chromebook), it will be assigned to an "onboarding" segment. The device will then be redirected to the customer's identity provider (IdP) portal for SSO authentication.
+
+Once the user successfully authenticates using the IdP, the device will be moved from the onboarding segment to the employee segment configured by the administrator, granting the user access to the corporate network resources.
+
+### Configuring Wired SSO
+
+To enable Wired SSO, administrators must complete the following steps:
+
+1. **Set up SAML Authentication with the IdP**: Ensure that the customer's identity provider is configured for SAML-based authentication.
+2. **Create an Onboarding Segment**: In the Nile Customer Portal, create a new network segment designated as the "onboarding" segment. This segment should be mapped to a restricted subnet, allowing only access to the IdP portal.
+3. **Identify the Employee Segment**: Determine the appropriate network segment to be assigned to authenticated employees.
+4. **Enable Wired SSO**: In the "Settings" > "Access Management" > "Wired SSO" section of the Nile Customer Portal, enable the Wired SSO feature and select the onboarding and employee segments.
+
+When the Wired SSO feature is enabled, the Nile Access Service will automatically create an "ALL" rule that applies the onboarding and employee segment assignments based on the SSO authentication status.
+
+### Wired SSO User Experience
+
+1. **Onboarding**: Devices that are not authorized in the MAC Auth table or cannot perform 802.1X authentication will be assigned to the onboarding segment. These devices will be redirected to the customer's IdP portal for SSO authentication.
+2. **Authentication**: The user will be prompted to authenticate using the corporate IdP credentials. Upon successful authentication, the device will be moved from the onboarding segment to the employee segment.
+3. **Subsequent Connections**: Once a device has been authenticated via SSO, it will be added to the MAC Auth table. Subsequent connections to the wired network will not require SSO re-authentication, as the device's MAC address will be recognized.
+
+The Wired SSO feature simplifies the onboarding process for employees connecting to the corporate network, while also enhancing the overall security posture by ensuring all wired devices are authenticated and assigned to the appropriate network segments.
+
+For more information on configuring identity provider integration or the Unique Passphrase feature, refer to the provider-specific guides and the Nile Access Service documentation.
+
+### SSO Time Out Options
+
+**Q. When does the SSO session expire for users connecting via (u)PSK, Wired, BYOD, or Open network types?**
+A. By default, the SSO session duration is set to 1 year. However, this can be customized in the Global Settings under the Identity section on the Identity Provider (IDP) page.
+Additionally, if a user does not log in to the network for 30 consecutive days, their SSO session will automatically expire regardless of the configured duration.
+
+**Q. What are the minimum and maximum session timeout values that can be configured?**
+A. The session timeout can be set to a minimum of 1 day and a maximum of 1 year.
+
+Q. **What time does the SSO session expire?**
+A. If a user logs in via SSO on January 12th at 9:30 AM, and assuming a strict 360-day expiration policy, their session would conclude on March 11th at 9:30 AM. Nonetheless, the system is designed to ensure that the session expires at 12:00 AM local time on March 11th, thereby facilitating a more predictable and less disruptive logout experience.
+
+Q. **What is "Local Time"?**
+Local time pertains to the time zone linked to the organization's location at the point of first SSO login.
+
+### Read Next
+
+:Link[Wired SSO FAQ]{label="Wired SSO FAQ" spaceId docId="__IMNQfxVKZBphQGo056V" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="single-sign-on-sso/wired-sso-faq.mdx"}
+
+:Link[MAC Authentication Bypass]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}

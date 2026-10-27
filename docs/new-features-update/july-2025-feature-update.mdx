@@ -1,0 +1,580 @@
+---
+title: July 2025 Feature Update
+slug: july-2025-feature-update
+createdAt: Mon Jul 28 2025 21:36:11 GMT+0000 (Coordinated Universal Time)
+---
+
+As we celebrate our debut as a Visionary in the 2025 Gartner Magic Quadrant for Wired and Wireless LAN Infrastructure, we are proud to announce new capabilities that further advance our mission of delivering secure, autonomous networking. These enhancements reinforce our commitment to Campus Zero Trust for built-in security and AI Automation to drive Day 0/1 to Day N operational efficiency powered by Nile Experience Intelligence (NXI).
+
+### Campus Zero Trust Security Enhancements
+
+
+
+<table isTableHeaderOn="true" columnWidths="51">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Feature/Capability**
+    </td>
+    <td>
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Trust Service
+      <Paragraph>
+        *Seamless Integration of Nile Trust Service with Palo Alto Prisma (SSE)*
+      </Paragraph>
+    </td>
+    <td>
+      Nile now supports seamless integration with **Palo Alto Networks Prisma SSE**, enabling direct traffic forwarding from the **Nile Service Block (NSB)** to Prisma for cloud-delivered security inspection—without requiring external routers or manual tunnel configuration.
+      <Paragraph>
+        Administrators simply enter Prisma account credentials into the **Nile Control Center**, and Nile automates the entire process—establishing secure, resilient IPSec tunnels and managing SSE connectivity as a service.
+      </Paragraph>
+      <Paragraph>
+        Traffic steering is policy-based, allowing selective forwarding to Prisma SSE based on segment. For example, organizations can exclude guest traffic from inspection to optimize cost and performance.
+      </Paragraph>
+      <Paragraph>
+        The integration is built on Nile’s resilient architecture, with automatic failover to ensure continuous, secure access.
+      </Paragraph>
+    </td>
+    <td>
+      As organizations move toward universal Zero Trust—encompassing every user (employee, guest, contractor) and every device (IT, OT, IoT), whether remote or on-site—they require consistent SSE policy enforcement across all access scenarios. This integration enables exactly that: applying Prisma SSE policies not only to remote users, but also to traffic originating from office-based users and devices.
+      <Paragraph>
+        Key Benefits
+      </Paragraph>
+      <Paragraph>
+        **Consistent Policy Enforcement:&#x20;**&#x45;xtend Prisma SSE protection to on-site users and connected devices, including IoT and OT systems. **Automated Connectivity:** Nile automatically establishes resilient IPSec tunnels from the Nile Service Block (NSB) to Prisma SSE, eliminating the need for external routers or manual configuration. **Built-in Resiliency:** Traffic is automatically rerouted to alternate Prisma nodes in the event of an SSE endpoint failure, ensuring uninterrupted service. **Policy-Based Traffic Steering:** Flexibly forward only selected segmented traffic to SSE for inspection. For example, employee traffic can be forwarded to SSE, but guest traffic can bypass SSE to reduce inspection load and cost. **Simple Management:** Admins simply enter Prisma credentials in the Nile Control Center. The rest—from tunnel setup to ongoing management—is fully automated.
+      </Paragraph>
+      <Paragraph>
+        Ideal for organizations looking to adopt cloud-delivered security with minimal setup, reduced operational overhead, and maximum reliability.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Access Service
+      <Paragraph>
+        *Standardized SIEM Integration: Streamlined Security & Compliance Visibility*
+      </Paragraph>
+    </td>
+    <td>
+      Unified and standardized event formats across all Nile system components for easier ingestion and analysis by third-party SIEM platforms. All events now follow a **standard schema**, simplifying parsing and ingestion by SIEM platforms. Supported event categories include:
+      - Alerts (from policy violations, threat detections, etc.)
+      - Audit Logs (admin and user actions, config changes)
+      - Client Events (associations, authentications, disconnects, roaming, etc.)
+      <Paragraph>
+        Each event type includes **clear identifiers, timestamps, and metadata** for effective search and correlation Helps unify **security operations and network observability**, reducing the time and effort to detect and respond to anomalies
+      </Paragraph>
+    </td>
+    <td>
+      This enables IT teams to do a&#x20;
+      - Faster incident response through easier correlation across user activity, network events, and security alerts
+      - Improved compliance readiness with centralized, audit-friendly logs
+      - Reduced SIEM integration complexity via clean, machine-readable event formats
+      - Accelerated root cause analysis with consistent, structured event data.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Trust Service&#x20;
+      <Paragraph>
+        *Easily forward rule logs to SIEMs*
+      </Paragraph>
+    </td>
+    <td>
+      This feature allows customers to **detect and respond to threats using their existing security operations infrastructure**. This is beneficial for audit/compliance reporting using their existing SIEMs.&#x20;
+    </td>
+    <td>
+      IT admins ca&#x6E;**&#x20;forward Trust Engine rule logs to their SIEM platform** (e.g., Splunk).&#x20;
+      <Paragraph>
+        This option is available in the SIEM integration settings within the Nile Control Center. A checkbox labeled “Send Trust Engine Rule Logs” is added. Once selected, the system will automatically stream all rule logs (both allow and deny actions) from the Trust Engine to the configured SIEM
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Nile Trust Service
+      <Paragraph>
+        *Easily track client authentication source&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      This feature ensures that the Mac Auth table (previously the MAB Table) accurately **displays the current authentication source of clients** using 802.1X and Mac Authentication, not just their initial classification.&#x20;
+      <Paragraph>
+        The segment and auth source shown in the table reflect the current authentication state, such as:
+      </Paragraph>
+      1. Dot1X AppAuthroved
+      2. Mac Auth Approved
+      3. Manual Admin Approved
+      4. Rule based approval (OUI/MAC/Fingerprint)
+      5. SSO based approval
+    </td>
+    <td>
+      The benefit is for IT administrators to **view and track how clients were onboarded especially** when diagnosing authentication issues.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Trust Service&#x20;
+      <Paragraph>
+        *Advanced filtering and sorting*
+      </Paragraph>
+    </td>
+    <td>
+      The feature enhances the MAC Auth page with powerful **filtering and sorting capabilities across all columns of the MAC Auth table**. The simple search capability is also available.&#x20;
+    </td>
+    <td>
+      1. Saves time by eliminating the need to scroll down to find devices by site or MAC.
+      2. Improve accuracy by helping admins validate access and status quickly.
+      3. Quickly **find clients by relevance, location, or status.**&#x20;
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+### Day N - Operational Efficiency Enhancements
+
+<table isTableHeaderOn="true" columnWidths="51">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Feature/Capability**
+    </td>
+    <td>
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1\.
+    </td>
+    <td>
+      Nile Access Service&#x20;
+      <Paragraph>
+        *AP and client contextual visibility&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      IT administrators now have better visibility into which clients are connected to each Access Point (AP) and they ca&#x6E;**&#x20;visually locate APs on a floor map** with a simple click. It streamlines troubleshooting, validation, and physical navigation during IT incidents.
+      <Paragraph>
+        The AP details page displays a list of currently **connected clients, including relevant metadata (e.g., client name, MAC, IP, device type, signal strength).&#x20;**&#x54;his appears in the device page for the AP and Nile Inventory Page when viewing AP details.
+      </Paragraph>
+      <Paragraph>
+        The AP location (Site / Building / Floor) in the AP details page is clickable and opens the floor map view. It also highlights the AP’s physical location on that floor.
+      </Paragraph>
+    </td>
+    <td>
+      This capability enables:
+      - Faster troubleshooting of client issues by showing contextual client & AP information
+      - Smarter decision-making through map-based AP identification and enhances situational awareness in large, distributed, or multi-floor environments
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Access Service -
+      <Paragraph>
+        Roam and Connectivity Visibility- Diagnose and Fix Problematic Roaming Events
+      </Paragraph>
+    </td>
+    <td>
+      New *Roam Status* visibility in the Nile Control Center enables IT teams to quickly identify and troubleshoot poor roaming behavior—without digging through raw logs.
+      <Paragraph>
+        New **"Roam Status" column** flags roaming events as either:
+      </Paragraph>
+      - Good Roam
+      - Bad Roam, based on:
+      <Paragraph>
+        **Timestamps** allow correlation with reported issues or service degradation&#x20;
+      </Paragraph>
+      <Paragraph>
+        **Origin and Destination APs** are displayed to visualize handoff paths and identify coverage gaps&#x20;
+      </Paragraph>
+      <Paragraph>
+        Designed to help IT teams **focus only on problematic roams**, eliminating the need to parse low-level telemetry
+      </Paragraph>
+    </td>
+    <td>
+      This capability allows IT teams to
+      - Improve end-user experience by pinpointing latency, connectivity issues, dropouts, or slow handoffs during roaming.
+      - Accelerate root cause analysis of roaming-related performance issues
+      - Highlight only problematic events, saving IT time and reducing noise
+      - Correlate roaming issues with user complaints or app performance disruptions
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Access Service&#x20;
+      <Paragraph>
+        *Monitor All Connected Devices and Their Power Consumption*
+      </Paragraph>
+    </td>
+    <td>
+      Under Switch Monitor Page, Customers can visualize all directly connected devices and the POE drawn by each device. In the Switch Monitor page, customers can now view:
+      - All directly connected devices
+      - Individual PoE draw per device
+      - Overall switch-level PoE utilization
+      - This feature gives IT teams deeper control and insight—without the need for manual audits or third-party tools.&#x20;
+    </td>
+    <td>
+      Customers can now monitor all devices directly connected to a Nile switch—along with real-time visibility into PoE power draw per device.
+      <Paragraph>
+        Nile continues to enhance visibility across the network edge—supporting end-user devices, IT assets, OT endpoints, and IoT sensors. This capability makes it easier to:
+      </Paragraph>
+      - Troubleshoot device-specific connectivity or performance issues
+      - Understand total PoE consumption across ports
+      <Paragraph>
+        Plan capacity for future PoE-enabled devices by knowing available power at a glance
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4\.
+    </td>
+    <td>
+      Nile Alerts
+      <Paragraph>
+        *Real-Time Notifications for Frontline Teams*
+      </Paragraph>
+    </td>
+    <td>
+      Email and SMS-based alert subscriptions for Helpdesk and Monitor users—enabling faster awareness and response to critical network events without requiring admin access.
+      <Paragraph>
+        Monitor-role and Helpdesk users can now subscribe to alerts in Nile Control Center. Alerts cover critical events such as internet outages, device failures, and policy violations&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      Ensures **timely and actionable insights** reach the right people without requiring full admin privileges. Helps organizations **streamline their incident response workflow** and reduce meantime-to-resolution
+      <Paragraph>
+        **Benefits**
+      </Paragraph>
+      - Speeds up incident detection and resolution by notifying frontline teams in real time
+      - Empowers non-admin users (like Helpdesk) to stay informed and act faster
+      - Supports proactive troubleshooting before issues escalate
+      - Customizable alert delivery via email or SMS, based on user preference
+      <Paragraph>
+        Improves communicatio&#x6E;**&#x20;flow** across IT support tiers without over-relying on admins
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Alerts
+      <Paragraph>
+        *Real time SMS Internet Down event&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      The feature provides **SMS-based alerts for Internet Down events**. This initial rollout is limited to recipients in the U.S. and focused solely on connectivity loss between the Nile Service Block (NSB) and the Internet.
+      <Paragraph>
+        Nile sends a text message (SMS) to subscribed users when an Internet Down event is detected or resolved. Ensures Helpdesk and Monitor roles in the U.S. are promptly notified, even when not actively logged into the portal. There are two alert types:
+      </Paragraph>
+      - \[OPEN]: Indicates the issue has been detected and is ongoing.
+      - \[CLOSED]: Indicates the issue has been resolved.
+    </td>
+    <td>
+      **Reducing mean-time-to-repair (MTTR)&#x20;**&#x62;y providing real-time (SMS) awareness of critical connectivity issues such as internet down.
+    </td>
+  </tr>
+</table>
+
+
+
+### Guest Service Enhancements
+
+<table isTableHeaderOn="true" columnWidths="54">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Feature/Capability**
+    </td>
+    <td>
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Guest Service
+      <Paragraph>
+        *Hassle-Free Visitor Wi-Fi with Shared Passcodes*
+      </Paragraph>
+    </td>
+    <td>
+      Simplified guest onboarding through a **shared passcode system**, allowing visitors to self-register for internet access—no manual approvals required.
+      <Paragraph>
+        **Feature Details**
+      </Paragraph>
+      - IT admins create and publish a guest Wi-Fi passcode via the Nile Control Center
+      - Passcodes can be configured with custom expiration windows or set to never expire
+      - Visitors are redirected to the Nile Guest Service Landing Page, where they enter the shared passcode to gain access
+      - Passcodes can be revoked or rotated at any time for added control
+      - Designed to support large groups of rotating guests with minimal operational friction
+    </td>
+    <td>
+      **Reducing mean-time-to-repair (MTTR)&#x20;**&#x62;y providing real-time (SMS) awareness of critical connectivity issues such as internet down.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2\.
+    </td>
+    <td>
+      Nile Guest Service
+      <Paragraph>
+        *Custom portal branding&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      Nile now support&#x73;**&#x20;customization of the Guest Portal (Splash Page)**, allowing enterprises to tailor the guest Wi-Fi access experience to reflect their corporate branding, messaging, and user expectations. Admins can access the Guest Portal customization settings via Nile Control Center, where they can:
+      - Select layout options
+      - Upload logos and images
+      - Configure text fields and branding
+      <Paragraph>
+        The portal can be previewed before publishing.
+      </Paragraph>
+    </td>
+    <td>
+      Benefits are:
+      - Enhances guest experience by presenting a seamless, branded guest user portal.
+      - Align the portal with the company’s identity.
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+### Nile Nav - Day 0/1 Operational Efficiency Enhancements
+
+<table isTableHeaderOn="true" columnWidths="57">
+  <tr>
+    <td>
+      **#**
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Feature/Capability**
+    </td>
+    <td>
+      **Outcome**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      1
+    </td>
+    <td>
+      Nile Nav
+      <Paragraph>
+        *Smarter Navigation, Faster Deployments*.
+      </Paragraph>
+    </td>
+    <td>
+      This feature enhances **Switch Closet Navigation** with:
+      - Floor-aware closet search with filters and sticky headers
+      - Floating Action Button for quick actions
+      - Clear display of floor IDs, closet counts, and location details
+      <Paragraph>
+        Improves **NSB Gateway Configuration**:
+      </Paragraph>
+      - Streamlined UI with real-time validation
+      - Visual alerts for incomplete or incorrect setup
+      - Integrated NSB checks for device readiness
+      <Paragraph>
+        Smarter **Device Management**:
+      </Paragraph>
+      - Context menu for actions: Activate, Deactivate, Troubleshoot
+      - Refined map experience with improved zooming and loading
+      <Paragraph>
+        New *Device Status Carousel* and "View on Map" option for quick visual location
+      </Paragraph>
+    </td>
+    <td>
+      A redesigned Nile Nav experience that simplifies device installation, improves floor-level visibility, and reduces deployment errors—especially in complex, multi-floor environments.
+      - Streamlined installer workflow with fewer configuration steps and better visual feedback
+      - Faster search and access of devices map-based device views, and in-place actions
+      - Reduced operational overhead for admins managing large campuses or distributed sites
+      - Fewer errors and faster deployments with improved NSB Gateway activation and validation
+    </td>
+  </tr>
+  <tr>
+    <td>
+      2
+    </td>
+    <td>
+      Nile Nav
+      <Paragraph>
+        *Factory Reset - Simpler and faster Installations.*
+      </Paragraph>
+    </td>
+    <td>
+      **Feature Details**
+      - End-to-end factory reset support directly from the Nile Installer interface
+      - Real-time progress tracking, with success/failure notifications and retry capability
+      - Tightly integrated with device activation, deactivation, and reporting workflows
+      - Streamlined UI designed specifically for installation teams, reducing manual overhead
+    </td>
+    <td>
+      Adds full factory reset support for Nile devices—making it easier for installers to reset devices to a clean firmware state with clear status feedback and retry options.
+      <Paragraph>
+        **Benefits for Installers**
+      </Paragraph>
+      - Simplifies installation workflows by enabling clean reset before bring-up
+      - Reduces onboarding issues caused by misconfigured or partially provisioned devices
+      - Increases first-time success rates for device activation during setup
+      <Paragraph>
+        **Gives clear visibility and control** with guided actions and real-time feedback
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      3
+    </td>
+    <td>
+      Nile Nav&#x20;
+      <Paragraph>
+        *Seamless Deployment Scaling&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      **Feature details:**
+      - Smarter Pagination: The Job Feed now loads data in smaller, more efficient increments, allowing for quicker page loads and smoother transitions between pages.
+      - Asynchronous Processing: Intensive backend tasks are shifted to background processes, significantly reducing UI lag and freeing the interface to remain interactive during heavy operations.
+    </td>
+    <td>
+      Delivers a **faster user experience, especially when working with large volumes of data.** It delivers faster page loads, improved performance at scale, and a more responsive interface, allowing users to navigate and manage jobs with less waiting and fewer interruptions.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      4
+    </td>
+    <td>
+      Nile Nav
+      <Paragraph>
+        *Site Discovery with Wired Survey*
+      </Paragraph>
+    </td>
+    <td>
+      **Automated Site Discovery**
+      - Automates the entire site discovery process through intelligent, guided workflows.
+      - Provides a user-friendly, intuitive interface to assist users—regardless of experience level—through each step of documentation.
+      <Paragraph>
+        **Asset and Infrastructure Data Capture**
+      </Paragraph>
+      <Paragraph>
+        Streamlines collection of key physical infrastructure details, including:
+      </Paragraph>
+      - Closets, racks, and rack units
+      - Essential assets like switches, patch panels, and UPS devices
+      - Coverage at both building and floor levels
+      <Paragraph>
+        Captures structured, standardized data for each asset to ensure consistency and accuracy. Precisely logs critical details, such as:
+      </Paragraph>
+      - Device types and models
+      - Port counts and assignments
+      - Physical locations within buildings and floors
+      - Connectivity and cabling information
+      <Paragraph>
+        **Rich Digital Documentation**
+      </Paragraph>
+      - Integrates tools for effortless photo uploads and in-field note taking.
+      - Supports thorough, real-time documentation to prevent omissions and provide critical context.
+      <Paragraph>
+        **Data Organization and Accessibility**
+      </Paragraph>
+      - Centralizes and organizes all captured data, making it instantly accessible for review, validation, and future reference.
+      - Reduces the risk of human error, omissions, and duplication for more reliable, complete records.
+    </td>
+    <td>
+      Nile Nav Site Discovery & Automation gives organizations higher accuracy and quickly manages wired infrastructure data—delivering BOM automation.&#x20;
+      - Highly accurate, up-to-date asset records are maintained through automated and structured data capture that automates BOM generation.
+      - Seamless scaling across multiple buildings and networks ensures documentation stays consistent and reliable as infrastructure grows.
+      - Comprehensive digital twin creation enables faster network planning, troubleshooting, and informed decision-making.
+      - Streamlined site surveys and documentation tasks reduce manual effort, accelerate deployments, and free staff for higher-value work.
+      <Paragraph>
+        Simplified compliance and auditing is achieved with standardized, always-accessible documentation that fulfills regulatory and operational needs.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      5
+    </td>
+    <td>
+      Nile Nav&#x20;
+      <Paragraph>
+        *Site Discovery with Wireless Survey&#x20;*
+      </Paragraph>
+    </td>
+    <td>
+      The **step-by-step, browser-based workflow feature** transforms how wireless network designs are captured, documented, and validated. Key capabilities include:
+      - Seamless upload and integration of floor plans, enabling accurate site mapping from the start.
+      - Structured entry of key design information—floor layouts, environmental attributes, and essential RF parameters—ensuring all critical details are routinely gathered.
+      - Ekahau file support, allowing direct import of antenna placements, RF requirements, and predictive models to streamline predictive survey workflows.
+      - Contextual guidance through every design step, covering analysis of coverage zones, user density, interference sources, and application requirements.
+      - Integrated data validation and input prompts, helping users avoid omissions and ensure every design is rooted in usage and performance principles.
+      - Real-time capture and organization of all wireless requirements in a single workflow for auditability, review, and generating optimized BOM.
+    </td>
+    <td>
+      The automated wireless design process for network planning and deployment offer&#x73;**:**
+      - Streamlined workflows and automated design steps, accelerating delivery from initial survey to deployment.
+      - More accurate alignment with real-world coverage, density, and performance needs ensures the wireless network design delivers optimal user experience and resource utilization.
+      <Paragraph>
+        Reduced design errors are realized by leveraging data-driven tools and intelligent validation, minimizing costly rework and troubleshooting.
+      </Paragraph>
+    </td>
+  </tr>
+</table>
+

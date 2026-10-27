@@ -1,0 +1,80 @@
+---
+title: What is AQI (Air Quality Index) and how is it calculated?
+
+
+What is AQI (Air Quality Index) and how is it calculated? (cloned)
+slug: what-is-aqi-air-quality-index-and-how-is-it-calculated-what-is-aqi-air-quality-index-and-how-is-it-calculated-cloned
+createdAt: Fri Dec 06 2024 00:18:06 GMT+0000 (Coordinated Universal Time)
+---
+
+
+AQI indicates WiFi health within an AP's cell, as indicated by a scale from 0 (unusable) to 100 (perfect). Airtime utilization shows how much of the access point airtime is being utilized by the clients that are associated to it.  
+
+There could be many reasons why the AQI is impacted.  Some reasons are high utilization of the AP channel, clients using a slow data rate, co-channel or adjacent channel interference, or nearby non-802.11 wifi devices like Bluetooth devices, wireless video cameras, or outdoor microwave links. The AP itself has a channel switching mechanism to move out of the operating channel if the noise is in the channel is high.
+
+If we receive an AQI Alert we can check what is causing the AQI to be poor. Is it Noise, OBSS load, or non-wifi interference? We can't do much for bursty noise and non-wifi interference. Since the 2.4 GHz band generally has more interference and congestion using the 5GHz band can help clients avoid interference, increasing the overall performance of the network. 
+
+We use the following parameters to calculate the AQI: self-chan-util, noise-floor, channel-load, obss-chan-util, total-rx-chan-util, total-chan-free, total-tx-chan-util, and total-non-wifi-util. Definitions of these parameters are at the bottom of the article.
+
+**Example of Bad AQI**
+
+As you can see from the below screenshot. here the AQI is dropped to 0 which is below the threshold value 35, and this will generate alerts on Nile Portal saying AQI is impacted for 2 mins /3 mins
+
+
+![Bad AQI](https://lh7-rt.googleusercontent.com/docsz/AD_4nXdJ0cHM55Y8VFAC1mJfxozhV-gyWy9U3-KclBjkJcBcsoy1FsMKS_OrzZkjWCddXgl6aNaTn5HY8gSs-s4NRyy_hg-cK-pQZNJLjOpwECmEVtU8AhpPiC31K0eWyqGsZ5nmtkv5og?key=97CEeEoKhBiLodjj6j0y-irP "Bad AQI")
+
+
+
+**Example of Good AQI&#x20;**
+
+Here as you see AQI is above 35 and marked as 98 which indicates that the air quality is good and that no issues are ongoing with the APs
+
+Nile Portal: AQI Statistics
+
+![ AQI Statistics](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfUMX2nd-i657vJg2KavB0Ut28OTjMwYnadMZvkVtCco0X6ZwXtjndgOorFegaHKdMyQmgGZ3oR9cE9KePimQwSnvu--m8N5yLt2Dn1iAhllfz1UZkvKTDa6vT1FKHWGBtUxjh1IA?key=97CEeEoKhBiLodjj6j0y-irP " AQI Statistics")
+
+**How to check the AQI alerts from the Nile portal in detail:**
+
+1. Click on the Air quality tile under infrastructure. Select the respective building in Red
+
+![Air Quality Status ](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfo1wRdkLkp3ZG99tvGeTJtpYXdo8RHLRyrCEwKsC-22fz5lTJosVd5B-jrN7Jb6YmUzZiohVepE2PKLfiCQP0UUWj-xI1cuxh6pBXEkoFSzthg02rgJLKTyitUotXjelR_At6I?key=97CEeEoKhBiLodjj6j0y-irP "Air Quality Status ")
+
+2\. This will list out all the air quality-related events on the bottom right of the page 
+
+![AQI events](https://lh7-rt.googleusercontent.com/docsz/AD_4nXdv282T3wAXKzYXF6AClzjxP1k09I1YtthEZcT_VUAPHDLdIrFhcMxKdPehEYpeLQ60XfVN_SrMjcDMkY94-iQzAND3HQzDjSVtoRLRjH7s32vGvcd_gPCp0cHte_1e3l81KtoIOg?key=97CEeEoKhBiLodjj6j0y-irP "Nile Portal ")
+
+3\. Check for the detailed view of AQI with the respective time/location
+
+
+![Detail view of AQI ](https://lh7-rt.googleusercontent.com/docsz/AD_4nXftfYQeneoRHh0AtS-bdGEfyjZPSTKmmqgtehNyPS4vVL2PV_MEGvq0lH9tHj85IM6qPoh6h5waLR8F__QjRTQ-Gd4SMCsGKseU2hRyT_pHV3yCYEWrLyXmYd0LL-_vpEBYYG1Y?key=97CEeEoKhBiLodjj6j0y-irP "Detail view of AQI ")
+
+
+4.Select the time slot 
+
+![AQI measuring time Slot](https://lh7-rt.googleusercontent.com/docsz/AD_4nXcB3v92uZ1kR7g-rea4aZ81-e7A-shP8o2cfdb94tm8JbKsfAJGXbGdZzk5UlHVGAH4TndFBpXCiSpNEl-l7fMIq1trr3KARCe0Jt98wycGvZq9-o3jeMbwSUyR3jllKA970gVNTA?key=97CEeEoKhBiLodjj6j0y-irP "AQI measuring time Slot")
+
+5\. Click on the Red circle in the map which indicates the AP that has generated bad AQI
+
+
+
+![measuring BAD AQI causing AP ](https://lh7-rt.googleusercontent.com/docsz/AD_4nXdjWRTDShZWDXSeeHBIxRYKj7RUf1mAaKb_yPd7IkJ8A4xbJjpaUrPvBhYK8nMDpTw3Ei4UuOrNeNfPzkSNhmjIqr9YWxMrBmiYuKiKBV9bk9hDgEfdCcg8kzsAg0GXF1iaCnEA?key=97CEeEoKhBiLodjj6j0y-irP "Nile Portal")
+
+6\. We should be seeing the threshold and AQI values for the respective time frame
+
+
+
+![](https://lh7-rt.googleusercontent.com/docsz/AD_4nXfgwpkUSVMmLP85NepFlABRVtPXbsHeAmNVOgYEc25zADPJ9nkvWAigIF6d3jnVhsONtUyfHbAXI62-10vE1ojHi0UxILyiFkycZzSPeVkpVcuD_h2mokvBViN9jrZR-btv_bXR?key=97CEeEoKhBiLodjj6j0y-irP "Nile Portal")
+
+ 
+
+**Definitions of AQI calculation parameters&#xA0;**
+
+- Self-chan-util:  Self-channel-util will be the sum of total-tx-chan-util and total-rx-chan-util. 
+- Noise-floor: The Noise Floor is the signal created from adding up all the unwanted signals within a measurement system.
+- channel-load: the percentage of the channel usage in time.
+- obss-chan-util: obss-chan-util reflects the co-channel wifi interference seen in the current channel. 
+- total-rx-chan-util: Rx utilization is the percent of radio channel utilization in RX, receive traffic from client.
+- total-chan-free: Percentage of radio channels that are free for transmission.
+- total-tx-chan-util: tx channel utilization is the percent of radio channel utilization in Tx, sent traffic from AP.
+- total-non-wifi-util: Total-non-wifi-util reflects the non-wifi channel utilization seen in the channel which is the sum of non-wifi interference and adj. channel interference seen in the current channel
+

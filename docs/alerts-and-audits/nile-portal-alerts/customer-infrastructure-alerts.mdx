@@ -1,0 +1,278 @@
+---
+title: Customer Infrastructure Alerts
+slug: customer-infrastructure-alerts
+createdAt: Tue Jul 23 2024 19:47:31 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Alerts for customer owned infrastructure raise awareness about the following:
+
+1. Radius Server Availability & experience
+2. DNS Server Availability & experience
+3. DHCP Server Availability & experience
+4. Internet availability and experience
+
+Below is the list of alerts raised in the Nile Portal for customer owned infrastructure.
+
+***
+
+## RADIUS Server Availability - Site Level
+
+This alert is generated when a RADIUS server serving a specific customer site is unavailable.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *RADIUS server with IP address 1.2.3.4 is unreachable from site Bangalore for 1 minute.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Use Run Test in the Nile Portal device details page to test whether Radius server is reachable from the device subnets.
+      • Check for any firewall rules blocking radius server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## RADIUS Server Availability - Customer Level
+
+This alert is generated when a RADIUS server serving ALL sites of a customer is unavailable.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Radius server with IP address 10.129.1.165 is unreachable for 3 minutes. All sites utilizing Radius server are impacted.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Verify that the RADIUS server at the indicated address is up and running, and no cable is unplugged or damaged.
+      • Use Run Test in the Nile Portal device details page to test whether Radius server is reachable from the device subnets.
+      • Check for any firewall rules blocking radius server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## RADIUS Server certificate expiry
+
+This alert is generated when the certificate in RADIUS server is about to expire.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *RADIUS certificate for server 1.2.3.4 expiring in 20 days on 01:13:24. Please update the RADIUS server certificate before it expires to avoid failed authentication for end user devices.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Update the RADIUS server certificate before it expires.
+    </td>
+  </tr>
+</table>
+
+***
+
+## Internet Availability
+
+This alert is generated when Nile Service Block is unable to reach Nile Cloud Services.&#x20;
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *Nile Service Block has lost power or internet and is not reachable from the Nile cloud at site Bangalore for 20 minutes.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Check the power at the Nile equipment
+      • Verify the cables are plugged into the upstream router, and that the cables are undamaged.
+      • Check the site's internet connectivity.
+    </td>
+  </tr>
+</table>
+
+***
+
+## DNS Availability - Site Level
+
+This alert is generated when a DNS server is unavailable from a site.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *DNS server with IP address 1.2.3.4 is unreachable from site Bangalore for 5 minutes.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Use run test in the Nile Portal device details page to test whether DNS server is reachable from the device subnets.
+      • Check for any firewall rules blocking DNS server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## DNS Availability - Customer Level
+
+This alert is generated when a DNS server is unavailable from ALL sites of a customer.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *DNS server with IP address 1.2.3.4 is unreachable for 10 minutes. All sites utilizing DNS server are impacted.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Check for any firewall rules blocking DNS server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## DHCP Availability - Site Level
+
+This alert is generated when a DHCP server is unavailable from a site.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      *DHCP service with IP address 1.2.3.4 is unreachable from site Bangalore for 10 hours.*
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Use run test in Nile Portal device details page to test whether DHCP server is reachable from the device subnets.
+      • Check for any firewall rules blocking DHCP server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## DHCP Availability - Customer Level
+
+This alert is generated when a DHCP server is unavailable from ALL sites of a customer.
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      DHCP server with IP address 10.129.1.165 is unreachable for 3 minutes. All sites utilizing DHCP server are impacted.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      • Use run test in Nile Portal device details page to test whether DHCP server is reachable from the device subnets.
+      • Check for any firewall rules blocking DHCP server access from the device subnets
+    </td>
+  </tr>
+</table>
+
+***
+
+## AQI Violation
+
+AQI measures the "quality" of the WiFi medium as detected by the Nile sensors. An alert is generated when the AQI falls below the expected threshold.
+
+***Note****: If overall channel utilization is high due to low Wi-Fi AQI, the Access Point (AP) will automatically switch to a better channel.*
+
+- If the air quality deteriorates due to channel load, the most likely root cause is Wifi interference from external access points.
+
+<table isTableHeaderOn="true" columnWidths="233">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Poor WiFi Air Quality detected due to WiFi interference from external access points at Bangalore/Bldg\_1/Floor\_1 for 10 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      •  Please check the area for any external access points or devices that could be causing WiFi interference, such as nearby routers.
+      *Note: AQI is only applicable to the 5GHz radio band.*
+    </td>
+  </tr>
+</table>
+
+- If the air quality deteriorates due to noise-floor, the most likely root cause is external non-wifi source of interference. 
+
+<table isTableHeaderOn="true" columnWidths="239">
+  <tr>
+    <td align="left">
+      Example Alert
+    </td>
+    <td align="left">
+      Poor WiFi Air Quality detected due to interference from external non-WiFi source at Bangalore/Bldg\_1/Floor\_1 for 8 minutes.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Recommended Customer Action
+    </td>
+    <td align="left">
+      •  Please check the area for any non-WiFi devices that may be causing interference, such as cordless phones, non-Wi-Fi compliant wireless security cameras, or other types of wireless equipment that generate continuous signals within the Wi-Fi frequency bands.
+    </td>
+  </tr>
+</table>
+
+***
+

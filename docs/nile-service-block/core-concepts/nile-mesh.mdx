@@ -1,0 +1,307 @@
+---
+title: Nile Mesh
+slug: nile-mesh
+createdAt: Mon Mar 02 2026 10:08:23 GMT+0000 (Coordinated Universal Time)
+---
+
+## 1. Overview
+
+**Nile Mesh** lets you extend Wi‑Fi coverage using wireless backhaul instead of running Ethernet to every access point (AP). It is ideal for:
+
+- Outdoor areas (parking lots, plazas, walkways)
+- Large campuses and warehouses
+- Temporary spaces and events
+- Locations where cabling is difficult or costly
+
+In a Nile Mesh deployment:
+
+- One or more **Root APs** are wired to the network switch and Nile Service Block.
+- One or more **Mesh APs (Mesh Points)** connect wirelessly to a Root AP and serve client SSIDs, just like wired APs.
+
+Nile Mesh is designed to:
+
+- Preserve end‑user experience and throughput
+- Maintain centralized visibility and control in the Nile Portal
+- Integrate with the existing Nile Access Service (no separate controllers or overlays)
+
+## 2. Core Concepts
+
+### 2.1 Roles in a Mesh Network
+
+**Root AP**
+
+- Has a **wired Ethernet** connection to a Nile access switch.
+- Acts as the **anchor** for Mesh AP.
+- Provides both:
+  - **Client access** (user SSIDs)
+  - **Wireless backhaul** to Mesh AP.
+
+**Mesh AP (Mesh Point)**
+
+- Has **no wired uplink** in steady state (powered typically by PoE).
+- Connects wirelessly to a Root AP using the mesh uplink.
+- Serves the **same user SSIDs** as wired APs, so clients see a single, unified WLAN.
+
+<BlockQuote>
+  From the client’s perspective, a Mesh AP behaves like any other Nile AP; the mesh backhaul is transparent.
+</BlockQuote>
+
+## 3. When to Use Nile Mesh
+
+Use Nile Mesh when:
+
+- You need coverage **beyond the wired footprint** of your switches.
+- Pulling cable is **costly, disruptive, or impractical**.
+- You want to quickly expand coverage to:
+  - Parking areas and outdoor seating
+  - New wings or temporary buildings
+  - Remote corners of large facilities
+
+Mesh is **not** meant to replace:
+
+- Traditional high‑capacity, fully wired indoor deployments
+- Long‑distance point‑to‑point wireless bridges between buildings
+
+Think of Mesh as a **short‑to‑medium distance extension** of your existing Nile Access Service, with careful RF planning.
+
+## 4. High‑Level Architecture
+
+At a high level, Nile Mesh works as follows:
+
+1. **Root APs** are wired to the Nile access switch and Nile Service Block.
+2. **Mesh APs** use a dedicated internal uplink radio to connect back to Root APs over Wi‑Fi.
+3. Mesh APs receive:
+   - A **management IP** like any other AP.
+   - The required information to reach Nile Cloud (headends, cloud services).
+4. **Client traffic**:
+   - From a client on a Mesh AP is encapsulated and carried over the wireless mesh link.
+   - Traverses the wired network to the Nile Service Block, just as if it originated on a wired AP.
+5. **Control and visibility**:
+   - All Mesh and Root APs continue to be managed via Nile Portal: topology, health, alerts, and upgrades remain fully centralized.
+
+The system ensures:
+
+- Bidirectional IP reachability between Mesh APs, Root APs, and the Nile Service Block.
+- Automatic path updates when Mesh APs move (roam) between Root APs.
+
+## 5. Planning a Mesh Deployment
+
+### 5.1 Site Planning and RF Considerations
+
+Before enabling Mesh in production, plan for:
+
+- **Distances**
+  - Typical recommended spacing between Root AP and Mesh AP:
+    - \~**50–80 ft** in open or semi‑open spaces for best throughput.
+    - Up to **\~100 ft** may be possible with clear line of sight and modest throughput needs.
+- **Line of Sight (LOS)**
+  - Aim for LOS or near‑LOS between Root and Mesh APs.
+  - Avoid or account for:
+    - Thick concrete or metal structures
+    - Heavy foliage or moving obstructions
+- **Mounting height and tilt**
+  - Mount outdoor APs at consistent heights when possible.
+  - Ensure antennas are aligned for the intended coverage zone.
+- **Interference**
+  - Consider nearby Wi‑Fi, radar (DFS), and other RF sources.
+  - Perform or review a **predictive RF survey** to validate channel and power plans.
+
+### 5.2 Capacity and Performance
+
+Keep in mind:
+
+- A Mesh AP shares its radio resources between:
+  - **Backhaul** (Root ↔ Mesh AP) and
+  - **Client access** (Mesh AP ↔ devices).
+- Throughput on a Mesh AP will generally be **lower than on a wired AP on the same channel and band**, due to airtime sharing.
+- For performance‑sensitive areas (dense offices, large classrooms):
+  - Prefer **wired APs**.
+  - Use Mesh primarily to reach **fringe or hard‑wired locations** where absolute peak throughput is not critical.
+
+## 6. Roles and Behavior (Customer‑Facing View)
+
+### 6.1 Root AP Behavior
+
+A Root AP:
+
+- Operates as a **standard Nile AP** for clients.
+- Additionally advertises a **mesh‑capable beacon** used by Mesh APs to discover and attach.
+- Only accepts mesh uplink associations from **mesh‑enabled APs**
+
+This design:
+
+- Preserves airtime for mesh backhaul and client traffic.
+
+### 6.2 Mesh AP Behavior
+
+A Mesh AP:
+
+- Boots and actively seek best root AP based on signal strength
+- Once connected:
+  - Obtains a **management IP address**.
+  - Registers with Nile Cloud via the Root AP.
+- Then:
+  - Brings up its **client SSIDs** (same as the rest of your Nile network).
+  - Starts serving user devices.
+
+If the Mesh AP loses its Root AP (for example, hardware failure or power loss):
+
+- It will automatically:
+  - Search for **alternative Root APs** within range.
+  - Re‑attach to the best available Root AP if one exists.
+
+## 7. Activation and Configuration&#x20;
+
+### 7.1 Root APs
+
+Initial Mesh role assignment needs manual staging.&#x20;
+
+1. **Select APs to act as Root APs**
+   - Root AP is connected via a wired uplink and provisioned through the AIOps/NOP portal
+   - After this, Root APs:
+     - Continue to serve normal client SSIDs.
+     - Also advertise themselves as **mesh‑capable** for Mesh APs.
+
+### 7.2 Mesh APs
+
+<Paragraph listRestartPolite="1" indent="1">
+  APs are configured as Mesh Points (Mesh APs) **before shipping** or during a staging phase.
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="2">
+  In the field, installers primarily:
+</Paragraph>
+
+<Paragraph listStyleType="disc" indent="3">
+  Mount and power them via **PoE**.
+</Paragraph>
+
+<Paragraph listStyleType="disc" listStart="2" indent="3">
+  Validate that they connect to the designated Root APs.
+</Paragraph>
+
+## 8. Monitoring and Troubleshooting
+
+### 8.1 Failover and Redundancy
+
+- Mesh points automatically select the optimal **root AP&#x20;**&#x62;ased on signal strength.&#x20;
+- If the primary root AP becomes unavailable, the mesh point connects to another available root AP within range.&#x20;
+- If no alternate root AP is available, **NSB&#x20;**&#x67;enerates a **“mesh link down”&#x20;**&#x61;lert.&#x20;
+- For deployments that require high availability, **SEs, SAs, and partners&#x20;**&#x73;hould design the network with multiple root APs to support failover.
+
+### 8.2 Mesh Alerts and Monitoring
+
+**Device Down (Availability):** An alert is generated when a root AP or mesh AP goes offline. If a mesh point becomes isolated and can no longer serve clients, the system generates an enhanced **“Mesh link down—mesh point unable to serve clients”** alert.
+
+**Missing Mesh Client Route:** An alert is generated when the logical mesh path is interrupted.
+
+**Weak Root AP Connection:** An alert is generated when a mesh point associates with a root AP at low RSSI (for example, below -67 dBm). If a stronger root AP is available, the system recommends corrective action.
+
+**High Channel Load:** An alert is generated when excessive radio or channel load affects a mesh AP or root AP.
+
+### 8.3 Common Symptoms and What to Check
+
+A. Mesh AP is offline or unreachable
+
+**Symptoms**
+
+- Mesh AP shows as **Down** or **Unreachable** in the portal.
+- Users behind that Mesh AP lose connectivity.
+
+**Checklist**
+
+1. **Power and cabling**
+   - Verify the PoE injector or PoE switch port is delivering power.
+   - Check the LED status on the AP.
+2. **RF reachability**
+   - Confirm the Mesh AP is within the planned range of its Root AP.
+   - Verify there are no new obstructions (temporary structures, vehicles, dense foliage).
+3. **Root AP status**
+   - Ensure the Root AP is:
+     - Online and healthy.
+     - Still configured as a Root (Mesh role not changed).
+4. **Alerts in Nile Portal**
+   - Review mesh‑related alerts (mesh link down, weak root AP connection, missing mesh route).
+   - Follow the recommended remediation or share details with Nile Support.
+
+B. Clients connected to a Mesh AP are slow
+
+**Symptoms**
+
+- Clients can connect and pass traffic, but speeds are lower than expected.
+
+**Checklist**
+
+1. **Distance and alignment**
+   - Validate that the Mesh AP ↔ Root AP distance is within the **planned range** (e.g., 70–85 ft).
+   - Check mounting and orientation of APs.
+2. **Channel and interference**
+   - Review channel utilization for the Root and Mesh AP.
+   - High utilization may indicate:
+     - Too many clients on the same channel.
+     - RF interference (other WLANs, radar, etc.).
+3. **Backhaul quality**
+   - Ensure each Mesh AP has a strong, reliable link to its Root AP.
+   - If performance is constrained, consider re-positioning APs or converting additional APs into Root APs where cabling becomes feasible.
+
+C. Mesh AP intermittently changes parent
+
+**Symptoms**
+
+- Mesh AP roams between different Root APs, causing brief interruptions.
+
+**Checklist**
+
+1. **Signal ratios**
+   - If two candidate Root APs have similar RSSI, a Mesh AP may roam between them.
+2. **Topology design**
+   - Slightly adjust power or placement so there is a clear best Root AP.
+   - Avoid placing too many Root APs at similar power/coverage overlapping the same Mesh AP.
+
+## 9. Best Practices and Recommendations
+
+- **Plan Mesh as an exception, not the norm**
+  - Use Mesh to reach where you **cannot** or **should not** pull cable.
+- **Always perform (or request) a predictive survey**
+  - Especially for outdoor and long‑corridor deployments.
+- **Provide redundancy where important**
+  - Have at least two potential Root APs covering critical Mesh APs, so they can fail over.
+- **Design for short mesh paths**
+  - Place Mesh APs so they maintain strong, single-hop links to their Root APs for predictable performance.
+- **Treat Mesh links as shared resources**
+  - Avoid overloading Mesh APs with very high client density or sustained heavy traffic (e.g., bulk backups, large media transfers) unless specifically planned.
+
+## 10. Frequently Asked Questions
+
+**Q1. Do end‑user devices know they are connected through a Mesh AP?**
+No. From the client’s perspective, a Mesh AP is just another Nile AP with the same SSIDs and security policies. Mesh backhaul is transparent.
+
+**Q2. Can I mix Mesh APs and wired APs on the same SSID?**
+Yes. Wired APs and Mesh APs can broadcast the same SSIDs. Clients roam between them following standard Wi‑Fi roaming behavior.
+
+**Q3. What happens during a Root AP failure?**
+If another Root AP is in range:
+
+- Mesh APs attempt to re‑attach to the alternate Root AP.
+- Client sessions may experience a brief disruption, then resume.
+
+If **no alternate Root AP** is in range, Mesh APs lose backhaul and clients will lose connectivity until a suitable Root AP is available again.
+
+**Q4. How far can a Mesh link extend?**
+Nile Mesh is designed for short mesh paths between a Mesh AP and its Root AP, with distances and placement depending on your RF environment and throughput requirements. Your Nile team can help validate link budgets and layouts for your specific deployment.
+
+
+
+## 11. Working with Nile
+
+For production Mesh deployments, Nile strongly recommends:
+
+- Engaging your **Nile Solutions Architect / SE** early for:
+  - Design review (topology, distances, expected capacity).
+  - Root/Mesh AP role planning.
+  - RF validation and predictive survey sign‑off.
+- Using **Nile Support** if:
+  - Mesh links show recurring alerts or performance issues.
+  - You are planning significant changes (new buildings, large outdoor expansions).
+
+Nile Mesh is designed to be a **managed, predictable extension** of the Nile Access Service. With proper planning, it provides robust coverage in places where wires can’t easily go—without sacrificing the simplicity and assurance model that Nile is known for.

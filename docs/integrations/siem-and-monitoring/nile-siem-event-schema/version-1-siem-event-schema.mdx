@@ -1,0 +1,268 @@
+---
+title: Version 1 - SIEM Event Schema
+slug: version-1-siem-event-schema
+createdAt: Wed Apr 30 2025 09:44:16 GMT+0000 (Coordinated Universal Time)
+---
+
+This document represents **Version 1** of the Nile SIEM Event Schema, which outlines the initial structure, format, and supported event types for integrating with Security Information and Event Management (SIEM) systems. As the foundational release, Version 1 serves as the baseline specification for how Nile emits and organizes security-related event data, ensuring compatibility with industry-standard SIEM platforms and setting the stage for future enhancements and expanded event coverage.
+
+## Audit Event Schema v1 :&#x20;
+
+```json
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "action" : {
+      "type" : "string",
+      "description" : "Action that's performed on the entity. For example 'Login', 'Logout', 'Approved', 'Update', 'Delete', 'Create'"
+    },
+    "additionalDetails" : {
+      "type" : "object",
+      "description" : "Json representation of actual changes. It has two fields 'newValue' and 'oldValue'. The oldValue field captures the data before the change and newValue captures the current data.  If the action is create, then only newValue will be populated. If the action is delete, then only the old value will be populated. If the action is update, then both oldValue and newValue will be populated. The actual JSON payload of the oldValue and newValue changes based on the type of entity that was modified"
+    },
+    "agent" : {
+      "type" : "string",
+      "description" : "User Agent"
+    },
+    "auditDescription" : {
+      "type" : "string",
+      "description" : "Short description which explains about the audit entry"
+    },
+    "auditTime" : {
+      "type" : "string",
+      "description" : "The start time of the alert in ISO 8601 format yyyy-MM-dd'T'HH:mm:ssxxx",
+      "format" : "date-time"
+    },
+    "entity" : {
+      "type" : "string",
+      "description" : "Entity on which the specific action is performed. Example Segments, 'User', 'PolicyRule', 'SSID', 'MAB', 'DHCP', 'RADIUS' "
+    },
+    "errorMessage" : {
+      "type" : "string",
+      "description" : "Error message if any. If the action failed, then the error message explains the reason"
+    },
+    "id" : {
+      "type" : "string",
+      "description" : "Unique Id representing the even. For example 'eaafcd8a-0174-4deb-b051-9be04d09b874'",
+      "format" : "uuid"
+    },
+    "sourceIP" : {
+      "type" : "string",
+      "description" : "Source IP address from where the specific action was performed"
+    },
+    "user" : {
+      "type" : "string",
+      "description" : "user who performed the audit action"
+    },
+    "version" : {
+      "type" : "string",
+      "description" : "The version of the audit event schema",
+      "pattern" : "1.0"
+    }
+  },
+  "required" : [ "auditDescription", "auditTime", "id", "sourceIP", "user", "version" ]
+}
+
+```
+
+## Alert Event Schema v1.2 :&#x20;
+
+```json
+{
+  "$schema" : "https://json-schema.org/draft/2020-12/schema",
+  "type" : "object",
+  "properties" : {
+    "additionalInformation" : {
+      "type" : "string",
+      "description" : "Additional information about the alert. This is usually a hyper link to the help documentation",
+      "format" : "uri"
+    },
+    "alertEntity" : {
+      "anyOf" : [ {
+        "type" : "null"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "deviceId" : {
+            "type" : "string",
+            "description" : "Device Id. This is the unique id of the device",
+            "format" : "uuid"
+          },
+          "deviceName" : {
+            "type" : [ "string", "null" ],
+            "description" : "User friendly device host name"
+          },
+          "deviceType" : {
+            "type" : "string",
+            "enum" : [ "AP", "SENSOR", "SWITCH", "HEAD_END", "EDGE_GW", "INTERNET_GW", "L2_SWITCH" ],
+            "description" : "Device Type"
+          },
+          "serialNumber" : {
+            "type" : "string",
+            "description" : "Device Serial Number"
+          },
+          "entityType" : {
+            "const" : "device"
+          }
+        },
+        "required" : [ "deviceType", "serialNumber", "entityType" ]
+      } ],
+      "description" : "Entity information of the alert"
+    },
+    "alertStatus" : {
+      "type" : "string",
+      "description" : "Status of the alert",
+      "pattern" : "Created|Resolved"
+    },
+    "alertSubject" : {
+      "type" : "string",
+      "description" : "Subject of the alert"
+    },
+    "alertSubscriptionCategory" : {
+      "type" : "string",
+      "description" : "Alert Subscription Category."
+    },
+    "alertSummary" : {
+      "type" : "string",
+      "description" : "Summary / Short description of the alert"
+    },
+    "alertType" : {
+      "type" : "string",
+      "description" : "The type of the alert"
+    },
+    "building" : {
+      "type" : "string",
+      "description" : "Building Name where this alert has occurred. If the alert is at tenant or site level, then the value will \"All\""
+    },
+    "closetName" : {
+      "type" : [ "string", "null" ],
+      "description" : "Closet Name where the Switch / HeadEnd is racked. It will have value as \"Unknown\" if the information is not available. Applicable only for Nile Infrastructure alerts specific to Switch and HeadEnd "
+    },
+    "customer" : {
+      "type" : "string",
+      "description" : "Customer Name"
+    },
+    "duration" : {
+      "type" : "string",
+      "description" : "User friendly duration of the alert. Example 15 minutes or 1 hour or 5 days"
+    },
+    "floor" : {
+      "type" : "string",
+      "description" : "Floor Name where this alert has occurred. If the alert is at tenant or site or building level, then the value will \"All\""
+    },
+    "howToFix" : {
+      "type" : [ "string", "null" ],
+      "description" : "How to fix this issue"
+    },
+    "id" : {
+      "type" : "string",
+      "description" : "Alert Id. When an alert changes it's state, another notification with same Id will be sent.",
+      "format" : "uuid"
+    },
+    "impact" : {
+      "type" : "string",
+      "description" : "Impact of the alert. Describes "
+    },
+    "severity" : {
+      "type" : "integer",
+      "format" : "int32",
+      "description" : "Severity of the alert. Ranges between 0-5. The highest alert severity is 0 and lowest is 5",
+      "minimum" : 0,
+      "maximum" : 5
+    },
+    "site" : {
+      "type" : "string",
+      "description" : "Site Name where this alert has occurred. If the alert is at tenant level, then the value will \"All\""
+    },
+    "startTime" : {
+      "type" : "string",
+      "description" : "The start time of the alert in ISO 8601 format",
+      "format" : "date-time"
+    },
+    "version" : {
+      "type" : "string",
+      "description" : "The version of the alert schema",
+      "pattern" : "1.[0-2]"
+    }
+  },
+  "required" : [ "additionalInformation", "alertStatus", "alertSubject", "alertSubscriptionCategory", "alertSummary", "alertType", "building", "customer", "duration", "floor", "id", "severity", "site", "startTime", "version" ]
+}
+```
+
+## End User Event Schema v1:&#x20;
+
+```json
+{
+   "$schema":"https://json-schema.org/draft/2020-12/schema",
+   "type":"object",
+   "properties":{
+      "clientEventAdditionalDetails":{
+         "type":"object",
+         "description":"Additional information for user device event returned as Json Object. This will be having radius server ipAddress for dot1x authenticated clients and connected to AP, Switch serial number"
+      },
+      "clientEventDescription":{
+         "type":"string",
+         "description":"Description of user device event"
+      },
+      "clientEventSeverity":{
+         "type":"string",
+         "description":"Severity of user device event",
+         "pattern":"INFO|CRITICAL"
+      },
+      "clientEventTimestamp":{
+         "type":"string",
+         "description":"The start time of the alert in ISO 8601 format",
+         "format":"date-time"
+      },
+      "clientLastKnownIpAddress":{
+         "type":"string",
+         "description":"Last known ipAddress of client. This will be current ip for online client and last known ip for offline or error clients"
+      },
+      "clientMac":{
+         "type":"string",
+         "description":"Mac address of client"
+      },
+      "clientUsername":{
+         "type":"string",
+         "description":"Username of client"
+      },
+      "connectedBssid":{
+         "type":"string",
+         "description":"Bssid details to which wireless client is connected"
+      },
+      "connectedPort":{
+         "type":"string",
+         "description":"Port details to which wired client is connected.Example port 0/40"
+      },
+      "connectedSsid":{
+         "type":"string",
+         "description":"Ssid details to which wireless client is connected"
+      },
+      "connectedSwitch":{
+         "type":"string",
+         "description":"Switch serial number or mac address details to which wired client is connected"
+      },
+      "id":{
+         "type":"string",
+         "description":"User device event id. This will be uniquely generated for every user device event.",
+         "format":"uuid"
+      },
+      "version":{
+         "type":"string",
+         "description":"The version of the user device event schema",
+         "pattern":"1.0"
+      }
+   },
+   "required":[
+      "clientEventDescription",
+      "clientEventSeverity",
+      "clientEventTimestamp",
+      "clientMac",
+      "id",
+      "version"
+   ]
+}
+
+```
+

@@ -1,0 +1,274 @@
+---
+title: December 2024 Feature Update
+slug: december-2024-feature-update
+createdAt: Wed Jan 29 2025 20:47:49 GMT+0000 (Coordinated Universal Time)
+---
+
+We closed out 2024 with a host of new features that are designed to enhance our customer's ability to better leverage their Nile Access Service and built-in Nile Trust Service security capabilities. We’ve also ensured that many of these capabilities are automatically enabled, without the need for exhaustive software upgrades.
+
+The goal is to provide better, more easily recognizable outcomes, such as security capabilities that are built-in to better secure your data, endpoints, and users. And troubleshooting features that are easy to use and greatly reduce manual interaction and cost of operations compared to legacy solutions. For example, the DFS capability below is completely automated.&#x20;
+
+It is with pleasure that I announce the availability of Zscaler SSE integration. It’s a big step forward as customers adopt a Universal Zero Trust strategy that unifies the enforcement of policies for devices connecting remotely or when at corporate, branch, and affiliated sites. We automatically identify the location of the Zscaler instance, and tunnel traffic as part of our integration capability. It’s a big differentiation compared to other vendors that reduce costs.&#x20;
+
+The remaining features highlight our ability to deliver on efficiency and ease of use objectives and customer’s needs.&#x20;
+
+Video Highlights --> :Link[Click here]{href="https://drive.google.com/file/d/1ONv_mI2QzCeM33WN3x6nRRaw6vBoswqY/view?usp=sharing" newTab="true" hasDisabledNofollow="false"}
+
+<table isTableHeaderOn="true" columnWidths="51,92,256">
+  <tr>
+    <td>
+    </td>
+    <td>
+      **Category**
+    </td>
+    <td>
+      **Feature/Capability**
+    </td>
+    <td>
+      **Outcome (Benefits)**
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **1**
+    </td>
+    <td>
+      Trust Service: **Premium**
+    </td>
+    <td>
+      [Integration with Zscaler SSE that allows the forwarding of specified Nile segments to the Zscaler cloud.](https://nilesecure.com/wp-content/uploads/2024/12/Zscaler-Nile-Solution-Brief-v2.pdf)&#x20;
+      <Paragraph>
+        · Simple integration that leverages existing WAN links
+      </Paragraph>
+      <Paragraph>
+        · Takes advantage of Nile’s native segment of one device isolation
+      </Paragraph>
+      <Paragraph>
+        · Unifies remote and on-prem policy enforcement without add-on appliances
+      </Paragraph>
+    </td>
+    <td>
+      IT can easily apply uniform security policies across remote and on-premises users.
+      <Paragraph>
+        For example, quickly apply a policy to forward all Internet bound traffic from the employee segment to Zscaler across the customer’s NSB instances. The SSE connectivity-as-a-service is fully automated based on intent and is designed for resiliency.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **2**
+    </td>
+    <td>
+      Trust Service:
+      <Paragraph>
+        **Core**
+      </Paragraph>
+    </td>
+    <td>
+      [IoT devices that do not support 802.1X can now use Nile’s unique PSK (uPSK) capability.](https://docs.nilesecure.com/upsk-and-self-registration#wjf5U)
+      <Paragraph>
+        Includes the ability to revoke access should the key be compromised. uPSK is more secure than PSK because each device is assigned its own unique key, preventing a single compromised credential from exposing the entire network.
+      </Paragraph>
+    </td>
+    <td>
+      IT can now securely onboard IoT devices (without RADIUS support) using unique passphrases for connecting them to the Internet.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **3**
+    </td>
+    <td>
+      Trust Service: **Core**
+    </td>
+    <td>
+      [Auth source support added for SSO/802.1X and MAC clients. We also show the status details.](https://docs.nilesecure.com/single-sign-on-sso#W24-5) Some examples are : “SO Session expired”, “SSO initiated”, “Admin enforced SSO re-authentication”, “SSO User deactivated”, “SSO Pending”, “SSO Denied”, “SSO Approved”, “802.1X Approved or Denied”. An alert is also sent to the SIEM (if available).
+    </td>
+    <td>
+      IT can now quickly see information regarding authentication sources for any SSO/802.1X/MAC end users to understand details about the status of the user to quickly resolve authentication issues.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **4**
+    </td>
+    <td>
+      Trust Service: **Core**
+    </td>
+    <td>
+      [We’ve enhanced support for silent/passive devices that do not initiate any traffic unless solicited. ](https://docs.nilesecure.com/passive-device-management-and-handling-wired)These devices are not detectable upon their first-ever connection to the Nile service as their MAC and IP address cannot be learned for onboarding. We can discover these devices automatically. This capability is automatically available once Nile software has been upgraded.&#x20;
+    </td>
+    <td>
+      IT can now quickly detect, approve and/or deny access for silent/passive devices, such as an IoT device that uses a static IP and remains passive unless solicited. This enhanced utility also runs a passive device discovery across the network, making migration to a Nile service a smooth transition for these devices.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **5**
+    </td>
+    <td>
+      Trust Service: **Core**
+    </td>
+    <td>
+      This feature avoids showing rouge access point alerts in a one-off situation when dealing with endpoints that may exhibit a behavior on the wired connection that matches one of the signatures of a potential wired rogue access point.
+      <Paragraph>
+        [This is an enhancement to the existing WIDS wired Rogue AP detection logic.](https://docs.nilesecure.com/widswips)
+      </Paragraph>
+      <Paragraph>
+        The capability automatically upgrades your security once Nile software has been upgraded.&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      This reduces false positives and unnecessary rouge access point alerts due to wired endpoints matching the signature of a rouge access point.&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **6**
+    </td>
+    <td>
+      Access Service: **Wireless**
+    </td>
+    <td>
+      Devices that are not DFS capable will be detected and [Channel Planner will influence channel allocations](https://docs.nilesecure.com/channel-planner-rf-optimization) to APs that are a mix of DFS and non-DFS channels.
+      <Paragraph>
+        This capability automatically enhances the performance of your network once Nile software has been upgraded.&#x20;
+      </Paragraph>
+    </td>
+    <td>
+      Automatically improves the performance of non-DFS device with a new device capability based Smart DFS channel allocation can now handle situations where non-DFS devices struggled to find a good AP to connect to in the past.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **7**
+    </td>
+    <td>
+      Access Service: **Setup**
+    </td>
+    <td>
+      [As part of the Nile Service setup customers can now enter the exact address of sites. ](https://docs.nilesecure.com/setup-service-areas#ffogy)Previously, if the address did not match an automated verification performed by Nile there were issues. This capability overrides the automated verification.
+    </td>
+    <td>
+      Allow customers to easily enter their site/building address in the event the address cannot be automatically found by Nile.
+      <Paragraph>
+        Saves time and ensures all deployment locations(addresses) are accurate for time zone issues, shipping, and other requirements.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **8**
+    </td>
+    <td>
+      Access Service: **Visibility**
+    </td>
+    <td>
+      We continue to increase visibility and control capabilities to better display network behavior associated with end-user devices to debug and troubleshoot. [AP details are now via the customer Control Center Porta](https://docs.nilesecure.com/access-point-details#Y_BNp)l. Some examples are 1) Tool tip on AP Maps shows the AP name, Serial Number, status of AP, and Channel Band and Utilization (per band) 2) Location of Nile Ethernet device and port on which the AP is connected 3) Ethernet uplink speed 4) Maps are updated to reflect the selected time chosen in the “events & status” section.
+    </td>
+    <td>
+      IT now has better data needed to troubleshoot end-device connectivity issues. For example: by quickly seeing AP details, the port that the AP is connected and ethernet link speed you can quickly rule out basic connectivity issues.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **9**
+    </td>
+    <td>
+      Access Service: **Visibility**
+    </td>
+    <td>
+      We now show the signal strength of an AP over a period from[ our coverage graph](https://docs.nilesecure.com/nile-slas#iz1TT).
+    </td>
+    <td>
+      IT teams can now quickly root cause any service issues related to coverage.
+      <Paragraph>
+        Instead of relying on clients which may not always connect with the service, Nile uses its sensors to measure and report the coverage.&#x20;
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **10**
+    </td>
+    <td>
+      Access Service: **Visibility**
+    </td>
+    <td>
+      Show the [reason for wireless client disconnects](https://docs.nilesecure.com/wireless-client-connection-history-logs) such as “eap-reject” vs. “eap-timeout” when 802.1X authentication is used.
+    </td>
+    <td>
+      The information quickly shows the reason why a wireless client may be having disconnect issues for faster root cause analysis.
+      <Paragraph>
+        This saves time because detailed information is shown compared to a basic EAP authentication failure message without any reason.
+      </Paragraph>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **11**
+    </td>
+    <td>
+      Access Service: **Alerts**
+    </td>
+    <td>
+      [Alert content](https://docs.nilesecure.com/configure-email-notifications) now includes a prominently displayed "For more information" link. This will direct admins to a dedicated troubleshooting page with relevant details and steps to help resolve an issue.
+    </td>
+    <td>
+      Quickly help IT resolve issues by linking to troubleshooting guides and other useful information, without the need to find information by searching online.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **12**
+    </td>
+    <td>
+      Access Service: **Alerts**
+    </td>
+    <td>
+      Trigger only one alert for [Internet down condition](https://docs.nilesecure.com/customer-infrastructure-alerts#UsIFP) as opposed to sending alerts for all affected devices such as switches, access points and sensors.&#x20;
+    </td>
+    <td>
+      Reduced alert noise during Internet or power or NSB down situations..&#x20;
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **13**
+    </td>
+    <td>
+      Access Service: **Integration**
+    </td>
+    <td>
+      [A simple user interface that enables quick integration between Snowflake and Nile ](https://docs.nilesecure.com/snowflake-integration-guide)so that IT can send end-user device events, alerts, and audit events to Snowflake.
+    </td>
+    <td>
+      The use of endpoint device events from Nile shared with Snowflake allows for better analytics, actionable insights, and reporting for customers to build and retain on their end
+    </td>
+  </tr>
+  <tr>
+    <td>
+      14
+    </td>
+    <td>
+      Nile AI Agent: **Support**
+    </td>
+    <td>
+      Customers receive quick answers and solutions from an AI support agent. &#x20;
+      <Paragraph>
+        They can view their support tickets in the same view as their support chats, review their chats and ticket history without navigating away from Nile Portal.
+      </Paragraph>
+    </td>
+    <td>
+      Instant resolution of queries about features and configuration settings or process with streamlined and intuitive chat experience. 
+      <Paragraph>
+        Customer will still have the  ability to open tickets via email to support\@nilesecure.com
+      </Paragraph>
+    </td>
+  </tr>
+</table>
+
+<Iframe iframeHeight="0" code="<iframe src=&#x22;https://drive.google.com/file/d/1ONv_mI2QzCeM33WN3x6nRRaw6vBoswqY/preview&#x22; width=&#x22;840&#x22; height=&#x22;480&#x22; allow=&#x22;autoplay&#x22;></iframe>">
+
+</Iframe>
+

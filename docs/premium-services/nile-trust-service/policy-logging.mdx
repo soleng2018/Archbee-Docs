@@ -1,0 +1,127 @@
+---
+title: Policy Logging
+slug: policy-logging
+createdAt: Fri Feb 20 2026 05:17:24 GMT+0000 (Coordinated Universal Time)
+---
+
+# Overview
+
+Every flow observed by the Zero Trust Fabric is evaluated and the resulting action is logged into a centralized policy log, visible in Nile Control Center. The information recorded in the log includes:
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td align="left">
+      Log Field
+    </td>
+    <td align="left">
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Timestamp
+    </td>
+    <td align="left">
+      Time when flow was evaluated by Trust Engine
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Source Group
+    </td>
+    <td align="left">
+      Name of the source policy group
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Source Group Type
+    </td>
+    <td align="left">
+      Type of the source policy group (user, device, app)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Destination Group
+    </td>
+    <td align="left">
+      Name of the destination policy group
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Destination Group Type
+    </td>
+    <td align="left">
+      Type of the destination policy group (user, device, app)
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Source IP
+    </td>
+    <td align="left">
+      IP address of the source endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Source MAC
+    </td>
+    <td align="left">
+      MAC address of the source endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Port
+    </td>
+    <td align="left">
+      Target port on the destination endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Protocol
+    </td>
+    <td align="left">
+      Protocol of traffic towards destination endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Service profile
+    </td>
+    <td align="left">
+      Name of matching service profile
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Destination IP
+    </td>
+    <td align="left">
+      IP address of the destination endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Destination MAC
+    </td>
+    <td align="left">
+      MAC address of the destination endpoint
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Action
+    </td>
+    <td align="left">
+      Action taken by Trust Engine: Allow, Deny, Forward upstream,
+    </td>
+  </tr>
+</table>
+
+When no policy exists for a given source/destination pair, the default-deny posture of the Zero Trust Fabric will deny traffic by default.  The policy log will record this as a Deny action but will not identify the source and destination information.  If explicit logging of the default Deny behavior for a source/destination pair is needed, then an explicit Deny policy should be created.
+

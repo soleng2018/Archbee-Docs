@@ -1,0 +1,212 @@
+---
+title: Static IP management
+slug: static-ip-management
+createdAt: Fri Jan 17 2025 23:35:37 GMT+0000 (Coordinated Universal Time)
+---
+
+# New Static IP Handling for Improved Security and Organization
+
+Nile’s default architecture is designed for security. Many customer devices still rely on static IP addresses, and Nile supports them. However, static IP usage introduces risks such as IP conflicts, spoofing attempts, and potential unauthorized access if not properly controlled.
+
+In most customer networks today, static IP management is poorly organized. IT teams often lack visibility into which devices are using static IP addresses and how they are configured. Nile addresses this challenge by introducing enhanced controls that secure static IP usage while also organizing the network for better management.
+
+<BlockQuote>
+  **Recommendation:** Nile strongly advises using DHCP-based IP addressing wherever possible. For devices that must use static IP addresses, consider migrating them to DHCP with IP reservations on the DHCP server. This provides the security and manageability benefits of DHCP while retaining device-specific IP assignments.
+</BlockQuote>
+
+## Static IP Drawbacks
+
+**Security Risks**
+
+- Devices using static IP addresses can bypass first-hop security.
+- IP spoofing becomes easier in environments where static IP usage is unmanaged.
+- The likelihood of IP conflicts increases significantly.
+
+**Management Complexity**
+
+- Networks with unmanaged static IP addresses become unorganized and hard to control.
+- Each device must be manually configured, creating unnecessary overhead.
+- Changes to IP addressing or device configurations require manual updates.
+
+**Scalability Challenges**
+
+- Manual IP assignment is error-prone and does not scale in larger environments.
+- As networks grow, managing static IPs becomes increasingly difficult and resource-intensive.
+
+# Static IP Management in Nile
+
+Nile introduces a more secure way to manage devices with static IP addresses by requiring explicit approval in the MAB (MAC Authentication Bypass) settings.
+
+### Minimizes Security Risk
+
+- Administrators must explicitly approve devices as “statically addressed.”
+- Devices not marked as approved for static IP are blocked by default.
+
+### Brings Order to the Network
+
+- Previously unorganized networks gain structure and visibility.
+- Administrators are notified of new static IP devices attempting access.
+- IP conflicts are eliminated or minimized since approval is required before devices can use static IP.
+
+### Supports Scalability
+
+- MAC addresses approved for static IP must be explicitly flagged in MAB or wireless access management settings.
+- Customers can bulk upload CSV files of all static IP devices from legacy networks.
+- This creates an organized baseline for future migration to DHCP reservation, since the list of devices is already centralized in the Nile Control Center.
+
+# Feature Settings for New Customers
+
+### Adding a Statically Addressed Device
+
+1. Log in to the Nile Portal.
+2. Navigate to **Settings > Access Management**.
+3. Select **Add Device** and choose **Static IP**.
+4. Provide:
+   - MAC address or OUI
+   - Segment (mandatory)
+   - Geographical scope (mandatory)
+   - IP address (recommended for highest security)
+5. If many devices share the same OUI (for example IoT devices), the IP field can remain blank. Approving the OUI as static IP will allow all devices with that OUI to connect using static IP addresses.
+6. If a MAC address is MAB approved but not allowed to use static IP, leave the **Static IP** option unchecked. This denies connectivity even if the device is otherwise approved.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/cPWYzbASiAcyFpX9JD-rc_screenshot-2025-01-17-at-40303-pm.png)
+
+**Bulk Upload&#x20;**
+
+A list of ‘approved’ mac addresses w/Static IP can be bulk uploaded as well
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/tMECx-kKr5PY46enlSpB2_image.png)
+
+MAB table has new ‘Static IP ’ and IP address column (default hidden), admins can add them on-demand&#x20;
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/H-Nhy7Y0NH98FijtSEScx_screenshot-2025-01-17-at-40351-pm.png)
+
+## Level of Security vs Flexibility
+
+Administrators can choose between strict security and greater flexibility:
+
+- **Highest Security:** Approve a specific MAC address as static IP and specify the exact IP address it is allowed to use.
+- **Moderate Flexibility:** Approve a MAC address as static IP without specifying the IP address.
+- **Maximum Flexibility:** Approve an OUI as static IP, allowing any device with that OUI to connect using static IP.
+
+For environments with a large number of IoT devices, administrators often choose OUI-based approval to simplify onboarding. For critical assets, Nile recommends the stricter MAC plus IP approval model.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sd3ydwRRkhDrw83bBMe50_image.png)
+
+## Alerting
+
+Nile provides a comprehensive alerting system for static IP violations. If a device attempts to use a static IP without proper approval, the Nile Portal generates an alert. In certain cases, the device is also blocked automatically.
+
+The table below summarizes the behavior:
+
+<table isTableHeaderOn="true" columnWidths="123,0,389">
+  <tr>
+    <td>
+      Approved as Static
+    </td>
+    <td>
+      Static IP Specified
+    </td>
+    <td>
+      Detected Condition
+    </td>
+    <td>
+      Action
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Yes
+    </td>
+    <td>
+      Yes (MAC + IP specified)
+    </td>
+    <td>
+      Device connects with a different static IP
+    </td>
+    <td>
+      Block + Alert
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Yes
+    </td>
+    <td>
+      Yes
+    </td>
+    <td>
+      Device connects with DHCP IP
+    </td>
+    <td>
+      Allow + Alert
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Yes
+    </td>
+    <td>
+      No
+    </td>
+    <td>
+      Device connects with DHCP IP
+    </td>
+    <td>
+      Allow + Alert
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Yes
+    </td>
+    <td>
+      No
+    </td>
+    <td>
+      Device connects with static IP
+    </td>
+    <td>
+      Allow
+    </td>
+  </tr>
+  <tr>
+    <td>
+      No
+    </td>
+    <td>
+      Not Applicable
+    </td>
+    <td>
+      Device connects with static IP
+    </td>
+    <td>
+      Block + Alert
+    </td>
+  </tr>
+  <tr>
+    <td>
+      No
+    </td>
+    <td>
+      No
+    </td>
+    <td>
+      Device connects using a static IP not belonging to any configured subnet within segments
+    </td>
+    <td>
+      Block + Alert
+    </td>
+  </tr>
+</table>
+
+# Feature Constraints
+
+- The Nile Service Block software must be updated to support the new static IP management feature.
+- Existing customers using the legacy static IP feature will be migrated by the Nile team.
+- New customers who are not on the required NSB version and wish to use this feature should contact Nile Support. The team will schedule an NSB upgrade and enable the feature in the Nile Control Center.
+

@@ -1,0 +1,60 @@
+---
+title: Snowflake
+slug: snowflake
+createdAt: Thu Jan 23 2025 00:43:34 GMT+0000 (Coordinated Universal Time)
+---
+
+Nile has enhanced its capabilities by adding support for Snowflake, enabling the transmission of three distinct categories of data. Once Snowflake is properly configured in the Control Center (Nile Portal), IT administrators can select the specific data to be sent, which includes Alerts, Audit logs, and End User Device events.
+
+The alerts category comprises five subcategories: Nile Service Alerts, Nile Infrastructure Alerts, Security Alerts, Application-Related Alerts, and Customer Infrastructure Alerts, specifically pertaining to their DHCP, RADIUS, and DNS servers.
+
+Audit events serve to document the change tracking activities that admin users perform within the Control Center, commonly referred to as the Nile Portal. This comprehensive tracking mechanism ensures accountability and transparency regarding modifications made by admin users. In parallel, the end-user device events provide a detailed account of each device's connectivity logs, capturing crucial information for both wired and wireless devices. This dual approach not only facilitates the monitoring of user actions but also enables the assessment of device connectivity, thereby enhancing overall network management and security.
+
+These capabilities enables Nile's customers to run their own analytics, retain data for compliance and auditing purpose and security.
+
+## Settings
+
+To integrate Nile with Snowflake, the following need to be configured on the Snowflake. Nile supports user and password or user and private key option for authentication. Please refer to this document on private key based authentication on Snowflake: [https://docs.snowflake.com/en/user-guide/key-pair-auth](https://docs.snowflake.com/en/user-guide/key-pair-auth)
+
+### Snowflake Settings
+
+- URL&#x20;
+- User / Password  (for Basic auth) or Private key (for key based authentication)
+- WareHouseName
+- Database Name
+- Schema Name&#x20;
+- Table Name
+- Role Name
+
+Typically, Snowflake admins would create a Warehouse, add a database, schema and a table for purposes of ingesting the incoming Nile data. A role would have to be created and assigned to the user that is intended for use by Nile that will authenticate with Snowflake and make write, post, read requests.
+
+### Nile Settings
+
+In the Control Center (Nile Portal) go to Global Settings > Integrations > Click on the '+' to add a new integration, Choose Snowflake from the listed options
+
+![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-8hdB6CHy7iXgKQROkWMc5-20250123-012520.png)
+
+![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-tOg-05LS-RKUQPGPOI-ks-20250123-013242.png)
+
+On the next screen, select the categories to subscribe to. Events, alerts related to selected category will be sent from the Nile cloud into Snowflake. Click Save
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/tKx7kg87zyzp827R5bD9f_screenshot-2025-01-22-at-53319-pm.png)
+
+❗The Name of the integration needs to be set to the string 'default'. Whichever integration is set to name as 'default' that is treated as the primary SIEM integration from Nile's perspective. If the 'Name' of the integration being added is not set to 'default' that receiver will not get any data from Nile cloud
+
+Once the Snowflake settings are saved, a tile showing Snowflake configured will appear as below under the Integrations&#x20;
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/yKXerH-ioqn4tLRPk-5pN_screenshot-2025-01-22-at-53931-pm.png)
+
+**The categories of data subscribed to can be seen on the tile for Snowflake**
+
+### Testing capability
+
+The Snowflake tile will show a 'Test' button to test the connectivity and authentication from Nile cloud to the Snowflake. A successful test will show the Status as UP, if the authentication or connectivity from Nile cloud is failing, the Status will show as Down.
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/haPK_zsD1dNWvOUSUehzJ_screenshot-2025-01-22-at-54043-pm.png)
+

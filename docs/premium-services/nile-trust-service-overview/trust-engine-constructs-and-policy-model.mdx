@@ -1,0 +1,197 @@
+---
+title: Trust Engine Constructs and Policy Model
+slug: trust-engine-constructs-and-policy-model
+createdAt: Thu Oct 16 2025 07:48:29 GMT+0000 (Coordinated Universal Time)
+---
+
+## Introduction
+
+The **Nile Trust Engine** enforces access decisions based on a structured and consistent policy framework. This framework defines how users, devices, and applications are classified, grouped, and governed under the principles of Zero Trust. Every communication request passes through a sequence of constructs that determine whether access is allowed, denied, or redirected.
+
+## Core Constructs
+
+The Trust Engine relies on several key constructs that work together to deliver comprehensive and scalable policy enforcement:
+
+1. **Policy Groups** – Logical collections of endpoints that define the security boundary.&#x20;
+2. **Service Profiles** – Sets of permitted protocols and ports for specific types of traffic.&#x20;
+3. **Policy Sets and Policies** – The rules that dictate which entities can communicate and how.&#x20;
+4. **Actions** – Enforcement behaviors applied to matching traffic (Allow, Deny, Forward, etc.).&#x20;
+5. **Attributes** – Identity and context metadata used for advanced policy decisions (available in future releases).&#x20;
+
+## Policy Groups
+
+Policy Groups are the foundation of the Trust Engine. They allow administrators to define security boundaries around users, devices, or applications based on identity, context, or network characteristics.
+
+### Group Types
+
+<table isTableHeaderOn="true" columnWidths="121,100,100">
+  <tr>
+    <td>
+      Group Type
+    </td>
+    <td>
+      Example
+    </td>
+    <td>
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **User**
+    </td>
+    <td>
+      Employees, Contractors
+    </td>
+    <td>
+      Classifies endpoints based on user identity or SCIM group membership.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Device**
+    </td>
+    <td>
+      Printers, Cameras, Sensors
+    </td>
+    <td>
+      Groups devices not tied to user accounts using identity, MAC/OUI, or fingerprint data.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Application**
+    </td>
+    <td>
+      Internet, Intranet, SaaS
+    </td>
+    <td>
+      Defines application destinations using IPs, FQDNs, or categories.
+    </td>
+  </tr>
+</table>
+
+Each endpoint is classified into exactly one policy group. When multiple groups could apply, the most specific rule (based on ordering) takes precedence.
+
+### Classification and Ordering
+
+Endpoints are evaluated against policy group definitions in sequence. User groups are checked first, followed by device groups. More specific classification rules should be placed higher in the list to ensure correct matching.
+
+If an endpoint does not match any defined policy group, it is automatically placed in an **Unclassified** group. Similarly, devices that fail security posture checks are placed in the **Quarantine** group.
+
+### Default and System Groups
+
+Nile provides predefined groups to simplify policy creation:
+
+- **Local:** All endpoints within a Nile Service Block.&#x20;
+- **External:** Endpoints outside of a Service Block.&#x20;
+- **Intranet:** Customer-defined RFC 1918 address space.&#x20;
+- **Internet:** Public network destinations not in the Intranet group.&#x20;
+- **Unclassified:** Users or devices that do not match any defined group.&#x20;
+- **Quarantine:** Devices that fail validation checks.&#x20;
+
+These groups are automatically recognized by the Trust Engine and appear in the policy interface as selectable sources or destinations.
+
+### Identity-Based Segmentation
+
+Unlike traditional VLAN-based security, Nile’s policy groups are **identity-driven**. This means users and devices can share the same IP segment while maintaining strict isolation through host-based controls. This approach simplifies network design and reduces the need for static segmentation.
+
+## Service Profiles
+
+Service Profiles define which protocols and ports are permitted when traffic between policy groups is allowed. They ensure communication adheres to least-privilege principles by restricting flows to only what is necessary.
+
+### Example
+
+For a printer, different functions (discovery, printing, administration) use distinct ports and protocols. A Service Profile can allow employees to send print jobs while restricting administrative access to IT staff.
+
+### Default Profiles
+
+- **Open Service Profile:** Allows all protocols and ports; intended for temporary use during migration or testing.&#x20;
+- **Infrastructure Services Profile:** Supports DHCP, HTTPS for identity provider (IdP) communication, and optional DNS.&#x20;
+- **DNS Services Profile:** Enables communication with local or external DNS servers (UDP/TCP 53, TCP 853 for DNS over TLS).&#x20;
+
+Custom Service Profiles are available to **Enterprise tier** customers, providing fine-grained control over protocol-level access.
+
+## Policy Sets and Policies
+
+A **Policy Set** is a collection of policies that together define how access is managed across the network. Each policy specifies a source, destination, service profile, and action.
+
+### Policy Components
+
+<table isTableHeaderOn="true" columnWidths="330,331">
+  <tr>
+    <td>
+      Component
+    </td>
+    <td>
+      Description
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Source**
+    </td>
+    <td>
+      The initiating policy group.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Service Profile**
+    </td>
+    <td>
+      Defines the permitted protocols and ports.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Destination**
+    </td>
+    <td>
+      The target policy group.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Action**
+    </td>
+    <td>
+      Determines enforcement: Allow, Deny, Forward, or Forward to SSE.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      **Status**
+    </td>
+    <td>
+      Indicates whether the policy is active or disabled.
+    </td>
+  </tr>
+</table>
+
+All network traffic is evaluated against the active policy set. If no matching policy exists, the traffic is denied by default.
+
+### Global Policy Set
+
+Each Nile tenant includes one **Global Policy Set**, automatically applied to all sites. It contains system-defined defaults that ensure essential network operations, such as DNS resolution and DHCP onboarding, function without manual setup.
+
+Administrators can add custom policies to the Global Policy Set to reflect organizational requirements. Future releases may include support for multiple policy sets per tenant for more granular control.
+
+## Policy Logging
+
+Every flow evaluated by the Trust Engine generates a log entry visible in Nile Control Center. Logs include:
+
+- Timestamp&#x20;
+- Source and destination groups&#x20;
+- IP and MAC addresses&#x20;
+- Protocol and port&#x20;
+- Service profile name&#x20;
+- Enforcement action&#x20;
+
+These logs enable administrators to audit policy effectiveness, identify unauthorized attempts, and refine enforcement strategies.
+
+## Summary
+
+The Trust Engine’s constructs—policy groups, service profiles, policy sets, and actions - form a unified framework for implementing zero trust across enterprise networks. By classifying endpoints through identity and context rather than topology, Nile delivers precise, scalable, and adaptable security enforcement.
+
+**Next:** Policy Group Management — Learn how to create, classify, and manage policy groups for users, devices, and applications.

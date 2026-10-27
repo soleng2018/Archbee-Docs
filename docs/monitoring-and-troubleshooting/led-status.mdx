@@ -1,0 +1,146 @@
+---
+title: LED Status
+slug: led-status
+createdAt: Wed Jan 15 2025 00:03:56 GMT+0000 (Coordinated Universal Time)
+---
+
+<table isTableHeaderOn="true" columnWidths="181">
+  <tr>
+    <td>
+      ### Sys LED Status
+    </td>
+    <td>
+      ### Condition
+    </td>
+    <td>
+      ### Recommended Action
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#09ff31">Blinking Green</font>
+    </td>
+    <td>
+      System Initializing
+    </td>
+    <td>
+      It is a transient state during the initial bring-up of the switch; if the LED stays persistent, contact Nile Support.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#00ff0a">Solid Green</font>
+    </td>
+    <td>
+      NE is connected to both the NSB GW and the Nile Cloud, and the Nile Access Service is operational.
+    </td>
+    <td>
+      \- No action is necessary. The Nile Access Service is operational and connected to Cloud.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#0011ff">Blinking Blue</font>
+    </td>
+    <td>
+      Bluetooth enabled and available. Connection to the Nile Cloud and the local NSB gateway is not established, and BLE is ready for pairing.
+    </td>
+    <td>
+      \- If it is new/out of the box, proceed with the setup.&#x20;
+      \- If still in the same state after activation:&#x20;
+      &#x20;  \- Verify connectivity issues between the NE and the Nile Cloud (e.g., firewall, routing).&#x20;
+      &#x20;  \- Check for cable issues between the NE and NSB Gateway.&#x20;
+      &#x20;  \- Investigate if the network closet is isolated from the rest of the network in case of multiple affected NEs.&#x20;
+      &#x20;  \- Ensure the NE is activated through the mobile app.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#0011ff">Solid Blue</font>
+    </td>
+    <td>
+      Bluetooth connected to the mobile app
+    </td>
+    <td>
+      \- If the mobile app hasn’t paired to the NE for troubleshooting, but the LED is solid blue, reboot the switch.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#ff0000">Blinking Red</font>
+    </td>
+    <td>
+      NE has connected either to the NSB GW or the Nile Cloud.
+    </td>
+    <td>
+      \- The NEs might have lost connectivity to the cloud. Check firewall rules and ISP issues.&#x20;
+      \- If the NSB GW is down, Nile will proactively notify you, and a Nile CSM will reach out.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#ff0000">Solid Red</font>
+    </td>
+    <td>
+      Most probably a system failure if the LED is solid red for more than 20-30 seconds.
+    </td>
+    <td>
+      \- If the persistent state is solid red, contact Nile Support.
+    </td>
+  </tr>
+</table>
+
+
+
+<table isTableHeaderOn="true">
+  <tr>
+    <td>
+      ### Power LED Status
+    </td>
+    <td>
+      ### Condition
+    </td>
+    <td>
+      ### Recommended Action
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#1dff00">Solid Green</font>
+    </td>
+    <td>
+      The power module is okay and delivering the correct power.
+    </td>
+    <td>
+      \- No action necessary
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#ff0000">Blinking Red</font>
+    </td>
+    <td>
+      The power input is okay, but the PSU output failed, or the power module is not inserted properly.
+    </td>
+    <td>
+      \- Reseat the power module/cable.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <font color="#ff0303">Solid Red</font>
+    </td>
+    <td>
+      Either one of the two power cords is connected, or one of the power supply modules failed.
+    </td>
+    <td>
+      \- Verify both power supplies are connected and providing power.&#x20;
+      \- Check if the UPS is working fine.
+      \- Check the PSU LED at the back of the switch:&#x20;
+      &#x20;  \- Amber indicates active but not receiving power.&#x20;
+      &#x20;  \- No LED indicates a PSU issue.&#x20;
+      &#x20;  \- Contact Nile Support if needed.
+    </td>
+  </tr>
+</table>
+

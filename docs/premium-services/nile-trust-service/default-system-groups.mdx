@@ -1,0 +1,183 @@
+---
+title: Default System Groups
+slug: default-system-groups
+createdAt: Fri Feb 20 2026 04:17:48 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Nile automatically creates several predefined groups to simplify configuration:
+
+- **Local:** All endpoints inside the Nile Service Block.&#x20;
+- **External:** All endpoints outside the Service Block.&#x20;
+- **Intranet:** The enterprise’s private address space defined by RFC 1918.&#x20;
+- **Internet:** Public destinations outside the Intranet.&#x20;
+- **Unclassified:** Endpoints that do not match any defined group.&#x20;
+- **Quarantine:** Devices that fail validation or posture checks.&#x20;
+
+These groups are recognized across the Trust Service and can be used as sources or destinations in policy definitions.
+
+## Local & External System Groups
+
+In addition to Internet and Intranet, Nile defines other default system groups that are used in default system policies. These groups are **not user-selectable when defining new policies.&#x20;**&#x20; 
+
+- **Local**: the Local group is a collective reference to any endpoint within the local Zero Trust Fabric, and is not specific to endpoint type. It can include users, devices, or apps that are local to the Zero Trust Fabric.
+- **External**: the External group is the inverse of Local, and refers to any endpoint that is outside of the Local Zero Trust Fabric.
+
+By default, the implicit “Deny all” posture of the Zero Trust Fabric implies that no endpoint can talk to any other endpoint without an explicit policy in place.  This implicit “Deny all” policy does not appear in the UI, as it is an immutable property of the Zero Trust Fabric. Additionally, there is a default policy that is visible that explicitly denis any inbound communication from outside (i.e., External) of the Zero Trust Fabric.  Any communication that is to be allowed inbound to a policy group within the Zero Trust Fabric must be explicitly defined in a policy.
+
+## Unclassified  Groups
+
+Nile pre-creates two default policy groups that are used for specific purposes:
+
+- **Unclassified User & Device Groups**: any user or device that does not match with any of the customer-defined policy groups will be categorized as “Unclassified” and will be placed into an Unclassified Users group or Unclassified Devices group. This is a category of users/devices for which no matching policy group can be found, and includes devices that are unknown (i.e., may be lacking a fingerprint and which do not match with any other defined device groups). 
+
+The unclassified users and devices will appear together as a single list in the NIle Control Center. Administrators with access to this group can manually classify these endpoints into existing groups, or they can create new groups on the fly and assign endpoints to a new group.   Similarly, administrators can **unassign&#x20;**&#x61; user or device from their current group and return them to the Unclassified group.
+
+By default, and in alignment with zero trust principles, members of the Unclassified User and Device groups will not be permitted to access any destinations other than necessary network infrastructure services.  If it is desired to **allow&#x20;**&#x55;nclassified Users or Deivces to access the Internet, an **explicit policy&#x20;**&#x6E;eeds to be added to the Global Policy Set to permit this.
+
+**Important Note:&#x20;**&#xA0;whether a user’s device ends up as an Unclassified Device or Unclassified User will depend on whether there is any user context available associated with that device. If there are no user attributes available associated to the device (eg, if segment-based User groups were used instead of IdP Group), then the user’s device will appear as an Unclassified Device if there are no matching user or device groups.
+
+### Manual Device Assignment & Unassignment
+
+In addition to manual assignment of endpoints to target policy groups, the Trust Engine also supports unassignment from current policy groups. This enables customers to override the previous endpoint classification (whether automated by the Trust Engine or manually assigned) and returns the endpoint to the Unclassified group, where it then can be reassigned.  Dynamic reassignment will occur at the next recalibration event, whereas manual reassignment can be done at any time.
+
+## Quarantine Group
+
+Nile pre-creates the Quarantine policy group for supporting quarantining of devices that fail continuous device validation. This form of quarantine provides stronger security posture compared to traditiona VLAN-based qaurantine, and additionally does not require any network moves or re-IP of the device.&#x20;
+
+The Quarantine Group and continuous device validation are supported for device policy groups that use either OUI/MAC or fingerprint based classification, and is well sutied for IoT/OT.  When continuous device validation is enabled for a device group, periodic creentials-based checks on devices are made, using either:
+
+<Paragraph listStyleType="disc" indent="2">
+  SSH
+</Paragraph>
+
+<Paragraph listStyleType="disc" listStart="2" indent="2">
+  HTTP/HTTPS
+</Paragraph>
+
+<Paragraph listStyleType="disc" listStart="3" indent="2">
+  SNMPv3
+</Paragraph>
+
+Custom access policies for the Quarantine group can be configured.  **By default**, devices in the Quarantine group have a “**deny access to internet**” policy. If customers intend to leverage quarantining functionality it is important to **modify the policy** that can permit quarantined devices to access specific remediation services or applications. 
+
+Additionally, by default, no endpoint can access devices in the Quarantine group. Permission to allow IT admins to access devices in Quarantine **must be defined as an explicit policy&#x20;**&#x61;nd added to the Global Policy Set.  
+
+### Moving Devices out of the Quarantine Group
+
+Once a quarantined device has been properly remediated, there are 4 ways for a device to be moved out of Quarantine group
+
+1. For device groups with periodic posture checking, those devices that are in the Quarantine group will be periodically checked.
+2. Manual disconnect/reconnect the device from the Clients details page will trigger revalidation.
+3. If the device is a wired device, then there is a forced reauthentication that occurs daily. During the reauthentication event, the quarantined device will be checked and if it succeeds, it will be moved out of the Quarantine group. 
+4. If the IP address is changed for a quarantined device, as a result of moving it to a different AP or physical port, then this will trigger revalidation of the device.
+
+## Unclassified & Quarantine Group Behavior
+
+The Unclassified and Quarantine groups are operational states and are transient in nature. It is recommended that admins pay attention to endpoints that appear in these groups as they warrant some sort of remediation before they can be reclassified to their intended policy group. A summary of transitions and actions for devices and users in these groups is summarized below:
+
+<table isTableHeaderOn="true" columnWidths="93,96.71186440677965,77.03230100275091,286.2558345904695">
+  <tr>
+    <td align="left">
+      **Current Group**
+    </td>
+    <td align="left">
+      **Recalibrated Group**
+    </td>
+    <td align="left">
+      **Supported&#x20;**
+    </td>
+    <td align="left">
+      **Support / Notes**
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Quarantine
+    </td>
+    <td align="left">
+      Intended Policy Group
+    </td>
+    <td align="left">
+      Yes
+    </td>
+    <td align="left">
+      quarantined devices that are provisioned/remediated such that they pass device validation can be recalibrated to their intended policy group
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Quarantine
+    </td>
+    <td align="left">
+      Unclassified
+    </td>
+    <td align="left">
+      No
+    </td>
+    <td align="left">
+      a device in quarantine means it has already matched to an intended group, but the device validation failed. Once the device in quarantine is remediated, it will transition to its intended policy group.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Unclassified
+    </td>
+    <td align="left">
+      Quarantine
+    </td>
+    <td align="left">
+      Yes
+    </td>
+    <td align="left">
+      a device that was Unclassified may be manually assigned to an existing (or new) policy group. If that policy group has a device validation specification, and the device fails, it can end up in quarantine.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Unclassified
+    </td>
+    <td align="left">
+      Intended Policy Group
+    </td>
+    <td align="left">
+      Yes
+    </td>
+    <td align="left">
+      a user or device in Unclassified group can be manually assigned to an existing (or newly defined) policy group.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Active Policy Group
+    </td>
+    <td align="left">
+      Unclassified
+    </td>
+    <td align="left">
+      Yes
+    </td>
+    <td align="left">
+      an admin can **unassign&#x20;**&#x61; device or user from the current policy group. This places the endpoint back into the Unclassified group and is available for reassignment.
+    </td>
+  </tr>
+  <tr>
+    <td align="left">
+      Active Policy Group
+    </td>
+    <td align="left">
+      Quarantine
+    </td>
+    <td align="left">
+      Yes
+    </td>
+    <td align="left">
+      As part of continuous validation, it is possible for an active device to fail the continuous validation check. In this case, it can be placed back into the Quarantine group.
+    </td>
+  </tr>
+</table>
+
+
+
+P

@@ -1,0 +1,121 @@
+---
+title: Understanding Policy Groups
+slug: understanding-policy-groups
+createdAt: Fri Feb 20 2026 03:35:10 GMT+0000 (Coordinated Universal Time)
+---
+
+# Introduction
+
+Policy Groups are at the core of the Nile Trust Service. They define how users, devices, and applications are logically segmented for access control. By classifying endpoints based on identity, device type, or context, administrators can apply policies that align with the enterprise’s security posture without relying on traditional VLANs or static segmentation.
+
+## Policy Groups
+
+A Policy Group represents a collection of endpoints that share common access requirements. Each endpoint belongs to exactly one Policy Group, ensuring that its access policies are clear and deterministic. The Trust Engine automatically evaluates each user or device during onboarding and assigns it to the most appropriate group based on predefined classification rules.
+
+### Group Types
+
+1. **User Groups** – Endpoints tied to an authenticated user. Commonly used for employees, guests, contractors, students, and faculty.&#x20;
+2. **Device Groups** – Endpoints such as printers, cameras, or IoT devices not associated with user identities.&#x20;
+3. **Application Groups** – Destination endpoints that represent private or public applications.&#x20;
+
+## Understanding User Groups
+
+User groups identify user endpoints via some common match criteria as listed above. When a user is on-boarded onto the network using a device such as a laptop, phone, or tablet, the device associated with the user belongs to the user group, and is **not&#x20;**&#x61;ssociated with any of the device groups that might be defined. For example, if a user group is defined based on IdP Group and the user is using a Windows 10 device, the user’s device will belong to the user group and not the Windows 10 device group.
+
+When defining a user group, multiple values can be selected as match criteria for the different categories. For example, an Employee user group can be created by selecting all the relevant SCIM values learned from the IdP - Sales, Marketing, HR, etc. It is not necessary to create a user group for each IdP Group value, if the members across these IdP Groups will be subject to common access policy, such as allowing all Employees access to the Printer device group.
+
+Nile also handles user devices that may be shared amongst different users. When 2 users share the same resource, such as a PC or tablet, the device will be associated with whichever user identity is used during authentication, ensuring that the right user-based access policies are applied to the device.
+
+## Understanding Device Groups
+
+Device groups are used to identify related devices that are not participating in a User Group.  When a device connects to the Zero Trust Fabric, it is first evaluated against User Group definitions to see if there is a match.  If so, the device is associated with that User Group.  If a device does not match any User Group, then it is evaluated against the Device policy group definitions.  
+
+For example, if a User group “Employees” is defined based on a network segment such as the “Employee” segment, any device that connects to that segment will be categorized in the Employees user policy group. 
+
+Multiple methods for defining device groups are supported,including identity-based classification (using device fingerprinting) as well as administrative classification techniques like MAC/OUI or network segment. 
+
+### Device Fingerprinting
+
+As one of the device policy group criteria, fingerprinting can be selected. The device fingerprint provides the identity for a device and is based on the same fingerprinting that is used during device on-boarding via MAB.  The device fingerprint supports 3 levels of identity:
+
+- Category: e.g., Cameras, Printers
+- Manufacturer: e.g., Dell, HP
+- Device model: e.g., Acme Printer Model ABC
+
+When defining a device policy group, one of different levels of fingerprint hierarchy can be selected. Fingerprinting can range from broad categories such as Printers down to specific manufacturer and model types. Multiple fingerprints can be combined into a single device group definition. For operational reasons, it is recommended to group device types together into groups that have common security posture and administration requirements.&#x20;
+
+### Continuous Device Validation 
+
+In support of the quarantine functionality described below, and continuous device validation can be optionally defined as part of the device policy group definition. Device validation uses active probing to IoT/OT devices on a periodic basis to ensure that a device’s login credentials are valid and is used as a means to validate corporate ownership of the asset. This helps prevent off-the-shelf IoT rogue devices from being introduced into an enterprise environment.  Device validation checking can be performed regularly with the following characteristics:
+
+- Active probing using either SNMPv3, HTTP/HTTPS, or SSH
+- Configurable revalidation periodicity: every 30min, 1hr, or 8hrs.  
+
+Traffic associated with active probing is not  considered East/West traffic and is not subject to the policy engine, as the device probing is performed directly by the Zero Trust Fabric. Only one device validation rule can be defined per Device policy group.
+
+## Understanding Application Groups
+
+Application groups are used to identify related application endpoints, whether public or private. Multiple methods for defining application groups are supported, and when combined with Actions, facilitates granular access policies to any application employed by the enterprise. Applications most often refer to destinations external to the Zero Trust Fabric (e.g., SaaS applications, Internet, DC-hosted private applications), but in the event of a locally hosted application within the Zero Trust Fabric, this will be treated as a “local” destination from a routing perspective.
+
+Application groups can be designated either as Source or Destination within a policy.  For user- or device--to-application access control, an application group is used as a destination, but for application-to-device access control (e.g., some legacy OT devices may have an external application that requests access to the OT system), the application group can be the source.
+
+**Note: any application traffic forwarded to the Zero Trust Fabric from an upstream system by default is denied unless a policy exists to allow North-to-South traffic. If the intent is to permit an inbound flow, a policy for that traffic must exist.**
+
+### Default Application Groups
+
+Default application groups are auto-created by Nile and include:
+
+- **Intranet**: this group contains the customer-defined enterprise RFC 1918 address space.  This represents the combination of internal Zero Trust Fabric subnets, private applications/servers/workloads across the enterprise, and any internal subnets that are not associated with Nile sites. By default all RFC 1019 addresses are included - customers should modify this definition accordingly.
+- **Internet**: this is defined as any address that is **non-RFC 1918** and represents general public Internet and SaaS destinations.
+
+# Policy Group Behavior
+
+## Policy Group Classification
+
+After a user or device obtains an IP address via the network on-boarding process, the endpoint goes through a classification process in order to associate it to a suitable policy group. Endpoint classification into policy groups follows a strict ordering:
+
+1. User policy groups are evaluated first.  If an endpoint does not match against any of the user policy groups, then:
+2. Device policy groups are evaluated next.
+
+Within each policy group type, policy groups are evaluated based on order of the policy group definitions, from top to bottom.  Admins can order the policy groups by dragging and dropping the relative position of each group.  **It is important to note that more specific policy groups should be placed ahead of more generalized policy groups**. This ensures that proper classification is achieved. 
+
+For example, if SCIM-based user groups are being created, and it is desirable to distinguish between general Employee group classification versus a more specific SCIM group such as Sales or Marketing, then it is important to create and sequence all the corporate department based SCIM groups **ahead&#x20;**&#x6F;f the general Employee group, as matching is done based on ordering.
+
+The classification behavior matches users and devices to **exactly one&#x20;**&#x70;olicy group - this means in the example above, even though a Sales employee could match to both Sales and general Employee policy group, the classification engine will only associate this specific Sales employee to the Sales policy group, based on group ordering. 
+
+Exact matching to a singular group also implies that **a complete set of access policies should be defined for each policy group.&#x20;**&#x45;ndpoints do not match to multiple groups and each group stands independent of others.
+
+## Policy Group Reclassification (Recalibration)
+
+On occasion, it may be necessary to recalibrate an endpoint and match it to a different policy group.  Recalibration is a continuous process - as policy groups are created, deleted, or edited, endpoints are continuously reevaluated against the latest policy group definitions, including those clients in Quarantine and Unclassified groups. NIle’s Trust Engine performs recalibration of all endpoints in the tenant upon any such changes to the policy groups, including:
+
+- Any changes in match criteria values for existing policy groups
+- Upon addition/deletion of a user or device group
+- Any change made to policy group ordering
+
+This ensures that unclassified and assigned endpoints are always consistent with the current policy group definitions.
+
+Recalibration can also occur when other types changes are made - examples include:
+
+- Unclassifying any manually classified endpoints will trigger the endpoint to be recalibrated
+- An endpoint that disconnects and reconnects will be recalibrated
+
+## Modifying Policy Groups
+
+Policy groups can be created with a specific classification type, but once created, it is important to note that th&#x65;**&#x20;classification type cannot be changed**.  Policy groups and their category are create-only constructs.  Once created, admins can change specific aspects of the policy group, including:
+
+- updates to metadata
+- changes in terms of match criteria values
+- changes to the device validation / posture check functionality
+
+If a different match type or categorization is desired for a set of endpoints, then it is necessary to create a new policy group with the new classification category (e.g., SCIM instead of segment), and to place it higher in the ordered list of policy groups.  When appropriate, the older policy group can be removed.&#x20;
+
+## Modifying Device Validation Checks within a Policy Group 
+
+When enabling device validation checking within a pre-existing policy group, the changes will not immediately apply to pre-existing endpoints - the behavior for existing endpoints is as follows:
+
+- when device validation checking is enabled in an existing policy group, existing endpoints will be validated upon the next change in IP address, expiration of authentication credentials, or in the event of a disconnect. 
+  - For wired devices, authentication credentials expire after 24 hours, so device validation checking will be added to existing wired devices within that time period. 
+  - For wireless devices, device validation will occur during roaming when a reconnect event occurs or when a forced reauthentication event is triggered.   
+- when disabling periodic device validation checking, endpoints that are currently quarantined will be recalibrated for potential classification into the updated policy group..
+

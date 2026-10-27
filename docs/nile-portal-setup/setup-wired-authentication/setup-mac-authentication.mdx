@@ -1,0 +1,55 @@
+---
+title: Setup MAC Authentication
+slug: setup-mac-authentication
+createdAt: Tue May 21 2024 14:53:51 GMT+0000 (Coordinated Universal Time)
+---
+
+### Overview
+
+**MAC Authentication** is used for endpoints—such as printers, desk phones, sensors, cameras, and other wired devices—connected to Nile Access Switches that do not support 802.1X authentication. In these cases, the device’s MAC address is used as the authentication credential.
+
+The **Nile Access Service** supports integrating MAC authentication with external RADIUS servers (for example, Cisco ISE or Aruba ClearPass). This enables organizations to leverage their existing RADIUS infrastructure for MAC-based authentication while retaining centralized management and policy enforcement through the Nile Access Service. Learn more about :Link[RADIUS Powered Authentication]{label="RADIUS Powered Authentication" spaceId="kh1Qrp4g29ZP3bHojadX_" docId="DpzQeD6jqfQucDKX3Lpob" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel newTab="true"}.
+
+**RADIUS-based MAC Authentication:&#x20;**&#x57;hen enabled, the Nile Access Service supports dynamic segment assignment based on attributes returned by the RADIUS server.&#x20;
+
+### Configuring MAC Authentication
+
+1. Log in to the Nile Portal. In the left navigation, select **Network Setup >** **Access Management > Wired&#x20;**&#x74;o add and manage MAC-based approvals, OUIs, fingerprints, and bulk uploads.
+2. To use an external RADIUS server for MAC authentication, go to **Network Setup > Authentication&#x20;**&#x61;nd add a RADIUS server; enable the Wired MAC Auth option during setup.
+
+### Device matching and rule options
+
+- **Exact MAC address rule**: Authorize a specific device and place it in a chosen segment when the MAC matches exactly.&#x20;
+- **OUI-based rule**: Match devices by manufacturer prefix (first 3 octets) and assign them to a segment.&#x20;
+- **Device fingerprint rule**: Use built-in fingerprinting (e.g., “HP printer”) to place matching devices into a segment.&#x20;
+- **Catch‑all (“ALL”) rule**: Optionally allow unmatched devices and assign a default segment; can be combined with workflows like Wired SSO.&#x20;
+
+### Ways to add and manage entries
+
+- **Approve/Deny discovered devices** directly from the MAC Authentication page (approve, deny, delete).
+- **Add OUI entries** from the OUI tool to approve or deny by vendor and map to a segment.
+- **Bulk CSV upload:** Upload multiple or all required MAC entries in a single instance using a CSV file. Proceed to the Access Management page.
+  - Click **Download sample file**.
+  - Replace the example rows with your own entries (MAC/OUI/fingerprint, description, target segment).
+  - Keep the column headers unchanged, save as CSV, and upload.
+- **Segment‑wide Approve/Deny (All)** option exists but is not recommended due to security risk.
+- **Descriptions and lifecycle controls**: Add a description per entry/rule; entries have lifecycle behaviors (e.g., retention/cleanup, statuses like Approved/Waiting/Deny).
+
+
+
+The **Nile Access Service** provides additional controls for managing wired device access, including:
+
+- Uploading **pre-approved device lists** to streamline onboarding.
+- Enabling **automatic MAC authentication (Auto‑MAC Auth)** for specified device categories.
+- Configuring **port locking** and **geographical restrictions** to control where and how devices connect.
+- &#x20;Refer to the :Link[Nile Wired Access Management FAQ]{label="Nile Wired Access Management FAQ" spaceId docId="79HHxffaWOnNgNK4M2IuF" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../nile-service-block/security/zero-trust-campus/zero-trust-access/mac-authentication/nile-wired-access-management-faq.mdx"} for details.
+
+
+
+### External RADIUS MAC Authentication (Offloading Approvals to RADIUS)
+
+- Enable **Wired MAC Authentication** on the **RADIUS server object** in the Nile portal to forward MAC authentication requests to your external RADIUS system.
+- Configure **dynamic segment assignment** by having RADIUS return the segment using either Nile’s **VSA (netseg)**&#x6F;r the standard **Tunnel-Private-Group-Id** attribute. This supports assigning different segments on a single SSID or across multiple segments based on device identity.
+- Optional portal redirection:
+  - Set a static portal redirect on the RADIUS server using the **Static URL** field, or
+  - Rely on server‑initiated redirects when integrating with an external captive portal workflow driven by MAC authentication.

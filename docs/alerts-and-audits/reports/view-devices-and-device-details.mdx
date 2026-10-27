@@ -1,0 +1,47 @@
+---
+title: View Devices and Device Details
+slug: view-devices-and-device-details
+createdAt: Wed May 08 2024 22:07:59 GMT+0000 (Coordinated Universal Time)
+---
+
+## Device Events
+
+Modified on: Mon, Mar 27, 2023 at 2:06 PM
+
+Device Events raise awareness about the following:
+
+1. Radius, DHCP and DNS issues experienced by the devices
+2. Errors (a.k.a user errors) while connecting with the network
+3. Location where the condition occurred
+4. Time at which the condition occurred
+
+For example, the below Devices page shows a list of devices with DHCP, DNS, Radius, and user errors.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LT-baF2akbVBg0ZpC1BOa_vkw9i4kjgptroravxzbzcxellzppywjtq.png)
+
+Below are the categories of device events shown by Nile Portal:
+
+1. DNS events
+2. Association requests events.
+3. Authentication success/failure event.
+4. DHCP success/not reachable/out of ip address events
+5. Radius time out events
+6. EAP success/failure events
+7. Static Client IP events
+8. Station state error events
+
+By Clicking on a particular Device in the "User" column, you can view the device details and see the ordered list of events for this device.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rMPvargG7kIf2wQ59b5Ym_txfqmt76t2cb6tcxteaa270tsjbpvadvsa.png)
+
+## Run Test for Troubleshooting
+
+To resolve end users issues, Nile Portal provides the customer Admin with a "Run Test" capability. Admins may execute "Run Test" to determine where the user is experiencing a problem. Specifically, the Admin will be able to answer whether the problem is with the network, infrastructure, or an application.
+
+An example of working with Run-Test is shown below (a 2-step process):
+
+1. An Admin would click the "RUN TEST" blue text on the top right of the screen to start the process.
+2. RUN TEST creates a popup window while running the tests and then displays the results once all are complete.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/KyebaKcUQC4GzvF_6-sTR_image.png)
+

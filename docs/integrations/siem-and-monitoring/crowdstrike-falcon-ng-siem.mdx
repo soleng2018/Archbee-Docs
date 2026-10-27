@@ -1,0 +1,124 @@
+---
+title: CrowdStrike Falcon NG SIEM
+slug: crowdstrike-falcon-ng-siem
+createdAt: Fri Apr 03 2026 03:28:44 GMT+0000 (Coordinated Universal Time)
+---
+
+## 1. Introduction
+
+This guide explains how to integrate **Nile** with **CrowdStrike Falcon NG SIEM** so that Nile security and network events are streamed into Falcon for centralised monitoring, detection, and investigation.
+
+## 2. Audience and prerequisites
+
+### 2.1 Intended audience
+
+This document is intended for:
+
+- **Nile tenant administrators** responsible for integrations.
+- **Security / SIEM engineers** managing CrowdStrike Falcon NG SIEM.
+- **Network and security operations teams** consuming SIEM data.
+
+### 2.2 Prerequisites
+
+Before you start, ensure the following:
+
+- An active **Nile tenant** with SIEM integration enabled.
+- Access to the **Nile Portal** (Cleo) with permissions to configure **Global Settings → Integrations**.
+- A **CrowdStrike Falcon** environment with the **NG-SIEM / Falcon LogScale data connector** capability, and permissions to create **Data Connectors** (Nile Access Service Data Connector).
+
+## 3. Configuring CrowdStrike Falcon NG SIEM
+
+This section focuses on setting up the **data connector** in Falcon so Nile can send events to it.
+
+### 3.1 Create and configure a Data Connector
+
+1. **Log in** to your CrowdStrike Falcon console as an administrator.
+2. Navigate to **Data Connectors** (NG-SIEM / Falcon LogScale).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-D95ctYdC4ELrKkarMrdp_.blob)
+
+3. Create a **new Data Connection** for Nile (e.g., name it “*Nile Data Connector”*).
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FHJ9t20G2dFhDz_Q09xVq_.blob)
+
+4. Click on “Filter by connector name”, search for “Nile”, and apply the filter.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MJlgYMvVmPb9K5fKsMG6h_.blob)
+
+5. Select the connector type as “Nile Access Service Data Connector” and click “Configure”.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5JM_Cff6vlPzD4WxJcTkx_.blob)
+
+6. In the “New Connection details” window:&#x9;
+   - Provide a connection name and description (optional)
+   - Select a timezone for your data. This will be applied to event data that does not include timezone information. 
+   - Host enrichment is enabled by default (optional). If needed, you can disable it by clearing the checkbox.
+   - Accept the Terms and Conditions, then click “Create connection”.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/RGtkEBCL2FfuQF98khxh8_.blob)
+
+7. A banner message appears in the Falcon console indicating that the connector setup is in progress. Click Close.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/5HQpdFCdkonStjszMTNmI_.blob)
+
+8. A notification message appears at the top of the screen indicating that the connector is ready to receive data. Click “Generate API Key” to create the API Key.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/cyPlh1qc4XOvHtRi_KE1N_.blob)
+
+9. This step generates the API Key and API URL as shown below. **Copy and securely store the API Key now**, as it is displayed only once and cannot be retrieved later. Click **Close** to exit the window.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/azu92dwvCYQ47nUOJy6df_.blob)
+
+## 4. Configuring Nile to send data to CrowdStrike
+
+### 4.1 Login to Nile Portal
+
+1. Log in to the **Nile Portal** with an **admin** account.
+2. From the left navigation, go to **Network Setup**, then open **Global Settings**.
+3. Click the **Integrations** tab.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/y2-ljv1UZfC1ZptiRzyTO_.blob)
+
+### 4.2 Add the CrowdStrike SIEM integration
+
+1. Click **Setup Integration** or the **“+” (Add)** button.
+2. In the list of SIEM options, select **Falcon** **SIEM**.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LIMCyMmVPO3_Fe9H-XrDx_.blob)
+
+3. On the CrowdStrike integration form in Nile
+   - Name: Set the Name to default. Nile uses the SIEM connection named “default” as the primary path for sending events out. 
+   - API URL: Paste the API URL exactly as shown in the Falcon Data Connector page (Nile Access Service Data Connector). This must match the URL CrowdStrike shows in its Data Connector configuration. 
+   - API Key: Paste the API key generated for the Falcon Data Connector.
+   - Click Next to proceed to the event selection.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/iFLgUIuAZE60wBMdJ0_8J_.blob)
+
+4. Select Nile event categories to send to CrowdStrike. 
+   - Enable the toggle for Audit, User Device Events, and Alerts as required. 
+   - Click Save to create the integration.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dApDodTS2MwGePRhnM9Ju_.blob)
+
+5. After saving, you should see a **CrowdStrike** tile in the Integrations page
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/im8r87Y-DeBE7I8gdoHQG_.blob)
+
+### 4.3 Test the integration from Nile
+
+1. On the **CrowdStrike** tile, click the **Test** icon \<->.
+2. Wait for the test to complete.
+   - **Green** status means Nile can reach the Falcon Data Connector, and the credentials/URL are valid.
+   - **Red** or failure means you should:
+     - Confirm the Falcon **Data Connection** is **enabled and running** in the Falcon console (Data Connector page). 
+     - Double-check the **API URL** and **API key** in Nile exactly match what’s shown in Falcon. 
+     - Ensure the integration Name is **the default** if this is your primary SIEM stream.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VADNFdeaMQLfJ03NhaSoX_.blob)
+
+3. If the test is successful, the test message will appear in the CrowdStrike Event console.&#x20;
+   - Search for **Vendor.eventType="test"** to locate and verify the test message.
+   - The test event was successfully received and processed by the system.
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YNKJz1yrk5292Qwgowglr_.blob)
+

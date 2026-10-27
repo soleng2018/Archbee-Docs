@@ -1,0 +1,122 @@
+---
+title: Configured device with Wired 802.1X, not able to connect
+slug: configured-device-with-wired-8021x-not-able-to-connect
+createdAt: Wed Jul 24 2024 20:16:19 GMT+0000 (Coordinated Universal Time)
+---
+
+Nile supports both Wireless and Wired 802.1X connections. 
+
+**1.  Verify if there any DOT1X authentication attempts from client side**.
+
+ By checking Device List from Nile Portal we could see particular client logs event:
+
+
+
+![Devices: Devices list](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mDwPkD2Vwe2LXXaDbxaSt_fofxykjfztot1xvf2cr-6pvywrobpwvnia.png "Devices: Devices list")
+
+**How to get MAC address of device:**
+
+a.  Navigate to: Control Panel\Network and Internet\Network Connections
+
+b. Right click to Wired adapter and click to Status:
+
+
+
+![Windows: Ethernet properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dmMVwQrFC9_sJmiX8u70A_5bwwty36hydvoqqe3fdm7fdev0eowmfhcw.png "Windows: Ethernet properties")
+
+
+
+c.  On Ethernet Status window click on Details:
+
+
+
+![Windows: Ethernet properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/MAkDz0qk9n2NRz1csnRUM_cd7pqxct2etpf5osddtretuwpg18exowuw.png "Windows: Ethernet properties")
+
+
+
+d. MAC address of device will be listed as Physical Address:
+
+
+
+![Windows: Ethernet properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/mR5OVKVlktR9sk34uQkTa_aees9zohxfsax8u4wj13mldpt3t6bfym5a.png "Windows: Ethernet properties")
+
+**2.  If there are no Devices found for that particular MAC address**, that means there is no Dot1x authentication attempts from client side and by default that particular device connected to Nile Switch port will fall to MAB approval page:
+
+
+
+![Devices: Devices info not found](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Jz66W2gIlWafZM3y1eANK_cpmrbuaabguidcpuv9yizb8ohdk88mbkaw.png "Devices: Devices info not found")
+
+Navigate to Settings -> MAB . We could see that MAC address we testing is pending MAB approval that confirms that DOT1X was not initiated from Client side and we will need to verify DOT1X configuration:
+
+
+
+![Settings: Access management](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/j2Bf3FXJ3qQZRIy-02kUD_qjh6atke-agvbdcbiz4iibnsldqo6q5prg.png "Settings: Access management")
+
+
+
+**3.  Verify 802.1X supplicant configuration from client side.**
+
+Client could be running different  variety of DOT1X supplicants like:
+
+\- Windows native supplicant.
+
+\- Cisco Anyconnect
+
+\- MAC OSX native supplicant 
+
+(please check vendor documentation for particular supplicant configuration)
+
+In our particular example, out PC client is Windows PC and should be running Windows native DOT1X supplicant.
+
+a. From Wired adapter Properties we could check if there Authentication Tab is available:
+
+As you could see Authentication tab is missing, that means our Wired DOT1X service is not running:
+
+
+
+![Windows: Ethernet properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/38WnQhVQH2qQsaorzFk64_vrtgfovwf0pq48tf6rqc2cfimfy8xr0sla.png "Windows: Ethernet properties")
+
+b. From PC Start-> Services, we need to enable Wired AutoConfig Service by clicking Start:
+
+
+
+![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uKouEn3Hni13t0MH9e-ev_ielgigyathceru890ehfxyv6hwrf1sjxtw.png)
+
+As result we could see Authentication Tab in our Wired Adapter properties to configure DOT1X authentication:
+
+
+
+![Windows: Ethernet properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/qwBe_9e-8VzAG_-_KEbOe_9ltr3ekxkv7l5db2ciicfglejpiyyozssw.png "Windows: Ethernet properties")
+
+
+
+**4.  Verify DOT1X supplicant configuration.**
+
+On this particular example, we will have EAP-PEAP(EAP-MSCHAP v2) password based authentication configured.
+
+
+
+![Windows: Supplicant config](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3sSfqaOY9u1JgGNu2WYBo_i63mmigyg0j4lnfh-i9dx8ryvvgonped-a.png "Windows: Supplicant config")
+
+From Settings, selecting Secure password (EAP-MSCHAP v2):
+
+
+
+![Windows: Supplicant config](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UH-ClADFo_oyeWmzoCxFV_dkkgy6dwkn79isb2hzahl3xgtpah31wihq.png "Windows: Supplicant config")
+
+From Advance Settings we have selected User Authentication only:
+
+![Windows: Supplicant config](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/so-hU_hIn_NOcNUd9wd6p_pyogxo4o4tlhascejla6b4zjhgpjc-fpga.png "Windows: Supplicant config")
+
+**5.  Checking back Nile Portal to see DOT1X authentication:**
+
+From Nile Portal device list, we see User connection. By clicking to User Link we could check details and events:
+
+![Devices: Device info](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9z8RBHoMTFrpYs8I4C2yu_tyrmt8b0f4oud-qeorgufpamzb1q4tpixw.png "Devices: Device info")
+
+Client connection details and events, where we could see Client information, Event Details and Timeframe.
+
+As we could see, DOT1X authentication was success this time:
+
+![Devices: Device events](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kb3nuv7Fr-rXwsLCcXUud_6mstdl8wq0vgj0jurouqat4pvtkhcnc-bq.png "Devices: Device events")
+
