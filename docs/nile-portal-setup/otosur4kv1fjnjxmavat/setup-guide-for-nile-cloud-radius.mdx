@@ -8,7 +8,7 @@ createdAt: Wed Apr 08 2026 13:33:38 GMT+0000 (Coordinated Universal Time)
 
 ## 1. Introduction
 
-### 1.1 Purpose of this guide
+### 1.1 Purpose of This Guide
 
 This guide provides step-by-step instructions for deploying the Nile RADIUS Service to enable secure 802.1X authentication on wired and wireless networks using EAP-TLS.
 
@@ -130,9 +130,9 @@ Before enabling Nile RADIUS, ensure the following are in place:
 5. **Optional — Microsoft Intune integration.** Required only if you intend to use Intune device-compliance state as a match condition in Nile RADIUS policies.
 6. &#x20;Review Technical Documentation: Read the :Link[Nile RADIUS Documentation]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} to understand key concepts.
 
-## 2. Getting ready: Identity, certificates, and integrations
+## 2. Getting Ready: Identity, Certificates, and Integrations
 
-### 2.1 Identity providers and SCIM
+### 2.1 Identity Providers and SCIM
 
 Integrate Nile with your IdP so the user and group context is available to Nile RADIUS for policy evaluation:
 
@@ -142,7 +142,7 @@ Integrate Nile with your IdP so the user and group context is available to Nile 
 
 For step-by-step IdP and SCIM integration instructions, refer to the relevant integration guide on :Link[Nile Docs]{href="https://docs.nilesecure.com/" newTab="true" hasDisabledNofollow="false"}.
 
-### 2.2 Certificate authority and PKI (for EAP-TLS)
+### 2.2 Certificate Authority and PKI (for EAP-TLS)
 
 For EAP-TLS, the customer is responsible for the full certificate lifecycle. This includes operating (or leveraging) a CA/PKI, issuing the Nile RADIUS server certificate, and issuing and distributing client certificates to devices — typically via an MDM such as Microsoft Intune.
 
@@ -176,7 +176,7 @@ Each client device must:
 1. Trust the CA chain (root and intermediates) that signed the Nile RADIUS server certificate — install the chain in the device's trust store so the supplicant validates the RADIUS server during the EAP-TLS handshake.
 2. Present a valid client certificate whose chain terminates at one of the CAs uploaded to Nile RADIUS, with clientAuth EKU and the identity (typically CN=\<user-or-device> and/or SAN email / UPN) you plan to match in your policies.
 
-### 2.3 Intune integration (optional)
+### 2.3 Intune Integration (Optional)
 
 To enforce RADIUS authentication decisions based on device compliance — such as restricting corporate SSID access to Intune-managed or compliant devices only — integrate Intune with Nile RADIUS by following the steps outlined in the :Link[Intune Integration Guide]{href="https://docs.nilesecure.com/nile-cloud-radius-integration-with-intune" newTab="true" hasDisabledNofollow="false"}.
 
@@ -184,7 +184,7 @@ To enforce RADIUS authentication decisions based on device compliance — such a
 
 This section configures Nile RADIUS itself and wires it into your segments, SSIDs, and policies.
 
-### 3.1 Upload the server certificate and Trust Certificates
+### 3.1 Upload the Server Certificate and Trust Certificates
 
 1. Navigate to the **Nile RADIUS&#x20;**&#x63;onfiguration. In the Nile portal, go to Network Setup → Authentication → Nile RADIUS.
 
@@ -240,7 +240,7 @@ Configure SSIDs and wired access
    - Wired 802.1X follows the **Wired Dot1x** knob set in section 3.1 — no per-SSID configuration is needed.
    - Each wired port (or port profile) is mapped to a segment that acts as the default for accepted devices. A RADIUS policy can override the segment when multiple segments are eligible, exactly as with wireless.
 
-### 3.3 Policy Groups vs. RADIUS policies — understand the distinction
+### 3.3 Policy Groups vs. RADIUS Policies — Understand the Distinction
 
 This is the most common point of confusion when first configuring Nile RADIUS. Nile has **two** distinct policy frameworks that operate at different points in the flow:
 
@@ -305,7 +305,7 @@ For the rest of this guide:
 - Section 3.4 covers **Nile RADIUS policies** — required for any RADIUS deployment.
 - Section 3.5 explains how RADIUS-assigned segments feed into Trust Engine policy groups, and points you to the full Trust Service setup workflow.
 
-### 3.4 Create Nile RADIUS policies
+### 3.4 Create Nile RADIUS Policies
 
 Navigate to **Network Setup → Authentication → Nile RADIUS → Policies** and create one policy per authorization outcome you need. Policies are evaluated top-down at authentication time; place more specific policies first.
 
@@ -371,7 +371,7 @@ The tag is delivered to the Palo Alto firewall via the XML API, so existing fire
   RADIUS-derived user/device identity (the certificate CN, SCIM group, Intune state) is available in the Nile RADIUS transaction record and on the device's detail page in the portal — useful for validating that a given device matched the policy you expected.
 </BlockQuote>
 
-### 3.5 Trust Engine Policy Groups for RADIUS-authenticated endpoints (optional but recommended)
+### 3.5 Trust Engine Policy Groups for RADIUS-Authenticated Endpoints (Optional but Recommended)
 
 After Nile RADIUS authorizes a device and assigns it to a segment, the **Nile Trust Engine** governs what that device can talk to — both east-west inside the Nile Service Block and north-south toward the internet, data center, or upstream firewall. Trust Engine policies are an entirely separate workflow from RADIUS policies and live under **Security → Trust Engine**.
 
@@ -384,7 +384,7 @@ For most RADIUS-driven deployments you will want to create:
 
 Trust Engine setup is its own end-to-end workflow that goes beyond the scope of a RADIUS guide. For the full step-by-step — creating policy groups, service profiles, policy sets, working with the matrix view, and reading policy logs — follow the Setup Guide for Nile Trust Service.
 
-## 4. Endpoint configuration — EAP-TLS
+## 4. Endpoint Configuration — EAP-TLS
 
 This section covers typical supplicant configuration. Cross-check with OS-specific docs for UI changes between releases. The recommended path for any fleet larger than a few devices is to push the Wi-Fi / wired profile and the client certificate together via MDM.
 
@@ -429,9 +429,9 @@ Nile RADIUS terminates EAP-TLS using a standard supplicant flow, so any modern s
 - Enable server certificate validation against the Nile RADIUS server's CA chain.
 - For fleets, push the Wi-Fi profile and the certificate together via MDM (Intune, Jamf, Workspace ONE) — manual configuration does not scale and is error-prone.
 
-## 5. Validation and troubleshooting
+## 5. Validation and Troubleshooting
 
-### 5.1 Verify 802.1X activity in Nile
+### 5.1 Verify 802.1X Activity in Nile
 
 1. In the Nile portal, go to **Devices**.
 2. Filter by MAC address or username to see:
@@ -440,7 +440,7 @@ Nile RADIUS terminates EAP-TLS using a standard supplicant flow, so any modern s
    - Recent events and timestamps.
 3. For the full RADIUS transaction (EAP method, certificate CN, matched policy, policy expression, returned attributes), open the device detail page and switch to the **RADIUS** tab, or use **Infrastructure → Nile RADIUS → Monitoring** for a service-wide view.
 
-### 5.2 Common issues and checks
+### 5.2 Common Issues and Checks
 
 **No device entry in Nile for the MAC address.** The supplicant is not sending 802.1X at all. Check supplicant services (WLAN AutoConfig / Wired AutoConfig), the wireless/wired profile configuration, and that the SSID or port is 802.1X-enabled in Nile.
 
@@ -460,7 +460,7 @@ failed to verify certificate: x509: certificate has expired or is not yet vali&#
 
 **Server certificate validation fails on the client side.** The supplicant does not trust the CA that issued the Nile RADIUS server cert. Install the CA root (and intermediates) into the device's trust store, and — if you ticked "Connect to these servers" — make sure the configured server name matches a SAN on the Nile RADIUS server certificate.
 
-### 5.3 RADIUS alerts
+### 5.3 RADIUS Alerts
 
 Nile automatically generates tenant-level RADIUS failure alerts when the percentage of clients seeing failures in a rolling 15-minute window crosses defined thresholds:
 
@@ -472,9 +472,9 @@ Server certificate expiration alerts are raised 90, 60, 30, and 10 days before t
 
 Clicking an alert takes you directly to the **Devices** page filtered to the affected clients, simplifying bulk troubleshooting. Alerts auto-close once the failure rate drops below 5%.
 
-## 6. Day-2 operations and monitoring
+## 6. Day-2 Operations and Monitoring
 
-### 6.1 Continuous monitoring
+### 6.1 Continuous Monitoring
 
 Nile RADIUS is:
 
@@ -487,11 +487,11 @@ Use:
 - **Device detail → RADIUS** for per-session troubleshooting.
 - **Security → Trust Engine → Policy Logs** to confirm which Trust Engine policy is being applied to traffic from a RADIUS-authenticated device once it is on the network.
 
-### 6.2 What happens when the Internet goes down
+### 6.2 What Happens When the Internet Goes Down
 
 Existing authenticated sessions remain active. Devices continue roaming seamlessly thanks to locally cached PMK. New authentications and re-authentications fail until cloud connectivity is restored — plan supplicant session and reauth timers accordingly for sites with unreliable WAN.
 
-### 6.3 Policy and certificate changes
+### 6.3 Policy and Certificate Changes
 
 When changing SCIM mappings, Intune integration, certificate-CN-based policies, or rolling out a new RADIUS server certificate:
 
@@ -550,11 +550,11 @@ Before enabling Nile RADIUS, ensure the following:
 4. **Optional: Microsoft Intune integration**
    - Required if Intune compliance state will be part of RADIUS policies.
 5. **Review Technical Documentation**:&#x20;
-   - Read the :Link[**Nile RADIUS Documentation**]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} to understand key concepts
+   - Read the :Link[**Nile Radius Documentation**]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} to understand key concepts
 
-## 2. Getting ready: Identity, certificates, and integrations
+## 2. Getting Ready: Identity, Certificates, and Integrations
 
-### 3.1 Identity providers and SCIM
+### 3.1 Identity Providers and SCIM
 
 Integrate Nile with your IdP to sync user and group data into the platform:
 
@@ -564,7 +564,7 @@ Integrate Nile with your IdP to sync user and group data into the platform:
 
 For step-by-step integration instructions, refer to the relevant guide on Nile Docs.&#x20;
 
-### 3.2 Certificate authority and PKI (for EAP‑TLS)
+### 3.2 Certificate Authority and PKI (for EAP‑TLS)
 
 For EAP-TLS authentication, the customer is responsible for managing the full certificate lifecycle. This includes operating or leveraging an existing CA/PKI infrastructure and issuing client certificates to devices — typically via an MDM such as Microsoft Intune or equivalent.
 
@@ -572,7 +572,7 @@ For EAP-TLS authentication, the customer is responsible for managing the full ce
   **Note:** Nile does not manage certificate issuance or renewal.
 </BlockQuote>
 
-**Server certificate preparation**
+**Server Certificate Preparation**
 
 Obtain a signed server certificate for the Nile RADIUS server using one of the following methods:
 
@@ -584,18 +584,18 @@ Once signed, export the certificate in one of the following formats:
 - A **.p12 / .pfx bundle** containing the signed server certificate, its encrypted private key, and the complete CA chain that signed it.
 - Separately as the server certificate and root/intermediate CA certificates.
 
-**CA chain for client certificate validation**
+**CA Chain for Client Certificate Validation**
 
 If the client certificates are issued by a different CA than the one that signed the Nile RADIUS server certificate, export the separate CA chain (root and any intermediates) that issues client certificates. This allows Nile RADIUS to validate client identity during authentication.
 
-**Client requirements**
+**Client Requirements**
 
 Each client device must:
 
 1. **Trust** the CA chain (root and intermediates) that signed the Nile RADIUS server certificate.
 2. **Present** a valid client certificate whose chain terminates at one of the uploaded trusted CAs.
 
-### 3.3 Intune integration (if applicable)
+### 3.3 Intune Integration (If applicable)
 
 To enforce RADIUS authentication decisions based on device compliance — such as restricting corporate SSID access to Intune-managed or compliant devices only — integrate Intune with Nile RADIUS by following the steps outlined in the :Link[Intune Integration Guide]{href="https://docs.nilesecure.com/nile-cloud-radius-integration-with-intune" newTab="true" hasDisabledNofollow="false"}.
 
@@ -626,7 +626,7 @@ This step configures Nile RADIUS itself and wires it into your network context.
 5. **Save configuration**
    - Click **Save**. Nile RADIUS is now ready to accept **EAP‑TLS** authentications once wired into segments and SSIDs.
 
-### 4.2 Enable Nile RADIUS for EAP‑PEAP with AD integration
+### 4.2 Enable Nile RADIUS for EAP‑PEAP with AD Integration
 
 This section assumes you want to support **username/password authentication** against AD/LDAP using **EAP‑PEAP/MSCHAPv2**.
 
@@ -654,7 +654,7 @@ This section assumes you want to support **username/password authentication** ag
 5. **Save configuration**
    - Click **Save**. AD‑backed EAP‑PEAP is now enabled for 802.1X authentication.
 
-### 4.3 Site‑aware AD routing (optional)
+### 4.3 Site‑Aware AD Routing (Optional)
 
 If you operate **per‑site AD servers**, enable **site‑aware AD**:
 
@@ -665,11 +665,11 @@ You would typically enable this when:
 - Large distributed deployment
 - Different regions use local AD domain controllers
 
-## 5. Step 2 – Map RADIUS to segments and SSIDs
+## 5. Step 2 – Map RADIUS to Segments and SSIDs
 
 Nile RADIUS works hand‑in‑hand with segments and SSIDs.
 
-### 5.1 Create/verify segments
+### 5.1 Create/Verify Segments
 
 1. In Nile Control Center, ensure that **segments** exist for the desired logical zones, e.g.:
    - employee-prod
@@ -682,13 +682,13 @@ Nile RADIUS works hand‑in‑hand with segments and SSIDs.
 
 Segments replace VLANs—each segment is essentially an L3 subnet.
 
-### 5.2 Map segments to Nile RADIUS
+### 5.2 Map Segments to Nile RADIUS
 
 1. For segments where access is controlled via 802.1X:
    - Associate the segment with **Nile RADIUS** as the authentication backend.
 2. Ensure any legacy external RADIUS mappings (ISE/ClearPass) are updated or left in place only where you intentionally keep hybrid mode (see migration section).
 
-### 5.3 Configure SSIDs and wired access
+### 5.3 Configure SSIDs and Wired Access
 
 1. **Wireless SSIDs**
    - Go to **Network Setup → Wireless**.
@@ -703,11 +703,11 @@ Segments replace VLANs—each segment is essentially an L3 subnet.
   When multiple segments are associated with a single SSID, segment selection is driven by authorization (SCIM groups, Intune compliance, certificate attributes, etc.) rather than static VLAN assignments.
 </BlockQuote>
 
-## 6. Step 3 – Define identity and device groups for RADIUS
+## 6. Step 3 – Define Identity and Device Groups for RADIUS
 
 This step mirrors the TS guide’s “Create Policy Group definitions”, but focuses on RADIUS‑driven identities.
 
-### 6.1 RADIUS‑relevant user groups
+### 6.1 RADIUS‑Relevant User Groups
 
 Navigate to **Security → Trust Engine → Policy Groups → User Groups**.
 
@@ -730,7 +730,7 @@ For each:
 4. Enter one or more **Values**.
 5. Click **Create**.
 
-### 6.2 Device and application groups
+### 6.2 Device and Application Groups
 
 For IoT and infrastructure devices authenticated via 802.1X (often using EAP‑TLS):
 
@@ -746,7 +746,7 @@ The UI workflow is analogous to the TS guide:
 3. Choose **Match Criteria** (fingerprint, segment, IP/subnet, etc.).
 4. Enter values, then **Create**.
 
-## 7. Step 4 – Configure RADIUS‑aware policies
+## 7. Step 4 – Configure RADIUS‑Aware Policies
 
 Policies tie together:
 
@@ -797,7 +797,7 @@ Each policy is created via a wizard:
 
 **Default‑deny:** Ensure that flows you want to permit are explicitly covered; otherwise, they will be denied.
 
-## 8. Endpoint configuration – EAP‑TLS and EAP‑PEAP
+## 8. Endpoint Configuration – EAP‑TLS and EAP‑PEAP
 
 This section covers typical supplicant configuration steps. Always cross‑check with OS‑specific docs for UI changes.
 
@@ -873,9 +873,9 @@ General guidance:
 
 For large fleets, use MDM (e.g., Intune, Jamf) to push Wi‑Fi profiles.
 
-## 9. Validation and troubleshooting
+## 9. Validation and Troubleshooting
 
-### 9.1 Verifying 802.1X activity in Nile
+### 9.1 Verifying 802.1X Activity in Nile
 
 1. In the Nile Control Center, go to **Devices**.
 2. Filter by MAC address or username to see:
@@ -888,7 +888,7 @@ For large fleets, use MDM (e.g., Intune, Jamf) to push Wi‑Fi profiles.
    - Action (Allow / Deny / Forward)
    - Flow metadata (IPs, ports, timestamps)
 
-### 9.2 Common issues and checks
+### 9.2 Common Issues and Checks
 
 **No device entry in Nile for the MAC address**
 
@@ -913,7 +913,7 @@ For large fleets, use MDM (e.g., Intune, Jamf) to push Wi‑Fi profiles.
 - Verify user credentials against AD.
 - Ensure correct AD servers and site‑aware settings are chosen in Nile.
 
-### 9.3 RADIUS alerts
+### 9.3 RADIUS Alerts
 
 Nile automatically generates **RADIUS failure alerts** when a significant percentage of clients see failures in a rolling 15‑minute window:
 
@@ -925,9 +925,9 @@ Clicking an alert takes you directly to the **Devices** page filtered to affecte
 
 Alerts auto‑close when failures drop below 5%.
 
-## 10. Day‑2 operations and monitoring
+## 10. Day‑2 Operations and Monitoring
 
-### 10.1 Continuous monitoring
+### 10.1 Continuous Monitoring
 
 Nile RADIUS is:
 
@@ -939,14 +939,14 @@ Use:
 - **RADIUS monitoring pages** and **device session views** to troubleshoot individual logins.
 - **Policy Logs** to understand segment and policy assignment decisions.
 
-### 10.2 Policy changes and audits
+### 10.2 Policy Changes and Audits
 
 When changing SCIM mappings, Intune usage, or certificate mappings (CN/OU‑based policies), always:
 
 - Stage changes in a limited scope (test site or subset of groups).
 - Use logs to verify correct behavior before broad rollout.
 
-### 10.3 Handling non‑802.1X or headless devices
+### 10.3 Handling Non‑802.1X or Headless Devices
 
 For devices that **cannot run 802.1X**:
 
@@ -956,11 +956,11 @@ For devices that **cannot run 802.1X**:
 
 This allows Nile RADIUS to focus on 802.1X‑capable endpoints while still securing legacy or constrained devices.
 
-## 11. Migration and co‑existence with legacy NAC
+## 11. Migration and Co‑Existence with Legacy NAC
 
 Many customers migrate from **Cisco ISE**, **Aruba ClearPass**, or similar legacy NAC solutions.
 
-### 11.1 Migration patterns
+### 11.1 Migration Patterns
 
 **Wireless**
 
@@ -971,7 +971,7 @@ Many customers migrate from **Cisco ISE**, **Aruba ClearPass**, or similar legac
 
 - Use the **“wired dot1x”** option (where available) to choose whether legacy NAC or Nile RADIUS handles wired 802.1X, enabling controlled migration rather than big‑bang cutovers.
 
-### 11.2 Reusing legacy policies
+### 11.2 Reusing Legacy Policies
 
 External integration docs (ISE/ClearPass) show how:
 
