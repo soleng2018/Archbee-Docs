@@ -14,7 +14,7 @@ By configuring this integration, you can leverage your existing Azure AD infrast
 
 - Administrator rights to Nile Customer Portal.
 - Administrator rights to Azure AD.
-- The same Nile Customer Portal administrator needs to be a user in Azure AD
+- The same Nile Customer Portal administrator needs to be a user in Azure AD.
 
 ## Azure AD Enterprise Application Setup
 
@@ -155,7 +155,7 @@ Update the ‘Identifier’ and ‘reply URL’ in the ‘Basic SAML Configurati
 
 ## Nile Customer Portal Identity Provider Setup
 
-Login to the Nile Customer Portal (:Link[https://www.nile-global.cloud]{href="https://www.nile-global.cloud" newTab="true"}) as an administrator.
+Log in to the Nile Customer Portal (:Link[https://www.nile-global.cloud]{href="https://www.nile-global.cloud" newTab="true"}) as an administrator.
 
 - Go to **Settings** -> **Global Settings -> Identity**
 
@@ -169,7 +169,7 @@ Click on **ADD A NEW PROVIDER:**
   - IdP Issuer URI: Azure AD SAML app Identifier noted in step 15 of the previous section.
   - IdP SSO URL: Azure AD SAML app Login URL noted in step 15 of the previous section.
   - Destination URL: Azure AD SAML app Login URL noted in step 15 of the previous section.
-  - SELECT CERTIFICATE: Upload the ‘SAML signing certificate downloaded previously.
+  - SELECT CERTIFICATE: Upload the ‘SAML signing certificate’ downloaded previously.
   - Click the **SUBMIT** button to save the changes and add the new Azure AD provider.
 
 ![](https://nilesecure.wpenginepowered.com/wp-content/uploads/2024/02/Picture22-1.png)
@@ -191,7 +191,7 @@ For illustration purposes only, the values used in this example:
 &#x20;Location:
 &#x20;**https\://login.u1.nile-global.cloud/sso/saml2/0oaah83qpuT5TRtMY5d7**
 
-Go back to the enterprise app (Nile) created on Azure AD to edit the ‘Basic SAML Configuration and click **Edit.**
+Go back to the enterprise app (Nile) created on Azure AD to edit the ‘Basic SAML Configuration’ and click **Edit.**
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/22.png)
 
@@ -209,7 +209,7 @@ Replace the temporary values of **Entity ID** and **Reply URL** with the values 
 <hint type="info">
   It is assumed that the administrator credentials belong to a domain in Azure AD. This domain would already be an Allowed domain on the Nile Customer Portal.&#x20;
 
-  Note: The Azure AD provider configuration is completed for SSO users to gain Internet access after signing-in using their AD credentials.
+  Note: The Azure AD provider configuration is completed for SSO users to gain Internet access after signing in using their AD credentials.
 </hint>
 
 ## Group Mapping

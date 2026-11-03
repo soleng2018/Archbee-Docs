@@ -121,7 +121,7 @@ Then click on “OK” to save the changes.
 
 ### 3. FortiGate Firewall Rules
 
-FortiGate has an implicit rule of denying all the traffic.To ensure the NSB subnet and the Sensor subnet is able to access the Internet, a rule needs to be created.
+FortiGate has an implicit rule of denying all the traffic. To ensure the NSB subnet and the Sensor subnet is able to access the Internet, a rule needs to be created.
 
 The following example policy will allow any traffic coming from the NSB switch interfaces to the internet. The example rule is intended to be used as reference and should be modified to fit the customer needs. In case the customer wants to allow communication from Host A to Host B within the NSB, they will need to create firewall rules to allow that traffic to hairpin and enter into the NSB.
 
@@ -130,7 +130,7 @@ The following example policy will allow any traffic coming from the NSB switch i
 &#x20;a. Name Provide a name to the rule
 &#x20;b. Incoming Interface Select the “NSB Switch”
 &#x20;c. Outgoing Interface WAN1
-&#x20;d. Source Create a source address with either a summarized subnet of all the subnets managed by the NSB or provide a IP range or select “Allow All”
+&#x20;d. Source Create a source address with either a summarized subnet of all the subnets managed by the NSB or provide an IP range or select “Allow All”
 &#x20;e. Destination All
 &#x20;f. Schedule Always
 &#x20;g. Service Specify any specific service like HTTP/HTTPS to be allowed or allow all
@@ -142,7 +142,7 @@ The following example policy will allow any traffic coming from the NSB switch i
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/policy.png)
 
-***Note:*** *NAT may need to be disabled while creating the firewall policy for some firewall rules to allow access to certain protocols (e.g., DHCP, DNS, Radius, NTP)*
+***Note:*** *NAT may need to be disabled while creating the firewall policy for some firewall rules to allow access to certain protocols (e.g., DHCP, DNS, RADIUS, NTP)*
 
 ### 4. DHCP Server
 
