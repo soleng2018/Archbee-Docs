@@ -8,7 +8,7 @@ createdAt: Tue Apr 07 2026 12:34:02 GMT+0000 (Coordinated Universal Time)
 
 This guide explains how to set up Nile Trust Service, Nile’s micro-segmentation capability for controlling both east–west and north–south traffic.&#x20;
 
-### Key Terminology
+### Key terminology
 
 - **Uni (Unidirectional)**: Traffic flows in one direction only
 - **Bi (Bidirectional)**: Traffic flows in both directions
@@ -30,11 +30,11 @@ Nile Trust Service supports three approaches to creating trust policies:
 
 Before beginning any migration, complete the following:
 
-1. **Review Technical Documentation**: Read the :Link[Nile Trust Service Documentation]{href="https://docs.nilesecure.com/nile-trust-service" newTab="true" hasDisabledNofollow="false"} to understand key concepts and constructs
-2. **Contact Nile Support**: Confirm your system release version
-3. **Enable Feature Flags**: Request Nile Support to enable the micro-segmentation 1.6 feature flag
+1. **Review Technical Documentation**: Read the :Link[Nile Trust Service Documentation]{href="https://docs.nilesecure.com/nile-trust-service" newTab="true" hasDisabledNofollow="false"} to understand key concepts and constructs.
+2. **Contact Nile Support**: Confirm your system release version.
+3. **Enable Feature Flags**: Request Nile Support to enable the micro-segmentation 1.6 feature flag.
 4. **Check site readiness**: Confirm that the target site is already onboarded to Nile Access Service.
-5. Ensure that **segments** are created and mapped to their respective DHCP pools. In the **Nile ecosystem**, there are no VLANs. Nile has a construct called Segments. A **segment** is an L3 construct that maps to a subnet. So, if your existing network has 10 VLANs, in Nile that would equate to 10 segments
+5. Ensure that **segments** are created and mapped to their respective DHCP pools. In the **Nile ecosystem**, there are no VLANs. Nile has a construct called Segments. A **segment** is an L3 construct that maps to a subnet. So, if your existing network has 10 VLANs, in Nile that would equate to 10 segments.
 
 ***
 
@@ -42,14 +42,14 @@ Before beginning any migration, complete the following:
 
 A Policy Group represents a collection of endpoints that share common access requirements. Each endpoint belongs to exactly one Policy Group, ensuring that its access policies are clear and deterministic. The Trust Engine automatically evaluates each user or device during onboarding and assigns it to the most appropriate group based on predefined classification rules for its identity.
 
-### Group Types
+### Group types
 
 - **User Groups** – Endpoints tied to an authenticated user. Commonly used for employees, guests, contractors, students, and faculty.&#x20;
 - **Device Groups** – Endpoints such as printers, cameras, or IoT devices not associated with user identities.&#x20;
 - **Application Groups&#x20;**– Destination endpoints that represent private or public applications.
 
 <BlockQuote>
-  Please note that policy group **ordering** determines which policies apply to an endpoint. Each user or device is classified into exactly one policy group, based on the first group it matches in the ordered list (user groups are evaluated first, followed by device groups). For example, consider two SCIM user groups: HR Admins (listed first) and Employees (listed second). If a user belongs to both IdP groups, Trust Service classifies the user into HR Admins only and does not evaluate the Employees group.  As a result, when the user accesses the Payroll App, the system applies only the policy with HR Admins as the source group (for example, “All ports/protocols to Payroll App”). Any policy using Employees as the source (such as “HTTPS-only to Payroll App”) is ignored.  If the group order is reversed so Employees appear first, the same user is classified as Employees, and only the Employees → Payroll App policy applies.
+  Please note that policy group **ordering** determines which policies apply to an endpoint. Each user or device is classified into exactly one policy group, based on the first group it matches in the ordered list (user groups are evaluated first, followed by device groups). For example, consider two SCIM user groups: HR Admins (listed first) and Employees (listed second). If a user belongs to both IdP groups, Trust Service classifies the user into HR Admins only and does not evaluate the Employees group. As a result, when the user accesses the Payroll App, the system applies only the policy with HR Admins as the source group (for example, “All ports/protocols to Payroll App”). Any policy using Employees as the source (such as “HTTPS-only to Payroll App”) is ignored. If the group order is reversed so Employees appear first, the same user is classified as Employees, and only the Employees → Payroll App policy applies.
 </BlockQuote>
 
 **Admin User Group**
@@ -82,9 +82,9 @@ If no IdP is available for identity-based policy creation, you can instead creat
 
 **Employee User Group**
 
-Similarly, create an employee user group and choose IDP Group as the criteria. This assumes Employees will be doing SSO to access the network. The SCIM protocol will return the groups the user belongs to, and that will be used to differentiate between Admin and Employee
+Similarly, create an employee user group and choose IDP Group as the criteria. This assumes Employees will be doing SSO to access the network. The SCIM protocol will return the groups the user belongs to, and that will be used to differentiate between Admin and Employee.
 
-Alternatively, if no IDP is available (for identity-based policy creation), create an employee user group and set the Nile Segment as the criteria.
+Alternatively, if no IdP is available (for identity-based policy creation), create an employee user group and set the Nile Segment as the criteria.
 
 <BlockQuote>
   Please note that RADIUS-based groups will be available in the future.
@@ -98,7 +98,7 @@ Create a Guest user group and choose the Nile Segment as the criterion.
 
 **Printer Device Groups**
 
-Create a Printer Group using the following steps and choose Fingerprint as the criteria. Ensure this has the highest priority
+Create a Printer Group using the following steps and choose Fingerprint as the criteria. Ensure this has the highest priority.
 
 1. Log in to the Nile portal.
 2. In the left navigation, select **Security > Policy Groups > Device Groups**.
@@ -106,7 +106,7 @@ Create a Printer Group using the following steps and choose Fingerprint as the c
 4. In **Enter Group Name**, type a descriptive name for the group (for example, Admin).
 5. In **Group Description**, add an optional description (for example, Admin Group).
 6. From **Select Match Criteria**, choose **Fingerprint**.
-7. In **Enter Values**, type or select the type of printer that matches your physical one(for example, HP Printer), then confirm the selection.
+7. In **Enter Values**, type or select the type of printer that matches your physical one (for example, HP Printer), then confirm the selection.
 8. Click **Create** to save the Device group.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Z35BCxBf4nYRNvIg4SDVX_screenshot-2026-03-13-at-22543apm.png)
@@ -136,24 +136,24 @@ Create a Zoom Rooms Group based on segments. Usually, there are multiple types o
 
 **DVR App Groups**
 
-Create a DVR group and use the IP address or subnet as the criterion. In this example, the DVR app group is not connected to Nile
+Create a DVR group and use the IP address or subnet as the criterion. In this example, the DVR app group is not connected to Nile.
 
 1. Log in to the Nile portal.
 2. In the left navigation, select **Security > Policy Groups > App Groups**.
 3. Click the **+** icon to create a new user group.
 4. In **Enter Group Name**, type a descriptive name for the group (for example, Admin).
 5. In **Group Description**, add an optional description (for example, Admin Group).
-6. From **Select Match Criteria**, choose **IP/subnet**
-7. In **Enter Values**, type or select one or more entries that represent your DVR network (for example, a single IP address such as 172.16.20.10 or a subnet such as 172.16.20.0/24) then confirm the selection. You can also add multiple entries of IP or subent and separate them with commas.
+6. From **Select Match Criteria**, choose **IP/subnet**.
+7. In **Enter Values**, type or select one or more entries that represent your DVR network (for example, a single IP address such as 172.16.20.10 or a subnet such as 172.16.20.0/24) then confirm the selection. You can also add multiple entries of IP or subnet and separate them with commas.
 8. Click **Create** to save the App group.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QfS8xVjqWBHWYnyedAEaJ_screenshot-2026-03-13-at-34343apm.png)
 
 **Call Manager App Groups**
 
-Similarly, create a Call Manager group and use the IP address as the criterion. In this example, the Call Manager is not connected to Nile
+Similarly, create a Call Manager group and use the IP address as the criterion. In this example, the Call Manager is not connected to Nile.
 
-### System-Defined Policy Groups
+### System-defined policy groups
 
 In addition to custom user, device, and app groups, Nile Trust Service provides several **system-defined policy groups**. These groups are always present and can be referenced directly in policies.
 
@@ -195,7 +195,7 @@ The **External** app group represents upstream or third-party enforcement points
 
 ## Step 2 - Create Service Profiles
 
-Service Profiles define which protocols and ports are permitted when traffic between policy groups is allowed. They ensure communication adheres to least-privilege principles by restricting flows to only what is necessary. Service profiles are mandatory for any policy configured to allow or forward traffic, consistent with Zero Trust principles.  Rules within a service profile are ordered, and the default rule is to exclude any port and any protocol (i.e., "deny all ports/protocols").
+Service Profiles define which protocols and ports are permitted when traffic between policy groups is allowed. They ensure communication adheres to least-privilege principles by restricting flows to only what is necessary. Service profiles are mandatory for any policy configured to allow or forward traffic, consistent with Zero Trust principles. Rules within a service profile are ordered, and the default rule is to exclude any port and any protocol (i.e., "deny all ports/protocols").
 
 **Printing Service Profile**
 
@@ -210,7 +210,7 @@ Create a service profile that allows access to TCP 9100 only using the steps bel
    - Set **Name** to TCP\_9100.
    - Set **Protocol** to TCP.
    - Set **Port** to 9100.
-   - Set **Action** to **Include**
+   - Set **Action** to **Include**.
    - Save the rule.
 7. Add a second rule to deny all other traffic:
    - Set **Name** to Deny All.
@@ -537,7 +537,7 @@ In the above table,&#x20;
 - Guest refers to the Guest user group created in “Guest User Group”.
 - Printer, Camera, Zoom Rooms, VOIP refer to the device groups created in the previous section.
 - DVR, Call Manager, Internet refer to the app groups created earlier.
-- Printing Service, Internet Service, All refer to the service profiles created in Step 2
+- Printing Service, Internet Service, All refer to the service profiles created in Step 2.
 
 Configure these policies in a **Global Policy Set** (example: *Employee to Printer*) using the following steps.
 
@@ -608,11 +608,11 @@ Use **Forward to firewall** when:
 As a guideline:
 
 - Use **Allow** for traffic that should be fully enforced and contained within the Nile Service Block.
-- Use **Forward to firewall** when traffic must leave the Nile Fabric and be inspected or logged by your existing upstream security infrastructure
+- Use **Forward to firewall** when traffic must leave the Nile Fabric and be inspected or logged by your existing upstream security infrastructure.
 
 ***
 
-# Global Policy Matrix – Policy Creation Guide
+# Global Policy Matrix – Policy creation guide
 
 Policies in a **Global Policy Set** can also be created and reviewed using the **Matrix** view. The sections below explain how to use matrix-specific options, including hiding system default groups and filtering for selected groups.
 
@@ -700,7 +700,7 @@ Filter the matrix by specific groups
 
 You can further narrow the matrix to only the groups that matter for the policy design you are working on:
 
-1. In the matrix header, click the **filter** icon
+1. In the matrix header, click the **filter** icon.
 2. In the **Filters** panel, choose a **Category** on the left:
 
    - User Groups
@@ -717,7 +717,7 @@ These options make the matrix an efficient way to both visualize and configure p
 
 ***
 
-### Policy Logs and Validation
+### Policy logs and validation
 
 Policy logs are critical for validating policies and troubleshooting unexpected behavior. After creating or modifying policies, always use the logs to confirm that traffic is being evaluated and enforced as intended.
 
