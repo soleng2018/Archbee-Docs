@@ -67,7 +67,7 @@ If no rules are configured, every new device that connects appears in the **Wire
 
 **Note:** An exact MAC address entry always takes priority over fingerprint, OUI, and catch-all rules. Nile does not move a device with an exact entry to a different segment later, even if its fingerprint changes.
 
-## Option 2: MAC address list (CSV)
+### Option 2: MAC address list (CSV)
 
 Use this to approve multiple devices at once before they connect to the network, for example, when you migrate an existing network to Nile.
 
@@ -99,7 +99,7 @@ For a few devices or one-offs, use **Add device** or approve them from the **Wai
 6. Keep the column headers unchanged and save the file as a CSV.
 7. In the **CSV Import** window, click **SELECT CSV FILE**, choose your file, and upload it.
 
-## Option 3: OUI
+### Option 3: OUI
 
 An OUI is the first three parts of a MAC address (for example, 00:11:22). It identifies the manufacturer. Use an OUI rule to approve all devices from one manufacturer in one step.
 
@@ -121,7 +121,7 @@ An OUI is the first three parts of a MAC address (for example, 00:11:22). It ide
 
 An OUI rule approves every device from that manufacturer, including ones you do not know about. Use it only for manufacturers whose devices you trust. Nile does not move a device that matched an OUI rule to another segment later. Do not create an OUI rule for devices that you want to place using fingerprinting.
 
-## Option 4: Allow all MACs
+### Option 4: Allow all MACs
 
 Use this rule to approve any device that connects into a segment, without entering MAC addresses one by one.
 
