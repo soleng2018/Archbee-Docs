@@ -40,7 +40,7 @@ Click on the individual link from the NSB Gateway to the ISP to add the IP infor
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Sr2JPgFjFg-fAGn0l5umZ_edge-service-link-config.png)
 
-- **ISP Name & Circuit Number:** This is used or alerting when the circuits experience an outage or degradation.
+- **ISP Name & Circuit Number:** This is used for alerting when the circuits experience an outage or degradation.
 - **Contract Start Date:** Used to reset the Data Cap counters.
 - **MRC:** To understand the billing and help customers with credits in case of service degradation from the circuit provider.
 - **Link Type:** Dropdown-style selection to understand if the link is Broadband, Fiber, DIA, LTE, Satellite, etc.
@@ -48,7 +48,7 @@ Click on the individual link from the NSB Gateway to the ISP to add the IP infor
 - **Data Cap:&#x20;**&#x55;sed to understand the data capacity of the link and feeds into the APS algorithm.
 
 <hint type="info">
-  ***Notably absent from the form:****&#x20;SLA-class definitions, application categorizations, probe endpoints, threshold values, or steering rules. The Edge Service automates the fine-tuning of these values dynamically&#x20;*
+  ***Notably absent from the form:***&#x20;*SLA-class definitions, application categorizations, probe endpoints, threshold values, or steering rules. The Edge Service automates the fine-tuning of these values dynamically&#x20;*
 </hint>
 
 # Adaptive Path Selection (APS)
@@ -122,13 +122,13 @@ The Edge service currently does active probing, i.e., each Edge Engine from all 
 
 Each path/class pair is scored with a Mean Opinion Score (MoS) approximation derived from the E-model (ITU-T G.107) with a class-specific weighting
 
-The resulting MoS is on the 1.0 - 4.5 range. A score of 4.0+ is indistinguishable from a good link for the IP SLA class; 3.5 - 4.0 is noticeable degradation but usable for certain SLA classes; below 3.5 is where it turns into a user complain.
+The resulting MoS is on the 1.0 - 4.5 range. A score of 4.0+ is indistinguishable from a good link for the IP SLA class; 3.5 - 4.0 is noticeable degradation but usable for certain SLA classes; below 3.5 is where it turns into a user complaint.
 
 ## Qualify: Dynamic Thresholds and Link Qualification
 
-Static thresholds do not hold true in todays day and age, a 100ms RTT maybe excellent for a transactional or interactive traffic going to a SaaS endpoint, but might be unacceptable for the Real-Time traffic. The Edge Service sets its qualification threshold per IP SLA class, per site, instead of one number for the whole path.
+Static thresholds do not hold true in today's day and age, a 100ms RTT may be excellent for a transactional or interactive traffic going to a SaaS endpoint, but might be unacceptable for the Real-Time traffic. The Edge Service sets its qualification threshold per IP SLA class, per site, instead of one number for the whole path.
 
-When a link drops below threshold for a IP SLA class, it's disqualified for that class only; not pulled from service. If it still meets the thresholds for other classes, Edge keeps steering those applications onto it.
+When a link drops below threshold for an IP SLA class, it's disqualified for that class only; not pulled from service. If it still meets the thresholds for other classes, Edge keeps steering those applications onto it.
 
 To avoid flapping between links and resetting active connections, a link isn't marked qualified again until it's held above threshold for 3 consecutive probe cycles.
 

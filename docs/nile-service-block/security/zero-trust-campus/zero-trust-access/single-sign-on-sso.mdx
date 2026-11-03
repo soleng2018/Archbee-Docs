@@ -35,44 +35,44 @@ The general steps to integrate an IdP with the Nile Access Service are as follow
 2. **Configure the Nile Identity Provider**:
    - Log in to the Nile Customer Portal as an administrator.
    - Navigate to the "Settings" > "Global Settings" > "Identity" page.
-     - Click "Add a New Provider" and fill out the form with the details from the IDP configuration:
+     - Click "Add a New Provider" and fill out the form with the details from the IdP configuration:
        - IDP Issuer URI
        - IDP SSO URL
        - Destination URL
-     - Upload the IDP's SAML signing certificate.
-     - Configure any necessary group mapping rules to assign users to segments based on IDP group membership.
+     - Upload the IdP's SAML signing certificate.
+     - Configure any necessary group mapping rules to assign users to segments based on IdP group membership.
 3. **Test the SSO Integration**:
-   - Verify that users can successfully log in to the Nile Access Service using their IDP credentials.
+   - Verify that users can successfully log in to the Nile Access Service using their IdP credentials.
    - Ensure that the user is being placed in the correct segment based on your configured policies.
 
 Refer to the provider-specific integration guides for detailed steps on configuring Azure AD, Google Workspace, Okta, and OneLogin as identity providers for the Nile Access Service.
 
 ## :Comment[Integrating IDP Groups with Nile Access Service]{docCommentId="ohZ4srvftAe0ltu-YxsiM" resolved="false"}
 
-When configuring the single sign-on (SSO) integration between the Nile Access Service and the customer's identity provider (IDP), such as Azure AD, the IDP group membership plays a crucial role in determining the user's access privileges.
+When configuring the single sign-on (SSO) integration between the Nile Access Service and the customer's identity provider (IdP), such as Azure AD, the IdP group membership plays a crucial role in determining the user's access privileges.
 
-The groups are defined in the IDP. For example, in Azure AD, the administrator may have configured groups like "Admin", "Monitor", and "Guest". When a user authenticates through the IDP, the Nile Access Service receives information about the user's group membership.
+The groups are defined in the IdP. For example, in Azure AD, the administrator may have configured groups like "Admin", "Monitor", and "Guest". When a user authenticates through the IdP, the Nile Access Service receives information about the user's group membership.
 
-Nile leverages the IDP group information in the following ways:
+Nile leverages the IdP group information in the following ways:
 
 1. **Nile Cloud Services Portal Access**:
-   - If the customer wants to allow users to access the Nile Cloud Services Portal, the IDP must send the "Admin" or "Monitor" group information.
+   - If the customer wants to allow users to access the Nile Cloud Services Portal, the IdP must send the "Admin" or "Monitor" group information.
    - Users belonging to the "Guest" group will not be able to log in to the Nile Cloud Services Portal, but they can still perform SSO for network access.
 2. **Network Access Privileges**:
-   - The Nile Access Service can use the IDP group information to assign users to the appropriate network segments and apply the corresponding access policies.
+   - The Nile Access Service can use the IdP group information to assign users to the appropriate network segments and apply the corresponding access policies.
    - For example, users in the "Admin" group may be granted access to sensitive network resources, while "Guest" users are isolated in a restricted segment.
 
-By integrating the IDP group information, the Nile Access Service can provide a seamless and secure single sign-on experience while enforcing granular access controls based on the user's role and privileges within the organization.
+By integrating the IdP group information, the Nile Access Service can provide a seamless and secure single sign-on experience while enforcing granular access controls based on the user's role and privileges within the organization.
 
-This integration between the IDP groups and the Nile Access Service is a crucial aspect of implementing a robust zero-trust security model, ensuring that only authorized users and devices can access the appropriate network resources.
+This integration between the IdP groups and the Nile Access Service is a crucial aspect of implementing a robust zero-trust security model, ensuring that only authorized users and devices can access the appropriate network resources.
 
 ## :Comment[SSO Options]{docCommentId="O5c-wDTocl1cBIZkBjmDP" resolved="false"}
 
-Once your IDP is successfully configured you are able to utilize a number of SSO powered authentication methods.
+Once your IdP is successfully configured, you are able to utilize a number of SSO powered authentication methods.
 
 ### Open SSO - Wireless Only
 
-This configuration allows the creation of an open WiFi network with SSO login. A typical use case would be a network that allows employees to access the Internet on their personal devices.&#x20;
+This configuration allows the creation of an open Wi-Fi network with SSO login. A typical use case would be a network that allows employees to access the Internet on their personal devices.&#x20;
 
 To use Open SSO, follow these steps.
 
@@ -85,17 +85,15 @@ To use Open SSO, follow these steps.
 
 ### :Comment[BYOD SSO]{docCommentId="QYIuj0iw00t24wCozZj5w" resolved="false"}
 
-Wireless best practices ecourage limiting the number of SSID's in air. Each beacon is like a bicycle on a freeway taking up bandwidth and slowing things down. For use cases where enterprises want to provide internet only access to employees personal devices, they can leverage this feature on an existing Guest SSID. This eliminates the need for a dedicated SSID.
+Wireless best practices encourage limiting the number of SSIDs in the air. Each beacon is like a bicycle on a freeway taking up bandwidth and slowing things down. For use cases where enterprises want to provide internet only access to employees' personal devices, they can leverage this feature on an existing Guest SSID. This eliminates the need for a dedicated SSID.
 
-When a user connects to the Guest SSID, a login button is displayed at the top right hand corner of the page as seen in the screenshot below
-
-
+When a user connects to the Guest SSID, a login button is displayed at the top right hand corner of the page as seen in the screenshot below.
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ZRE9LODjzDj3PdExW0Vtc_image.png" size="80" width="1522" height="1241" position="center" caption="Nile Guest Login Page" alt="Nile Guest Login Page" showCaption="true"></Image>
 
-**Guest User Workflow -&#x20;**&#x41; guest user will fill the form and once approved will get access to the network for the duration of time defined in the SSID settings
+**Guest User Workflow -&#x20;**&#x41; guest user will fill the form and once approved will get access to the network for the duration of time defined in the SSID settings.
 
-**Employee User Workflow** - An employee user will click on the login button on the top right hand corner. On clicking they will be navigated to the IDP for authentication. Once authenticated their personal device will have access to the network for a longer duration unlike guest users. These devices will be on the same segment as the guest users and all guest policies defined will be applicable.
+**Employee User Workflow** - An employee user will click on the login button on the top right hand corner. On clicking they will be navigated to the IdP for authentication. Once authenticated their personal device will have access to the network for a longer duration unlike guest users. These devices will be on the same segment as the guest users and all guest policies defined will be applicable.
 
 To use Open SSO, follow these steps.
 
@@ -111,7 +109,7 @@ To use Open SSO, follow these steps.
 
 ### PSK SSO
 
-We created this option for customers who want to use a Pre-Shared Key but do not have RADIUS. Similar to Open SSO, this method prevents any unauthorized access to the network, even if a PSK is compromized.
+We created this option for customers who want to use a Pre-Shared Key but do not have RADIUS. Similar to Open SSO, this method prevents any unauthorized access to the network, even if a PSK is compromised.
 
 To use PSK SSO, follow these steps.
 
@@ -120,7 +118,7 @@ To use PSK SSO, follow these steps.
   - Give the segment a name like Employee PSK-SSO.
   - Then, enter the 'Service Area' tab.
   - Select the Service Area where this network will be available.
-  - Select the DHCP server from dthe dropdown list and select the appropriate subnet to be used by the segment.
+  - Select the DHCP server from the dropdown list and select the appropriate subnet to be used by the segment.
   - Click 'Save' to complete.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VvBSIQO_B74lwgriYBhxt_create-segment.png "Add a Segment")

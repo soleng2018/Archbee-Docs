@@ -35,10 +35,8 @@ Rogue access points, or those not approved by IT, can cause a security threat if
 If a rogue AP connects to the network, it can broadcast its own WLAN to unsuspecting users. This creates an entry point for non-corporate devices to connect to the corporate WLAN if end-to-end security measures are not in place. This is the classic definition of a rogue AP. If not detected, bad actors can safely operate outside the physical perimeter of the enterprise, connecting to the rogue’s WLAN from the parking lot, finding an entry point into the enterprise LAN. WIDS and WIPS help to protect against rogue access points.
 
 <hint type="success">
-  In the case of the Nile, the Wired Rogue AP threat vector is less severe by a large degree as compared to traditional networks, owing to the built-in 'true' Zero Trust Access. No wired device gets on the Nile network without authorization. All the ports on the Nile switches are default enabled for either MAC-address by-pass based authentication (MAB) or 802.1x. Thus, Nile's Zero Trust Access posture provides a strong first line of defense against unauthorized Wi-Fi APs getting on the network.
+  In the case of the Nile, the Wired Rogue AP threat vector is less severe by a large degree as compared to traditional networks, owing to the built-in 'true' Zero Trust Access. No wired device gets on the Nile network without authorization. All the ports on the Nile switches are default enabled for either MAC-address by-pass based authentication (MAB) or 802.1X. Thus, Nile's Zero Trust Access posture provides a strong first line of defense against unauthorized Wi-Fi APs getting on the network.
 </hint>
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kjVaZ2WqML1au1r60ZZu7_image.png)
 
@@ -50,7 +48,7 @@ An evil twin or honeypot AP is a form of rogue AP that makes a malicious access 
 
 ### What is the difference between an Evil Twin/Honeypot AP and a Rogue AP?
 
-A rogue access point is an illegitimate access point plugged into a network to create a bypass from outside into the legitimate network. It may or may not be malicious. For example, an employee may connect a router that functions as a rogue AP, but without ill intent. However, a lack of malicious intent does not mean that it should be connected to the network. An evil twin or honeypot is also a rogue, but it is, by definition, malicious. That’s because it is set up to impersonate a legitimate access point. Attackers use impersonation of SSID or SSID+BSSID to lure unsuspecting victims into connecting so that they can steal information. Nile defines Rogue AP as an unauthorized or accidentally authorized Wi-Fi AP that connects to a Nile switch. It is possible that such a wired rogue AP can additionally employ impersonation techniques as well. The impersonation APs, such as a honeypot or evil twin, may not necessarily be 'wired' to the Nile switches, e.g., a mobile hotspot spoofing a legitimate Nile AP's SSID
+A rogue access point is an illegitimate access point plugged into a network to create a bypass from outside into the legitimate network. It may or may not be malicious. For example, an employee may connect a router that functions as a rogue AP, but without ill intent. However, a lack of malicious intent does not mean that it should be connected to the network. An evil twin or honeypot is also a rogue, but it is, by definition, malicious. That’s because it is set up to impersonate a legitimate access point. Attackers use impersonation of SSID or SSID+BSSID to lure unsuspecting victims into connecting so that they can steal information. Nile defines Rogue AP as an unauthorized or accidentally authorized Wi-Fi AP that connects to a Nile switch. It is possible that such a wired rogue AP can additionally employ impersonation techniques as well. The impersonation APs, such as a honeypot or evil twin, may not necessarily be 'wired' to the Nile switches, e.g., a mobile hotspot spoofing a legitimate Nile AP's SSID.
 
 ### Wireless peer-to-peer connections
 
@@ -75,7 +73,7 @@ The Nile Access Service ensures that the overlay wireless security vector is sec
 
 Nile brings the ‘Nile way’ to WIDS by making it zero configuration, always on, and turnkey. The WIDS functionality kicks in right at service activation, taking on the onus to expertly enable the protection and alerting against top Wi-Fi intrusion threats.
 
-Nile can effectively detect, alert, and mitigate **rogue access points** from the get-go. The Nile WIDS uses sophisticated correlation techniques that intelligently filter out non-wired neighboring/friendly access points in the vicinity, to truly alert about real threats—such as a rogue access point that is connected to the LAN. The benefit of the Nile's full-stack wireless and wired LAN service is the end-to-end visibility. It can detect the port number where the rogue AP has been plugged in and block the port, thus stopping the proliferation of the intruder into the wired LAN and further into the wider network. Furthermore, the rogue AP alert provides location information for the customer to send IT personnel to physically remove such rogue APs.
+Nile can effectively detect, alert, and mitigate **rogue access points** from the get-go. The Nile WIDS uses sophisticated correlation techniques that intelligently filter out non-wired neighboring/friendly access points in the vicinity, to truly alert about real threats—such as a rogue access point that is connected to the LAN. The benefit of Nile's full-stack wireless and wired LAN service is the end-to-end visibility. It can detect the port number where the rogue AP has been plugged in and block the port, thus stopping the proliferation of the intruder into the wired LAN and further into the wider network. Furthermore, the rogue AP alert provides location information for the customer to send IT personnel to physically remove such rogue APs.
 
 ## Approach to WIDS/WIPS
 
@@ -104,7 +102,7 @@ Any non-Nile Element that is connected to the service should be authorized and a
 Navigate to the Nile Control Center >> Settings >> Access Management >> Wired.
 
 <hint type="info">
-  In the case of Nile, the Wired Rogue AP threat vector is less severe with Nile by a large degree as compared to traditional networks, owing to the built-in 'true' Zero Trust Access. No wired device gets on the Nile network without authorization. All the ports on the Nile switches are default enabled for either MAC-address by-pass based authentication (:Link[MAB]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}) or 802.1x. Thus, Nile's Zero Trust Access posture provides a strong first line of defense against unauthorized Wi-Fi APs getting on the network.
+  In the case of Nile, the Wired Rogue AP threat vector is less severe with Nile by a large degree as compared to traditional networks, owing to the built-in 'true' Zero Trust Access. No wired device gets on the Nile network without authorization. All the ports on the Nile switches are default enabled for either MAC-address by-pass based authentication (:Link[MAB]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}) or 802.1X. Thus, Nile's Zero Trust Access posture provides a strong first line of defense against unauthorized Wi-Fi APs getting on the network.
 </hint>
 
 Without an admin approving this request, the device will not be able to get an IP address and hence cannot pass any traffic on to the network. Devices can be approved through different rules, such as an exact MAC address match, OUI, or fingerprint. In some cases, customers may choose to have an ALL rule that allows any devices on the network if it did not match any of the specific rules. Although an ALL rule is not recommended, the option exists to offer flexibility to the customers. Nile's WIDS/WIPS uses the following approach to reduce friction in onboarding devices while also offering security.
@@ -119,7 +117,7 @@ Navigate to Nile Control Center >> Alerts >> search for Security events.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LRpzwP5kh4Jp1ybcy2LDC_screenshot-2025-07-21-at-95142-am.png)
 
-If the user navigates to the Nile Control Center >> Devices page, the 4th tile shows the overview of the clients detected under WIDS/WIPS
+If the user navigates to the Nile Control Center >> Devices page, the 4th tile shows the overview of the clients detected under WIDS/WIPS.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ICgyZ_6iDx1xCWLb9JzrO_devcies-page-rogue.png)
 
@@ -129,11 +127,11 @@ Clicking on the More Details will take the user to Rogue AP's 'Device Details' p
 
 **Rogue AP with NAT on wired port**
 
-As this is a Rogue AP, most likely it might NAT all the traffic out of its interface onto the Nile system. These are typically the Wi-Fi Routers used at home, available off the shelf. They have a port marked as WAN in most cases and plug into the home's internet connection. Thus, the interface usually NAT's all the traffic out. This introduces some challenges in reliably detecting the presence of a Wi-Fi Rogue AP on the Wired network, such as an office LAN. Nile uses some techniques to inspect the egress traffic on the WAN port connected to NSB.
+As this is a Rogue AP, most likely it might NAT all the traffic out of its interface onto the Nile system. These are typically the Wi-Fi Routers used at home, available off the shelf. They have a port marked as WAN in most cases and plug into the home's internet connection. Thus, the interface usually NATs all the traffic out. This introduces some challenges in reliably detecting the presence of a Wi-Fi Rogue AP on the Wired network, such as an office LAN. Nile uses some techniques to inspect the egress traffic on the WAN port connected to NSB.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ieca3xo5cKGr-quXD_-M4_nat-rogue.png)
 
-When the traffic is NAT'ed, even though the source MAC address and the IP address will be rewritten by the rogue AP, the NSB will see two packets with the same IP and MAC address with two different TTL values, and that confirms the detection of a Rogue AP. However, detecting the presence of a NAT on the wired devices port connected to NSB alone does not confirm that the device is a Wi-Fi AP. The monitoring data collected by Nile AP's monitoring radio reports all the BSSIDs seen in the air, as well as Wi-Fi Client mac-addresses that may have been associated with BSSIDs seen in the vicinity. All this data is processed in the cloud to further correlate the wired and wireless MAC addresses to establish a relationship between any wired mac-adddresses seen on the NSB and the Wi-Fi BSSIDs seen in the air. If a correlation is found, it can be confirmed that the device observed doing NAT on its wired port is also a Wi-Fi access point, in which case a 'Rogue AP detected' alert is generated, as in the example above.&#x20;
+When the traffic is NAT'ed, even though the source MAC address and the IP address will be rewritten by the rogue AP, the NSB will see two packets with the same IP and MAC address with two different TTL values, and that confirms the detection of a Rogue AP. However, detecting the presence of a NAT on the wired device's port connected to NSB alone does not confirm that the device is a Wi-Fi AP. The monitoring data collected by Nile AP's monitoring radio reports all the BSSIDs seen in the air, as well as Wi-Fi client MAC addresses that may have been associated with BSSIDs seen in the vicinity. All this data is processed in the cloud to further correlate the wired and wireless MAC addresses to establish a relationship between any wired MAC addresses seen on the NSB and the Wi-Fi BSSIDs seen in the air. If a correlation is found, it can be confirmed that the device observed doing NAT on its wired port is also a Wi-Fi access point, in which case a 'Rogue AP detected' alert is generated, as in the example above.&#x20;
 
 **Suspected Rogue AP**
 
@@ -145,7 +143,7 @@ In some cases, it is non-trivial to correlate the wired MAC address of a device 
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3BXYkRWl5y5RG7O5TJOxD_suspected-rogue.png)
 
-If the Rogue AP is not NAT'ing the traffic, based on the fingerprinting data and also by comparing the wired MAC address with the BSSID's broadcasting from the rogue AP, we will be able to detect them as a Rogue AP, and an alert is shown on the Nile Control Center.
+If the Rogue AP is not NAT'ing the traffic, based on the fingerprinting data and also by comparing the wired MAC address with the BSSIDs broadcasting from the rogue AP, we will be able to detect them as a Rogue AP, and an alert is shown on the Nile Control Center.
 
 **Misassociated Clients**
 
@@ -167,13 +165,13 @@ Below are examples of a Honeypot alert and an Evil Twin alert
 
 **Denial of Service (DoS) attacks**
 
-Nile's WIDS currently detects DoS attacks of two types: **'broadcast deauthentication and disassociation'** attempts detected as a flood from Nile BSSID, which seems unusually higher than normal. Broadcast deauthentication or disassociation packets are unusual in Wi-Fi networks these days. Alerts can be found under Nile Control Center > Alerts
+Nile's WIDS currently detects DoS attacks of two types: **'broadcast deauthentication and disassociation'** attempts detected as a flood from Nile BSSID, which seems unusually higher than normal. Broadcast deauthentication or disassociation packets are unusual in Wi-Fi networks these days. Alerts can be found under Nile Control Center > Alerts.
 
 The alert also specifies which Nile APs on the floor have reported the monitoring data that assisted in detecting the DoS attempt. This helps customer IT teams to check the area around the reporting AP in the alert.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/7dAY3iKNM1ZehphjP2Ty-_screenshot-2025-07-21-at-110207-am.png)
 
-Second is **'unicast broadcast deauthentication and disassociation'** attempts seen as a flood from the Nile BSSID to a Wi-Fi client mac-address or vice-versa, which seems unusually higher than normal. These attempts are alerted for in the Nile Control Center for the customer IT team's awareness and action, to check for any suspicious injectors, unidentified Wi-Fi devices in the vicinity that may be spewing these DoS floods over the air
+Second is **'unicast broadcast deauthentication and disassociation'** attempts seen as a flood from the Nile BSSID to a Wi-Fi client MAC address or vice-versa, which seems unusually higher than normal. These attempts are alerted for in the Nile Control Center for the customer IT team's awareness and action, to check for any suspicious injectors, unidentified Wi-Fi devices in the vicinity that may be spewing these DoS floods over the air.
 
 The alert also specifies which Nile APs on the floor have reported the monitoring data that assisted in detecting the DoS attempt. This helps customer IT teams to check the area around the reporting AP in the alert.
 
@@ -193,8 +191,6 @@ The alert also specifies which Nile APs on the floor have reported the monitorin
 <hint type="info">
   There is no mitigation for Honeypot, evil twin, or DoS attacks. Only alerts are sent to the Nile Control Center, and notifications are generated via email or webhook if the customer IT team has set up a subscription to the notification. It is highly recommended to subscribe to notifications for alerts.
 </hint>
-
-
 
 ## Excluding Trusted Device from WIDS
 
@@ -234,13 +230,9 @@ There are various options to mark a MAC address to be ignored from the WIDS Rogu
   Understanding the BSSID-based Rogue detection is important in order to use the ignore from WIDS functionality through the 'Wireless Access Management'. Nile’s WIDS Rogue AP detection can intelligently detect a wired 3rd party Wi-Fi AP based on its BSSID and other matching rules, even though it may not be possible to correlate this AP’s wired identity (Ethernet MAC) to its wireless identity (wireless MAC/BSSID). In such cases, admins can choose to exclude certain BSSIDs from WIDS. This is done through the access management page for Wireless
 </hint>
 
-
-
 <hint type="warning">
   This is <u>NOT a recommended option since BSSIDs can be hard to find beforehand. Instead, use the ignore/block option from the Rogue AP alert that specifies it was BSSID-based Rogue detection. An example of a rogue AP alert detected based on BSSID is below. </u>This is an example of a Rogue AP detected based on correlation of monitoring data, where WIDS could tell there is a Wi-Fi AP connected to a port on the NSB; however, its wired Ethernet MAC address could not be correlated to the AP's BSSID. Nonetheless, with a good degree of confidence, it could be inferred that the rogue AP is indeed connected to the NSB over LAN.
 </hint>
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/au0F6G78428whlStmT0va_screenshot-2025-07-21-at-113927-am.png)
 
@@ -248,8 +240,6 @@ There are various options to mark a MAC address to be ignored from the WIDS Rogu
 2. This option applies to ignoring or blocking ‘wired rogue APs’ based on their BSSIDs/wireless MACs
 3. Ignore will exclude the devices matching the rule from Rogue WIDS – no alerts, no mitigation
 4. Block will perform the WIDS mitigation action
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AfJWTMAjd42A1tmqgpkeL_image.png)
 
@@ -259,13 +249,13 @@ There are various options to mark a MAC address to be ignored from the WIDS Rogu
 
 The example below illustrates how a MAC address can be ignored from WIDS detection and alerting. The same applies to both a suspected rogue AP alert and a rogue AP alert.
 
-Clicking on the More Details from a suspected rogue or rogue AP alert will open a drawer with the option to 'Ignore' or 'Block' the MAC address of the device shown in the alert
+Clicking on the More Details from a suspected rogue or rogue AP alert will open a drawer with the option to 'Ignore' or 'Block' the MAC address of the device shown in the alert.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/E4cx8DBTwUVOMdCARbcU9_image.png)
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ilTAK3GXWxMrAnp8y_3pv_image.png)
 
-The option to ignore or block will present the user with a warning pop-up, acknowledging that it will add the MAC address to either the ignore list from WIDS or block it. The status of the MAC address can be seen under the Access Management > Wired tab under Network Setup
+The option to ignore or block will present the user with a warning pop-up, acknowledging that it will add the MAC address to either the ignore list from WIDS or block it. The status of the MAC address can be seen under the Access Management > Wired tab under Network Setup.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/0qycZt0B8fe5NzDiCQNdT_image.png)
 
@@ -289,15 +279,15 @@ The columns to show whether a MAC address has been ignored from rogue AP detecti
 
 **Admins can take action from the Honeypot Alert**
 
-Clicking on the More Details from a Honeypot AP alert will open a drawer with the option to 'Ignore' the MAC address of the device shown in the alert
+Clicking on the More Details from a Honeypot AP alert will open a drawer with the option to 'Ignore' the MAC address of the device shown in the alert.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/zJ05R5Ld-hXO5AHnUYLZN_honeypot-alert.png)
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/RF4-yIo2gKfw97PxcA0Jo_hp-alert-drawer.png)
 
-The option to ignore will present the user with a warning pop-up, acknowledging that it will add the MAC address to the ignore list from WIDS honeypot detection. The status of the MAC address can be seen under the Access Management > Wireless tab under Network Setup
+The option to ignore will present the user with a warning pop-up, acknowledging that it will add the MAC address to the ignore list from WIDS honeypot detection. The status of the MAC address can be seen under the Access Management > Wireless tab under Network Setup.
 
-The Honeypot Ignore status column is hidden by default. Choose the column selector to add the Honeypot Ignore column to view the status of the MAC addresses that have been ignored from WIDS honeypot AP detection
+The Honeypot Ignore status column is hidden by default. Choose the column selector to add the Honeypot Ignore column to view the status of the MAC addresses that have been ignored from WIDS honeypot AP detection.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VCilQkUQzACnrb1D-v5hN_hp-ignore-conf-popup.png)
 
@@ -312,8 +302,6 @@ A honeypot exclusion applies to a wireless **BSSID** or **OUI**. Once added, dev
 When to use this
 
 Use this feature when you know a neighboring or legacy AP is legitimate and should not continue triggering honeypot alerts, especially in brownfield environments where non-Nile APs may still be active near deployed Nile APs.
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/pEyxUNaHZYHz7tvmTsZeR_image.png)
 

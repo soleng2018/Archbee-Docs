@@ -10,7 +10,7 @@ See Figure 1. for a typical Nile Dashboard view. The SLAs on this instance are g
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/klYDtK0NkRjiL9JLMtjSm_qktome0iekc7n21smlzwkr5ogmtdjql6ka.png)
 
-To check for Latency in Infrastructure (DHCP, DNS, Radius, or Internet connectivity you can click on the Infrastructure tile or click on Infrastructure on the left-hand navigation. To check for Latency on Applications you can click on Applications. See Figure 2. for where to click.
+To check for Latency in Infrastructure (DHCP, DNS, RADIUS, or Internet connectivity) you can click on the Infrastructure tile or click on Infrastructure on the left-hand navigation. To check for Latency on Applications you can click on Applications. See Figure 2. for where to click.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/OEsda7NFXenfdB-BX7MeO_ppvxf3avfqgya55lr7ecytfb300cko-kyw.png)
 
@@ -60,12 +60,11 @@ The following transactions are used to calculate latency:
 
 DHCP: Testing DHCP is performed from the Headend Controller, using a synthetic DHCP transaction, acting as if it were a client requesting a new IP address. This tests both server availability, and DHCP Service availability on the server.
 
-DNS: Testing DNS is performed from the Headend Controller, using script that creates an actual DNS request from the Server and calculates the response time. This tests both server availability, and DNS Service availability on the server.
+DNS: Testing DNS is performed from the Headend Controller, using a script that creates an actual DNS request from the Server and calculates the response time. This tests both server availability, and DNS Service availability on the server.
 
-RADIUS: Testing Radius is performed from the Headend Controller, using a Synthetic Radius Authentication request from the Server and calculating the response time. The Synthetic transaction requires setting up a test authentication account on the actual Radius server. This tests both server availability, and DNS Service availability on the server.
+RADIUS: Testing RADIUS is performed from the Headend Controller, using a Synthetic RADIUS Authentication request from the Server and calculating the response time. The Synthetic transaction requires setting up a test authentication account on the actual RADIUS server. This tests both server availability, and DNS Service availability on the server.
 
 Internet: Testing Internet is performed from the Headend Controller, using ICMP Pings to Google.com and calculating the response time. This tests the path from the Headend Northbound to Google and Back, so does include additional infrastructure on prem like routers and firewalls that it transits.
 
 Applications: Testing Applications is performed from the Headend Controller, using a "curl" command to try to load the initial Application website page, and calculating the response time. In some cases if the Application website refuses "curl" commands, we can change this to ICMP pings instead. One exception like this is Skype which is tested via ICMP pings.
-
 

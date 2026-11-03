@@ -24,11 +24,11 @@ Nile operates with three clearly defined groups:&#x20;
 
 The **Administrator&#x20;**&#x67;roup is equipped with comprehensive capabilities which includes the ability to set up SSIDs, which are essential for establishing wireless networks. Furthermore, the admin role encompasses managing authentication to ensure secure access to the network; wired or wireless. Additionally, the admin can establish integrations with third-party systems, such as ServiceNOW and Zscaler, facilitating streamlined operations and enhanced functionality.
 
-On the other hand, the **Monitor&#x20;**&#x67;roup has a more restricted function. As its name implies, the monitor role is limited to viewing data within the portal. Individuals in this role do not have the authority to modify or configure any settings within the portal, thereby ensuring that critical configurations remain securely managed by the admin role. This role is assigned to employees who field end-user calls and assist with troubleshooting
+On the other hand, the **Monitor&#x20;**&#x67;roup has a more restricted function. As its name implies, the monitor role is limited to viewing data within the portal. Individuals in this role do not have the authority to modify or configure any settings within the portal, thereby ensuring that critical configurations remain securely managed by the admin role. This role is assigned to employees who field end-user calls and assist with troubleshooting.
 
 Lastly, the **Help Desk** admin group functions with capabilities akin to the monitor group, primarily focusing on data visibility. However, this group holds additional responsibilities, including the approval of wired devices. This involves a process where help desk admins can assess wired devices seeking access and then approve or deny them based on predefined criteria.
 
-Together, these roles contribute to a well-structured and efficient operational framework, ensuring that admins can effectively setup up the network (SSID's, Guest Access etc.) and troubleshoot it while maintaining security and accessibility across the board.
+Together, these roles contribute to a well-structured and efficient operational framework, ensuring that admins can effectively set up the network (SSIDs, Guest Access etc.) and troubleshoot it while maintaining security and accessibility across the board.
 
 <hint type="info">
   Nile also possesses a **Root Admin** Role. This individual is the initial registrant of the service. The root admin holds the same privileges as the admin; however, the distinguishing factor is that the root admin has the authority to transfer the account to another admin.
@@ -126,13 +126,11 @@ Together, these roles contribute to a well-structured and efficient operational 
   </tr>
 </table>
 
-
-
 ## Fedration with IDP
 
-Administrators can be created locally within the Nile portal. Individuals with Administrator privileges have the capability to create additional **Administrator** accounts or manage **Help Desk** and **Monitor&#x20;**&#x72;ole administrators. Furthermore, Nile can integrate with the customer's Identity Provider (IDP) to facilitate access to the Nile Portal. Roles can be dynamically assigned through the IDP, providing a streamlined approach to user management. One significant advantage of this system is that when an employee leaves the company, their access to the Nile Portal is automatically revoked, ensuring enhanced security and compliance.&#x20;
+Administrators can be created locally within the Nile portal. Individuals with Administrator privileges have the capability to create additional **Administrator** accounts or manage **Help Desk** and **Monitor&#x20;**&#x72;ole administrators. Furthermore, Nile can integrate with the customer's Identity Provider (IdP) to facilitate access to the Nile Portal. Roles can be dynamically assigned through the IdP, providing a streamlined approach to user management. One significant advantage of this system is that when an employee leaves the company, their access to the Nile Portal is automatically revoked, ensuring enhanced security and compliance.&#x20;
 
-Please review the :Link[Azure AD]{href="https://docs.nilesecure.com/azure-active-directory-integration#OG8cH" newTab="true" hasDisabledNofollow="false"} article to understand the configuration process
+Please review the :Link[Azure AD]{href="https://docs.nilesecure.com/azure-active-directory-integration#OG8cH" newTab="true" hasDisabledNofollow="false"} article to understand the configuration process.
 
 <hint type="info">
   The Guest group is designated for granting employees access to the network via Single Sign-On (SSO). It is important to note that individuals within this group will not be granted access to the Nile portal.
@@ -226,9 +224,5 @@ Let us consider a scenario involving a customer ACME Inc. who manages 100 retail
 
 Let's begin by tagging all retail sites with the appropriate **retail&#x20;**&#x74;ag and all enterprise sites with the corresponding **enterprise&#x20;**&#x74;ag.
 
-
-
 ## Step 2: Create a new admin and map them to the appropriate tags
-
-
 

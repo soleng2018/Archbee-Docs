@@ -4,7 +4,7 @@ slug: configured-device-with-wireless-8021x-not-able-to-connect
 createdAt: Wed Jul 24 2024 21:35:38 GMT+0000 (Coordinated Universal Time)
 ---
 
-Nile supports both Wireless and Wired 802.1X connections. 
+Nile supports both Wireless and Wired 802.1X connections.
 
 **1.  Verify if there are any DOT1X authentication attempts from the client side**.
 
@@ -28,7 +28,7 @@ d. MAC address of device will be listed as Physical Address:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ocagScQLswG5a0HMb81AE_hu8hh9uxtpepwtinrcdalpi9lr0uhlic8g.jpeg)
 
-**2.  If there are no Devices found for that particular MAC address**, that means there is no Dot1x authentication attempts from client side.
+**2.  If there are no Devices found for that particular MAC address**, that means there are no Dot1x authentication attempts from client side.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dIJgttH8IQs4Vt8DKvnnZ_k7smuaxk-z-yh1vkiueugd136opk23zwtw.png)
 
@@ -40,23 +40,21 @@ d. MAC address of device will be listed as Physical Address:
 
 **4.  Verify 802.1X supplicant configuration from client side.**
 
-Client could be running different  variety of DOT1X supplicants like:
+Client could be running different variety of DOT1X supplicants like:
 
 \- Windows native supplicant.
 
 \- Cisco Anyconnect
 
-\- MAC OSX native supplicant 
+\- MAC OSX native supplicant
 
 (please check vendor documentation for particular supplicant configuration)
 
-In our particular example, out PC client is Windows PC and should be running Windows native DOT1X supplicant.
+In our particular example, our PC client is Windows PC and should be running Windows native DOT1X supplicant.
 
 From PC Start-> Services, we need to enable WLAN AutoConfig Service by clicking Start:
 
 ![Windows: Services](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NiTsLvOTlEtu-Bds35cLA_zbonlekqc8vnbsqbtdur5bf6ikxutbzjsw.png "Windows: Services")
-
-
 
 **4.  Verify DOT1X supplicant configuration.**
 
@@ -74,7 +72,7 @@ b. Then from opened windows select Manually connect to wireless network:
 
 c. Fill up next window with:
 
-\-   Network name (SSID name assigned from Nile Portal). 
+\-   Network name (SSID name assigned from Nile Portal).
 
 -   Security type: 802.1x
 
@@ -83,8 +81,6 @@ c. Fill up next window with:
 d.  Select Change connection settings:
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1x7EVm5NSFqgLrXD-ox5I_qza5zlfcr8l0kjkbxnevnpil5kdskxnpog.png" size="66" width="1214" height="886" position="center" caption="Windows: Network config" alt="Windows: Network config" showCaption="true"></Image>
-
-
 
 e. From security Tab configure:
 
@@ -96,11 +92,7 @@ Advanced settings -> Specify authentication mode: User authentication.
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/EtbT3oRWDVGFC368k5KEJ_zobkat-bppwe-nkbvckvhjfkkovgaz10uw.png" size="66" width="722" height="988" position="center" caption="Windows: Network config" showCaption="true"></Image>
 
-
-
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3-YohN1-DkCJwWSrfaFsI_bqnjwtb0lkiy4lmsp2aj1xgkvblktltjaq.png" size="72" width="746" height="1134" position="center" caption="Windows: Network config" alt="Windows: Network config" showCaption="true"></Image>
-
-
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/vEMqKKqXOIRkkF4NKR8i0_c-azqcmuakdqri8dzaurias-prcxtvi69a.png" size="68" width="740" height="990" position="center" caption="Windows: Network config" alt="Windows: Network config" showCaption="true"></Image>
 

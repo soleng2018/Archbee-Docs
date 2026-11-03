@@ -8,8 +8,6 @@ createdAt: Fri May 24 2024 17:25:47 GMT+0000 (Coordinated Universal Time)
 
 This document covers the API integration between the Nile Access Service and Palo Alto Networks (PAN) Next Generation Firewalls (NGFW) to provide secure campus networks through dynamic and granular segmentation. The Nile Service Block (NSB) inside the Nile Access Service communicates with PAN‑OS® through XML API calls to provide the NGFW with mappings of client IP addresses to their dot1x user identity and group. The dynamic exchanges enable organizations to apply granular segmentation policies based on the organization security strategies.
 
-
-
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi1.png" size="70" width="552" height="662" position="center" darkWidth="552" darkHeight="662" showCaption="false"></Image>
 
 ## Components required
@@ -20,7 +18,7 @@ This document covers the API integration between the Nile Access Service and Pal
 - RADIUS server
 
 <hint type="success">
-  Note: The tests conducted in this guide used PAN-OS® 10.2.3-h4 and ClearPass. Although Clearpass is shown in this guide, any RADIUS server will work.
+  Note: The tests conducted in this guide used PAN-OS® 10.2.3-h4 and ClearPass. Although ClearPass is shown in this guide, any RADIUS server will work.
 </hint>
 
 ## Feature flow
@@ -68,7 +66,7 @@ Enforcement Policy
 1. Navigate to **Device > Admin Roles**, and click on the **Add&#x20;**&#x62;utton
 2. Enter the name “nile-xml-role”
 3. Under the **Web UI** tab, <u>disable all options.</u>
-4. Under the **XML API** tab, <u>disble all options</u> except **User-ID Agent**
+4. Under the **XML API** tab, <u>disable all options</u> except **User-ID Agent**
 5. Click on **OK&#x20;**&#x74;o complete the role addition
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/panapi4.png)
@@ -86,12 +84,10 @@ Tags are identifiers that can be used to create Dynamic Address Groups. PAN‑OS
 
 ### Tags and Address Groups
 
-For the API integration to work, Tags and Dynamic Address Groups are required. .The **Staff** and **Student** Group seen below illustrate how to create Tags. The Tags will be mapped with the user group information sent by the NSB. Subsequently, those two tags are used to configure two PAN-OS® dynamic Address Groups: **Staff-role** and **Student-role**.
+For the API integration to work, Tags and Dynamic Address Groups are required. The **Staff** and **Student** Group seen below illustrate how to create Tags. The Tags will be mapped with the user group information sent by the NSB. Subsequently, those two tags are used to configure two PAN-OS® dynamic Address Groups: **Staff-role** and **Student-role**.
 
 1. :Comment[Navigate to ]{docCommentId="8IDyUM9_lZ2A6WI4HM9lC" resolved="true"}**Objects > Tags**, and click on the **Add&#x20;**&#x62;utton
 2. Add two Tags named <u>Staff </u>and <u>Student</u>
-
-
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi6.png" size="60" width="398" height="188" position="center" darkWidth="398" darkHeight="188" showCaption="false"></Image>
 
@@ -103,8 +99,6 @@ For the API integration to work, Tags and Dynamic Address Groups are required. .
 
 1. :Comment[Navigate to ]{docCommentId="UxAatLqgXG6HgER2bVc32" resolved="true"}**Objects > Address Groups**, and click on the **Add** button
 2. Add two Address Groups <u>Staff-role</u> and <u>Student-role</u> of type **Dynamic&#x20;**&#x6D;atching respectively the <u>Staff</u> and <u>Student</u>
-
-
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi10.png" size="60" width="460" height="302" position="center" darkWidth="460" darkHeight="302" showCaption="false"></Image>
 
@@ -125,13 +119,11 @@ Since the NSB connects to the PAN firewall through two Equal Cost Multi-Path (EC
 
 For illustration purposes, the following loopback setting is shown below:
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/panapi12.png)
 
 ## Set up the Nile Access Service to communicate with PAN NGFW
 
-The following screenshots shows an example on how to accomplish that on the Nile Portal:
+The following screenshots show an example on how to accomplish that on the Nile Portal:
 
 **DHCP** **-** Set the DHCP Server and Subnets for the user groups.
 
@@ -149,7 +141,7 @@ The following screenshots shows an example on how to accomplish that on the Nile
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/panapi16.png)
 
-Now **Validate&#x20;**&#x74;he integration. The validation steps below show what to look for when validating asuccessful dot1x authentication, returning the correct user group/tag through the ‘Filter-id’ attribute from ClearPass Policy Manager.
+Now **Validate&#x20;**&#x74;he integration. The validation steps below show what to look for when validating a successful dot1x authentication, returning the correct user group/tag through the ‘Filter-id’ attribute from ClearPass Policy Manager.
 
 ## RADIUS server
 
@@ -158,7 +150,6 @@ Validate that the RADIUS server has assigned the appropriate role with the corre
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi20.png" size="60" width="510" height="232" position="center" darkWidth="510" darkHeight="232" showCaption="false"></Image>
 
 A second validation for the user ‘**staff1**’ is shown below:&#x20;
-
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi19.png" size="60" width="412" height="326" position="center" darkWidth="412" darkHeight="326" showCaption="false"></Image>
 
@@ -170,7 +161,6 @@ Validate that the RADIUS server has assigned the appropriate role with the corre
 
 A second validation for the user ‘**student1**’ is shown below:
 
-
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi17.png" size="60" width="404" height="318" position="center" darkWidth="404" darkHeight="318" showCaption="false"></Image>
 
 ## Palo Alto RADIUS User Mapping
@@ -181,7 +171,7 @@ Inside the PAN management dashboard, validate that there is correct mapping betw
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/panapi21.png)
 
-Inside the PAN management dashboard, validate that there is correct mapping between IP addresses and tags. The image below demonstrates the correct mapping betweenIP addresses to their respective tags:
+Inside the PAN management dashboard, validate that there is correct mapping between IP addresses and tags. The image below demonstrates the correct mapping between IP addresses to their respective tags:
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/panapi22.png)
 

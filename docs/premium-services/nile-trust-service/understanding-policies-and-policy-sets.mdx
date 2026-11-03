@@ -8,11 +8,11 @@ createdAt: Fri Feb 20 2026 04:53:01 GMT+0000 (Coordinated Universal Time)
 
 Any communication across the Zero Trust Fabric must have an access policy in place. Policies are access rules and are unidirectional.
 
-When a policy is selected, the reverse trafic direction is implicitly defined using the same service profile.
+When a policy is selected, the reverse traffic direction is implicitly defined using the same service profile.
 
 ## Implicit Deny-All Posture and Default Inbound Deny
 
-An implicit 'deny all' posture exists: no endpoint can talk to any other endpoint in any other policy group without an explicit policy. This implicit deny is immutable and does not appear in the UI list of policies. it applies to all endpoints and isoaltes them into a "segment of one", regardless of what network segment they may be on-boarded into.&#x20;
+An implicit 'deny all' posture exists: no endpoint can talk to any other endpoint in any other policy group without an explicit policy. This implicit deny is immutable and does not appear in the UI list of policies. It applies to all endpoints and isolates them into a "segment of one", regardless of what network segment they may be on-boarded into.&#x20;
 
 A default non-editable policy explicitly denies inbound traffic from outside the Zero Trust Fabric: External -> Local / Deny. Any inbound communication that should be allowed must be explicitly defined.
 
@@ -81,9 +81,9 @@ By default, if no policy exists, the flow is denied.
 
 ## Enabling Macro- & Micro-segmentation
 
-The **Core Trust Service** tier support traffic access policies at the network segment granularity level.  Enterprises looking to configure basic East/West inter- and intra-segment granular access policies and enforce the policies natively within the Zero Trust Fabric can do so using the Core Trust Service tier by defining source and destination polyc groups based on network segment classification citeria. 
+The **Core Trust Service** tier supports traffic access policies at the network segment granularity level.  Enterprises looking to configure basic East/West inter- and intra-segment granular access policies and enforce the policies natively within the Zero Trust Fabric can do so using the Core Trust Service tier by defining source and destination policy groups based on network segment classification criteria.
 
-For more advanced security use-cases requiring zero trust least-privilege access policies with micro-segmentation granularity, the **Enterprise Trust Service** adds an extensive level of fine-grained policy controls and identity-centric classification options.  Policy definition using Enterprise Trust Service takes into consideration  user/device/application identity, customizable service profiles, and other tools for implementing more precise access controls. 
+For more advanced security use-cases requiring zero trust least-privilege access policies with micro-segmentation granularity, the **Enterprise Trust Service** adds an extensive level of fine-grained policy controls and identity-centric classification options.  Policy definition using Enterprise Trust Service takes into consideration  user/device/application identity, customizable service profiles, and other tools for implementing more precise access controls.
 
 ## Global Policy Set
 
@@ -176,12 +176,10 @@ When a policy or any component of a policy is updated, the impact of the change 
 
 ## East/West and North/South Policy Enforcement
 
-In additton to conventional East/West enforcement within the Zero Trust Fabric, the Trust Engine is capable of supporting enforcement in the North-to-South and South-to-North traffic directions. When an upstream edge Firewall or SD-WAN device exists, consideration of where North-South traffic enforcement occurs is required.
+In addition to conventional East/West enforcement within the Zero Trust Fabric, the Trust Engine is capable of supporting enforcement in the North-to-South and South-to-North traffic directions. When an upstream edge Firewall or SD-WAN device exists, consideration of where North-South traffic enforcement occurs is required.
 
 1. Customers have flexibility in deciding which Trust Service policies should be enforced locally and which should be forwarded upstream for enforcement.
 2. Traffic will be subjected to both the set of enforcement policies in the upstream system as well as those defined natively.
 3. For outbound South-to-North traffic, Allow and Forward Upstream actions are synonymous. Traffic that is Allowed in the Zero Trust Fabric can still be blocked by the upstream system.
 4. For inbound North-to-South traffic, any traffic allowed by the upstream firewall is still subjected to any local policies defined that match the inbound traffic.&#x20;
-
-##
 

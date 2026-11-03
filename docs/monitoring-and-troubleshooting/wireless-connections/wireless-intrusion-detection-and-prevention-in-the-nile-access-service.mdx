@@ -84,30 +84,29 @@ The Nile Access Service leverages the comprehensive data collected from the NSBs
 
 When these threats are detected, the Nile Access Service generates alerts that are surfaced in the Nile Cloud Services Portal, allowing administrators to take appropriate action.
 
-
 ![Nile Services: Alerts & Audit page](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/3BXYkRWl5y5RG7O5TJOxD_suspected-rogue.png "Nile Services: Alerts & Audit page")
 
 As this is a Rogue AP, most likely it might NAT all the traffic out of its interface on to the Nile system
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ieca3xo5cKGr-quXD_-M4_nat-rogue.png)
 
-When the traffic is NAT'ed even though the source mac address and the IP address will be re-written by the rogue AP, the NSB will see two packets with the same IP and mac address with two different TTL values and that confirms the detection of a Rogue AP.
+When the traffic is NAT'ed even though the source MAC address and the IP address will be re-written by the rogue AP, the NSB will see two packets with the same IP and MAC address with two different TTL values and that confirms the detection of a Rogue AP.
 
 If the user navigates to the Nile Portal >> Devices page, the 4th tile shows the overview of the clients detected under WIDS/WIPS
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ICgyZ_6iDx1xCWLb9JzrO_devcies-page-rogue.png)
 
-if you click on the Rogue AP, you can go into further details about the client and find out the vendor it belongs to and the timeline of the events.
+If you click on the Rogue AP, you can go into further details about the client and find out the vendor it belongs to and the timeline of the events.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/avWMEfeWq0hDL2I8TtfU1_rogue-detected.png)
 
-If the Rogue AP is not NAT'ing the traffic, based on the fingerprinting data and also by comparing the wired mac address with the BSSID's broadcasting from of the rogue AP, we will be able to detect them and an alert is showed on the Nile Portal.
+If the Rogue AP is not NAT'ing the traffic, based on the fingerprinting data and also by comparing the wired MAC address with the BSSIDs broadcasting from of the rogue AP, we will be able to detect them and an alert is shown on the Nile Portal.
 
 **Misassociated Clients:** In case of a Rogue AP that is in bridge mode where the packets are not NAT'ed, as the traffic from that client is ingressing from the same switch interface as the Rogue AP, it will be categorized as a misassociated client and it will also show the details related to which Rogue AP it is connected to.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YiTIYjkVQdoxoGIFf_4qZ_misassociated-client.png)
 
-**Honeypot AP:** A non-Nile AP broadcasting the same ESSID and/or BSSID that of a authorized Nile AP, should be detected as ‘Honeypot’ impersonation attempt. These APs are defined as non-wired malicious APs that are impersonating an enterprise AP to lure clients to it as the first step to what’s to follow later.&#x20;
+**Honeypot AP:** A non-Nile AP broadcasting the same ESSID and/or BSSID that of an authorized Nile AP, should be detected as ‘Honeypot’ impersonation attempt. These APs are defined as non-wired malicious APs that are impersonating an enterprise AP to lure clients to it as the first step to what’s to follow later.&#x20;
 
 Such APs can be detected by tracking the presence of vendor specific Information Element (IE) in the beacons of the impersonating AP. As Nile has its own custom IE in the beacons that is encrypted, any other third party AP that is trying to impersonate a Nile AP certainly differs from the IEs in our beacons and hence can be detected easily.
 

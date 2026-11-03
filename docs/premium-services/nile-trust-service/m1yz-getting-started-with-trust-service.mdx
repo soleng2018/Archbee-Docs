@@ -17,8 +17,8 @@ Before enabling the Nile Trust Service, administrators should review their netwo
 - Ensure all sites are running the latest software version that supports the Trust Service.&#x20;
 - Confirm that essential network services such as DHCP, DNS, RADIUS, and Identity Providers (IdP) are reachable and configured.&#x20;
 - For identity-based micro-segmentation, verify that users and devices can be identified through either SCIM/IdP Groups or device fingerprinting.&#x20;
-- For environments requiring protection against rogue devices, review plans for continuous validation
-- For environments where policy enforcement will be migrated from the external Firewall into the Nile Zero Trust Fabric, review what the existing poicies are..&#x20;
+- For environments requiring protection against rogue devices, review plans for continuous validation.
+- For environments where policy enforcement will be migrated from the external Firewall into the Nile Zero Trust Fabric, review what the existing policies are.&#x20;
 
 ### Recommended Initial Setup Sequence
 
@@ -42,14 +42,13 @@ Once the basics have been established and refinement of zero trust posture is de
 5. **Optional: Define Quarantine Policy**: if the use of the default Quarantine group is desired, then policies are required, one for defining what the devices can access when in Quarantine, and one defining who/what can access these devices.
    - A policy should exist that defines what app group (e.g., quarantine servers) devices in quarantine are allowed to access. This app group need not include infrastructure services like DHCP as they are already predefined.  By default, Nile has created a quarantine policy that denies access to Internet as a **placeholder policy** and must be updated with the desired quarantine app group and an Allow action,  if use of the quarantining function is expected.
    - A policy should exist that defines who can access the devices in Quarantine (and via what protocol/port)
-6. **Build additional policies:**.  using the refined poilcy groups, define more restrictive access poilcies and progressively work towards a least-privilege access model. &#x20;
+6. **Build additional policies:**.  using the refined policy groups, define more restrictive access policies and progressively work towards a least-privilege access model. &#x20;
 
 - Employee & Guest access to Internet (controlled by an Internet Service Profile)
 - Employee access to Printers except for administrative access
 - Employee access to corporate Intranet applications (captured in an application group)
 - IT admin access to administrative protocols/ports of Printers and IoT devices
 - IoT and Printer access to specific Internet or print server destinations
-
 
 ## Best Practices for Initial Rollout
 

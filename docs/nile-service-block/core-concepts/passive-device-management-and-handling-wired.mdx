@@ -6,9 +6,9 @@ createdAt: Wed Jan 22 2025 22:56:28 GMT+0000 (Coordinated Universal Time)
 
 ## Passive device (wired)
 
-Nile's default architecture is built for security. It is based on Layer 3 and that means we limit the use of broadcast flooding, which is traditionally used to poll for connected wired devices
+Nile's default architecture is built for security. It is based on Layer 3 and that means we limit the use of broadcast flooding, which is traditionally used to poll for connected wired devices.
 
-Nile switches discover a device on a port based on DHCP packets seen from it once plugged in. If a device performs DHCP IP, it is not considered 'Passive' since Nile is able to learn the device and keep it alive as long as it is connected
+Nile switches discover a device on a port based on DHCP packets seen from it once plugged in. If a device performs DHCP IP, it is not considered 'Passive' since Nile is able to learn the device and keep it alive as long as it is connected.
 
 The definition of 'Passive' in Nile's architecture is a 'statically IP addressed device' that does not initiate any traffic or DHCP packet upon first connection and remains silent unless solicited by another device or application.
 
@@ -35,7 +35,7 @@ Nile provides tools to not only handle passive wired devices but also to manage 
 
 ### Day 2 Keep Alive
 
-- Nile switches send keepalive probes to devices identified as passive, reducing reliance on broadcast based learning.
+- Nile switches send keepalive probes to devices identified as passive, reducing reliance on broadcast-based learning.
 
 ### Per Device Discover and Wake Up
 
@@ -58,8 +58,6 @@ Nile provides tools to not only handle passive wired devices but also to manage 
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/kR66v-0saaU-YL8Q9eNUS_screenshot-2025-01-22-at-32941-pm.png" size="60" width="700" height="578" position="center" showCaption="false"></Image>
 
-
-
 1. Optionally, use **Bulk Upload** to import a CSV list of MAC addresses to be marked as Static IP and Passive.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/YjKdkfiAwBmyVAhyZ5Vq4_screenshot-2025-01-22-at-33523-pm.png)
@@ -68,15 +66,11 @@ Nile provides tools to not only handle passive wired devices but also to manage 
 
 1. Log in to the Nile Control Center.
 
-
-
 1. ![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-0365rRl0X7WG9vRTssJAI-20250122-234127.png)
 2. Navigate to **Network Setup > Access Management**.
 3. Select the **Passive Device Discovery** icon.
 4. In the drawer that opens, specify an IP address, an IP range, or a subnet up to /24 that passive devices are using within the defined geographical scope.
 5. Select **Scan**.
-
-
 
 1. <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-4XwDKfUSWGvZwqLRfDayj-20250122-234442.png" size="60" width="672" height="526" position="center" showCaption="false"></Image>
 2. The NSB initiates auto discovery on switches in that scope and presents a list of MAC addresses for review.
@@ -85,18 +79,13 @@ Nile provides tools to not only handle passive wired devices but also to manage 
 <BlockQuote>
   If the IP range provided does not match any subnet mapped to configured segments, the discovery tool will generate an error. Ensure the range matches one of the existing segments.
 
-
 </BlockQuote>
 
 1. <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-5c6eByhe7Qm94aKQ1AO0F-20250122-235452.png" size="60" width="799" height="797" position="center" showCaption="false"></Image>
 
 The IP addresses for passive devices are populated in the MAB (MAC Authentication Bypass) list once they are fully learned by Nile switches.
 
-
-
 1.
-
-
 
 <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-5c6eByhe7Qm94aKQ1AO0F-20250122-235452.png" size="60" width="799" height="797" position="center" showCaption="false"></Image>
 
@@ -118,8 +107,6 @@ This triggers a one-time auto discovery on the specific switch and port where th
 ![](https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-grcFugwkthRTtqGLhwJRo-20250123-001405.png)
 
 **Day 2 Discovery Tool - background process**
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/2yGtikOSG_TRfzbKKO-m-_image.png)
 

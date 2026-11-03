@@ -79,7 +79,7 @@ Nile RADIUS-as-a-Service provides a **demo mode** where certificates for both se
   - Assign to specific segments
   - Apply Palo Alto tags for firewall integration
 
-This gives admins fine-grained control over who gets on the network, and what access they have
+This gives admins fine-grained control over who gets on the network, and what access they have.
 
 Following is a ladder diagram on how the traffic flows:
 
@@ -121,8 +121,6 @@ Both groups connect to the same SSID without confusion, but they are automatical
 - SCIM Groups = **contractors**
   → **Accept** and assign **Contractor** Segment
 
-
-
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/T19C3sax-GVuHFhFolQ-4_94301c3e-1712-4543-9ab2-8925d1b21320.png "Contractor RADIUS Policy")
 
 ### Use Case 2: Restricting Access to Active Employees Only (Dynamic SCIM Integration)
@@ -156,7 +154,7 @@ This ensures that network access is always aligned with both **group membership*
 
 ### Use Case 3: IoT Device Segmentation Using Certificates
 
-IoT devices such as IP cameras, printers, medical equipment, or barcode scanners often support 802.1X but do not have an end-user identity tied to them. These devices need to be on-boardedin a way that ensures they are properly segmented from user devices.
+IoT devices such as IP cameras, printers, medical equipment, or barcode scanners often support 802.1X but do not have an end-user identity tied to them. These devices need to be on-boarded in a way that ensures they are properly segmented from user devices.
 
 With Nile RADIUS-as-a-Service, admins can leverage **certificate attributes** for classification. For example:
 
@@ -171,7 +169,7 @@ IoT devices automatically end up in the **appropriate segment** with the right a
 - Printers can only talk to the print server.
 - Medical devices can only access the approved application servers.
 
-This prevents IoT devices from having broad access to the corporate network, reducing the attack surface and meeting compliance requirements
+This prevents IoT devices from having broad access to the corporate network, reducing the attack surface and meeting compliance requirements.
 
 **Example Policy Set**
 
@@ -265,7 +263,7 @@ A. Nile currently supports EAP‑TLS (certificate based auth). Additional EAP me
 
 **Q. Does Nile support end-user on-boarding?**
 
-A. Nile does not operate a PKI, on-boarding workflows—such as certificate enrollment, distribution, and renewal—must be performed through your existing MDMs
+A. Nile does not operate a PKI, on-boarding workflows—such as certificate enrollment, distribution, and renewal—must be performed through your existing MDMs.
 
 **Q. How does Demo Mode (demo certificates) work?**
 
@@ -293,7 +291,7 @@ A. Yes. You can build dedicated policy sets for wired devices such as printers, 
 
 **Q. Does Nile RADIUS support guest and temporary access like ClearPass and ISE?**
 
-A. Guest access is provided natively through Nile Access Service and is independent of the RADIUS service
+A. Guest access is provided natively through Nile Access Service and is independent of the RADIUS service.
 
 **Q. Do we need to configure RADIUS IPs, shared secrets, RadSec, or port settings?**
 
@@ -309,5 +307,5 @@ A. Nile RADIUS scales automatically to support large authentication bursts acros
 
 **Q. Does Nile support devices that do not use 802.1X?**
 
-A. Methods such as MAC‑based authentication and UPSK are supported for IoT and legacy devices natively through Nile Access Service and is independent of the RADIUS service
+A. Methods such as MAC‑based authentication and UPSK are supported for IoT and legacy devices natively through Nile Access Service and is independent of the RADIUS service.
 

@@ -28,7 +28,7 @@ Routing is achieved through **Open Shortest Path First (OSPF)** or **Equal Cost 
 
 The NSB requires an upstream router or firewall for connectivity to the Nile Cloud. Each NSB gateway, which can be an access or distribution switch, serves as the default gateway for all Nile elements such as access switches, access points, and sensors.
 
-- NSB gateways operate in an active active configuration.
+- NSB gateways operate in an active-active configuration.
 - Traffic is routed to the upstream router or firewall using OSPF by default.
 - No configuration is required on the NSB gateways themselves. The upstream firewall or router configuration is sufficient for the NSB gateways to automatically learn routing parameters from OSPF hello messages.
 - The customer must configure the upstream routers or firewalls to **advertise a default route (0.0.0.0/0) towards the NSB gateways via OSPF.** This ensures that Nile elements have reachability to external networks and the Nile Cloud.

@@ -35,18 +35,13 @@ B.    Group(s) of employees to be identified that can leverage the Nile SSO f
 
 - Fill up the group name (ex: Nile-Admin), group description, and select the desired members of this group; then click on **Create**
 
-
-
-
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/h39ojeFeEjEFyDpCbEY6R_image.png" size="56" width="460" height="560" position="center" showCaption="false"></Image>
 
 - Repeat the previous group creation operation to create a second group (ex: Nile-Monitor) that could be displayed afterward as illustrated
 
-
-
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Y9WAcQNS4MJbydDxjWsbs_image.png)
 
-- An existing group (Nile-SSO) with 4 members that represent the employees that can sign-in to the Nile SSO SSID is presented for illustration:
+- An existing group (Nile-SSO) with 4 members that represent the employees that can sign in to the Nile SSO SSID is presented for illustration:
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_hIoR8lbv5ypX9d3pLUdi_image.png" size="94" width="778" height="380" position="center" showCaption="false"></Image>
 
@@ -58,7 +53,6 @@ B.    Group(s) of employees to be identified that can leverage the Nile SSO f
 
 - ·On the Microsoft Entra admin Center or Entra ID accessed through the Azure portal, navigate to the ‘**Enterprise applications**’ page
 - Click on ‘**New application**’
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DFvmC59RlQ-KaAQyZEeQM_image.png)
 
@@ -103,8 +97,6 @@ Enter the following
 
 - Click **Single sign-on** in the left menu
 
-
-
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/lnCKVQjzR0zLxML7CRuhK_image.png)
 
 - Click the **SAML&#x20;**&#x70;anel
@@ -113,8 +105,6 @@ Enter the following
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6xK20CF11cGjl5V7I8BL2_image.png" size="88" width="638" height="584" position="center" showCaption="false"></Image>
 
 - Enter temporary values for **Identifier (Entity ID)&#x20;**&#x61;nd **Reply URL (Assertion Consumer Service URL)&#x20;**&#x74;o generate the certificate for download.&#x20;
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/zslJXUcH6TRse8CvYlpAA_image.png)
 
@@ -146,7 +136,6 @@ Edit each claim one by one as follows:
 
 - Click **+ Add New Claim&#x20;**&#x6C;ink, add a new claim for the **mobile&#x20;**&#x61;ttribute as shown. Click the **Save&#x20;**&#x62;utton
 
-
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fY33OrYp_CPo2EHRgMyQu_image.png" size="80" width="520" height="308" position="center" showCaption="false"></Image>
 
 - Click **+ Add New Claim** link, add a new claim for the **displayName&#x20;**&#x61;ttribute. Then click the **Save&#x20;**&#x62;utton
@@ -172,14 +161,13 @@ Edit each claim one by one as follows:
 
 <u>**To be done after completing the next section:&#x20;**</u>Update the ‘Identifier’ and ‘reply URL’ in the ‘Basic SAML Configuration’ section of the Nile app from the metadata.xml file downloaded after completing the Nile Portal provider configuration in the next section.
 
-
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NOzo5NHYuo3qXcBy3T42a_image.png" size="82" width="1702" height="452" position="center" showCaption="false"></Image>
 
 ## Nile Portal Identity Provider Configuration
 
 - Log in to the Nile Portal (https\://www\.nile-global.cloud) as an administrator.
 
-***Note****: It is assumed that the administrator credentials belong to a domain in Microsoft Entra ID. This domain would already be an allowed domain on the Nile Portal.*
+***Note***: *It is assumed that the administrator credentials belong to a domain in Microsoft Entra ID. This domain would already be an allowed domain on the Nile Portal.*
 
 - Navigate to **Global Settings** → **Identity**
 
@@ -194,8 +182,7 @@ Fill up the fields in the new provider window as follows:
 **IdP Issuer URI**:	Microsoft Entra Identifier noted in the previous section
 **IdP SSO URL:**	Login URL noted in the previous section
 **Destination URL**:Login URL noted in the previous section
-**SELECT CERTIFICATE**: Upload the text content of the downloaded SAML Base64certificate&#x20;
-
+**SELECT CERTIFICATE**: Upload the text content of the downloaded SAML Base64 certificate&#x20;
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_QOdgMDjernb6s67vu1H-_image.png" size="66" width="722" height="608" position="center" showCaption="false"></Image>
 
@@ -227,7 +214,7 @@ Click the **SUBMIT&#x20;**&#x62;utton to save the changes and add the new Micros
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/pjOaD_Zut97-YD5YKLf3x_image.png" size="82" width="812" height="396" position="center" showCaption="false"></Image>
 
 **Note**<u>**s**</u>**: &#x20;**<u>****</u> <u>1. </u>The Entra ID provider configuration is completed for SSO users&#x20;
-to gain Internet access after signing-in using their Entra ID credentials. <u></u> <u>2. </u>Entra ID<u> user profiles should contain </u>all previously mapped attributes including <u>emails and mobile phones in order to connect successfully to the Nile SSO SSID.</u>
+to gain Internet access after signing in using their Entra ID credentials. <u></u> <u>2. </u>Entra ID<u> user profiles should contain </u>all previously mapped attributes including <u>emails and mobile phones in order to connect successfully to the Nile SSO SSID.</u>
 
 ### Group Mapping
 
@@ -314,7 +301,7 @@ dev.azure.com
 
 - Click the **SAVE** button to complete the addition of the new segment
 - **Go to NETWORK SETUP-->Wireless&#x20;**&#x70;age to create the PSK SSO SSID
-- Click onthe + sign to add a SSID
+- Click on the + sign to add an SSID
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/-b_qNJybOpasb7nl82eG7_image.png" size="82" width="626" height="336" position="center" showCaption="false"></Image>
 

@@ -11,7 +11,7 @@ With this API, you can:
 - Discover Guest portals that use **Access Code** authentication
 - Create and manage **generic** access codes (shared codes not tied to a specific guest)
 - Create and manage **guest‑specific** access codes (per‑guest codes with name and email tied to the access code)
-- Update start or end time for the access codes as required.
+- Update start or end time for the access codes as required
 - Delete Access Codes when they are no longer needed
 
 ### Prerequisites
@@ -27,7 +27,7 @@ With this API, you can:
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ja2k9eeyMIzLMmYM2kfkp_screenshot-2026-01-12-at-32924apm.png" size="100" width="3398" height="1314" position="center" showCaption="false" indent="2"></Image>
 
-3. When you save, an API key JSON file will be generated. This will look like :
+3. When you save, an API key JSON file will be generated. This will look like:
 
 <BlockQuote>
   \{
@@ -242,7 +242,7 @@ Nile returns a unique access code and all metadata for each guest, along with a 
 
 **Example Request 3: Shared event code for multiple guests**
 
-In this scenario, a single access code is shared by multiple guests from the same organization. For example, at a conference center where several vendors/exhibitors are present, you can assign one access code per company and use it for all guests belonging to that company
+In this scenario, a single access code is shared by multiple guests from the same organization. For example, at a conference center where several vendors/exhibitors are present, you can assign one access code per company and use it for all guests belonging to that company.
 
 <BlockQuote>
   \{
@@ -274,7 +274,7 @@ The response contains one entry per guest, all with the same access code and a s
 
 You can also update parameters such as start time, end time and Access Code for guest‑specific using the following API: **PUT** *\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
 
-You will have to provide the guest email and name as attributes in the request body as they remain contsant and cannot be updated.You must include the guest’s email and name as attributes in the request body because these values are fixed at creation time and cannot be modified later
+You will have to provide the guest email and name as attributes in the request body as they remain constant and cannot be updated. You must include the guest’s email and name as attributes in the request body because these values are fixed at creation time and cannot be modified later
 
 **Example Request: Updation of Access Codes**
 

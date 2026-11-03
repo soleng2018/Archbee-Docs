@@ -26,7 +26,7 @@ Nile uses a **push-based integration** approach to deliver event data to SIEM sy
 
 - Syslog-based integrations are **not supported**.
 - All events are **pre-processed**, **well-defined**, and delivered **exclusively in structured JSON format** to maximize compatibility and simplify parsing.
-- Please refer :Link[**Version 1 - SIEM Event Schema**]{href="https://docs.nilesecure.com/version-1-siem-event-schema" newTab="true" hasDisabledNofollow="false"} for the latest JSON schema.
+- Please refer to :Link[**Version 1 - SIEM Event Schema**]{href="https://docs.nilesecure.com/version-1-siem-event-schema" newTab="true" hasDisabledNofollow="false"} for the latest JSON schema.
 
 ## Example of a Complete Payload
 
@@ -173,7 +173,7 @@ Example of End User Event Payload (**`eventType`**=="end\_user\_device\_events")
   - For wired clients, it represents the switch MAC address.
     - Example: `"bssid": "24:15:10:20:c9:12"`
 - **`connectedPort`** : Port details to which wired client is connected. Example port 0/40
-- **`connectedSwitch`** : Switch serial number or mac address to which wired client is connected.
+- **`connectedSwitch`** : Switch serial number or MAC address to which wired client is connected.
 - **`clientUsername`** : Username of client. Example: john.doe\@company.com
 - **`clientLastKnownIpAddress`** : Last known IP address of client. This will be current IP address for online client and last known IP address for offline or error clients.&#x20;
 - **`clientEventAdditionalDetails`**: A JSON string containing formatted additional information, which can be NULL. It may include server IP and serial numbers for DHCP, DNS servers, etc. In some events, it may also contain the client's IP address.
