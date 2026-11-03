@@ -49,13 +49,9 @@ There are two main groups of settings needed to make this work.
 - Log in to the Nile Portal.
 - Navigate to Settings >> DHCP and click on “+” to add a new DHCP Server
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/NP-DHCP1.png)
 
 - Configure the following parameters:
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/NP-DHCP2.png)
 
@@ -82,8 +78,6 @@ There are two main groups of settings needed to make this work.
 
 - Navigate to Data Management >> DHCP >> Networks and click on “+” to add a new network.
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox3.png)
 
 - Go through the Setup wizard.
@@ -94,13 +88,9 @@ x
 - Add the netmask, in the example, it is /24.
 - Define the network, in this example 192.168.68.0, click “Next”.
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox5.png)
 
 - Add the grid member that will respond to the DHCP requests.
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox6.png)
 
@@ -111,37 +101,25 @@ x
   - DNS Servers: Configure the DNS servers that can resolve the hostnames for the clients, you can use Infoblox threat defense to process the DNS requests too.
   - Click “Next” and “Save”.
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox7.png)
 
 - View the summary of the created network.
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox8.png)
 
 - Click on the created network and continue with the setup by adding the IP range that can serve the DHCP requests.
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox9.png)
 
 - Go through the setup wizard and add the range.
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox10.png)
 
 - Enter the start IP and end IP.
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox11.png)
 
 - Add the grid member that can serve requests for this range.
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/Infoblox12.png)
 

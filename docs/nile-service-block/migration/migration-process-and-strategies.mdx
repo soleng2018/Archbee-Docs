@@ -42,13 +42,13 @@ The firewall must be configured to allow or deny communication between users, de
 
 ### Nile Portal Settings
 
-Log in to the Nile Portal and set up the network. Please see the"settings" section, starting with :Link[Setup DHCP]{label="Setup DHCP" spaceId docId="9E1eAklBev801XqSSOJHk" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../nile-portal-setup/setup-dhcp.mdx"}, for more details. Once this step is complete the network is fully up and devices can connect to the network
+Log in to the Nile Portal and set up the network. Please see the "settings" section, starting with :Link[Setup DHCP]{label="Setup DHCP" spaceId docId="9E1eAklBev801XqSSOJHk" version="v2" docAnchorId loadingMethod="dynamic" overridedLabel href="../../nile-portal-setup/setup-dhcp.mdx"}, for more details. Once this step is complete the network is fully up and devices can connect to the network.
 
 - [x] Provide DHCP server details
 - [x] Provide RADIUS server details
 - [x] Create segments for users and devices
 - [x] Create SSIDs
-- [x] Setup up Access Management rules
+- [x] Set up Access Management rules
 - [x] Sign up for alerts
 
 ### Validation
@@ -57,12 +57,12 @@ Log in to the Nile Portal and set up the network. Please see the"settings" secti
 - [x] Verify **devices** can authenticate, get an IP address, and pass traffic
 - [x] Verify the **firewall&#x20;**&#x72;ules
 - [x] Verify the Nile **SLA’s**&#x20;
-- [x] Verify that the **Infrastructure** (DHCP/DNS/RADIUS/Internet is being monitored by Nile
+- [x] Verify that the **Infrastructure** (DHCP/DNS/RADIUS/Internet) is being monitored by Nile
 - [x] Verify that **alerts** are generated and received
 
 ## Migration Strategies
 
-There a two options to migrate a brownfield deployment to the Nile Access Service:
+There are two options to migrate a brownfield deployment to the Nile Access Service:
 
 |                                 | Define New Subnets | Migrate existing subnets |
 | ------------------------------- | ------------------ | ------------------------ |
@@ -77,8 +77,6 @@ This strategy can be adopted when customers want to bring up the Nile Access Ser
 
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-Iy_DMFjahubS7mAIbUuOY-20240926-200519.jpg)
 
-
-
 As shown in the diagram, all laptops will migrate from VLAN 1 to Segment 1, cameras from VLAN 2 to Segment 2, and printers from VLAN 3 to Segment 3.&#x20;
 
 ### :Comment[Migrating Existing Subnets]{docCommentId="kkVNy3-6K3G_7Z-okfFIE" resolved="false"}
@@ -87,9 +85,7 @@ This strategy requires removing VLANs from the existing infrastructure and lever
 
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-Fn43lnzib9COV_y56c0RZ-20240926-200601.jpg)
 
-
-
-As seen in the above diagram the old network is decommissioned and the VLAN L3 SVI's are migrated from the old infrastructure to Nile
+As seen in the above diagram, the old network is decommissioned and the VLAN L3 SVIs are migrated from the old infrastructure to Nile.
 
 <embed url="https://youtu.be/DBZOwLgYLd4?si=co0fpmw1RKd2uAI1">
 

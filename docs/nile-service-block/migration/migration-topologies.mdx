@@ -15,14 +15,14 @@ createdAt: Fri Jul 26 2024 03:09:05 GMT+0000 (Coordinated Universal Time)
 
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-JqJxqx1A3mDw193oUwTTb-20241024-085804.jpg)
 
-The upstream device can be anything that supports **OSPF** or **static routes with ECMP**. Following are the types of devices we can connect to
+The upstream device can be anything that supports **OSPF** or **static routes with ECMP**. The following are the types of devices we can connect to.
 
 1. L3 Switch
 2. Core Router
 3. Firewall Appliance
 4. SD-WAN Appliance
 
-### OSPF 
+### OSPF
 
 Nile service will automatically configure OSPF when Core or Uplink router interface facing Nile NSB gateway has OSPF enabled and configured:
 
@@ -74,7 +74,7 @@ If the campus is very large, multiple NSBs can be installed, with each NSB scali
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-oTaY90ev7RjcV4fT2qqHc-20241023-161043.jpg)
 
 <hint type="info">
-  Note: When multiple NSB's are used on a campus. unique subnets have to be defined for each segment. For example, if there are 3 NSBs in a campus, the Employee segment will have 3 unique subnets; one for each NSB
+  Note: When multiple NSBs are used on a campus, unique subnets have to be defined for each segment. For example, if there are 3 NSBs in a campus, the Employee segment will have 3 unique subnets; one for each NSB
 </hint>
 
 ### Split Core
@@ -83,11 +83,11 @@ In large campuses, there can be primary and secondary core. Nile's distribution 
 
 ## :Comment[Small to Medium Deployment]{docCommentId="RxWhKGMkfgzKVplLhJPIM" resolved="false"}
 
-This topology is common in small and medium-sized campus/branch sites where the core and distribution layers are combined. In this case, the Nile Service Block will replace the customer's existing distribution and access layers. The Nile Service Gateway will connect to the customer's core routers or Firewall via a Layer 3 link and form an OSPF neighborhship to exchange routes. The existing  DHCP, DNS, and RADIUS servers will be connected to the core layer or on the cloud.&#x20;
+This topology is common in small and medium-sized campus/branch sites where the core and distribution layers are combined. In this case, the Nile Service Block will replace the customer's existing distribution and access layers. The Nile Service Gateway will connect to the customer's core routers or Firewall via a Layer 3 link and form an OSPF neighborhship to exchange routes. The existing DHCP, DNS, and RADIUS servers will be connected to the core layer or on the cloud.&#x20;
 
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-OAFZmyVe0qbWPhNd0q_bm-20241024-085834.jpg)
 
-&#x20;If a router or SD-WAN device is being used as the core the same routing principles outline in the previous section will apply. If a firewall is being used as a router, the VLANs need to be removed and converted to Nile Segments.
+&#x20;If a router or SD-WAN device is being used as the core, the same routing principles outlined in the previous section will apply. If a firewall is being used as a router, the VLANs need to be removed and converted to Nile Segments.
 
 ## :Comment[Firewall ]{docCommentId="8ERQrOyT_QXFQxBkpYPNM" resolved="false"}Policies with the Nile Access Service
 

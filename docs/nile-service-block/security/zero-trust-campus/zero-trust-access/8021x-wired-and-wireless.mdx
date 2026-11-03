@@ -29,11 +29,7 @@ To set up 802.1X authentication on your campus zero trust network with Nile, fol
 
 In the Nile Portal, navigate to the "Network Setu&#x70;**>Authentication**" tab and click "Add".
 
-
-
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ri2rCnE98W8YvIizSXdEe_image.png)
-
-
 
 - **Name**
   - A unique name for the RADIUS server group.
@@ -53,8 +49,6 @@ In the Nile Portal, navigate to the "Network Setu&#x70;**>Authentication**" tab 
   - This setting is leveraged for guest access authentication.
 - **Wired MAC Auth**
   - Specifies that this RADIUS server group should be used for MAC authentication.
-
-
 
 ### Enable 802.1X on a Nile Segment
 
@@ -85,8 +79,6 @@ Nile understands that not every device on your network will support 802.1X. For 
 In some use cases, a single SSID can be mapped to multiple segments in the Nile Access Service. In such scenarios, it is mandatory for the RADIUS server to send back the exact segment name that the user or device should be assigned to. The Nile Access Service supports dynamic segment assignment based on user and device attributes received from external RADIUS servers, such as Cisco Identity Services Engine (ISE) and Aruba ClearPass. To facilitate this, Nile provides a custom dictionary file that can be uploaded to the RADIUS servers or standard RADIUS attributes can be used.
 
 When a user or device authenticates to the Nile Access Service using 802.1X, the RADIUS server can send the "netseg" Vendor Specific Attribute (VSA) during the authentication process. This attribute informs the Nile Access Service which network segment the user or device should be assigned to.
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LcBC4lUMxgR6k8oTbFVJQ_image.png)
 

@@ -20,7 +20,7 @@ Before you begin, make sure you have the following:
 - The Endpoint URL for your HTTP or HTTPS receiver.
 - Your preferred authentication method: Token-based authentication, Basic authentication, or Mutual TLS authentication.
 - If using token-based authentication, have the header name and token value available for the requests sent by Nile.
-- If using mutual TLS, have a client certificate in **.P12** or **.PFX** format and the corresponding keystore password are available. 
+- If using mutual TLS, have a client certificate in **.P12** or **.PFX** format and the corresponding keystore password available.
 - If your receiver uses a private or self-signed server certificate and you want certificate validation enabled, have the custom CA certificate ready so it can be uploaded and trusted for this connection.
 - The Nile event categories you want to export, such as alerts, end-user device events, and audit trail.
 
@@ -125,11 +125,11 @@ If your destination uses HTTPS, choose whether certificate validation should rem
 
 If your destination platform requires extra headers, add them in the custom headers section.
 
-Once the customer headers are added, click Next to enable the Subscriptions
+Once the custom headers are added, click Next to enable the Subscriptions.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Lk3TrbFFiJ7HVWNN06tSR_.blob)
 
-### Step 9: Select event categories 
+### Step 9: Select event categories
 
 Choose the event categories you want Nile to export through this connector. The subscription options include Audit, User Device Events, and Alerts.
 

@@ -25,7 +25,6 @@ By configuring this integration, customers can leverage Prisma SASE’s advanced
 - Navigate to Settings -> Identity & Access -> Add Identity
 - Choose Identity type: **Service Account**, create a Service Account name, and click Next.
 
-
 <Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-Qx_fLCpG-1qlNp30rBJNT-20250710-065042.png" size="70" width="924" height="540" position="center" showCaption="false"></Image>
 
 - Save the **Client ID** and **Client Secret&#x20;**&#x66;or later use in Nile Control Center.
@@ -38,13 +37,11 @@ By configuring this integration, customers can leverage Prisma SASE’s advanced
 
 ## Nile Access Service Configuration
 
-- Login to the Nile Control Center as an administrator.
+- Log in to the Nile Control Center as an administrator.
 - Navigate to **Settings > Global Settings > Integrations.**
 - Click on “+ **Setup Integration**”. You should be able to see “SSE Integration”. Click on the option. If you don’t have access to the SSE integration option, please reach out to Nile support to ensure that you have the option enabled.
 
 <Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-2msQK8A_fBCX4EbuwgUPi-20250710-082441.png" size="70" width="1711" height="683" position="center" showCaption="false"></Image>
-
-
 
 - On the **Configuration Instance** menu, enter the name of the integration and select **Palo Alto Networks** as the provider.
 - Fill in the **Client ID** field using the Palo Alto Networks service account Client ID obtained from the previous step.
@@ -69,10 +66,8 @@ By configuring this integration, customers can leverage Prisma SASE’s advanced
 
 <Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-tXnkJnxQKxP-I0IAtZ-X0-20250710-083926.png" size="70" width="1896" height="492" position="center" showCaption="false"></Image>
 
-
-
 - Follow the workflow to set up the external rule. Select the “**Source Segment**” and then select the destination as “**All Internet Bound Traffic**”.
-- On the Action page, select the“**Forward**” action, and the SSE instance will be preselected.&#x20;
+- On the Action page, select the “**Forward**” action, and the SSE instance will be preselected.&#x20;
 - Choose whether to forward the traffic to the local upstream firewall in case of tunnel failure.&#x20;
   \***Important** **Note**: If this option is not enabled, then traffic will be dropped in the event of tunnel failure and end users/devices may lose network connectivity.
 - Fill in the appropriate rule name.
@@ -80,8 +75,6 @@ By configuring this integration, customers can leverage Prisma SASE’s advanced
 - Click Save.
 
 <Image src="https://api.archbee.com/api/optimize/iJitOSzq4rJv_Xv-76j6m-JIbS6ztyk3jifXXsI78ZC-20250710-084217.png" size="70" width="1892" height="829" position="center" showCaption="false"></Image>
-
-
 
 - Note: all provisioning of Prisma Remote Networks and Tunnels is automated and may take up to 20 minutes if the Remote Network is not already created and available in a Geo location.
 
@@ -139,7 +132,7 @@ Nile recommends using Dynamic Address Groups for accurate and consistent policy 
 For example, if the administrator wants to apply a specific set of policies to “\<Segment Name>” users, they can follow these recommended steps:
 
 - To access Address Groups in Prisma Access, navigate to:&#xA;**&#x20;Manage > Configuration > NGFW and Prisma Access > Objects >Address > Address Groups**
-- Create a Dynamic Address Group where tags used to filter traffic are “Nile Secure” and “\<Segment Name>.
+- Create a Dynamic Address Group where tags used to filter traffic are “Nile Secure” and “\<Segment Name>”.
 - Use the Dynamic Address Group in policies to apply policies as needed.
 - As the Dynamic Address Groups are maintained automatically by the Prisma Access platform, when a new Nile site is deployed and the segment is extended to a new site, policy application will automatically extend to the new site’s users/devices. This is also true for site/segment deletions as well.
 

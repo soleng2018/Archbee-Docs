@@ -6,26 +6,26 @@ createdAt: Tue Nov 11 2025 23:25:50 GMT+0000 (Coordinated Universal Time)
 
 # Overview
 
-The Nile Cloud Radius integration with Microsoft Intune is a mandatory step if Intune is to be used in the Radius policies. The integration setup consists of the following steps:
+The Nile Cloud RADIUS integration with Microsoft Intune is a mandatory step if Intune is to be used in the RADIUS policies. The integration setup consists of the following steps:
 
 - Create a new App registration in Entra ID with appropriate Intune and Microsoft Graph permissions
 - Copy and Paste the Tenant ID, Client ID and Secret from the newly created Entra ID App
 
 # Requirements
 
-- Entra ID user with roles to create new application registrations, add Microsoft Graph and Intune API permissions and grant those permisions to the app registration
+- Entra ID user with roles to create new application registrations, add Microsoft Graph and Intune API permissions and grant those permissions to the app registration
 - Administrator access to the Nile Control Center (Nile Portal)
 
 # Configuration
 
-The integration of cloud Radius with Microsoft Intune consists of the following tasks:
+The integration of cloud RADIUS with Microsoft Intune consists of the following tasks:
 
 1. Create a new app registration and collect the following parameters:
    - Application (client) ID
    - Directory (tenant) ID
    - Client secret
 2. Add the appropriate API read permissions to Microsoft Graph and Intune
-3. Login to Nile Control Center and fill up the Intune configuration using the parameters collected from the app registration
+3. Log in to Nile Control Center and fill up the Intune configuration using the parameters collected from the app registration
 
 ## Entra ID App registration
 
@@ -45,7 +45,7 @@ The integration of cloud Radius with Microsoft Intune consists of the following 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/T0yIvWXt3Xl_BcYpYTqkz_intune-registration3.png" size="74" width="695" height="454" position="flex-start" darkWidth="695" darkHeight="454" showCaption="false"></Image>
 
 - Click on **New client secret** to add a client secret
-  In the pop up window, enter a description and select the expiration period, then click the **Add** button
+  In the pop-up window, enter a description and select the expiration period, then click the **Add** button
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/2w0cw69ue8pooQ7OlYdSL_intune-secret.png" size="74" width="670" height="189" position="flex-start" darkWidth="670" darkHeight="189" showCaption="false"></Image>
 
@@ -65,7 +65,7 @@ The integration of cloud Radius with Microsoft Intune consists of the following 
 
 ## Nile Intune Configuration
 
-- Login to Nile Control Center at [https://www.nile-global.cloud](https://www.nile-global.cloud)&#x20;
+- Log in to Nile Control Center at [https://www.nile-global.cloud](https://www.nile-global.cloud)&#x20;
 - Navigate to **GLOBAL SETTINGS > Identity**, and select the **Intune Configuration** page
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dLrpJVEGMvrn71APmGCNM_cleo-intune.png" size="74" width="904" height="489" position="flex-start" darkWidth="904" darkHeight="489" showCaption="false"></Image>

@@ -10,9 +10,9 @@ Since the introduction of VLANs (802.1q), enterprise networks have grown increas
 
 VLAN-based segmentation introduced challenges such as limited broadcast domains, management overhead, and weak security boundaries. These issues hindered scalability, reduced agility, and made enforcing granular access controls difficult. Using VLANs for segmentation also left networks vulnerable to lateral attacks within shared broadcast domains, while adding operational complexity across multiple devices and vendors.
 
-Originally, VLANs were created to mitigate broadcast storms. Their role in security driven segmentation emerged later but exposed the same limitations: fragmented management, limited scalability, and insufficient isolation.
+Originally, VLANs were created to mitigate broadcast storms. Their role in security-driven segmentation emerged later but exposed the same limitations: fragmented management, limited scalability, and insufficient isolation.
 
-This document explains how **dynamic, policy driven Layer 3 segments**, which are a core capability of the Nile Access Service, address these challenges. Nile’s approach is rooted in zero trust principles and microsegmentation. It enables organizations to design secure, adaptive, and future ready networks that align with modern security and scalability requirements.
+This document explains how **dynamic, policy-driven Layer 3 segments**, which are a core capability of the Nile Access Service, address these challenges. Nile’s approach is rooted in zero trust principles and microsegmentation. It enables organizations to design secure, adaptive, and future-ready networks that align with modern security and scalability requirements.
 
 ### Why a Layer 3 Only Network?
 
@@ -20,7 +20,7 @@ Nile’s Layer 3 Network Architecture marks a fundamental shift from VLAN-based 
 
 This design eliminates the inherent complexity of VLAN management. Segments are created in the Nile Customer Portal and applied dynamically to users and devices, independent of physical location.
 
-At the foundation is **zero trust**, which assumes no user, device, or application is inherently trusted. Instead, granular access controls are enforced through continuous authentication, authorization, and policy based segmentation.
+At the foundation is **zero trust**, which assumes no user, device, or application is inherently trusted. Instead, granular access controls are enforced through continuous authentication, authorization, and policy-based segmentation.
 
 ### Key Features and Benefits
 
@@ -32,7 +32,7 @@ At the foundation is **zero trust**, which assumes no user, device, or applicati
 
 **Campus Zero Trust:** Unknown devices are isolated by default and directed to the firewall, reducing the risk of malware infiltration.
 
-**Seamless Integration:** Standard routing protocols such as OSPF enable efficient communication between segments. Nile integrates easily with existing firewalls and cloud or on premises security platforms.
+**Seamless Integration:** Standard routing protocols such as OSPF enable efficient communication between segments. Nile integrates easily with existing firewalls and cloud or on-premises security platforms.
 
 ### How Layer 3 Segmentation Operates
 
@@ -72,7 +72,7 @@ Common Questions
 - The NSB provides a list of known services.
 - The client initiates unicast communication with the printer. Traffic is then subject to firewall or Nile microsegmentation policies.
 
-Nile advertises services across segments, so devices such as printers and laptops do not need to share the same subnet. Services are only advertised within the requesting device’s vicinity, avoiding unnecessary network wide announcements.
+Nile advertises services across segments, so devices such as printers and laptops do not need to share the same subnet. Services are only advertised within the requesting device’s vicinity, avoiding unnecessary network-wide announcements.
 
 ## Layer 2 vs Layer 3 Comparison
 

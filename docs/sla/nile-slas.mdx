@@ -8,8 +8,6 @@ createdAt: Wed Jun 26 2024 17:49:43 GMT+0000 (Coordinated Universal Time)
 
 The Nile Access Service provides a comprehensive set of Service Level Agreements (SLAs) to ensure the reliability and performance of the network infrastructure. Our goal is to eliminate complexity and provide a simple, scalable, and secure network that doesn’t need configuration (by humans). We want to ensure the service is *always-on*. To achieve this we have taken an outside-in approach using physical and virtual sensors that are deployed across the Nile network (including APs and switches). We call this the "outside-in approach" because of its simplicity and the ability to easily verify the Nile sensor data. Nile measures and guarantees these SLAs on a per-building basis, providing customers with visibility and accountability into service delivery. If a Nile network within a building does not meet its commitment, customers are eligible to receive service credits towards future monthly billing cycles as outlined in Nile’s service contract.
 
-
-
 ## What SLAs does Nile Offer
 
 Nile’s performance guarantee is designed to continuously validate the following in real-time and is backed by a 99.95% commitment on a per-building basis:
@@ -23,8 +21,6 @@ This allows Nile to take action, ensuring that service quality is proactively ma
 ## How does Nile measure SLAs?
 
 The first piece of the puzzle is the use of physical and virtual sensors deployed alongside Wi-Fi access points (APs). The sensors act like synthetic user devices providing us an outside-in view for a high degree of visibility. As a group, the sensors continuously run tests every minute to discover any issues related to network and application performance.
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sEtXQFURNiXGa_zUN8Bys_image.png)
 
@@ -42,11 +38,9 @@ When responses are received, it is considered a “good” minute and if not, we
 
 The Coverage SLA measures the availability of voice-quality signal strength. Nile considers a signal strength of -67 dBm or above as the threshold for voice quality. Nile's wall-pluggable sensors measure the Received Signal Strength Indicator (RSSI) of the Nile APs. If the RSSI during a minute is equal to or better than -67 dBm, the sensors declare the minute as "good"; otherwise, they declare the minute as "bad". The number of good and bad minutes are aggregated across all the sensors in a building, and the Coverage is calculated as a percentage of good minutes out of the total minutes. Minute by minute coverage can be observed in Nile Portal by looking at the signal strength seen by sensors.&#x20;
 
-
-
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/uqpqFSBDMeYbGgJP5jYAu_image.png)
 
-In the above image, the sensor on the top cannot see a single AP with -67 dBm or better (the best signal it can see is -70 dBm). This is reported as a bad minute
+In the above image, the sensor on the top cannot see a single AP with -67 dBm or better (the best signal it can see is -70 dBm). This is reported as a bad minute.
 
 ### Capacity
 
@@ -73,7 +67,6 @@ The Monthly Uptime Status Percentage is calculated as the average of the Availab
   &#x20;Good Minutes = 267,840 - 18 = 267,822 minutes
 
   Availability = (Good Minutes / Total Minutes) × 100% = (267,822 / 267,840) × 100% = 99.99%
-
 
 </ExpandableHeading>
 

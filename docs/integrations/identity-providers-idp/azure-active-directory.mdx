@@ -28,7 +28,6 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
 
 - On the “Browse Azure AD Gallery”, click “**Create your own application**”
 
-
 ![Azure Enterprise Applications page](https://nilesecure.com/wp-content/uploads/2024/02/1.png "Azure Enterprise Applications page")
 
 - Click **Create**.
@@ -52,15 +51,11 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
 
 ![Azure Organization Select Single Sign On method Page](https://nilesecure.com/wp-content/uploads/2024/02/6.png "Azure Organization Select Single Sign On method Page")
 
-
-
 - In **Select a single sign-on method**, click **SAML panel** and Click **Edit.**
 - On the **Set UP Single Sign-On with SAML** page, in the **Basic SAML Configuration** section click "Edit".
 - Enter temporary values for **Identifier (Entity ID)** and **Reply URL (Assertion Consumer Service URL)** to generate the certificate for download.
 - Click on **Save** (top bar) to save the changes.
 -
-
-
 
 ![Azure Organization Select Single Sign On method Page](https://nilesecure.com/wp-content/uploads/2024/02/7.png "Azure Organization Set up Single Sign On Page")
 
@@ -70,25 +65,16 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
   - The **Attributes & Claims page** is presented
     &#x20;
 
-
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/9.png)
-
-
 
 - Edit each claim one by one as follows:
   - Click on the user.mail claim line to open it for editing and delete the namespace URI. Change the Name to “mail” and click **Save**.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/11.png)
 
-
-
 - Similarly edit user.givenname by deleting the namespace URI and renaming givenname to **firstName**, and click save.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/12.png)
-
-
 
 - Edit user.userprinciplename by deleting the namespace URI, and click **Save.**
 
@@ -99,8 +85,6 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/14-3.png)
 
-
-
 - Next, add a new claim for the **mobile** attribute:
   - Name: "mobile"
   - Source: "Attribute"
@@ -108,8 +92,6 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
   - Click Save
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/15.png)
-
-
 
 - Add a new claim for the **displayName** attribute;
   - Name: displayName
@@ -125,11 +107,7 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
   - Click Save
     &#x20;
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/17.png)
-
-
 
 - Download the ‘SAML Signing Certificate’ (to be uploaded later to the Nile Customer Portal when adding Azure AD as a provider):
 - Azure AD Identifier:
@@ -161,7 +139,6 @@ Log in to the Nile Customer Portal (:Link[https://www.nile-global.cloud]{href="h
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/19.png)
 
-
 Click on **ADD A NEW PROVIDER:**
 
 - Fill up the fields in the new provider window as follows:
@@ -174,11 +151,9 @@ Click on **ADD A NEW PROVIDER:**
 
 ![](https://nilesecure.wpenginepowered.com/wp-content/uploads/2024/02/Picture22-1.png)
 
-
 Click the **METADATA** button to download the file.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/21-3.png)
-
 
 Open the downloaded file with a text editor, and search for the ‘entityID’ and ‘Location’ strings.
 
@@ -222,12 +197,10 @@ The example that follows maps an AD admin group “NileAdmin” to the Nile Cust
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/25-2.png)
 
-
 2\. Click “Add Group Mapping”:
 &#x20;
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/26-1.png)
-
 
 Add the group name to the “Friendly name” and “External name” fields and click Save.
 
@@ -265,8 +238,6 @@ Log back in to the Nile Customer Portal
   - Click on the ⊕ to add a new segment
   - Type a meaningful segment name (Demo PSK SSO)
 
-
-
 ![](https://nilesecure.com/wp-content/uploads/2024/02/32-1.png)
 
 Go to the ‘Service area’ tab to select the DHCP server and scope:
@@ -288,8 +259,6 @@ Go to the ‘Advanced’ tab and check off the ‘URL Allow List’ and click on
 - **\*.aadcdn.msauth.net**
 
 Click SAVE to complete the addition of the new segment
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/34.png)
 

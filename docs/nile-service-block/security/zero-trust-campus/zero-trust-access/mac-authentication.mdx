@@ -6,18 +6,18 @@ createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
 
 # :Comment[MAC Auth]{docCommentId="e_i_0q-r5RTV-6WTjZn_W" resolved="true"}
 
-The Nile Access Service is built on the principles of a "Zero Trust Campus," ensuring that no user or device is implicitly trusted. As part of this security model, the Nile Access Service supports :Comment[MAC Auth]{docCommentId="2aSxSL3Z1JEsOqdUcMsmz" resolved="true"}:Comment[as]{docCommentId="l0m4rR-P92PwsiKTzZ61Q" resolved="true"} an authentication method for devices that :Comment[cannot accommodate the 802.1X standard.]{docCommentId="nV0lUs5g-7mEtczK-TvMa" resolved="true"} When a device connects to a Nile Switch, its MAC address is learned and sent to the Nile Cloud or External RADIUS server for authentication. If the device is successfully authenticated a Segment name is returned to the NSB. The device is then assigned the segment and traffic is allowed.
+The Nile Access Service is built on the principles of a "Zero Trust Campus," ensuring that no user or device is implicitly trusted. As part of this security model, the Nile Access Service supports :Comment[MAC Auth]{docCommentId="2aSxSL3Z1JEsOqdUcMsmz" resolved="true"}:Comment[as]{docCommentId="l0m4rR-P92PwsiKTzZ61Q" resolved="true"} an authentication method for devices that :Comment[cannot accommodate the 802.1X standard.]{docCommentId="nV0lUs5g-7mEtczK-TvMa" resolved="true"} When a device connects to a Nile Switch, its MAC address is learned and sent to the Nile Cloud or External RADIUS server for authentication. If the device is successfully authenticated, a Segment name is returned to the NSB. The device is then assigned the segment and traffic is allowed.
 
 ## Nile Cloud MAC Authentication
 
-By default when a device connects to the Nile Switch it will show up in the Nile Portal as "Waiting for approval". This device can then be manually approved or denied. If approved a segment will be assigned to it. Approving or denying each individual device can be cumbersome. So Nile provides the ability for an admin to create pre-define rules. The following are the rules that can be created:
+By default, when a device connects to the Nile Switch it will show up in the Nile Portal as "Waiting for approval". This device can then be manually approved or denied. If approved a segment will be assigned to it. Approving or denying each individual device can be cumbersome. So Nile provides the ability for an admin to create pre-defined rules. The following are the rules that can be created:
 
-1. Exact Match Address - The admin can create an entry with an MAC address
+1. Exact Match Address - The admin can create an entry with a MAC address
 2. Fingerprint Rule - Nile has an exhaustive list of fingerprints in its database. So a rule based on fingerprint can be created e.g. Devices matching "HP Printer" should be assigned the printer segment
 3. OUI - Create a rule based on the first 3 octets of a MAC address
-4. Catch All rule - If none of the rules are not matched a device can be mapped to a segment using this rule
+4. Catch All rule - If none of the rules are matched a device can be mapped to a segment using this rule
 
-All these rules are optional but its recommended to create rules&#x20;
+All these rules are optional but it's recommended to create rules.&#x20;
 
 <ExpandableHeading isOpen="true">
   ### :Comment[MAC Auth: Address matching process]{docCommentId="yLSbuhZXAJXS21s6yj23x" resolved="true"}
@@ -37,7 +37,7 @@ All these rules are optional but its recommended to create rules&#x20;
   4. **Catch-All Match**:
      - If the client does not match the exact MAC address, fingerprint or OUI-based rules, the system checks the "Catch-All" rule.
      - The Catch-All rule can be configured to either allow the client and place it in a specific network segment, or self serve with Wired SSO.
-     - If Fingerprint based rules are being used, its strongly recommended to have the Catch-all rule. Once the device gets an IP address and passes some traffic like DNS or user-agent, it can get accurately fingerprinted and then moved to the appropriate segment. For example Define a rule defined as "Allow HP Printer on the printer segment". When the printer connects to the network, it may not get fingerprinted right away. But once it falls in the all rule, gets an IP and passes some traffic, it will get fingerprinted and moved to the printer segment
+     - If Fingerprint based rules are being used, it's strongly recommended to have the Catch-all rule. Once the device gets an IP address and passes some traffic like DNS or user-agent, it can get accurately fingerprinted and then moved to the appropriate segment. For example Define a rule defined as "Allow HP Printer on the printer segment". When the printer connects to the network, it may not get fingerprinted right away. But once it falls in the all rule, gets an IP and passes some traffic, it will get fingerprinted and moved to the printer segment
 </ExpandableHeading>
 
 ### Setup MAC Auth
@@ -51,21 +51,19 @@ Nile provides flexible options for configuring MAC Auth within the Nile Access S
 - Segment: The network segment to which the device should be assigned (required for "Allow" status, optional for "Deny")
 - Geoscope (optional) Site, Building, Floor: Restrict the device to a specific geographical location. The default is ALL geoscopes which means a device can be plugged into any switch at any site assuming "Lock to port" is not set.
 - Status (mandatory): Specify whether to allow or deny access for the device
-- Lock to Port (optional): The "Lock to Port" feature automatically locks the device to the switch port where it first achieved successful authentication. For example; when a VOIP phone is connected to the network, the admin may choose to lock it to a port to ensure its location is not changed. If this phone is moved to a different port on the same switch or different switch, it will be denied access
-- Allow ALL MACs (optional) - Catch all rule for devices that don't match and criteria's.
+- Lock to Port (optional): The "Lock to Port" feature automatically locks the device to the switch port where it first achieved successful authentication. For example, when a VOIP phone is connected to the network, the admin may choose to lock it to a port to ensure its location is not changed. If this phone is moved to a different port on the same switch or different switch, it will be denied access
+- Allow ALL MACs (optional) - Catch all rule for devices that don't match any criteria.
 - Wired SSO (optional) - If a device falls in the ALL category, enable SSO and move the device to an employee segment
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AuxSy-KixdkoIA5gjp_of_upload-csv.png)
-
-
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/fMMaPJaVWQ63swXisrPp__add-device.png)
 
 ## :Comment[M]{docCommentId="Oy8sg82cuGyGmcIm2EDiC" resolved="false"}AC AUTH with External RADIUS server
 
-MAC authentication is a mandatory for all devices that don't support 802.1X. But admins have the choice to use MAC auth with their own RADIUS server as opposed to Nile Cloud.
+MAC authentication is mandatory for all devices that don't support 802.1X. But admins have the choice to use MAC auth with their own RADIUS server as opposed to Nile Cloud.
 
-When a RADIUS server is created and the "Wired Auth" checkbox is checked; Nile will do a MAC Auth with the external radius server.
+When a RADIUS server is created and the "Wired Auth" checkbox is checked; Nile will do a MAC Auth with the external RADIUS server.
 
 Note: External RADIUS Servers must be configured to return a segment name with authentication to ensure the device is placed in the correct segment. Refer to the expandable header below for details.
 
@@ -74,7 +72,7 @@ Note: External RADIUS Servers must be configured to return a segment name with a
 
   In some use cases, a single SSID can be mapped to multiple segments in the Nile Access Service. In such scenarios, it is mandatory for the RADIUS server to send back the exact segment name that the user or device should be assigned to.&#x20;
 
-  For example; A university SSID could have both Faculty and Student segments mapped, allowing each to access their specific resources without needing multiple SSIDs. As well as being very convenient for users, it reduces the issues that can occur when VLAN locked SSIDs proliferate.
+  For example, a university SSID could have both Faculty and Student segments mapped, allowing each to access their specific resources without needing multiple SSIDs. As well as being very convenient for users, it reduces the issues that can occur when VLAN locked SSIDs proliferate.
 
   The segment assignment can be achieved in two ways:
 
@@ -142,15 +140,15 @@ By leveraging the flexibility and security of MAC Auth within Nile's innovative 
 
   ### Can I Enable Nile Auto Wired Device Authentication for a Specific Vendor or Device Type?
 
-  Yes, you can create a wired device authentication policy for a specific device vendor or type using the Organizational Unique Identifier (OUI). The OUI is the first 24 bits of a MAC address that is used as a globally unique identifier assigned by the IEEE to identify network devices.You can enable the OUI-based policy in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device > OUI/MAC), where you can select the segment, status (Approved/Denied), and geographical scope for the OUI-based policy.
+  Yes, you can create a wired device authentication policy for a specific device vendor or type using the Organizational Unique Identifier (OUI). The OUI is the first 24 bits of a MAC address that is used as a globally unique identifier assigned by the IEEE to identify network devices. You can enable the OUI-based policy in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device > OUI/MAC), where you can select the segment, status (Approved/Denied), and geographical scope for the OUI-based policy.
 
   ### What is Nile Wired Access Management Lock to Port?
 
-  The "Lock to Port" feature will lock a device's approval to a specific Nile switch port when the device connects for the first time. If the wired device is moved to a different port or a different switch, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again.You can enable the "Lock to Port" feature in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and optionally choosing the geographical scope.
+  The "Lock to Port" feature will lock a device's approval to a specific Nile switch port when the device connects for the first time. If the wired device is moved to a different port or a different switch, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again. You can enable the "Lock to Port" feature in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and optionally choosing the geographical scope.
 
   ### What is Wired Access Management Geo Scope?
 
-  The Wired Access Management Geo Scope is a feature that limits wired device authentication pre-approval to a specific location (site, building, or floor). If a wired device is moved to a different location, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again.You can enable the Geo Scope in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and choosing the geographical scope (site, building, or floor). The admin can view this information in the MAB table
+  The Wired Access Management Geo Scope is a feature that limits wired device authentication pre-approval to a specific location (site, building, or floor). If a wired device is moved to a different location, the Wired Access Management policy will be changed from "allow" to "deny", and the Nile portal administrator will need to allow the device again. You can enable the Geo Scope in the Nile Customer Portal (Network Setup> Access Management > Wired > Add Device) by entering the OUI (for multiple devices) or MAC (for a single device), selecting a specific segment, and choosing the geographical scope (site, building, or floor). The admin can view this information in the MAB table.
 
   ### Can Administrators Pre-Approve Devices Based on Device Make, Model, or Software?
 
@@ -195,14 +193,7 @@ By leveraging the flexibility and security of MAC Auth within Nile's innovative 
 
   Deleting an existing rule will not impact any existing device Wired Access Management entries. It will only affect the addition of new devices. When a new device is added, if it matches a rule, a specific entry will be created for that device. The only impact would be if both the rule and the device entry were deleted - in this case, the device status will change to "waiting for approval" and require manual approval.
 
-
 </ExpandableHeading>
-
-
-
-
-
-
 
 Read Next; :Link[Wired Access FAQ]{href="https://app.archbee.com/docs/JugAmsswAWaUxXjhmYR53/NqRX00KDRS4W4lgx-fqN4" newTab="true" hasDisabledNofollow="false"}
 

@@ -93,9 +93,6 @@ Interfaces: Create New (**Name:** NSB || **Interface:** NSB Switch || **Cost:** 
 
 Inject Default Route: Always
 
-
-
-
 **Static Routing (WAN):**
 &#x20;1\. Expand on Network → Static Routes → Create New:
 &#x20;Destination: Subnet (0.0.0.0/0)
@@ -108,9 +105,6 @@ Inject Default Route: Always
 
 Then click on “OK” to save the changes.
 &#x20;
-
-
-
 
 2\. Repeat the same steps for setting up with a default static route for WAN2; set the AD as 10 while setting up the default route for WAN2, if WAN1 is desired as the primary link.
 
@@ -137,8 +131,6 @@ The following example policy will allow any traffic coming from the NSB switch i
 &#x20;h. Action Accept
 &#x20;i. Inspection Mode Flow based
 &#x20;j. Firewall/Network Options Enable NAT, Use Outgoing interface address for IP pool setup
-
-
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/policy.png)
 

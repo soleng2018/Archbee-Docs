@@ -51,7 +51,7 @@ This section focuses on setting up the **data connector** in Falcon so Nile can 
 
 6. In the “New Connection details” window:&#x9;
    - Provide a connection name and description (optional)
-   - Select a timezone for your data. This will be applied to event data that does not include timezone information. 
+   - Select a timezone for your data. This will be applied to event data that does not include timezone information.
    - Host enrichment is enabled by default (optional). If needed, you can disable it by clearing the checkbox.
    - Accept the Terms and Conditions, then click “Create connection”.
 
@@ -87,15 +87,15 @@ This section focuses on setting up the **data connector** in Falcon so Nile can 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/LIMCyMmVPO3_Fe9H-XrDx_.blob)
 
 3. On the CrowdStrike integration form in Nile
-   - Name: Set the Name to default. Nile uses the SIEM connection named “default” as the primary path for sending events out. 
-   - API URL: Paste the API URL exactly as shown in the Falcon Data Connector page (Nile Access Service Data Connector). This must match the URL CrowdStrike shows in its Data Connector configuration. 
+   - Name: Set the Name to default. Nile uses the SIEM connection named “default” as the primary path for sending events out.
+   - API URL: Paste the API URL exactly as shown in the Falcon Data Connector page (Nile Access Service Data Connector). This must match the URL CrowdStrike shows in its Data Connector configuration.
    - API Key: Paste the API key generated for the Falcon Data Connector.
    - Click Next to proceed to the event selection.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/iFLgUIuAZE60wBMdJ0_8J_.blob)
 
-4. Select Nile event categories to send to CrowdStrike. 
-   - Enable the toggle for Audit, User Device Events, and Alerts as required. 
+4. Select Nile event categories to send to CrowdStrike.
+   - Enable the toggle for Audit, User Device Events, and Alerts as required.
    - Click Save to create the integration.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/dApDodTS2MwGePRhnM9Ju_.blob)
@@ -110,8 +110,8 @@ This section focuses on setting up the **data connector** in Falcon so Nile can 
 2. Wait for the test to complete.
    - **Green** status means Nile can reach the Falcon Data Connector, and the credentials/URL are valid.
    - **Red** or failure means you should:
-     - Confirm the Falcon **Data Connection** is **enabled and running** in the Falcon console (Data Connector page). 
-     - Double-check the **API URL** and **API key** in Nile exactly match what’s shown in Falcon. 
+     - Confirm the Falcon **Data Connection** is **enabled and running** in the Falcon console (Data Connector page).
+     - Double-check the **API URL** and **API key** in Nile exactly match what’s shown in Falcon.
      - Ensure the integration Name is **the default** if this is your primary SIEM stream.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/VADNFdeaMQLfJ03NhaSoX_.blob)
