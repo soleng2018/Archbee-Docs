@@ -19,9 +19,9 @@ Traditional RADIUS solutions such as Aruba ClearPass or Cisco ISE are powerful b
 - **Faster Rollout**
   New sites can be onboarded without standing up additional infrastructure. Authentication and authorization services are instantly available everywhere your Nile Access infrastructure runs.
 - **Cloud-Scale Security**
-  All communication between Nile infrastructure and RADIUS-as-a-Service is carried over encrypted gRPC tunnels, avoiding the need to set up RADSec or in most cases un-encrypted. Customers don’t need to worry about securing RADIUS traffic with additional measures.
+  All communication between Nile infrastructure and RADIUS-as-a-Service is carried over encrypted gRPC tunnels, avoiding the need to set up RADSec or in most cases un-encrypted. You don’t need to worry about securing RADIUS traffic with additional measures.
 - **Operational Efficiency**
-  Instead of a team of NAC specialists maintaining a complex rules engine, customers can use Nile’s simplified policy framework to achieve the same outcomes in fewer steps.
+  Instead of a team of NAC specialists maintaining a complex rules engine, you can use Nile’s simplified policy framework to achieve the same outcomes in fewer steps.
 
 ***
 
@@ -48,7 +48,7 @@ This architecture gives customers the **benefits of cloud scale and reliability 
 
 - **Supported Method:** EAP-TLS
 - **How it works:**
-  Customers upload their server certificate and private key. End-user devices and IoT systems authenticate using mutual TLS, ensuring strong, certificate-based identity validation.
+  You upload your server certificate and private key. End-user devices and IoT systems authenticate using mutual TLS, ensuring strong, certificate-based identity validation.
 - Please ensure you have the following before&#x20;
 
 * [ ] Server Certificate
@@ -81,7 +81,7 @@ Nile RADIUS-as-a-Service provides a **demo mode** where certificates for both se
 
 This gives admins fine-grained control over who gets on the network, and what access they have.
 
-Following is a ladder diagram on how the traffic flows:
+The following is a ladder diagram on how the traffic flows:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Q520RO1pVwZlz0q9WyjFs-20251117-194040.png)
 
@@ -163,7 +163,7 @@ With Nile RADIUS-as-a-Service, admins can leverage **certificate attributes** fo
 - Similar policies can be created for printers, sensors, or other device categories.
 
 **Outcome:**
-IoT devices automatically end up in the **appropriate segment** with the right access controls and eliminates SSID sprawl. For instance:
+IoT devices automatically end up in the **appropriate segment** with the right access controls and eliminate SSID sprawl. For instance:
 
 - Cameras can only reach the video management server.
 - Printers can only talk to the print server.
@@ -251,7 +251,7 @@ A. Yes. Nile RADIUS is monitored every minute from every site, reporting availab
 
 **Q. What happens when the Internet goes down?**
 
-A. Existing authenticated sessions remain active. Devices continue roaming seamlessly due to locally cached PMK. New or re-authentication attempts will not work until connectivity is restored.
+A. Existing authenticated sessions remain active. Devices continue roaming seamlessly due to locally cached PMK. New or re-authentication attempts do not work until connectivity is restored.
 
 **Q. Can we see detailed logs of all transactions?**
 
@@ -259,11 +259,11 @@ A. Yes. Detailed logs are available on both the Device Details page and the RADI
 
 **Q. What EAP types are supported?**
 
-A. Nile currently supports EAP‑TLS (certificate based auth). Additional EAP methods will be supported in the future.
+A. Nile currently supports EAP‑TLS (certificate-based auth). Additional EAP methods will be supported in the future.
 
 **Q. Does Nile support end-user on-boarding?**
 
-A. Nile does not operate a PKI, on-boarding workflows—such as certificate enrollment, distribution, and renewal—must be performed through your existing MDMs.
+A. Nile does not operate a PKI. On-boarding workflows—such as certificate enrollment, distribution, and renewal—must be performed through your existing MDMs.
 
 **Q. How does Demo Mode (demo certificates) work?**
 
@@ -293,7 +293,7 @@ A. Yes. You can build dedicated policy sets for wired devices such as printers, 
 
 A. Guest access is provided natively through Nile Access Service and is independent of the RADIUS service.
 
-**Q. Do we need to configure RADIUS IPs, shared secrets, RadSec, or port settings?**
+**Q. Do we need to configure RADIUS IPs, shared secrets, RADSec, or port settings?**
 
 A. No. As a full‑stack solution, Nile eliminates all traditional RADIUS infrastructure configuration. The Service Block automatically establishes a secure connection to the cloud RADIUS service.
 
@@ -307,5 +307,5 @@ A. Nile RADIUS scales automatically to support large authentication bursts acros
 
 **Q. Does Nile support devices that do not use 802.1X?**
 
-A. Methods such as MAC‑based authentication and UPSK are supported for IoT and legacy devices natively through Nile Access Service and is independent of the RADIUS service.
+A. Methods such as MAC‑based authentication and UPSK are supported for IoT and legacy devices natively through Nile Access Service and are independent of the RADIUS service.
 

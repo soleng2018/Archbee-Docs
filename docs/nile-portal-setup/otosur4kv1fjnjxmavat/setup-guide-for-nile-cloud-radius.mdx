@@ -70,7 +70,7 @@ This guide covers:
       EAP-TLS
     </td>
     <td align="left">
-      Certificate-based EAP method providing mutual TLS between supplicant and RADIUS server. Only the EAP method is supported by Nile RADIUS today.
+      Certificate-based EAP method providing mutual TLS between supplicant and RADIUS server. Nile RADIUS supports only this EAP method today.
     </td>
   </tr>
   <tr>
@@ -144,7 +144,7 @@ For step-by-step IdP and SCIM integration instructions, refer to the relevant in
 
 ### 2.2 Certificate Authority and PKI (for EAP-TLS)
 
-For EAP-TLS, the customer is responsible for the full certificate lifecycle. This includes operating (or leveraging) a CA/PKI, issuing the Nile RADIUS server certificate, and issuing and distributing client certificates to devices — typically via an MDM such as Microsoft Intune.
+For EAP-TLS, you are responsible for the full certificate lifecycle. This includes operating (or leveraging) a CA/PKI, issuing the Nile RADIUS server certificate, and issuing and distributing client certificates to devices — typically via an MDM such as Microsoft Intune.
 
 <BlockQuote>
   **Nile** does not issue or renew certificates. Nile only generates expiry alerts at 90, 60, 30, and 10 days before the server cert expires.
@@ -167,7 +167,7 @@ Either way, the artifact you upload to Nile is a single password-protected .p12 
 
 If your client certificates are issued by a **different** CA than the one that signed the Nile RADIUS server certificate, export the root and any intermediates of the client-issuing CA and upload them separately as PEM into the Trust Certificates section of Nile RADIUS. Each PEM file can contain one CA cert or multiple CA certs as concatenated PEM blocks; Nile internally chains them in the correct order regardless of upload order.
 
-**Multiple** **client-issuing CAs&#x20;**&#x61;re supported — for example, IoT devices issued by one CA and laptops/phones issued by another. Upload each CA's chain, and Nile RADIUS will validate any client cert that terminates at one of the uploaded trust anchors.
+**Multiple** **client-issuing CAs&#x20;**&#x61;re supported — for example, IoT devices issued by one CA and laptops/phones issued by another. Upload each CA's chain, and Nile RADIUS validates any client cert that terminates at one of the uploaded trust anchors.
 
 **Client requirements:**
 
@@ -226,7 +226,7 @@ Segments replace VLANs — each segment is an L3 subnet, and a device's segment 
 Point segments at Nile RADIUS
 
 1. In each segment that requires 802.1X, set the authentication server to **Nile RADIUS**. (Segments that should continue to use an external RADIUS — ISE / ClearPass — keep their existing setting for hybrid migration.)
-2. Wireless SSIDs that use these segments will use Nile RADIUS automatically once the SSID security type is Enterprise (see below). Wired 802.1X on Nile switches follows the **Wired Dot1x** knob in section 3.1.
+2. Wireless SSIDs that use these segments use Nile RADIUS automatically once the SSID security type is Enterprise (see below). Wired 802.1X on Nile switches follows the **Wired Dot1x** knob in section 3.1.
 
 Configure SSIDs and wired access
 
@@ -365,7 +365,7 @@ Example D — Palo Alto tag assignment for upstream firewall enforcement
   &#x20; Action: ACCEPT, tag = ent-sales
 </BlockQuote>
 
-The tag is delivered to the Palo Alto firewall via the XML API, so existing firewall policies that key on user-id tags work without modification.
+Nile delivers the tag to the Palo Alto firewall via the XML API, so existing firewall policies that key on user-id tags work without modification.
 
 <BlockQuote>
   RADIUS-derived user/device identity (the certificate CN, SCIM group, Intune state) is available in the Nile RADIUS transaction record and on the device's detail page in the portal — useful for validating that a given device matched the policy you expected.
@@ -468,7 +468,7 @@ Nile automatically generates tenant-level RADIUS failure alerts when the percent
 - 10–25% failure rate: medium-severity alert
 - 25–100% failure rate: high-severity alert
 
-Server certificate expiration alerts are raised 90, 60, 30, and 10 days before the cert expires. Plan renewal accordingly — Nile does not renew the cert for you.
+Nile raises server certificate expiration alerts 90, 60, 30, and 10 days before the cert expires. Plan renewal accordingly — Nile does not renew the cert for you.
 
 Clicking an alert takes you directly to the **Devices** page filtered to the affected clients, simplifying bulk troubleshooting. Alerts auto-close once the failure rate drops below 5%.
 
@@ -540,17 +540,17 @@ Before enabling Nile RADIUS, ensure the following:
    - Key properties on that cert:
      - KeyUsage: digitalSignature, keyEncipherment
      - ExtendedKeyUsage (EKU): serverAuth
-     - SANs as required by the customer (optional, but if they want them, they must be in the CSR).
+     - SANs as you require (optional, but if you want them, they must be in the CSR).
    - The cert + private key is packaged into a PKCS#12 (.pfx / .p12) file, password-protected.
    - The issuing CA chain (root + intermediates) is uploaded separately into the Nile RADIUS Trust Certificates section, as PEM blocks.&#x20;
 
      <BlockQuote>
-       Nile does not operate a CA or handle CSR generation: customers continue to use their own CA/PKI (Sectigo, AD CS, Intune, etc.), then upload the final artifacts into Nile.
+       Nile does not operate a CA or handle CSR generation: you continue to use your own CA/PKI (Sectigo, AD CS, Intune, etc.), then upload the final artifacts into Nile.
      </BlockQuote>
 4. **Optional: Microsoft Intune integration**
    - Required if Intune compliance state will be part of RADIUS policies.
 5. **Review Technical Documentation**:&#x20;
-   - Read the :Link[**Nile Radius Documentation**]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} to understand key concepts
+   - Read the :Link[**Nile RADIUS Documentation**]{href="https://docs.nilesecure.com/nile-radius" newTab="true" hasDisabledNofollow="false"} to understand key concepts.
 
 ## 2. Getting Ready: Identity, Certificates, and Integrations
 
@@ -566,7 +566,7 @@ For step-by-step integration instructions, refer to the relevant guide on Nile D
 
 ### 3.2 Certificate Authority and PKI (for EAP‑TLS)
 
-For EAP-TLS authentication, the customer is responsible for managing the full certificate lifecycle. This includes operating or leveraging an existing CA/PKI infrastructure and issuing client certificates to devices — typically via an MDM such as Microsoft Intune or equivalent.
+For EAP-TLS authentication, you are responsible for managing the full certificate lifecycle. This includes operating or leveraging an existing CA/PKI infrastructure and issuing client certificates to devices — typically via an MDM such as Microsoft Intune or equivalent.
 
 <BlockQuote>
   **Note:** Nile does not manage certificate issuance or renewal.
@@ -608,7 +608,7 @@ This step configures Nile RADIUS itself and wires it into your network context.
 ### 4.1 Enable Nile RADIUS for EAP‑TLS
 
 1. Navigate to the Nile RADIUS configuration
-   - In Portal, go to:
+   - In the Portal, go to:
      Network Setup → Authentication → Nile RADIUS.
 2. Select authentication method
    - Under Auth Type, choose EAP‑TLS (if not already selected).
@@ -825,7 +825,7 @@ Based on Nile’s troubleshooting docs for wireless 802.1X with PEAP:
 
 1. Make sure the SSID is configured as **WPA2‑Enterprise** in Nile.
 2. On the Windows client:
-   - Check **the WLAN AutoConfig** service is running.
+   - Check that **the WLAN AutoConfig** service is running.
    - From **Control Panel → Network and Sharing Center**:
      1. Choose **Set up a new connection or network**.
      2. Select **Manually connect to a wireless network**.
@@ -838,7 +838,7 @@ Based on Nile’s troubleshooting docs for wireless 802.1X with PEAP:
        - Inner method: **Secured password (EAP‑MSCHAPv2)**.
      - Click **Advanced settings**:
        - Authentication mode: **User authentication**.
-3. Attempt connection and verify successful PEAP authentication in Nile Devices and RADIUS logs.
+3. Attempt a connection and verify successful PEAP authentication in Nile Devices and RADIUS logs.
 
 ### 8.3 Windows – Wired 802.1X (EAP‑PEAP)
 

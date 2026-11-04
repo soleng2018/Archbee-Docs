@@ -4,7 +4,7 @@ slug: okta
 createdAt: Tue Apr 08 2025 20:21:45 GMT+0000 (Coordinated Universal Time)
 ---
 
-This document covers the setup of SAML (Security Assertion Markup Language) federation between Nile (Okta) as a Service Provider (SP) and Okta as Identity Provider (IdP), for the purpose of leveraging Nile wired and wireless SSO.
+This document covers the setup of SAML (Security Assertion Markup Language) federation between Nile (Okta) as a Service Provider (SP) and Okta as an Identity Provider (IdP), for the purpose of leveraging Nile wired and wireless SSO.
 
 # Requirements
 
@@ -37,7 +37,7 @@ This document covers the setup of SAML (Security Assertion Markup Language) fede
 
 - Edit the person’s profile and add their mobile number, as it is a Nile SSO requirement that Okta users pass the following non-empty attributes to Nile via SAML:
   first name, last name, email and mobile phone
-- Assign that person to the ‘NileAdmin’ group, only if a Nile Portal admin access is desired.
+- Assign that person to the ‘NileAdmin’ group, only if Nile Portal admin access is desired.
 
 ## Okta app Setup
 
@@ -110,7 +110,7 @@ This document covers the setup of SAML (Security Assertion Markup Language) fede
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/GVAB_QPm8NKRjYG2b9bbT_image.png" size="80" width="496" height="418" position="center" showCaption="false"></Image>
 
-- Click **SUBMIT** button to complete adding Okta as an IdP provider
+- Click the **SUBMIT** button to complete adding Okta as an IdP provider
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/AR6yNyjrmLXV1zHxzXw80_image.png" size="80" width="770" height="452" position="center" showCaption="false"></Image>
 
@@ -129,7 +129,7 @@ This document covers the setup of SAML (Security Assertion Markup Language) fede
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/foFAvy4IJ8fw4o-Nd7MBn_image.png" size="80" width="560" height="266" position="center" showCaption="false"></Image>
 
-- Add the ‘memberOf' string in both the ‘Friendly name’ and ‘External name’ fields, and select the ‘Type’ as ARRAY from the dropdown list, as illustrated:
+- Add the ‘memberOf’ string in both the ‘Friendly name’ and ‘External name’ fields, and select the ‘Type’ as ARRAY from the dropdown list, as illustrated:
 - Click the **SAVE** button to complete the GROUP MAPPING
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/rrnpTs4642VPQPngmMr_0_image.png" size="80" width="400" height="342" position="center" showCaption="false"></Image>

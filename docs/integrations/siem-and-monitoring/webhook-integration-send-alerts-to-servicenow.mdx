@@ -54,7 +54,7 @@ Alerts that export via webhook to ServiceNow are:
 
 ### Create ServiceNow Development Instance for testing
 
-- Login to ServiceNow\.You can create a new account if you don’t have one yet.
+- Log in to ServiceNow\. You can create a new account if you don’t have one yet.
 - ServiceNow provides a developer instance (for free) that can be used for NSB integration tests. This document uses a developer instance for this purpose. The steps will be the same in creating a production ServiceNow instance.
 - To create a developer instance, go to https\://developer.servicenow\.com/dev.do
 - Create a developer account, then log in to build a developer ServiceNow.
@@ -67,9 +67,9 @@ Alerts that export via webhook to ServiceNow are:
 After building the developer instance, you will be provided an **instance URL**, **login user name**, and **password**. (In our example, the developer instance URL is https\://dev119912.service-now\.com and the username/password is “admin/=EZ\*g23IjdTi”)
 &#x20;
 
-**Important Note**: If you do not access the developer instance for a few days, the instance state will be changed to **hibernate**. After some additional time, the instance will be **deleted**.
+**Important Note**: If you do not access the developer instance for a few days, the instance state changes to **hibernate**. After some additional time, the instance is **deleted**.
 
-- Login to the new instance using your admin account
+- Log in to the new instance using your admin account
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/4.png)
 
@@ -98,7 +98,7 @@ After building the developer instance, you will be provided an **instance URL**,
 
 ### Create ServiceNow New Field for Nile Service
 
-- The next step is to create a Java scripted Rest APIs which handles the Webhooks requests from Nile notification-services. Below is the Java script that we will use to create the API:
+- The next step is to create Java scripted Rest APIs which handle the Webhooks requests from Nile notification-services. Below is the Java script that we will use to create the API:
 
 <BlockQuote>
   (function process( /\*RESTAPIRequest\*/ request, /\*RESTAPIResponse\*/ response) \{
@@ -207,7 +207,7 @@ Click on **Authorization&#x20;**, select **Type Basic Auth, &#x20;**&#x61;nd pro
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/20.png)
 
-- Click on **Send&#x20;**&#x61;nd verify the status, the status should be **200 OK**, this means the REST API request was completed without any error.
+- Click on **Send&#x20;**&#x61;nd verify the status. The status should be **200 OK**, this means the REST API request was completed without any error.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/21.png)
 
@@ -223,7 +223,7 @@ Click on **Authorization&#x20;**, select **Type Basic Auth, &#x20;**&#x61;nd pro
 
 ### Add ServiceNow Webhooks to Nile Portal
 
-- Login to Nile portal using an admin account, and navigate to Settings
+- Log in to Nile portal using an admin account, and navigate to Settings
   &#x20;Select Global Settings. Select Integration; click on “**+**” sign to add ServiceNow webhooks.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/25.png)
@@ -287,7 +287,7 @@ Click on **SAVE&#x20;**&#x74;o save the config.
   </tr>
 </table>
 
-- Login to Nile portal using an admin account and navigate to **Global Settings**.
+- Log in to Nile portal using an admin account and navigate to **Global Settings**.
 - Select Integrations-->Setup Integrations****
   Selecting **Email&#x20;**&#x77;ill enable alerts to be sent to a logged-in admin.
   Selecting **Webhooks** will send alerts via Webhook (in our example Service-Now). Note: the selected options are saved automatically
@@ -325,7 +325,7 @@ The Nile Portal now includes the following webhook enhancements.
 
 ### Verify Nile Events under ServiceNow and Report:
 
-- Login to Nile Portal as an admin.
+- Log in to Nile Portal as an admin.
 - Click on **Alert icon** (triangle on left side)
   Click on **Alerts** tab
   Verify Nile alerts
@@ -334,7 +334,7 @@ The Nile Portal now includes the following webhook enhancements.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/29.webp)
 
-- Login to ServiceNow instance as an admin.
+- Log in to ServiceNow instance as an admin.
 - Verify Nile alerts are created as incidents under ServiceNow: from the ServiceNow instance, under All, filter on Service Desk, then click on Incidents, the Incident table will be opened.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/31.webp)

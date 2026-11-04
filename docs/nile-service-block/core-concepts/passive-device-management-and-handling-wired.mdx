@@ -12,7 +12,7 @@ Nile switches discover a device on a port based on DHCP packets seen from it onc
 
 The definition of 'Passive' in Nile's architecture is a 'statically IP addressed device' that does not initiate any traffic or DHCP packet upon first connection and remains silent unless solicited by another device or application.
 
-⚠️ The assumption is, the passive device is typically using a Static IP address
+⚠️ The assumption is, the passive device is typically using a Static IP address.
 
 ## Passive Device Management and Handling (Wired)
 
@@ -77,13 +77,13 @@ Nile provides tools to not only handle passive wired devices but also to manage 
 3. Approve the discovered devices. Once approved, they are automatically marked as **Static IP** and **Passive**.
 
 <BlockQuote>
-  If the IP range provided does not match any subnet mapped to configured segments, the discovery tool will generate an error. Ensure the range matches one of the existing segments.
+  If the IP range provided does not match any subnet mapped to configured segments, the discovery tool generates an error. Ensure the range matches one of the existing segments.
 
 </BlockQuote>
 
 1. <Image src="https://api.archbee.com/api/optimize/BCE7EWkx2xIZkKMA74K_R-5c6eByhe7Qm94aKQ1AO0F-20250122-235452.png" size="60" width="799" height="797" position="center" showCaption="false"></Image>
 
-The IP addresses for passive devices are populated in the MAB (MAC Authentication Bypass) list once they are fully learned by Nile switches.
+The IP addresses for passive devices are populated in the MAB (MAC Authentication Bypass) list once Nile switches fully learn them.
 
 1.
 

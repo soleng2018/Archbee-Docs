@@ -23,7 +23,7 @@ Policy Groups are the foundation of the Trust Engine. They allow administrators 
 
 ### Understanding Policy Groups vs Network Segments
 
-Nile’s Zero Trust policies layer is **decoupled&#x20;**&#x66;rom networking segments. While traditional approaches use VLANs and network segments as a means to define security boundaries, Nile allows policy groups to be completely identity based. Any user or device can obtain an IP from any network segment, while their access policy can be purely based on identity and context.  With identity-based policy groups,  segmenting devices using network segments is unnecessary - all enterprise endpoints can reside in a single subnet and still be securely isolated with traffic governed by least-privilege access policies.
+Nile’s Zero Trust policies layer is **decoupled&#x20;**&#x66;rom networking segments. While traditional approaches use VLANs and network segments as a means to define security boundaries, Nile allows policy groups to be completely identity-based. Any user or device can obtain an IP from any network segment, while their access policy can be purely based on identity and context. With identity-based policy groups, segmenting devices using network segments is unnecessary - all enterprise endpoints can reside in a single subnet and still be securely isolated with traffic governed by least-privilege access policies.
 
 For customers who still desire to segment endpoints using network segments, whether for organizational or operational/interworking purposes, or to support multiple authentication methods, Nile fully supports policy groups that map to network segments.
 
@@ -80,9 +80,9 @@ Each endpoint is classified into exactly one policy group. When multiple groups 
 
 ### Classification and Ordering
 
-The process of classifying endpoints occurs after an endpoint has obtained its IP address and has completed the network on-boarding process.  Once on-boarded, endpoints are classified into a policy group based on evaluation priority. User group definitions are checked first, followed by device groups. More specific classification groups should be placed higher in the list to ensure correct matching.
+The process of classifying endpoints occurs after an endpoint has obtained its IP address and has completed the network on-boarding process. Once on-boarded, endpoints are classified into a policy group based on evaluation priority. User group definitions are checked first, followed by device groups. More specific classification groups should be placed higher in the list to ensure correct matching.
 
-If an endpoint does not match any defined policy group, it is automatically placed into the **Unclassified** policy group, where they can then be manually assigned. Devices that fail continuous device validation checks are placed in the **Quarantine** policy group.
+If an endpoint does not match any defined policy group, it is automatically placed into the **Unclassified** policy group, where it can then be manually assigned. Devices that fail continuous device validation checks are placed in the **Quarantine** policy group.
 
 ### Default and System Groups
 
@@ -103,7 +103,7 @@ Unlike traditional VLAN-based security, Nile’s policy groups can be **identity
 
 ## Service Profiles
 
-Service Profiles define which protocols and ports are permitted when traffic between policy groups is allowed. They ensure communication adheres to least-privilege principles by restricting flows to only what is necessary. Service profiles are mandatory for any policy that is configured to allow or forward traffic - this is consistent with Zero Trust principles.  Rules within a service profile are ordered, and the default rule is to exclude any port and any protocol (i.e., "deny all ports/protocols").
+Service Profiles define which protocols and ports are permitted when traffic between policy groups is allowed. They ensure communication adheres to least-privilege principles by restricting flows to only what is necessary. Service profiles are mandatory for any policy that is configured to allow or forward traffic - this is consistent with Zero Trust principles. Rules within a service profile are ordered, and the default rule is to exclude any port and any protocol (i.e., "deny all ports/protocols").
 
 ### Example
 
@@ -119,7 +119,7 @@ Custom Service Profiles are available to **Enterprise Trust Service** customers,
 
 ## Action
 
-An Action determines how a flow is enforced within an access policy. Every flow is inspected by the centralized policy engine and the resulting action is logged in the policy log, detailing how the flow was treated.&#x20;
+An Action determines how a flow is enforced within an access policy. The centralized policy engine inspects every flow and the resulting action is logged in the policy log, detailing how the flow was treated.&#x20;
 
 <table isTableHeaderOn="true" columnWidths="90,284.85260770975054,286.14739229024946">
   <tr>
@@ -165,7 +165,7 @@ An Action determines how a flow is enforced within an access policy. Every flow 
     <td align="left">
       Flows matching the policy are forwarded upstream for enforcement. This is useful for customers who want to direct E/W traffic to the upstream system, instead of having it locally enforced.
       <Paragraph>
-        Upstream appliance can be a firewall/router or SD-WAN appliance.
+        The upstream appliance can be a firewall/router or SD-WAN appliance.
       </Paragraph>
     </td>
     <td align="left">

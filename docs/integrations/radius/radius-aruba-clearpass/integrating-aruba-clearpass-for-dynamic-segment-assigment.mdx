@@ -22,7 +22,7 @@ The Nile Access Service supports integration with Aruba ClearPass, a leading net
 1. Import the Nile dictionary file into the ClearPass RADIUS dictionary. This file contains the necessary vendor-specific attributes (VSAs) used for dynamic segment assignment.
 2. Add the Nile Service Block (NSB) as a network device in the ClearPass Policy Manager, specifying the NAS IP address and RADIUS shared secret.
 3. Create a new 802.1X wireless service in the ClearPass Policy Manager, leveraging the local identity store.
-4. Configure the Enforcement Profile for the 802.1X service to include the "netseg" attribute, which will be used to dynamically assign the user or device to the appropriate network segment in the Nile Access Service.
+4. Configure the Enforcement Profile for the 802.1X service to include the "netseg" attribute, which is used to dynamically assign the user or device to the appropriate network segment in the Nile Access Service.
 
 ## Verify Authentication and Segment Assignment
 

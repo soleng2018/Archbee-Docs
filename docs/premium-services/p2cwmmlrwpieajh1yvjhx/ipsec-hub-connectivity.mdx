@@ -6,7 +6,7 @@ createdAt: Thu Jun 25 2026 22:02:49 GMT+0000 (Coordinated Universal Time)
 
 ## 1. Overview
 
-Some networks would require a private, encrypted path back to customer-controlled infrastructure — legacy applications, regulated data, or partner extranets. For these, the **Nile Edge engine terminates IPSec tunnels** from the Nile site to one or more customer-controlled hubs (for example, a Datacenter or a cloud VPC). Tunnel survivability is owned by the same Adaptive Path Selection (APS) loop that Nile already runs across public-internet paths.
+Some networks require a private, encrypted path back to customer-controlled infrastructure — legacy applications, regulated data, or partner extranets. For these, the **Nile Edge engine terminates IPSec tunnels** from the Nile site to one or more customer-controlled hubs (for example, a Datacenter or a cloud VPC). Tunnel survivability is owned by the same Adaptive Path Selection (APS) loop that Nile already runs across public-internet paths.
 
 Nile implements this capability as a **hub-and-spoke model**:
 
@@ -33,7 +33,7 @@ Complete the following before configuring IPSec tunnels:
 3. **Site configuration completed first.** Finish the site's settings — **DHCP, authentication, segments, and wireless** — before configuring IPSec.
 
 <hint type="info">
-  **Why order matters:** The IPSec configuration depends on the completed site settings. The **Source Segments** offered during tunnel creation are derived from the segments defined for the sites in the selected scope. If the site settings are not complete, the expected segments will not appear in the tunnel configuration.
+  **Why order matters:** The IPSec configuration depends on the completed site settings. The **Source Segments** offered during tunnel creation are derived from the segments defined for the sites in the selected scope. If the site settings are not complete, the expected segments do not appear in the tunnel configuration.
 </hint>
 
 ## 3. Architecture & Failover Behavior
@@ -65,11 +65,11 @@ Each branch designates one or two hubs:
 
 When two hubs are configured, both tunnels are kept up at all times. The active hub carries traffic by default; the backup hub carries traffic only when the active hub is unreachable.
 
-Hub model parameters are configured per branch in the portal. For each hub the customer provides:
+Hub model parameters are configured per branch in the portal. For each hub you provide:
 
 - **Hub IP / FQDN** (primary and backup)
 - **Pre-shared key or certificate reference** (per hub)
-- **Encryption domain** — the prefixes that should be tunnelled (the remote subnets)
+- **Encryption domain** — the prefixes that should be tunneled (the remote subnets)
 
 ### 4.2 Regional / multi-hub scoping
 

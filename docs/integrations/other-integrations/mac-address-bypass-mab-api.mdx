@@ -28,14 +28,14 @@ Obtain your API key in the Nile portal.
 ### Creating an API key
 
 - Log in to Nile Portal using an admin account.
-- Click on the **Global Settings** icon on the left side
-- Click on **Security** tab
+- Click on the **Global Settings** icon on the left side.
+- Click on the **Security** tab.
 - On API key management, click on the **“ADD KEY**” button to generate a new API token.
-- Fill Add key info:
+- Fill in Add key info:
   - <u>**Name**</u>**:&#x20;**&#x4B;ey name (example **“Nile MAB API”**)
   - <u>**Duration (days)**</u>: token key validity, the maximum is 1 year (365 days)
-  - <u>**Workflow**</u>: Select the workflow that we want to generate a key for. For MAB Onboarding, we select: ‘**MAB Onboarding API**’
-  - **Read only:** Select ‘Read-only’ to enable the API for read-only access. By default, the API key permits read/write operations. However, if you intend to update MAB entries, such as approving or denying MAC addresses in specific segments, it is advised not to enable 'Read-only' access."Click on **SAVE** to save the config.
+  - <u>**Workflow**</u>: Select the workflow that you want to generate a key for. For MAB Onboarding, you select: ‘**MAB Onboarding API**’
+  - **Read only:** Select ‘Read-only’ to enable the API for read-only access. By default, the API key permits read/write operations. However, if you intend to update MAB entries, such as approving or denying MAC addresses in specific segments, it is advised not to enable 'Read-only' access. Click on **SAVE** to save the config.
   - Click **Save** to save the API key.
 
 After saving the configuration, a JSON file containing key information will automatically download to your computer.
@@ -138,7 +138,7 @@ After saving the configuration, a JSON file containing key information will auto
 ## Endpoints
 
 <hint type="info">
-  For readability, long IDs are truncated with .... In real responses you will see full UUID values.
+  For readability, long IDs are truncated with .... In real responses you see full UUID values.
 </hint>
 
 ### Segments
@@ -428,7 +428,7 @@ You can update more than one MAC in a single request by adding multiple objects 
 **Response codes**
 
 - 204 No Content → update succeeded (most common)
-- Errors return JSON body with code and message
+- Errors return a JSON body with code and message
 
 **Best practices**
 

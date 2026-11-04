@@ -7,12 +7,12 @@ createdAt: Wed May 08 2024 00:10:21 GMT+0000 (Coordinated Universal Time)
 ## :Comment[Wired SSO Configuration and Behavior]{docCommentId="BTuLn4RjQZ82BRxLEWW7Q" resolved="false"}
 
 **As an admin, do I have control over where and when Wired SSO is enabled?**
-Yes, the admin has control over where Wired SSO is enabled. When creating a segment in the Nile Customer Portal, there will be an option to enable the Wired SSO feature. This feature can only be enabled if an identity provider (IdP) has been configured in the Nile Portal.
+Yes, the admin has control over where Wired SSO is enabled. When creating a segment in the Nile Customer Portal, there is an option to enable the Wired SSO feature. This feature can only be enabled if an identity provider (IdP) has been configured in the Nile Portal.
 
 Alternatively, the Wired SSO configuration can be accessed through the "Access Management" > "Wired SSO" section, where the admin can enable the feature and select the onboarding and employee segments.
 
 **As an admin, what do I need to do to make Wired SSO work?**
-As an admin, you'll need to complete the following steps to set up Wired SSO:
+As an admin, you need to complete the following steps to set up Wired SSO:
 
 1. Set up SAML authentication with your identity provider (IdP).
 2. Create a DHCP scope with a short lease time (e.g., 5 minutes). This ensures that devices release their IP addresses and get a new one when the segment changes.
@@ -20,12 +20,12 @@ As an admin, you'll need to complete the following steps to set up Wired SSO:
 4. Identify the "employee" segment that authenticated users should be assigned to.
 5. Enable the Wired SSO feature in the Nile Customer Portal and select the onboarding and employee segments.
 
-When Wired SSO is enabled, Nile will automatically create an "ALL" rule that applies the onboarding and employee segment assignments based on the SSO authentication status.
+When Wired SSO is enabled, Nile automatically creates an "ALL" rule that applies the onboarding and employee segment assignments based on the SSO authentication status.
 
 **What happens to devices that are not browser-based and do not match any MAC Auth or OUI rules?**
 Devices that do not match any MAC Auth or OUI rules will be placed in the onboarding segment and marked as "Waiting for Approval" in the Nile Portal. Even though these devices are technically approved, they will not have access to the network due to the captive portal (SSO) requirement.
 
-The admin can manually approve these devices or, if the device can be fingerprinted and a fingerprint rule exists, it can be automatically moved to the appropriate segment. In some scenarios, the device can also be registered through the self-registration portal, which will authorize it while it's in the "Waiting for Approval" state.
+The admin can manually approve these devices or, if the device can be fingerprinted and a fingerprint rule exists, it can be automatically moved to the appropriate segment. In some scenarios, the device can also be registered through the self-registration portal, which authorizes it while it's in the "Waiting for Approval" state.
 
 **Can Wired SSO be enabled at certain locations only?**
 No, Wired SSO cannot be enabled at specific locations only. It is a global setting that applies to all locations where the configured onboarding and employee segments are used.
@@ -53,7 +53,7 @@ The admin cannot use the onboarding segment for other purposes, such as includin
 If the user has previously connected to the wireless network and been assigned a segment, they will be placed in that same segment. Otherwise, they will be assigned to the employee segment defined in the Wired SSO configuration.
 
 **What is the priority of MAC Auth rules?**
-&#x20;When a device is connected to a wired port, the Nile Access Service will evaluate the following MAC Auth rules in order:
+&#x20;When a device is connected to a wired port, the Nile Access Service evaluates the following MAC Auth rules in order:
 
 1. Exact MAC address match
 2. Fingerprint match (e.g., Polycom VVX 300)

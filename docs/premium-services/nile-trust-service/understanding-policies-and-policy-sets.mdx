@@ -65,7 +65,7 @@ All network traffic is evaluated against the active policy set. If no matching p
 
 ## Policy Sets and Matching
 
-A policy set is the collection of policies evaluated for each flow. Policies within a policy set have no order.  Each flow is matched based on source group and destination group. Once a match occurs, the corresponding action is taken and the enforcement action is logged.
+A policy set is the collection of policies evaluated for each flow. Policies within a policy set have no order. Each flow is matched based on source group and destination group. Once a match occurs, the corresponding action is taken and the enforcement action is logged.
 
 The Zero Trust Fabric prevents the creation of multiple policies with the same source and destination groups, eliminating policy sprawl. &#x20;
 
@@ -73,17 +73,17 @@ For example, if the following policy is configured:
 
 - User Group “**Employees**” access to Device Group “**Printers**” with Service Profile “**Printing-Service-Profile**”, **Allow**
 
-then the Nile Control Center will prevent the creation of a new policy with the exact same Source and Destination but perhaps different action or service profile.
+then the Nile Control Center prevents the creation of a new policy with the exact same Source and Destination but perhaps different action or service profile.
 
-**Note:&#x20;**&#x77;hile there is no ordering of policies, there is ordering amongst Policy Groups. Any user endpoint will be classified into a User Group based on the ordering of user policy groups, and any device will similarly be classified into a Device Group based on ordering of device policy groups. It is important to place more specific endpoint classification rules earlier in the ordered list of policy groups.
+**Note:&#x20;**&#x77;hile there is no ordering of policies, there is ordering among Policy Groups. Any user endpoint is classified into a User Group based on the ordering of user policy groups, and any device is similarly classified into a Device Group based on ordering of device policy groups. It is important to place more specific endpoint classification rules earlier in the ordered list of policy groups.
 
 By default, if no policy exists, the flow is denied.
 
 ## Enabling Macro- & Micro-segmentation
 
-The **Core Trust Service** tier supports traffic access policies at the network segment granularity level.  Enterprises looking to configure basic East/West inter- and intra-segment granular access policies and enforce the policies natively within the Zero Trust Fabric can do so using the Core Trust Service tier by defining source and destination policy groups based on network segment classification criteria.
+The **Core Trust Service** tier supports traffic access policies at the network segment granularity level. Enterprises looking to configure basic East/West inter- and intra-segment granular access policies and enforce the policies natively within the Zero Trust Fabric can do so using the Core Trust Service tier by defining source and destination policy groups based on network segment classification criteria.
 
-For more advanced security use-cases requiring zero trust least-privilege access policies with micro-segmentation granularity, the **Enterprise Trust Service** adds an extensive level of fine-grained policy controls and identity-centric classification options.  Policy definition using Enterprise Trust Service takes into consideration  user/device/application identity, customizable service profiles, and other tools for implementing more precise access controls.
+For more advanced security use-cases requiring zero trust least-privilege access policies with micro-segmentation granularity, the **Enterprise Trust Service** adds an extensive level of fine-grained policy controls and identity-centric classification options. Policy definition using Enterprise Trust Service takes into consideration user/device/application identity, customizable service profiles, and other tools for implementing more precise access controls.
 
 ## Global Policy Set
 
@@ -133,7 +133,7 @@ The Trust Engine automatically includes foundational policies to support essenti
       Allow
     </td>
     <td align="left">
-      Supports DHCP and HTTPS traffic for client authentication and onboarding to customer-defined App Group containing IP addresses for DHCP and SSO IdP servers. Optionally, if a local DNS is used, DNS protocol and server IP should be added to the service profile and app group.  This policy is editable.
+      Supports DHCP and HTTPS traffic for client authentication and onboarding to customer-defined App Group containing IP addresses for DHCP and SSO IdP servers. Optionally, if a local DNS is used, DNS protocol and server IP should be added to the service profile and app group. This policy is editable.
     </td>
   </tr>
   <tr>
@@ -172,14 +172,14 @@ Administrators can add new rules to this policy set to reflect organizational se
 
 ## Modifying Policies
 
-When a policy or any component of a policy is updated, the impact of the change is reflected **not just on new flows, but also on existing flows** that are impacted by the change in near-realtime.  The Nile system is periodically checking for changes that may impact traffic to ensure proper zero trust enforcement.
+When a policy or any component of a policy is updated, the impact of the change is reflected **not just on new flows, but also on existing flows** that are impacted by the change in near-realtime. The Nile system is periodically checking for changes that may impact traffic to ensure proper zero trust enforcement.
 
 ## East/West and North/South Policy Enforcement
 
 In addition to conventional East/West enforcement within the Zero Trust Fabric, the Trust Engine is capable of supporting enforcement in the North-to-South and South-to-North traffic directions. When an upstream edge Firewall or SD-WAN device exists, consideration of where North-South traffic enforcement occurs is required.
 
-1. Customers have flexibility in deciding which Trust Service policies should be enforced locally and which should be forwarded upstream for enforcement.
-2. Traffic will be subjected to both the set of enforcement policies in the upstream system as well as those defined natively.
+1. You have flexibility in deciding which Trust Service policies should be enforced locally and which should be forwarded upstream for enforcement.
+2. Traffic is subjected to both the set of enforcement policies in the upstream system as well as those defined natively.
 3. For outbound South-to-North traffic, Allow and Forward Upstream actions are synonymous. Traffic that is Allowed in the Zero Trust Fabric can still be blocked by the upstream system.
 4. For inbound North-to-South traffic, any traffic allowed by the upstream firewall is still subjected to any local policies defined that match the inbound traffic.&#x20;
 

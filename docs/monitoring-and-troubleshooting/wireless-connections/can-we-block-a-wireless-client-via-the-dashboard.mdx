@@ -6,7 +6,7 @@ createdAt: Wed Jul 24 2024 21:49:00 GMT+0000 (Coordinated Universal Time)
 
 To block the wireless client, please log in to Nile Portal [https://u1.nile-global.cloud](https://u1.nile-global.cloud/devices)
 
-Navigate to **Settings** -> **Access management&#x20;**-> **Wireless** -> **Add&#x20;**&#x61;nd enter the **MAC address** and Click on **Save.&#x20;**&#x4E;OTE: The default rule is Deny.
+Navigate to **Settings** -> **Access management&#x20;**-> **Wireless** -> **Add&#x20;**&#x61;nd enter the **MAC address** and click on **Save.&#x20;**&#x4E;OTE: The default rule is Deny.
 
 To allow the wireless client again, checkmark the device -> Delete from the same page
 
@@ -15,6 +15,6 @@ To allow the wireless client again, checkmark the device -> Delete from the same
 There are a few important points that need to be considered while using this Deny feature
 
 1. Every time the 'randomized MAC' address changes, the same device can still connect to the same SSID. This implies that it's not possible to completely deny the device from connecting.
-2. Despite being added to the deny list, devices can bypass this restriction by altering their MAC addresses using MAC Randomization. In this case User will be allowed access, if that's the case Admin has to block the user again for the randomized MAC (which is a troublesome process)
-3. So it's always advisable for the customers to implement additional security measures, such as strong authentication protocols like dot1x to mitigate the risk posed by MAC address randomization and help secure the organization from unauthorized access.
+2. Despite being added to the deny list, devices can bypass this restriction by altering their MAC addresses using MAC Randomization. In this case User is allowed access. If that's the case, Admin has to block the user again for the randomized MAC (which is a troublesome process).
+3. So it's always advisable for you to implement additional security measures, such as strong authentication protocols like dot1x to mitigate the risk posed by MAC address randomization and help secure the organization from unauthorized access.
 

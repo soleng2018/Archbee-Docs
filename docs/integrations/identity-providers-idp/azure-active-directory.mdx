@@ -8,7 +8,7 @@ createdAt: Fri May 24 2024 17:29:36 GMT+0000 (Coordinated Universal Time)
 
 This document is designed to assist with the setup of SAML federation between Nile, leveraging Okta as a Service Provider (SP), and Azure Active Directory (AD) as the Identity Provider (IdP). Integrating Azure AD with the Nile Access Service is an important step in establishing a secure, zero-trust campus network aligned with Nile's architectural principles.
 
-By configuring this integration, you can leverage your existing Azure AD infrastructure to authenticate users and devices, ensuring consistent access controls and policies across your network. This guide will walk you through the necessary steps to set up the Azure AD enterprise application, configure the Nile Identity Provider, and map Azure AD groups to Nile access groups.&#x20;
+By configuring this integration, you can leverage your existing Azure AD infrastructure to authenticate users and devices, ensuring consistent access controls and policies across your network. This guide walks you through the necessary steps to set up the Azure AD enterprise application, configure the Nile Identity Provider, and map Azure AD groups to Nile access groups.&#x20;
 
 ## Requirements
 
@@ -47,11 +47,11 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
 
 - **Select** user(s) to assign to the application:
 - Click **Assign**
-- Next; Click **Single sign-on** in the left menu
+- Next, click **Single sign-on** in the left menu
 
 ![Azure Organization Select Single Sign On method Page](https://nilesecure.com/wp-content/uploads/2024/02/6.png "Azure Organization Select Single Sign On method Page")
 
-- In **Select a single sign-on method**, click **SAML panel** and Click **Edit.**
+- In **Select a single sign-on method**, click **SAML panel** and click **Edit.**
 - On the **Set UP Single Sign-On with SAML** page, in the **Basic SAML Configuration** section click "Edit".
 - Enter temporary values for **Identifier (Entity ID)** and **Reply URL (Assertion Consumer Service URL)** to generate the certificate for download.
 - Click on **Save** (top bar) to save the changes.
@@ -72,7 +72,7 @@ Sign in to the Microsoft Azure portal: :Link[https://portal.azure.com]{href="htt
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/11.png)
 
-- Similarly edit user.givenname by deleting the namespace URI and renaming givenname to **firstName**, and click save.
+- Similarly edit user.givenname by deleting the namespace URI and renaming givenname to **firstName**, and click Save.
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/12.png)
 
@@ -141,7 +141,7 @@ Log in to the Nile Customer Portal (:Link[https://www.nile-global.cloud]{href="h
 
 Click on **ADD A NEW PROVIDER:**
 
-- Fill up the fields in the new provider window as follows:
+- Fill in the fields in the new provider window as follows:
   - Name: An appropriate string to name the provider.
   - IdP Issuer URI: Azure AD SAML app Identifier noted in step 15 of the previous section.
   - IdP SSO URL: Azure AD SAML app Login URL noted in step 15 of the previous section.
@@ -158,7 +158,7 @@ Click the **METADATA** button to download the file.
 Open the downloaded file with a text editor, and search for the ‘entityID’ and ‘Location’ strings.
 
 **NOTE**: Save the **entityID** and **Location** values. Those values are used later to
-&#x20;complete the Azure AD enterprise application configuration
+&#x20;complete the Azure AD enterprise application configuration.
 
 For illustration purposes only, the values used in this example:
 &#x20;entityID:
@@ -178,7 +178,7 @@ Replace the temporary values of **Entity ID** and **Reply URL** with the values 
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/24.png)
 
-&#x20;Verify your changes on the single sign on page.
+&#x20;Verify your changes on the single sign-on page.
 &#x20;
 
 <hint type="info">
@@ -191,7 +191,7 @@ Replace the temporary values of **Entity ID** and **Reply URL** with the values 
 
 The group mapping is used to map a designated Azure AD admin group to the Nile Customer Portal Administrator group. A **Group** rule is needed and can be added on the Nile Customer Portal as illustrated in the following steps.
 
-The example that follows maps an AD admin group “NileAdmin” to the Nile Customer Portal Administrator group, and a ‘NileMonitor’ group to the Nile Customer Portal Monitor Admin group
+The example that follows maps an AD admin group “NileAdmin” to the Nile Customer Portal Administrator group, and a ‘NileMonitor’ group to the Nile Customer Portal Monitor Admin group.
 
 1\. Click the **Group Rules** tab:
 
@@ -209,7 +209,7 @@ Next, click the **ADD GROUP RULE**:
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/27-2.png)
 
-Add two group rules to map AD users members of two AD groups (NileAdmin and NileMonitor in this example) to the Nile Customer Portal Administrator and Monitor groups respectively, by evaluating the ‘memberOf’ attribute value coming in the SAML assertion from Azure AD:
+Add two group rules to map AD users who are members of two AD groups (NileAdmin and NileMonitor in this example) to the Nile Customer Portal Administrator and Monitor groups respectively, by evaluating the ‘memberOf’ attribute value coming in the SAML assertion from Azure AD:
 
 - **Name**: An appropriate rule name
 - **Mapping Value**: Azure AD Group object ID

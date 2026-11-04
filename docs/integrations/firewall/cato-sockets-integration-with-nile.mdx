@@ -364,7 +364,7 @@ Next, define the logical networks associated with these interfaces.
    - **Hold time**: 10
    - **Keepalive interval**: 5
    - **MD5 Auth**: disabled (leave unchecked unless you configure matching MD5 on NSB).
-3. Repeat for all four neighbors so that the BGP summary table resembles the image below
+3. Repeat for all four neighbors so that the BGP summary table resembles the image below.
 
    ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nKHj95qjzXEiepKz8Xlx6-20260429-054304.png)
 
@@ -394,13 +394,13 @@ To ensure NSB transit and Nile sensor traffic is forwarded as pure L3 routed tra
 
 ## Configuring BGP on NSB Gateways
 
-NSB gateways will mirror the four-neighbor BGP design, and this configuration is currently performed by Nile Support. Please reach out to our Technical Support team to configure eBGP peering with the Cato Sockets. Self-service configuration through the Nile Portal will be available soon.
+NSB gateways mirror the four-neighbor BGP design, and Nile Support currently performs this configuration. Please reach out to our Technical Support team to configure eBGP peering with the Cato Sockets. Self-service configuration through the Nile Portal will be available soon.
 
 ## Verification
 
 ### On Cato
 
-- In **Network > Sites > BGP**, verify all four neighbors are in **the Established** state and learning prefixes from NSB (user/NSB subnets).
+- In **Network > Sites > BGP**, verify all four neighbors are in the **Established** state and learning prefixes from NSB (user/NSB subnets).
 - Confirm that the Cato routing table shows NSB prefixes reachable via all four transit networks.
 
 ### On Nile Gateways

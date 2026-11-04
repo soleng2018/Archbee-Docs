@@ -16,7 +16,7 @@ Traditionally, network monitoring relied on SNMP, Logs, events, CLI of the netwo
 - **Audit Trail**
   - Any action taken by a user inside the Nile Portal, such as modifying settings
 
-Nile leverages the Sumo Logic's HTTPS Log and Metric collector feature. A secure https-based connection is created between the Nile cloud and the Sumo Logic instance using Sumo Logic's secure https URL generated when a new HTTPS collector is added to Sumo Logic
+Nile leverages the Sumo Logic's HTTPS Log and Metric collector feature. A secure HTTPS-based connection is created between the Nile cloud and the Sumo Logic instance using Sumo Logic's secure HTTPS URL generated when a new HTTPS collector is added to Sumo Logic.
 
 ## Settings
 
@@ -35,7 +35,7 @@ Follow all the steps and perform the required settings per the Sumo Logic docume
 
 - Navigate to the new integrations screen Global Settings > Integrations > Setup Integration to add a new integration
 - Select Sumo Logic
-- Paste the URL for Sumo Logic HTTP collector generated from previous steps in the url field
+- Paste the URL for Sumo Logic HTTP collector generated from previous steps in the URL field
 - Name field should be left as 'default' as the exact string if this is the default SIEM integration you are using
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/9MmTyHQim47vuUGLqYGG0_screenshot-2025-03-13-at-112324-am.png)
@@ -46,7 +46,7 @@ Follow all the steps and perform the required settings per the Sumo Logic docume
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/umWYVVoDCW7LSys5MR96h_screenshot-2025-03-13-at-112605-am.png" size="50" width="922" height="446" position="center" showCaption="false"></Image>
 
-- Sumo Logic is now configured from Nile and events for selected categories will be sent from Nile cloud into Sumo Logic
+- Sumo Logic is now configured from Nile and events for selected categories are sent from Nile cloud into Sumo Logic
 - Check the Sumo Logic Collector logs for events coming in from Nile
 
 ### Testing capability

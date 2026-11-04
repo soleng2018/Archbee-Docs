@@ -10,7 +10,7 @@ Transition mode SSID is designed to support legacy clients by allowing them to c
 
 **WPA3-Personal (Transition mode) SSID:** On a tri-band AP, this mode allows 2.4 GHz and 5 GHz clients to connect using either WPA3-SAE or WPA2-PSK, while 6 GHz clients are restricted to WPA3-SAE only.
 
-**WPA3-Enterprise (Transition mode) SSID:** On a tri-band AP, this mode allows 2.4 GHz and 5 GHz clients to connect using either WPA3-802.1X or WPA2-802.1X authentication. The SSID will not broadcast on the 6 GHz radio when using Transition mode.
+**WPA3-Enterprise (Transition mode) SSID:** On a tri-band AP, this mode allows 2.4 GHz and 5 GHz clients to connect using either WPA3-802.1X or WPA2-802.1X authentication. The SSID does not broadcast on the 6 GHz radio when using Transition mode.
 
 **WPA3-Enterprise (192-bit Strict mode) SSID:&#x20;**&#x46;or WPA3-Enterprise deployments, the RADIUS server must present X.509 certificates that comply with contemporary cryptographic best practices and the stricter requirements of WPA3-Enterprise. In practice, this generally means using RSA keys of at least 2048 bits (with 3072 bits or larger recommended for long-lived certificates or 192-bit security profiles), or elliptic-curve (ECDSA) certificates based on strong curves such as P-256 or stronger. Certificates should be signed using SHA-256 or a stronger hash function, and deprecated parameters such as 1024-bit RSA keys or SHA-1 signatures must be avoided.
 

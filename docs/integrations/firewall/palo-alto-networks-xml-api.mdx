@@ -6,7 +6,7 @@ createdAt: Fri May 24 2024 17:25:47 GMT+0000 (Coordinated Universal Time)
 
 # &#x20;Overview
 
-This document covers the API integration between the Nile Access Service and Palo Alto Networks (PAN) Next Generation Firewalls (NGFW) to provide secure campus networks through dynamic and granular segmentation. The Nile Service Block (NSB) inside the Nile Access Service communicates with PAN‑OS® through XML API calls to provide the NGFW with mappings of client IP addresses to their dot1x user identity and group. The dynamic exchanges enable organizations to apply granular segmentation policies based on the organization security strategies.
+This document covers the API integration between the Nile Access Service and Palo Alto Networks (PAN) Next Generation Firewalls (NGFW) to provide secure campus networks through dynamic and granular segmentation. The Nile Service Block (NSB) inside the Nile Access Service communicates with PAN‑OS® through XML API calls to provide the NGFW with mappings of client IP addresses to their dot1x user identity and group. The dynamic exchanges enable organizations to apply granular segmentation policies based on the organization's security strategies.
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi1.png" size="70" width="552" height="662" position="center" darkWidth="552" darkHeight="662" showCaption="false"></Image>
 
@@ -24,7 +24,7 @@ This document covers the API integration between the Nile Access Service and Pal
 ## Feature flow
 
 1. A dot1x user authenticates to a Nile Enterprise SSID.
-2. The associated RADIUS server returns a ‘Filter-Id’ VSA holding the user group with the ‘Access-Accept’
+2. The associated RADIUS server returns a ‘Filter-Id’ VSA holding the user group with the ‘Access-Accept’.
 3. The NSB maps the username, acquired client DHCP IP address and the user group and sends via XML API to the PAN NGFW.
 4. The PAN firewall identifies the group as a configured tag with an associated dynamic group with a security policy that implements the desired access control on the user traffic.
 
@@ -33,7 +33,7 @@ This document covers the API integration between the Nile Access Service and Pal
 - Setting up RADIUS to return ‘Filter-Id’ VSA
 - Setting up PAN NGFW to identify information sent from NSB
 - Setting up the Nile Access Service to communicate with PAN NGFW
-- Validate the integration
+- Validating the integration
 
 ## Setting up RADIUS to return 'Filter-Id' VSA
 
@@ -58,7 +58,7 @@ Enforcement Policy
 
 :Comment[To create an administrator account, there are 2 steps that must be followed:]{docCommentId="vMVW1iJCk2NW3nlPDzCuQ" resolved="true"}
 
-1. Create an Admin Role Profile. The screenshot below shows an example of profile named ‘nile-xml-role’
+1. Create an Admin Role Profile. The screenshot below shows an example of a profile named ‘nile-xml-role’
 2. Add an administrator account and attach the Admin Role Profile created in step a. The screenshot below shows an example of the account created named ‘ nile-admin’ attaching to the Admin Role Profile named ‘nile-xml-role’
 
 ## New Admin Role
@@ -123,7 +123,7 @@ For illustration purposes, the following loopback setting is shown below:
 
 ## Set up the Nile Access Service to communicate with PAN NGFW
 
-The following screenshots show an example on how to accomplish that on the Nile Portal:
+The following screenshots show an example of how to accomplish that on the Nile Portal:
 
 **DHCP** **-** Set the DHCP Server and Subnets for the user groups.
 
@@ -145,7 +145,7 @@ Now **Validate&#x20;**&#x74;he integration. The validation steps below show what
 
 ## RADIUS server
 
-Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId’. The example below demonstrates ClearPass assigned the correct role to ‘**staff1**’ through the returned attribute ‘Filter-Id’ with the value ‘**staff1**’:
+Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId”. The example below demonstrates ClearPass assigned the correct role to ‘**staff1**’ through the returned attribute ‘Filter-Id’ with the value ‘**staff1**’:
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi20.png" size="60" width="510" height="232" position="center" darkWidth="510" darkHeight="232" showCaption="false"></Image>
 
@@ -153,7 +153,7 @@ A second validation for the user ‘**staff1**’ is shown below:&#x20;
 
 <Image src="https://nilesecure.com/wp-content/uploads/2024/02/panapi19.png" size="60" width="412" height="326" position="center" darkWidth="412" darkHeight="326" showCaption="false"></Image>
 
-Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId’. The example below demonstrates ClearPass assigned the correct role to ‘**student1**’ through the returned attribute ‘Filter-Id’ with the value ‘**Student**’:
+Validate that the RADIUS server has assigned the appropriate role with the correct “FilterId”. The example below demonstrates ClearPass assigned the correct role to ‘**student1**’ through the returned attribute ‘Filter-Id’ with the value ‘**Student**’:
 
 &#x20;
 

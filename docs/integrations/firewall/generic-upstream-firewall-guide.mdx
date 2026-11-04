@@ -150,8 +150,8 @@ Enable **OSPF on all four NSB uplink interfaces**, and configure the firewall as
   &#x20; network 172.16.7.12 0.0.0.3 area 0
 </BlockQuote>
 
-- Ensure **default-information originate** is present to advertise default route to NSB.
-- All subnets behind the NSB (client, sensor, NSB) will be reachable via OSPF-learned paths.
+- Ensure **default-information originate** is present to advertise the default route to NSB.
+- All subnets behind the NSB (client, sensor, NSB) are reachable via OSPF-learned paths.
 
 ## 🔒 4. Firewall Rules
 
@@ -345,7 +345,7 @@ Ensure the following outbound ports are **open from the NSB to the Internet**:
 
 - All four NSB-to-firewall interfaces are configured with /30 IPs
 - Static or OSPF routes to the NSB, sensor, and client subnets are configured
-- Default route(s) to ISP configured
+- Default route(s) to ISP are configured
 - Firewall rules allow bidirectional traffic between NSB and Internet zones
 - NAT applied for outbound access from the NSB subnet
 - Required ports opened for Nile to communicate with cloud and identity services
