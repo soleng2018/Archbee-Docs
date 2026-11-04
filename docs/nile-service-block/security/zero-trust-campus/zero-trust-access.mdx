@@ -6,7 +6,7 @@ createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
 
 # What is Zero Trust Access?
 
-Providing authentication mechanisms for all users and devices across wired and wireless networks can be frustrating and overly complex. Zero Trust Access delivers a simplified and unified access approach by delivering functionalities like 802.1X, MAB, and SSO, for both wired and wireless networks. Always available and enabled on every component of the Nile service. Nile's Architecture by design offers zero trust isolation where every connection flows through a central policy enforcement point.
+Providing authentication mechanisms for all users and devices across wired and wireless networks can be frustrating and overly complex. Zero Trust Access delivers a simplified and unified access approach by delivering functionalities like 802.1X, MAB, and SSO, for both wired and wireless networks. It is always available and enabled on every component of the Nile service. Nile's Architecture by design offers zero trust isolation where every connection flows through a central policy enforcement point.
 
 **Authentication Methods in the Nile Access Service: Building a Zero Trust Campus**
 
@@ -35,7 +35,7 @@ Nile's MAB implementation includes:
 
 - Quarantine all new devices by default
 - Centralized configuration through the Nile Customer Portal
-- Create custom rules based on match criteria.
+- Create custom rules based on match criteria
   - Exact MAC address&#x20;
   - Fingerprint&#x20;
   - MAC OUI&#x20;
@@ -59,7 +59,7 @@ Single Sign-On allows users to access multiple applications with a single set of
 Nile's SSO integration provides:
 
 - Support for popular SSO protocols, including SAML, to ensure compatibility with leading identity providers.
-- Centralized SSO configuration through the Nile Customer Portal
+- Centralized SSO configuration through the Nile Customer Portal.
 
 [Discover how SSO](https://docs.nilesecure.com/single-sign-on-sso) can be seamlessly integrated into the Nile Access Service to enhance your Zero Trust Campus.
 
@@ -81,7 +81,7 @@ By leveraging these authentication methods and following best practices, organiz
   </tr>
   <tr>
     <td align="left">
-      Wired & Wireless 802.1x
+      Wired & Wireless 802.1X
     </td>
     <td align="left">
       IEEE standard for port-based network access control - Supports various EAP methods (PEAP, EAP-TLS, EAP-TTLS) - Provides strong authentication and encryption
@@ -113,8 +113,8 @@ By leveraging these authentication methods and following best practices, organiz
       Allows users or device groups (printers, cameras etc.) to have a unique PSK
     </td>
     <td align="left">
-      1. A single user's compromises key does not affect all users and devices
-      2. With SSO on top of UPSK, deactivated users in IDP will lose network access immediately with SCIM integration
+      1. A single user's compromised key does not affect all users and devices
+      2. With SSO on top of UPSK, deactivated users in IdP will lose network access immediately with SCIM integration
     </td>
   </tr>
   <tr>

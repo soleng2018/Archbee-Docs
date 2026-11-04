@@ -12,8 +12,8 @@ This document is designed to assist with integrating FortiGate Next-Generation F
 
 1. FortiGate version 7.2.2 or higher is required.
 2. Five unique /30 subnets:&#x20;
-   - As we are designing a high-definition and an always-on service, we will be using Equal Cost Multi-Path (ECMP) to create 4 point-to-point links to act as a L3 transit between the NSB and the edge.
-   - The fifth /30 network will be used to host a Dynamic Host Configuration Protocol (DHCP) server. Alternatively, the customer can use their own managed DHCP server.
+   - As we are designing a high-definition and an always-on service, we use Equal Cost Multi-Path (ECMP) to create 4 point-to-point links to act as an L3 transit between the NSB and the edge.
+   - The fifth /30 network is used to host a Dynamic Host Configuration Protocol (DHCP) server. Alternatively, the customer can use their own managed DHCP server.
 
 ![](https://api.archbee.com/api/optimize/ImEd-PCOilvgKQAzsWWDC-otDyHc5Sr--KlO1L0KbC8-20241022-121541.jpg)
 
@@ -78,13 +78,13 @@ Click the “Save” button when done.
 
 ### 2. Routing
 
-Customers need to use Static Routing to add the default route towards the WAN interfaces, but on the LAN, it is recommended to use OSPF whenever possible, if there are certain limitations where OSPF cannot be used on the FortiGate, then create static routing on the LAN as well.
+Customers need to use Static Routing to add the default route toward the WAN interfaces, but on the LAN, it is recommended to use OSPF whenever possible. If there are certain limitations where OSPF cannot be used on the FortiGate, then create static routing on the LAN as well.
 
 **OSPF (LAN):**
 
 1\. Expand on Network → OSPF:
 
-Router ID: Fortinet’s best practice is to NOT use the existing IP of the interface, as Area ID is defined as 0.0.0.0, we are using the Router ID as 0.0.0.1 in this example.
+Router ID: Fortinet’s best practice is to NOT use the existing IP of the interface, as Area ID is defined as 0.0.0.0. We are using the Router ID as 0.0.0.1 in this example.
 
 Areas: Create New (**Area ID**: 0.0.0.0 || **Type**: Regular || **Authentication**: None)
 &#x20;Networks\:Create New (**Area**: 0.0.0.0 || **IP/Netmask**: 0.0.0.0 0.0.0.0)
@@ -115,9 +115,9 @@ Then click on “OK” to save the changes.
 
 ### 3. FortiGate Firewall Rules
 
-FortiGate has an implicit rule of denying all the traffic. To ensure the NSB subnet and the Sensor subnet is able to access the Internet, a rule needs to be created.
+FortiGate has an implicit rule of denying all the traffic. To ensure the NSB subnet and the Sensor subnet are able to access the Internet, a rule needs to be created.
 
-The following example policy will allow any traffic coming from the NSB switch interfaces to the internet. The example rule is intended to be used as reference and should be modified to fit the customer needs. In case the customer wants to allow communication from Host A to Host B within the NSB, they will need to create firewall rules to allow that traffic to hairpin and enter into the NSB.
+The following example policy allows any traffic coming from the NSB switch interfaces to the internet. The example rule is intended to be used as a reference and should be modified to fit the customer needs. In case the customer wants to allow communication from Host A to Host B within the NSB, they need to create firewall rules to allow that traffic to hairpin and enter into the NSB.
 
 **Outgoing to Internet**
 &#x20;Navigate to **Policy & Objects >> Firewall Policy >> Create New:**
@@ -134,7 +134,7 @@ The following example policy will allow any traffic coming from the NSB switch i
 
 ![](https://nilesecure.com/wp-content/uploads/2024/02/policy.png)
 
-***Note:*** *NAT may need to be disabled while creating the firewall policy for some firewall rules to allow access to certain protocols (e.g., DHCP, DNS, RADIUS, NTP)*
+***Note:*** *NAT may need to be disabled while creating the firewall policy for some firewall rules to allow access to certain protocols (e.g., DHCP, DNS, RADIUS, NTP).*
 
 ### 4. DHCP Server
 

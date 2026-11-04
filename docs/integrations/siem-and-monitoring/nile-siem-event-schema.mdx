@@ -148,7 +148,7 @@ Example of End User Event Payload (**`eventType`**=="end\_user\_device\_events")
 }
 ```
 
-- **`id`** : User device event id. This will be uniquely generated for every user device event.
+- **`id`** : User device event id. This is uniquely generated for every user device event.
 - **`clientMac`**: MAC address of the end-user device.
 - **`clientEventSeverity`**: Severity of the event. Possible values:
   - `INFO`: Indicates success or informational events.
@@ -175,7 +175,7 @@ Example of End User Event Payload (**`eventType`**=="end\_user\_device\_events")
 - **`connectedPort`** : Port details to which wired client is connected. Example port 0/40
 - **`connectedSwitch`** : Switch serial number or MAC address to which wired client is connected.
 - **`clientUsername`** : Username of client. Example: john.doe\@company.com
-- **`clientLastKnownIpAddress`** : Last known IP address of client. This will be current IP address for online client and last known IP address for offline or error clients.&#x20;
+- **`clientLastKnownIpAddress`** : Last known IP address of client. This is the current IP address for online client and last known IP address for offline or error clients.&#x20;
 - **`clientEventAdditionalDetails`**: A JSON string containing formatted additional information, which can be NULL. It may include server IP and serial numbers for DHCP, DNS servers, etc. In some events, it may also contain the client's IP address.
   - Example: `"additionalDetails": "{\"server_ip\":\"10.4.5.1\",\"sourceSerialNum\":\"A00A00076253\",\"ip_address\":\"10.4.5.38\"}"`
 
@@ -205,7 +205,7 @@ Example of Alerts Payload (**`eventType`**=="nile\_alerts") :
 ```
 
 - **`version`**: The version of the alert event schema.
-- **`id`**: UUID of the alert. Events will be sent when an alert is created and resolved. This ID can be used to correlate the information.
+- **`id`**: UUID of the alert. Events are sent when an alert is created and resolved. This ID can be used to correlate the information.
 - **`alertSubscriptionCategory`**: These are the Nile Alerts categories, for example:&#x20;
   - "Nile Service Alerts"
   - "Infrastructure Alerts"

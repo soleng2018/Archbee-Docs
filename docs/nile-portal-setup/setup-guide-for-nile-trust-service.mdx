@@ -54,7 +54,7 @@ A Policy Group represents a collection of endpoints that share common access req
 
 **Admin User Group**
 
-Create an Admin user group using the steps below and select IDP Group as the match criteria. This assumes that Admins use SSO SSID or wired SSO to access the network. (Note: RADIUS-based groups will be supported in the future.) SCIM will return the groups a user belongs to, which will be used to distinguish Admins from Employees. Ensure the Admin group is configured with the highest priority/order.
+Create an Admin user group using the steps below and select IDP Group as the match criteria. This assumes that Admins use SSO SSID or wired SSO to access the network. (Note: RADIUS-based groups will be supported in the future.) SCIM returns the groups a user belongs to, which are used to distinguish Admins from Employees. Ensure the Admin group is configured with the highest priority/order.
 
 1. Log in to the Nile portal.
 2. In the left navigation, select **Security > Trust Engine > Policy Groups > User Groups**.
@@ -82,7 +82,7 @@ If no IdP is available for identity-based policy creation, you can instead creat
 
 **Employee User Group**
 
-Similarly, create an employee user group and choose IDP Group as the criteria. This assumes Employees will be doing SSO to access the network. The SCIM protocol will return the groups the user belongs to, and that will be used to differentiate between Admin and Employee.
+Similarly, create an employee user group and choose IDP Group as the criteria. This assumes Employees do SSO to access the network. The SCIM protocol returns the groups the user belongs to, and that is used to differentiate between Admin and Employee.
 
 Alternatively, if no IdP is available (for identity-based policy creation), create an employee user group and set the Nile Segment as the criteria.
 
@@ -144,7 +144,7 @@ Create a DVR group and use the IP address or subnet as the criterion. In this ex
 4. In **Enter Group Name**, type a descriptive name for the group (for example, Admin).
 5. In **Group Description**, add an optional description (for example, Admin Group).
 6. From **Select Match Criteria**, choose **IP/subnet**.
-7. In **Enter Values**, type or select one or more entries that represent your DVR network (for example, a single IP address such as 172.16.20.10 or a subnet such as 172.16.20.0/24) then confirm the selection. You can also add multiple entries of IP or subnet and separate them with commas.
+7. In **Enter Values**, type or select one or more entries that represent your DVR network (for example, a single IP address such as 172.16.20.10 or a subnet such as 172.16.20.0/24), then confirm the selection. You can also add multiple entries of IP or subnet and separate them with commas.
 8. Click **Create** to save the App group.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QfS8xVjqWBHWYnyedAEaJ_screenshot-2026-03-13-at-34343apm.png)
@@ -710,7 +710,7 @@ You can further narrow the matrix to only the groups that matter for the policy 
 
    ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/8LLb26ri22J98seQiEsT0_screenshot-2026-03-13-at-45230apm.png)
 3. In the middle column, select one or more groups to focus on (for example, **Finance**, **Engineering**, **IT Admin**, **Employee**).
-4. Click **Apply** to update the matrix. Only the selected groups will be shown on the source and destination axes.
+4. Click **Apply** to update the matrix. Only the selected groups are shown on the source and destination axes.
 5. To reset to the full view, click **Reset** (and then **Apply** if required).
 
 These options make the matrix an efficient way to both visualize and configure policies, especially in larger environments with many groups and flows.

@@ -31,7 +31,7 @@ The NSB requires an upstream router or firewall for connectivity to the Nile Clo
 - NSB gateways operate in an active-active configuration.
 - Traffic is routed to the upstream router or firewall using OSPF by default.
 - No configuration is required on the NSB gateways themselves. The upstream firewall or router configuration is sufficient for the NSB gateways to automatically learn routing parameters from OSPF hello messages.
-- The customer must configure the upstream routers or firewalls to **advertise a default route (0.0.0.0/0) towards the NSB gateways via OSPF.** This ensures that Nile elements have reachability to external networks and the Nile Cloud.
+- The customer must configure the upstream routers or firewalls to **advertise a default route (0.0.0.0/0) toward the NSB gateways via OSPF.** This ensures that Nile elements have reachability to external networks and the Nile Cloud.
 
 Example OSPF Configuration:&#x20;
 
@@ -98,7 +98,7 @@ Permit outbound HTTPS traffic to the following domains and IPs:
 - u1.nilesecure.com
 - ne-u1.nile-global.cloud
   - Resolves to 52.13.104.212, 100.20.40.199, 52.12.186.175
-- https\://s3.us-west-2.amazonaws.com/nile-prod-us-west-2(required only for device upgrades)
+- https\://s3.us-west-2.amazonaws.com/nile-prod-us-west-2 (required only for device upgrades)
 
 ### DNS (UDP/53)
 

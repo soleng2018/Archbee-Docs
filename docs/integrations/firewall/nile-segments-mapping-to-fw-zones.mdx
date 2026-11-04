@@ -6,13 +6,13 @@ createdAt: Wed Nov 13 2024 00:34:22 GMT+0000 (Coordinated Universal Time)
 
 # Introduction
 
-This document provides a solution using a 3rd party intermediate L3 switch to satisfy both the Nile L3 design and the firewalls use of incoming tagged LAN traffic segmented by security zones.
+This document provides a solution using a 3rd party intermediate L3 switch to satisfy both the Nile L3 design and the firewall's use of incoming tagged LAN traffic segmented by security zones.
 
 The following Proof of Concept breaks down the solution into three parts:
 
 - Nile NSB provisioning.
 - Palo Alto Firewall configuration of a trunk uplink interface and security zones mapped to each VLAN in the trunk.
-- Cisco 3750 configuration acting as the Nile NSB uplink and mapping Nile segments to  different VLANs on a trunk port to the Palo Alto firewall.
+- Cisco 3750 configuration acting as the Nile NSB uplink and mapping Nile segments to different VLANs on a trunk port to the Palo Alto firewall.
 
 # Topology
 

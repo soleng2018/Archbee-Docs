@@ -39,7 +39,7 @@ Nile operates differently. The Nile Access Service is Layer 3 based and does not
 - **Packet Origination:** The DHCP request originates from the subnet assigned to the device. The source IP is the subnet’s default gateway provided by Nile.
 - **Default Gateway Configuration:** For example, if you configure three user subnets (192.168.1.0/24, 192.168.2.0/24, 192.168.3.0/24), Nile assigns default gateways 192.168.1.1, 192.168.2.1, and 192.168.3.1. When a device connects, Nile originates the DHCP helper request from the appropriate default gateway.
 
-Because of this architecture, DHCP traffic must be routed through the customer’s firewall or router to reach the DHCP server. Customers must ensure that firewall rules allow UDP ports 67 and 68 between the Nile default gateway IPs and the DHCP servers.
+Because of this architecture, DHCP traffic must be routed through your firewall or router to reach the DHCP server. You must ensure that firewall rules allow UDP ports 67 and 68 between the Nile default gateway IPs and the DHCP servers.
 
 This integration ensures that DHCP assignment is consistent with Nile’s segmentation and access control policies.
 
@@ -63,17 +63,17 @@ The Nile DHCP service supports two redundancy models to ensure availability and 
 
 **Option 1: Virtual IP (VIP) Configuration**
 
-- Customers provide the shared VIP address in the Nile Portal.
+- You provide the shared VIP address in the Nile Portal.
 - Nile sends DHCP requests to the VIP.
 - The cluster of DHCP servers behind the VIP manages load balancing and redundancy.
 
 **Option 2: Load-Balanced DHCP Server Cluster**
 
-- Customers configure up to three servers (Host 1, Host 2, Host 3).
+- You configure up to three servers (Host 1, Host 2, Host 3).
 - The servers must be set up in a load-balanced cluster.
 - When a request is sent, all servers receive it. The first valid response is used, and others are discarded.
 
-In both models, customers are responsible for configuring redundancy and high availability on the DHCP server side. Nile forwards requests to the configured servers and relies on the first valid response.
+In both models, you are responsible for configuring redundancy and high availability on the DHCP server side. Nile forwards requests to the configured servers and relies on the first valid response.
 
 # Summary
 

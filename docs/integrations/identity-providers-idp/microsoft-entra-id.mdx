@@ -33,7 +33,7 @@ B.    Group(s) of employees to be identified that can leverage the Nile SSO f
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/clN11I-BPlKh_dxOifiw3_image.png" size="100" isUploading="false" width="768" height="364" showCaption="false" indent="1"></Image>
 
-- Fill up the group name (ex: Nile-Admin), group description, and select the desired members of this group; then click on **Create**
+- Fill in the group name (ex: Nile-Admin), group description, and select the desired members of this group; then click on **Create**
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/h39ojeFeEjEFyDpCbEY6R_image.png" size="56" width="460" height="560" position="center" showCaption="false"></Image>
 
@@ -51,7 +51,7 @@ B.    Group(s) of employees to be identified that can leverage the Nile SSO f
   Nile app creation
 </Heading>
 
-- ·On the Microsoft Entra admin Center or Entra ID accessed through the Azure portal, navigate to the ‘**Enterprise applications**’ page
+- On the Microsoft Entra admin Center or Entra ID accessed through the Azure portal, navigate to the ‘**Enterprise applications**’ page
 - Click on ‘**New application**’
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/DFvmC59RlQ-KaAQyZEeQM_image.png)
@@ -88,7 +88,7 @@ Enter the following
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/6rZNb0OLezoD0xsD02dRV_image.png" size="66" width="748" height="608" position="center" showCaption="false"></Image>
 
-- Check off those groups, namely ‘Nile-Admin’ and ‘Nile-Monitor’, as well as <u>any user groups that will be signing in to the Nile SSO SSID</u>. In this document, the Nile-SSO is one example of such groups and click on the **Select** button to confirm the selection.
+- Check off those groups, namely ‘Nile-Admin’ and ‘Nile-Monitor’, as well as <u>any user groups that will be signing in to the Nile SSO SSID</u>. In this document, the Nile-SSO is one example of such groups. Click on the **Select** button to confirm the selection.
 - Click the **Assign** button to complete the addition of the groups to the Nile app.
 
   **Note:** Individual users can also be assigned to the Nile SAML app by selecting the **Users&#x20;**&#x74;ab in the illustration above.
@@ -148,8 +148,8 @@ Edit each claim one by one as follows:
 
 ### SAML Certificate
 
-- ·Back on the **Set up Single Sign-On with SAML** page, in the **SAML Certificates** section
-- Download the ‘SAML Signing Certificate’ (to be uploaded later to the Nile Portal when adding Entra ID as a provider):|
+- Back on the **Set up Single Sign-On with SAML** page, in the **SAML Certificates** section
+- Download the ‘SAML Signing Certificate’ (to be uploaded later to the Nile Portal when adding Entra ID as a provider):
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/QlS-BTcFqjlhxP3rl02ak_image.png)
 
@@ -177,7 +177,7 @@ Edit each claim one by one as follows:
 
 <Image src="https://app.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Vps4EmZvuQNMJoZqqbIWJ_image.png" size="54" width="358" height="482" position="center" showCaption="false"></Image>
 
-Fill up the fields in the new provider window as follows:
+Fill in the fields in the new provider window as follows:
 
 **IdP Issuer URI**:	Microsoft Entra Identifier noted in the previous section
 **IdP SSO URL:**	Login URL noted in the previous section
@@ -192,7 +192,7 @@ Click the **SUBMIT&#x20;**&#x62;utton to save the changes and add the new Micros
 
 - Click the **METADATA** button to download the file.
 - Open the downloaded file with a text editor, and search for the ‘entityID’ and ‘Location’ strings.
-- **NOTE**: Save the **entityID** and **Location** values.  Those values are used later to&#x20; <u>complete the Entra ID enterprise app configuration </u>
+- **NOTE**: Save the **entityID** and **Location** values. Those values are used later to&#x20; <u>complete the Entra ID enterprise app configuration </u>
 
   For illustration purposes only, the values used in this example:
   entityID:
@@ -220,7 +220,7 @@ to gain Internet access after signing in using their Entra ID credentials. <u></
 
 The group mapping is used to map a designated Entra ID group to the Nile Portal Administrator group. A **Group** rule is needed and can be added on the Nile Portal as illustrated in the following steps.
 
-The example that follows maps an AD admin group “Nile-Admin” to the Nile Portal **Administrator** group, and a ‘Nile-Monitor’ group to the Nile Portal **Monitor** Admin group
+The example that follows maps an AD admin group “Nile-Admin” to the Nile Portal **Administrator** group, and a ‘Nile-Monitor’ group to the Nile Portal **Monitor** Admin group.
 
 Click the **Group rules&#x20;**&#x74;ab:
 

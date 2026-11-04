@@ -8,7 +8,7 @@ Nile supports both Wireless and Wired 802.1X connections.
 
 **1.  Verify if there are any DOT1X authentication attempts from the client side**.
 
- By checking the Device List from Nile Portal we could see particular client logs events:
+ By checking the Device List from Nile Portal you can see particular client log events:
 
 ![Nile portal: Devices list](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/niARmcsnZ9FSVzvaDdcpV_z1-3x0g1pucwqx7xqm6wylewtffcfag.png "Nile portal: Devices list")
 
@@ -16,15 +16,15 @@ Nile supports both Wireless and Wired 802.1X connections.
 
 a.  Navigate to: Control Panel\Network and Internet\Network Connections
 
-b. Right click on Wireless adapter and click on Status:
+b. Right-click on the Wireless adapter and click on Status:
 
 ![Windows: Wifi adapter properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/s9AcxV5hephUv9novotwa_r7q7q1byxoteushudw87fkpkp9dhqle-rg.png "Windows: Wifi adapter properties")
 
-c.  On the Wireless Ethernet Status window click on Details:
+c.  On the Wireless Ethernet Status window, click on Details:
 
 ![Windows: Wifi adapter properties](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/gB2h0Nq_MhJXzFnkqsM4v_gplsvnwzqamkwkzinjtkka7j-st-gacndw.png "Windows: Wifi adapter properties")
 
-d. MAC address of device will be listed as Physical Address:
+d. The MAC address of the device is listed as Physical Address:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ocagScQLswG5a0HMb81AE_hu8hh9uxtpepwtinrcdalpi9lr0uhlic8g.jpeg)
 
@@ -34,13 +34,13 @@ d. MAC address of device will be listed as Physical Address:
 
 **3. Verify of connecting SSID is configured for DOT1X:**
 
- From Network Setup -> Wireless, click on pencil of Wireless Service you are trying to connect and make sure it is configured as WPA2 Enterprise Security:
+ From Network Setup -> Wireless, click on the pencil of the Wireless Service you are trying to connect to and make sure it is configured as WPA2 Enterprise Security:
 
 ![Network Setup: Wireless configs](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/G6OGU3CKQMwMz7b-H4Jz4_xabpvorh7hor-6cwsorypqmbrfwoljucha.png "Network Setup: Wireless configs")
 
 **4.  Verify 802.1X supplicant configuration from client side.**
 
-Client could be running different variety of DOT1X supplicants like:
+The client could be running a variety of DOT1X supplicants like:
 
 \- Windows native supplicant.
 
@@ -50,27 +50,27 @@ Client could be running different variety of DOT1X supplicants like:
 
 (please check vendor documentation for particular supplicant configuration)
 
-In our particular example, our PC client is Windows PC and should be running Windows native DOT1X supplicant.
+In our particular example, our PC client is a Windows PC and should be running the Windows native DOT1X supplicant.
 
-From PC Start-> Services, we need to enable WLAN AutoConfig Service by clicking Start:
+From PC Start-> Services, you need to enable WLAN AutoConfig Service by clicking Start:
 
 ![Windows: Services](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/NiTsLvOTlEtu-Bds35cLA_zbonlekqc8vnbsqbtdur5bf6ikxutbzjsw.png "Windows: Services")
 
 **4.  Verify DOT1X supplicant configuration.**
 
-On this particular example, we will have EAP-PEAP(EAP-MSCHAP v2) password based authentication configured.
+In this particular example, you have EAP-PEAP(EAP-MSCHAP v2) password-based authentication configured.
 
 a. From Control Panel\Network and Internet\Network and Sharing Center
 
-Click to Set up new connection or network:
+Click Set up new connection or network:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/PqGG1XCLhOiwfmyViWo3r_owufqkqeoxnk-hkugzvjm-cfk72jmklslg.png "Windows: Network config")
 
-b. Then from opened windows select Manually connect to wireless network:
+b. Then from the opened window, select Manually connect to wireless network:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/nvNcgKAYBEnYm0ynfIjU-_uetq4bh4zwbl2vt-xd-avbg1cchzul5i-w.png)
 
-c. Fill up next window with:
+c. Fill in the next window with:
 
 \-   Network name (SSID name assigned from Nile Portal).
 
@@ -82,7 +82,7 @@ d.  Select Change connection settings:
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/1x7EVm5NSFqgLrXD-ox5I_qza5zlfcr8l0kjkbxnevnpil5kdskxnpog.png" size="66" width="1214" height="886" position="center" caption="Windows: Network config" alt="Windows: Network config" showCaption="true"></Image>
 
-e. From security Tab configure:
+e. From the security Tab, configure:
 
 Authentication method:  Microsoft: Protected EAP (PEAP)
 
@@ -98,11 +98,11 @@ Advanced settings -> Specify authentication mode: User authentication.
 
 **5.  Checking back Nile Portal to see DOT1X authentication:**
 
-Same MAC address filtering shows that PC successfully connected:
+The same MAC address filtering shows that the PC successfully connected:
 
 ![Nile portal:  Devices list](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/_-HwKJbeVZN5U_UQaOxvX_ecp-xusm5rjggjkztrun-1y4big-khmv1a.png "Nile portal:  Devices list")
 
-By clicking to User Name we could see details of connection:
+By clicking User Name, you can see details of the connection:
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/JMZPO-DHYsvh8f_46JMkE_j7tjltu-cydn3552eysiqanfvj92ywbr7w.png)
 

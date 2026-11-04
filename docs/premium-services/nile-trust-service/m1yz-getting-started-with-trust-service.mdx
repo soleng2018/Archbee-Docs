@@ -33,16 +33,16 @@ Before enabling the Nile Trust Service, administrators should review their netwo
 Once the basics have been established and refinement of zero trust posture is desired, additional tasks include:
 
 1. **Specify Intranet address space**: if Intranet will be used in policies, ensure the Intranet app group is accurate.
-2. **Refine Policy Groups:** consider increasing security posture through smaller policy groups and group devices together:
+2. **Refine Policy Groups:** consider increasing security posture through smaller policy groups and grouping devices together:
    - IoT devices or IoT device categories (printers, cameras, etc.)
    - User groups like Employees and Guests and Contractors
    - App groups beyond Intranet and Internet, such as Data Center applications, or more specific categories of corporate applications
 3. **Create more restrictive Service Profiles:** instead of a fully open port/protocol profile, consider limiting the allowed traffic types.&#x20;
-4. **Optional: Unclassified Users and Sevices Setup** - unclassified users and devices by default cannot access the Internet - if a different policy is desired, add an explicit policy for these policy groups should be created.
+4. **Optional: Unclassified Users and Sevices Setup** - unclassified users and devices by default cannot access the Internet - if a different policy is desired, an explicit policy for these policy groups should be created.
 5. **Optional: Define Quarantine Policy**: if the use of the default Quarantine group is desired, then policies are required, one for defining what the devices can access when in Quarantine, and one defining who/what can access these devices.
-   - A policy should exist that defines what app group (e.g., quarantine servers) devices in quarantine are allowed to access. This app group need not include infrastructure services like DHCP as they are already predefined.  By default, Nile has created a quarantine policy that denies access to Internet as a **placeholder policy** and must be updated with the desired quarantine app group and an Allow action,  if use of the quarantining function is expected.
+   - A policy should exist that defines what app group (e.g., quarantine servers) devices in quarantine are allowed to access. This app group need not include infrastructure services like DHCP as they are already predefined.  By default, Nile has created a quarantine policy that denies access to Internet as a **placeholder policy** and must be updated with the desired quarantine app group and an Allow action, if use of the quarantining function is expected.
    - A policy should exist that defines who can access the devices in Quarantine (and via what protocol/port)
-6. **Build additional policies:**.  using the refined policy groups, define more restrictive access policies and progressively work towards a least-privilege access model. &#x20;
+6. **Build additional policies:** using the refined policy groups, define more restrictive access policies and progressively work towards a least-privilege access model. &#x20;
 
 - Employee & Guest access to Internet (controlled by an Internet Service Profile)
 - Employee access to Printers except for administrative access

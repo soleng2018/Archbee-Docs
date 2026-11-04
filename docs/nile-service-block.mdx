@@ -6,7 +6,7 @@ createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
 
 ## Overview
 
-The Nile architecture is based on the core principles of Core, Environment, and Context. These three pillars form the foundation of the Nile network design and management approach. The architecture inherently is a deterministic design with built-in campus zero trust. Augmented with the comprehensive data collection enabled by sensors, this is a self-managed service and provides performance guarantees. Let's explore the architecture in more detail.
+The Nile architecture is based on the core principles of Core, Environment, and Context. These three pillars form the foundation of the Nile network design and management approach. The architecture is inherently a deterministic design with built-in campus zero trust. Augmented with the comprehensive data collection enabled by sensors, this is a self-managed service and provides performance guarantees. Let's explore the architecture in more detail.
 
 ## Core, Environment, Context
 
@@ -14,14 +14,14 @@ The Nile architecture is based on the core principles of Core, Environment, and 
 
 ### :Comment[Core]{docCommentId="SnjAqiEcFWi7cdIX87kq7" resolved="false"}
 
-When we talk about 'Core' in this context we are referring to the Nile Service Block which provides wired and wireless access infrastructure as a service. Designing our own hardware means we can embed physical and virtual sensors throughout the NSB in order to gather the deep intelligence required to deliver fully automated infrastructure.
+When we talk about 'Core' in this context we are referring to the Nile Service Block, which provides wired and wireless access infrastructure as a service. Designing our own hardware means we can embed physical and virtual sensors throughout the NSB in order to gather the deep intelligence required to deliver fully automated infrastructure.
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/E5FAcRoCX0YXBh5DXS5vm-20260602-032121.jpg" darkSrc="https://archbee-image-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/6WTwAxQDCh0fIk_yBSPdf-20260602-032101.jpg" size="100" width="7547" height="9568" darkWidth="7546" darkHeight="9568" position="center" showCaption="false"></Image>
 
 Nile's architecture is designed to ensure maximum uptime and minimize service disruptions. We achieve this through built-in redundancy at every layer of the Nile Service Block:
 
 - **NSB Gateway** NSB gateway is a role that is assumed by the switch that connects to the customer's upstream router/firewall using OSPF to dynamically manage path failover, ensuring continuous connectivity even if a hardware component fails. Whether a large campus with Distribution switches or a remote site with only Access switching, NSB Gateway guarantees service resiliency.&#x20;
-- **Access:** Two or more Nile Access switches are deployed per wiring closet, coupled with a "Salt & Pepper" WiFi deployment model where neighboring APs are connected to different switches in the wiring closet. Should a switch fail, WiFi coverage remains unaffected, and only directly connected wired ports on that switch are impacted. Given that the Nile Access Service does not have any switch or port level config, affected devices can be easily moved from the impacted Access Switch to a functioning AS. OSPF ensures upstream path redundancy.&#x20;
+- **Access:** Two or more Nile Access switches are deployed per wiring closet, coupled with a "Salt & Pepper" Wi-Fi deployment model where neighboring APs are connected to different switches in the wiring closet. Should a switch fail, Wi-Fi coverage remains unaffected, and only directly connected wired ports on that switch are impacted. Given that the Nile Access Service does not have any switch or port level config, affected devices can be easily moved from the impacted Access Switch to a functioning AS. OSPF ensures upstream path redundancy.&#x20;
 
 ### Environment
 
@@ -31,9 +31,9 @@ Physical Wi-Fi sensors and dedicated monitoring radios in our APs provide real-t
 
 ### :Comment[Context]{docCommentId="4hlepF8FF40b1H7ACjYhO" resolved="true"}
 
-In the Nile Architecture, Context refers to the users and devices connected to the NSB, as well as the services and applications (external to the NSB) being consumed/delivered. Nile's context monitoring doesn't end with device status; monitoring user/device **experience** at the point of consumption is vital to our 360 degree view.
+In the Nile Architecture, Context refers to the users and devices connected to the NSB, as well as the services and applications (external to the NSB) being consumed/delivered. Nile's context monitoring doesn't end with device status; monitoring user/device **experience** at the point of consumption is vital to our 360-degree view.
 
-For example, when a wireless user establishes a connection they will be authenticated using RADIUS. Once authenticated they receive an IP address via DHCP from internal systems or Nile DHCP. The user accesses enterprise cloud applications, requiring DNS.
+For example, when a wireless user establishes a connection, they are authenticated using RADIUS. Once authenticated, they receive an IP address via DHCP from internal systems or Nile DHCP. The user accesses enterprise cloud applications, requiring DNS.
 
 Nile monitors the availability and response time of these services, building an ongoing 'pattern-of-life' dataset that our AI tools can use to take action if there are deviations in normal operations.
 
@@ -66,7 +66,7 @@ The diagram below illustrates how these sensors collectively monitor the NSB, cu
   </tr>
   <tr>
     <td>
-      Availablity
+      Availability
     </td>
     <td>
       The sensor probes the network every 12 seconds to ensure continuous connectivity.

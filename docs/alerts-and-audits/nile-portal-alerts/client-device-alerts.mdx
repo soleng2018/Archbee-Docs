@@ -34,7 +34,7 @@ This alert is generated when multiple client devices are encountering RADIUS err
       Recommended Action
     </td>
     <td>
-      - Click on the alert to get a list of all devices encountering RADIUS failures
+      - Click on the alert to get a list of all devices encountering RADIUS failures.
       - Fix the condition shown in the "Error" field.
     </td>
   </tr>
@@ -64,7 +64,7 @@ This alert is generated when multiple client devices are encountering RADIUS err
       Recommended Action
     </td>
     <td>
-      - Click on the alert to get a list of all devices encountering DNS failures
+      - Click on the alert to get a list of all devices encountering DNS failures.
       - Fix the condition shown in the "Error" field.
     </td>
   </tr>
@@ -94,7 +94,7 @@ This alert is generated when multiple client devices are encountering DHCP error
       Recommended Action
     </td>
     <td>
-      - Click on the alert to get a list of all devices encountering DHCP failures
+      - Click on the alert to get a list of all devices encountering DHCP failures.
       - Fix the condition shown in the "Error" field.
     </td>
   </tr>
@@ -105,11 +105,12 @@ This alert is generated when multiple client devices are encountering DHCP error
 **Overview**
 
 The **CRC Error Alert** triggers when an interface detects corrupted data packets. A Cyclic Redundancy Check (CRC) error occurs when a frame fails its integrity check, meaning data was damaged during transit.
+
 **Alert Details**
 
 - **Severity:** sev\_2 (Configurable)
 - **Trigger Condition:** Triggered when any wired client link experiences CRC errors after the link comes up for that client.
-- **Clear Condition:** Once CRC stops, the portal will wait for another 24 hours to confirm if the issue is occurring again.
+- **Clear Condition:** Once CRC stops, the portal waits for another 24 hours to confirm if the issue is occurring again.
 
 **Potential Impact**
 
@@ -129,6 +130,7 @@ The **CRC Error Alert** triggers when an interface detects corrupted data packet
 
 **Overview**
 &#x20;The **Link Mismatch Alert** triggers when two connected network devices are configured with conflicting speed or duplex settings. This typically happens when one side is hardcoded and the other relies on Auto-Negotiation.
+
 **Alert Details**
 
 - **Severity:** sev\_2 (Configurable)
@@ -139,7 +141,7 @@ The **CRC Error Alert** triggers when an interface detects corrupted data packet
 
 - **Severe Performance Drop:** Duplex mismatches cause massive collision rates, dropping performance to a fraction of the capacity.
 - **Flapping Links:** The interface may repeatedly go up and down.
-- **Total Disconnect:** A complete speed mismatch will prevent the link from establishing a connection entirely.
+- **Total Disconnect:** A complete speed mismatch prevents the link from establishing a connection entirely.
 
 **Troubleshooting Steps**
 

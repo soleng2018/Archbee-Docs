@@ -14,7 +14,7 @@ This document is designed to assist in the integration of FortiGate Next-Generat
 - Four (4) unique /30 subnets as point-to-point links to act as L3 transit subnets between the NSB Active-Active gateways and the pair of Active-Passive FortiGate firewalls.
 
 <BlockQuote>
-  Note: This document was validated using FortiOS 7.4.8
+  Note: This document was validated using FortiOS 7.4.8.
 </BlockQuote>
 
 # Topology Diagram
@@ -22,7 +22,7 @@ This document is designed to assist in the integration of FortiGate Next-Generat
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/BTiSSjOqQRnUji8VM3Nqr_image.png" size="76" width="926" height="1072" position="center" showCaption="false"></Image>
 
 <BlockQuote>
-  Note: To span one ISP physical connection to both FortiGate firewalls, an intermediate switch is needed with two access ports on the same broadcast domain
+  Note: To span one ISP physical connection to both FortiGate firewalls, an intermediate switch is needed with two access ports on the same broadcast domain.
 </BlockQuote>
 
 # Configuration
@@ -57,24 +57,24 @@ Click the “OK” button when done.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FyJtYtniS2BV_EndAyjPw_screenshot-2026-02-27-at-32153apm.png)
 
-In case of a second ISP connected to WAN2 interface, configure that interface in a similar manner:
+In case of a second ISP connected to the WAN2 interface, configure that interface in a similar manner:
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/Ni-2tGjMcfO3SnB5sVIvw_picture-2.png" size="70" width="650" height="584" position="center" showCaption="false"></Image>
 
 ### NSB Interfaces
 
-Two (2) physical interfaces will be used to connect the two Nile Gateways.
+Two (2) physical interfaces are used to connect the two Nile Gateways.
 
-However, each FortiGate interface will be configured with a primary and a secondary IP address. The secondary IP will be automatically used on the Passive firewall by OSPF in case of a failover.
+However, each FortiGate interface is configured with a primary and a secondary IP address. OSPF automatically uses the secondary IP on the Passive firewall in case of a failover.
 
-Navigate to **Network > Interfaces** and select the first physical Interface to be used (internal1 in this example)
+Navigate to **Network > Interfaces** and select the first physical Interface to be used (internal1 in this example).
 
 - **Alias:** NSB1
 - **VRF ID:** 0
 - **Role:** LAN
 - **Addressing Mode:** Manual
 - **IP/Netmask:** IP address/netmask of interface (example used 172.16.0.1/30)
-- **Secondary IP address:** IP address to be used on Passive FW ( example used 172.16.0.9/30)
+- **Secondary IP address:** IP address to be used on Passive FW (example used 172.16.0.9/30)
 - **Administrative Access:** Allow the required IPv4 services to include PING
 - **Receive/Transmit LLDP:** Enable
 - **Status:** Enabled
@@ -83,7 +83,7 @@ Click the “OK” button when done.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/sXL_BnOA_qE5ppwZ5fSUG_screenshot-2026-02-27-at-32401apm.png)
 
-Similarly, navigate to **Network > Interfaces** and select the second physical Interface to be used (internal2 in this example)
+Similarly, navigate to **Network > Interfaces** and select the second physical Interface to be used (internal2 in this example).
 
 - **Alias:** NSB2
 - **VRF ID:** 0
@@ -100,7 +100,7 @@ Similarly, navigate to **Network > Interfaces** and select the second physical I
 
 ### Nile Zone
 
-To simplify policy rules, it may be useful to group both NSB interfaces into a single zone entity (Nile in this document)
+To simplify policy rules, it may be useful to group both NSB interfaces into a single zone entity (Nile in this document).
 
 While in the Network > Interfaces page, click **Create New > zone** to create the Nile zone, and add NSB1 and NSB2 as interface members.
 
@@ -132,18 +132,18 @@ In case of a second ISP, this document covers the **traditional WAN failover**, 
 
 Navigate to **Network > OSPF**:
 
-- **Router ID:** Use 0.0.0.1 and not any of the LAN interfaces IP address
+- **Router ID:** Use 0.0.0.1 and not any of the LAN interfaces' IP addresses
 - **Areas:** Create New (**Area ID:** 0.0.0.0 || **Type:** Regular || **Authentication:** None)
 - **Networks:** Create New (**Area:** 0.0.0.0 || **IP/Netmask:** 0.0.0.0 0.0.0.0)
 
 <BlockQuote>
-  Note: This document adopted a tighter OSPF networks control by using an aggregation of the four (4) uplink subnets: 172.16.0.0/28
+  Note: This document adopted a tighter OSPF networks control by using an aggregation of the four (4) uplink subnets: 172.16.0.0/28.
 </BlockQuote>
 
 - **Interfaces:**
   - Create New (**Name**: NSB1 || **Interface:** NSB1(internal1) || **Cost:** 0 || **Authentication**: None || **Network type:** Point to point || **Hello interval:** 1 || **Dead interval:** 4
   - Similarly, create New (**Name**: NSB2 || **Interface:** NSB2(internal2) || **Cost:** 0 || **Authentication**: None || **Network type:** Point to point ||**Hello interval:** 1 || **Dead interval:** 4
-- **Inject default route:**  Always
+- **Inject default route:** Always
 
 Then click the **Apply** button to save the changes.
 
@@ -163,7 +163,7 @@ By default, the FortiGate firewall applies an implicit deny rule to all traffic.
 - **Nile wired and wireless client subnets** – Must be permitted outbound Internet access.
 - **NSB to Server Farm** – The NSB must be allowed to communicate with the server farm for infrastructure services such as DHCP and RADIUS, as required.
 
-For illustration purposes, the following policy example allows any traffic from the Nile zone to the Internet
+For illustration purposes, the following policy example allows any traffic from the Nile zone to the Internet.
 
 Navigate to Policy & objects > Firewall Policy > Create new:
 
@@ -188,7 +188,7 @@ This section covers the FortiGate Active-Passive High Availability (HA).
 FortiGate NGFW has the following requirements for two units to be configured for High Availability (HA):
 
 - **Hardware Match:** Both units must be the same model with identical firmware versions.
-- **Heartbeat Interfaces:** Dedicated ports must be directly connected or isolated via dedicated VLAN to synchronize session and configuration data.
+- **Heartbeat Interfaces:** Dedicated ports must be directly connected or isolated via a dedicated VLAN to synchronize session and configuration data.
 
 This document uses a single heartbeat port on each FortiGate unit with a direct connection between the two units.&#x20;
 
@@ -197,8 +197,8 @@ This document uses a single heartbeat port on each FortiGate unit with a direct 
 Navigate to **System > HA** and configure the following:
 
 1. **Mode:** Set to Active-Passive
-2. **Device priority:** Set it to a higher value (e.g. 200) than the Secondary (default is 128) to dictate which becomes the Primary.
-3. **Cluster Settings:**  Define a **Group ID**, **Group name** and **Password**. These must be identical on both units.
+2. **Device priority:** Set it to a higher value (e.g., 200) than the Secondary (default is 128) to dictate which becomes the Primary.
+3. **Cluster Settings:** Define a **Group ID**, **Group name** and **Password**. These must be identical on both units.
 4. **Heartbeat interfaces:** Select the dedicated interface.
 5. **Monitor interfaces:** Could be defined once the HA is operational.
 

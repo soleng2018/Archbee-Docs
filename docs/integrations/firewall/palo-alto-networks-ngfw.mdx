@@ -22,7 +22,7 @@ The purpose of this document is to assist with the seamless integration between 
 - **Client subnets**:
   These are the subnets defined on the Nile Portal and used by wired and wireless devices connected to the Nile Service.
 - **Servers Addresses**:
-  These are the IP addresses of the customer DHCP, DNS, and RADIUS servers that are to be defined on the Nile Portal.
+  These are the IP addresses of your DHCP, DNS, and RADIUS servers that are to be defined on the Nile Portal.
 
 ### To:Comment[pology Diagra]{docCommentId="E_NBVfx14TVJ2X8zQyvwI" resolved="false"}m
 
@@ -75,7 +75,7 @@ Multiple sections need to be set up on the Palo Alto Next-Generation Firewall:
 6. NAT Rules
 7. High Availability (Active – Passive)
 
-Before starting, log into the administrator web page of your Palo Alto NGFW appliance.
+Before starting, log in to the administrator web page of your Palo Alto NGFW appliance.
 
 ### A. Single/Active Firewall
 
@@ -109,7 +109,7 @@ Figure 2
 
 **Internet**
 
-Click on **+Add** button (at the bottom of the Zone screen) to create another new zone:
+Click on the **+Add** button (at the bottom of the Zone screen) to create another new zone:
 
 1. **Name:** Internet
 2. **Log Setting:** SNMP traps or syslog could be defined as needed.
@@ -140,7 +140,7 @@ Figure 5
 
 Go to **Network → Network Profiles → Interface Mgmt**:
 
-Click on **+ Add** button, and enable the desired services with security concerns in mind.
+Click on the **+ Add** button, and enable the desired services with security concerns in mind.
 The following screenshots illustrate two profiles: NSB and WAN:
 
 Figure 6
@@ -205,7 +205,7 @@ Figure 11
 
 ![ele](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/p00lvKWZAJ28FSQLFDTom_11.jpeg)
 
-a. **LLDP**: Enable LLDP and Select the ‘LLDP enable’ profile
+a. **LLDP**: Enable LLDP and select the ‘LLDP enable’ profile
 
 Figure 12
 
@@ -253,7 +253,7 @@ Figure 14
 
 ### LAN subnet
 
-This setting specifies the interface to a directly-attached server farm, or the core network. It is shown here for completion purposes:
+This setting specifies the interface to a directly attached server farm, or the core network. It is shown here for completion purposes:
 
 Figure 15
 
@@ -267,7 +267,7 @@ Figure 16
 
 ![figure 16](https://archbee-doc-uploads.s3.amazonaws.com/6swSwg1BT-BlfEPtYJhxM/BQqCqRph5JKFT6_ueDEZS_figure-16.jpeg)
 
-The virtual router **default** is used in this document, and all interfaces have already been added in the previous section. Click on “default” link to see the settings:
+The virtual router **default** is used in this document, and all interfaces have already been added in the previous section. Click on the “default” link to see the settings:
 
 Figure 17
 
@@ -314,7 +314,7 @@ For the Nile service to operate correctly, it is critical that the following sub
 - All client subnets
 - Servers (DHCP, RADIUS, DNS) hosts/subnets
 
-Two routing options to the Nile NSB are supported: **static** or **dynamic (OSPF)**
+Two routing options to the Nile NSB are supported: **static** or **dynamic (OSPF)**.
 
 Option 1: Static routing with ECMP&#x20;
 
@@ -330,7 +330,7 @@ In this document, the following subnets:
 
 Therefore, four (4) static routes are added to the aggregated subnet: 172.16.8.0/21, one for each of the downlinks to the Nile Gateways.
 
-Since Nile traffic to the PAN firewall uses flow based ECMP routing through both Nile Gateways, it is important to enable ECMP on the firewall:
+Since Nile traffic to the PAN firewall uses flow-based ECMP routing through both Nile Gateways, it is important to enable ECMP on the firewall:
 
 **1.1 ECMP setup:**&#x20;
 
@@ -477,7 +477,7 @@ NOTE
 
 ### 4. Firewall Rules
 
-By default, Palo Alto Next Gen firewall allows intrazone (within the same zone) traffic and denies / blocks interzone (between two different zones) traffic.
+By default, the Palo Alto Next Gen firewall allows intrazone (within the same zone) traffic and denies / blocks interzone (between two different zones) traffic.
 
 As three zones were created in this document – (1) Internet, (2) NSB and (3) LAN – rules are needed to allow traffic from the LAN and NSB zones to the Internet zone, and between the NSB and LAN zones.
 
@@ -647,7 +647,7 @@ The WAN link monitoring has both ISP1 and ISP2 interfaces (Dual ISP).
 
 To set up HA link monitoring,
 go to **Device → High Availability → Link and Path Monitoring**,
-Define as shown:
+define as shown:
 
 Figure 43
 
@@ -694,8 +694,8 @@ Figure 47
 
 NOTE
 
-\*\*-   The management ports of both firewalls have ip connectivity.
+\*\*-   The management ports of both firewalls have IP connectivity.
 
 - Ping is enabled and permitted on the management interface.
-- HA2 ports are connected via an ethernet cable.\*\*
+- HA2 ports are connected via an Ethernet cable.\*\*
 

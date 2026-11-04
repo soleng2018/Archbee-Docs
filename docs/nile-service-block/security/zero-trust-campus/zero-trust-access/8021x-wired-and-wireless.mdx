@@ -6,9 +6,9 @@ createdAt: Thu Apr 04 2024 19:59:33 GMT+0000 (Coordinated Universal Time)
 
 ## Overview
 
-Nile's Campus Zero Trust approach to network security is essential in today's high risk environment. Nile's support for industry-standard 802.1X authentication enables you to enforce consistent access controls and policies across your wired and wireless campus networks, ensuring only authorized devices and users can connect.
+Nile's Campus Zero Trust approach to network security is essential in today's high-risk environment. Nile's support for industry-standard 802.1X authentication enables you to enforce consistent access controls and policies across your wired and wireless campus networks, ensuring only authorized devices and users can connect.
 
-By integrating with your existing RADIUS infrastructure, such as Windows NPS, Aruba ClearPass, Cisco ISE etc. to authenticate clients, the Nile Access Service ensures only authorized devices and users can access network resources. In the Campus Zero Trust architecture, devices are denied access by default, and can only access resources through one of the supported authentication methods, including 802.1X. This streamlines the onboarding process and ensures a seamless user experience, all while maintaining a strong security posture.&#x20;
+By integrating with your existing RADIUS infrastructure, such as Windows NPS, Aruba ClearPass, Cisco ISE, etc., to authenticate clients, the Nile Access Service ensures only authorized devices and users can access network resources. In the Campus Zero Trust architecture, devices are denied access by default, and can only access resources through one of the supported authentication methods, including 802.1X. This streamlines the onboarding process and ensures a seamless user experience, all while maintaining a strong security posture.&#x20;
 
 The Nile Access Service supports several RADIUS-powered authentication methods to provide secure network access for a variety of devices and use cases. These authentication options include:
 
@@ -19,7 +19,7 @@ The Nile Access Service supports several RADIUS-powered authentication methods t
 3. **UPSK (Unique Passphrase) with External RADIUS**
 4. **Guest Services** with **External RADIUS**
 
-In this section we will cover 802.1X Authentication.
+In this section, we cover 802.1X Authentication.
 
 ## Configuring 802.1X Authentication on Nile
 
@@ -44,7 +44,7 @@ In the Nile Portal, navigate to the "Network Setu&#x70;**>Authentication**" tab 
 - **Verify Hosts**
   - An optional setting to authenticate the RADIUS server using MSCHAP-PEAPv2 username and password.
 - **Display NAS IPs**
-  - Displays the Nile IP addresses from which authentication requests will originate, allowing you to configure the RADIUS server accordingly.
+  - Displays the Nile IP addresses from which authentication requests originate, allowing you to configure the RADIUS server accordingly.
 - **Guest Portal URLs**
   - This setting is leveraged for guest access authentication.
 - **Wired MAC Auth**
@@ -59,7 +59,7 @@ In the Nile Portal, navigate to the "Network Setu&#x70;**>Authentication**" tab 
 5. Click **SAVE** to immediately enable 802.1X on that segment.
 
 **Redundancy**:
-&#x20;If multiple RADIUS servers are configured (Host 1, Host 2, Host 3), the Nile Access Service will follow a primary-secondary-tertiary failover model.&#x20;
+&#x20;If multiple RADIUS servers are configured (Host 1, Host 2, Host 3), the Nile Access Service follows a primary-secondary-tertiary failover model.&#x20;
 
 - The authentication request is first sent to the primary server (Host 1).&#x20;
 - If the primary server is down, the request is sent to the secondary server (Host 2), and if the secondary server is also down, the request is sent to the tertiary server (Host 3).&#x20;
@@ -72,11 +72,11 @@ This monitoring can be based on accounting transactions or MSCHAP-PEAPv2 usernam
 
 ### Supporting Non-802.1X Devices in a Campus Zero Trust Network
 
-Nile understands that not every device on your network will support 802.1X. For these non-802.1X-capable clients, :Comment[Nile offers MAC Authentication Bypass]{docCommentId="Flu6uXQ3c0fRWPNy3D_B1" resolved="false"}; :Link[learn more]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}.
+Nile understands that not every device on your network supports 802.1X. For these non-802.1X-capable clients, :Comment[Nile offers MAC Authentication Bypass]{docCommentId="Flu6uXQ3c0fRWPNy3D_B1" resolved="false"}; :Link[learn more]{href="https://docs.nilesecure.com/mac-authentication" newTab="true" hasDisabledNofollow="false"}.
 
 ### Dynamic Segment Assignment with Nile Dictionary
 
-In some use cases, a single SSID can be mapped to multiple segments in the Nile Access Service. In such scenarios, it is mandatory for the RADIUS server to send back the exact segment name that the user or device should be assigned to. The Nile Access Service supports dynamic segment assignment based on user and device attributes received from external RADIUS servers, such as Cisco Identity Services Engine (ISE) and Aruba ClearPass. To facilitate this, Nile provides a custom dictionary file that can be uploaded to the RADIUS servers or standard RADIUS attributes can be used.
+In some use cases, a single SSID can be mapped to multiple segments in the Nile Access Service. In such scenarios, it is mandatory for the RADIUS server to send back the exact segment name that the user or device should be assigned to. The Nile Access Service supports dynamic segment assignment based on user and device attributes received from external RADIUS servers, such as Cisco Identity Services Engine (ISE) and Aruba ClearPass. To facilitate this, Nile provides a custom dictionary file that can be uploaded to the RADIUS servers, or standard RADIUS attributes can be used.
 
 When a user or device authenticates to the Nile Access Service using 802.1X, the RADIUS server can send the "netseg" Vendor Specific Attribute (VSA) during the authentication process. This attribute informs the Nile Access Service which network segment the user or device should be assigned to.
 
@@ -86,7 +86,7 @@ Following is the 802.1X flow:
 
 1. A wireless or wired device initiates 802.1X
 2. NSB proxies all requests to the RADIUS server
-3. Once the device is successfully authenticated, the RADIUS server is required to send a segment name (exact case match to NSB for wired devices). For wireless devices segment is optional if the SSID is mapped to just one segment. If NSB has the segment configured, the device will be assigned the segment
+3. Once the device is successfully authenticated, the RADIUS server is required to send a segment name (exact case match to NSB for wired devices). For wireless devices, segment is optional if the SSID is mapped to just one segment. If NSB has the segment configured, the device will be assigned the segment
 4. NSB now allows and forwards all frames including DHCP&#x20;
 
 ### Example Use Case: Single SSID for Teachers and Students
@@ -121,7 +121,7 @@ The segment assignment can be achieved in two ways:
 
 - **Standard RADIUS Attribute**: If the RADIUS server does not support uploading a custom dictionary file, the segment name can be sent using the standard RADIUS attribute `Tunnel-Private-Group-ID_Lookup`.
 
-If the segment name sent by the RADIUS server is null or does not match the configured segments in Nile, the device will fail authentication with the appropriate error message.
+If the segment name sent by the RADIUS server is null or does not match the configured segments in Nile, the device fails authentication with the appropriate error message.
 
 <hint type="info">
   Note that if the SSID is mapped to only one segment in the Nile Access Service, the use of the Nile dictionary file or the standard RADIUS attribute is not required.
@@ -140,7 +140,7 @@ By leveraging dynamic segment assignment with the Nile-provided dictionary file,
 
 Nile's cloud-managed architecture provides a simple path for 802.1X deployment. This includes the ability to:
 
-- Easily onboard and manage primary, secondary and tertiary RADIUS servers for redundancy and segmentation
+- Easily onboard and manage primary, secondary, and tertiary RADIUS servers for redundancy and segmentation
 - Track authentication events and client activity across your wired and wireless networks
 - Quickly troubleshoot connectivity issues with detailed logs and reporting
 

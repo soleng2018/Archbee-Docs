@@ -10,7 +10,7 @@ See Figure 1. for a typical Nile Dashboard view. The SLAs on this instance are g
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/klYDtK0NkRjiL9JLMtjSm_qktome0iekc7n21smlzwkr5ogmtdjql6ka.png)
 
-To check for Latency in Infrastructure (DHCP, DNS, RADIUS, or Internet connectivity) you can click on the Infrastructure tile or click on Infrastructure on the left-hand navigation. To check for Latency on Applications you can click on Applications. See Figure 2. for where to click.
+To check for Latency in Infrastructure (DHCP, DNS, RADIUS, or Internet connectivity), you can click on the Infrastructure tile or click on Infrastructure on the left-hand navigation. To check for Latency on Applications, you can click on Applications. See Figure 2. for where to click.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/OEsda7NFXenfdB-BX7MeO_ppvxf3avfqgya55lr7ecytfb300cko-kyw.png)
 
@@ -20,9 +20,9 @@ Clicking on Infrastructure in the Left-hand navigation brings you right to detai
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/FAsA1aBWoPBfVGd0kx8wK_yppguuja4syntljmofkbs-fuk9xfbswpba.png)
 
-To view details of a specific Infrastructure component click on the Name of the component.
+To view details of a specific Infrastructure component, click on the Name of the component.
 
-When you select a component it will open a time-based graph of Availability and Experience for that Infrastructure type. Figure 5. shows how the DNS Experience over the last two hours has been. In this case, some spots of higher latency are seen on the graph and marked by "bad experience" along with dips in latency showing improvement. Note that on this graph, "Now" is on the right side and as you look further left, you are looking farther back in time.
+When you select a component, it opens a time-based graph of Availability and Experience for that Infrastructure type. Figure 5. shows how the DNS Experience over the last two hours has been. In this case, some spots of higher latency are seen on the graph and marked by "bad experience" along with dips in latency showing improvement. Note that on this graph, "Now" is on the right side and as you look further left, you are looking farther back in time.
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/UkwGHrcPbVWRROb7AzT-Y_y82thcjowunq6an8udmtt9sv5jrgkf7jpw.png)
 
@@ -44,7 +44,7 @@ In Figure 8. we can see several of the Applications had some issues. Selecting G
 
 This opens a time-based graph view of GCP Availability and Performance (Latency). In a few cases you can see that the application has high latency and those spots are marked in red as a bad experience.
 
-If you hover your mouse pointer over the bad spot you can get a bit more detail on the Experience of the GCP application at that point in time, as shown in Figure 11.&#x20;
+If you hover your mouse pointer over the bad spot, you can get a bit more detail on the Experience of the GCP application at that point in time, as shown in Figure 11.&#x20;
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/JExUO5rvwY7AoNeHebTWx_fdaqcwxp6d2tsyj38jdbbzafkflnt0e6jg.png)
 
@@ -52,7 +52,7 @@ Here you see the latency went from an average of 250 ms up to 396 ms, triggering
 
 ## How is Latency Calculated by Nile for Infrastructure and Applications?
 
-For DNS, DHCP, Internet, RADIUS and Application latency, Nile monitors and compares individual transaction times to prior collected latency data during the last 8 hours. If the current latency number is above the baseline moving average (from the last 8 hours), then Nile will label the number a bad experience point. For example if the baseline is 8 msecs (calculated based on the data from the last 8 hours) and the latency in the current minute t is 10 msecs, then we have a bad experience point at time t. The baseline is calculated for each server. If there are two DHCP servers, each DHCP server has its own baseline based on the past data. If 10 msecs becomes norm for 8hrs continuously, then 10 msecs will become the baseline and as long as the value after t+8 hours is at or less than 10 msecs, everything will be good.
+For DNS, DHCP, Internet, RADIUS and Application latency, Nile monitors and compares individual transaction times to prior collected latency data during the last 8 hours. If the current latency number is above the baseline moving average (from the last 8 hours), then Nile labels the number a bad experience point. For example, if the baseline is 8 msecs (calculated based on the data from the last 8 hours) and the latency in the current minute t is 10 msecs, then we have a bad experience point at time t. The baseline is calculated for each server. If there are two DHCP servers, each DHCP server has its own baseline based on the past data. If 10 msecs becomes norm for 8hrs continuously, then 10 msecs will become the baseline and as long as the value after t+8 hours is at or less than 10 msecs, everything will be good.
 
 ## What transactions are used to Calculate Latency?
 
@@ -66,5 +66,5 @@ RADIUS: Testing RADIUS is performed from the Headend Controller, using a Synthet
 
 Internet: Testing Internet is performed from the Headend Controller, using ICMP Pings to Google.com and calculating the response time. This tests the path from the Headend Northbound to Google and Back, so does include additional infrastructure on prem like routers and firewalls that it transits.
 
-Applications: Testing Applications is performed from the Headend Controller, using a "curl" command to try to load the initial Application website page, and calculating the response time. In some cases if the Application website refuses "curl" commands, we can change this to ICMP pings instead. One exception like this is Skype which is tested via ICMP pings.
+Applications: Testing Applications is performed from the Headend Controller, using a "curl" command to try to load the initial Application website page, and calculating the response time. In some cases if the Application website refuses "curl" commands, we can change this to ICMP pings instead. One exception like this is Skype, which is tested via ICMP pings.
 

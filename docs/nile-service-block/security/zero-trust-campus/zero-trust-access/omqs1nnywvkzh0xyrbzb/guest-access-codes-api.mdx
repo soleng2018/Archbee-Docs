@@ -27,7 +27,7 @@ With this API, you can:
 
 <Image src="https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ja2k9eeyMIzLMmYM2kfkp_screenshot-2026-01-12-at-32924apm.png" size="100" width="3398" height="1314" position="center" showCaption="false" indent="2"></Image>
 
-3. When you save, an API key JSON file will be generated. This will look like:
+3. When you save, an API key JSON file will be generated. This looks like:
 
 <BlockQuote>
   \{
@@ -44,9 +44,9 @@ With this API, you can:
 
 ## Discovering Guest Portals with authentication as Access‑Code
 
-Before creating access codes, you will need to find the portal ID for the guest portal that uses Access Code authentication using the **API** GET *\<base-url-from-nile>/api/v1/portalconfig/summary*.
+Before creating access codes, you need to find the portal ID for the guest portal that uses Access Code authentication using the **API** GET *\<base-url-from-nile>/api/v1/portalconfig/summary*.
 
-This will list the guest portals and identify which ones are configured with Access Code authentication.
+This lists the guest portals and identify which ones are configured with Access Code authentication.
 
 **Example request:**
 
@@ -93,7 +93,7 @@ This will list the guest portals and identify which ones are configured with Acc
   genericAccessCode:
   - true → portal uses generic access codes
   - false → portal uses guest‑specific access codes
-- The guest portal ID is provided in the first line of the example above as "id". This value will be used as &#x7B;portalId} in all subsequent API requests.
+- The guest portal ID is provided in the first line of the example above as "id". This value is used as &#x7B;portalId} in all subsequent API requests.
 
 ## Creating Generic Access Codes
 
@@ -272,9 +272,9 @@ The response contains one entry per guest, all with the same access code and a s
 
 ## Update Guest‑Specific Access Codes:
 
-You can also update parameters such as start time, end time and Access Code for guest‑specific using the following API: **PUT** *\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
+You can also update parameters such as start time, end time and Access Code for guest‑specific access codes using the following API: **PUT** *\<base-url-from-nile>/api/v2/portalconfig/&#x7B;portal-id}/access-codes*.
 
-You will have to provide the guest email and name as attributes in the request body as they remain constant and cannot be updated. You must include the guest’s email and name as attributes in the request body because these values are fixed at creation time and cannot be modified later
+You will have to provide the guest email and name as attributes in the request body as they remain constant and cannot be updated. You must include the guest’s email and name as attributes in the request body because these values are fixed at creation time and cannot be modified later.
 
 **Example Request: Updation of Access Codes**
 

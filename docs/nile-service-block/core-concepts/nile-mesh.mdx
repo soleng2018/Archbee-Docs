@@ -113,7 +113,7 @@ Keep in mind:
 - A Mesh AP shares its radio resources between:
   - **Backhaul** (Root ↔ Mesh AP) and
   - **Client access** (Mesh AP ↔ devices).
-- Throughput on a Mesh AP will generally be **lower than on a wired AP on the same channel and band**, due to airtime sharing.
+- Throughput on a Mesh AP is generally **lower than on a wired AP on the same channel and band**, due to airtime sharing.
 - For performance‑sensitive areas (dense offices, large classrooms):
   - Prefer **wired APs**.
   - Use Mesh primarily to reach **fringe or hard‑wired locations** where absolute peak throughput is not critical.
@@ -126,7 +126,7 @@ A Root AP:
 
 - Operates as a **standard Nile AP** for clients.
 - Additionally advertises a **mesh‑capable beacon** used by Mesh APs to discover and attach.
-- Only accepts mesh uplink associations from **mesh‑enabled APs**
+- Only accepts mesh uplink associations from **mesh‑enabled APs**.
 
 This design:
 
@@ -136,7 +136,7 @@ This design:
 
 A Mesh AP:
 
-- Boots and actively seeks the best root AP based on signal strength
+- Boots and actively seeks the best root AP based on signal strength.
 - Once connected:
   - Obtains a **management IP address**.
   - Registers with Nile Cloud via the Root AP.
@@ -146,7 +146,7 @@ A Mesh AP:
 
 If the Mesh AP loses its Root AP (for example, hardware failure or power loss):
 
-- It will automatically:
+- It automatically:
   - Search for **alternative Root APs** within range.
   - Re‑attach to the best available Root AP if one exists.
 
@@ -242,7 +242,7 @@ B. Clients connected to a Mesh AP are slow
      - RF interference (other WLANs, radar, etc.).
 3. **Backhaul quality**
    - Ensure each Mesh AP has a strong, reliable link to its Root AP.
-   - If performance is constrained, consider re-positioning APs or converting additional APs into Root APs where cabling becomes feasible.
+   - If performance is constrained, consider repositioning APs or converting additional APs into Root APs where cabling becomes feasible.
 
 C. Mesh AP intermittently changes parent
 
@@ -285,7 +285,7 @@ If another Root AP is in range:
 - Mesh APs attempt to re‑attach to the alternate Root AP.
 - Client sessions may experience a brief disruption, then resume.
 
-If **no alternate Root AP** is in range, Mesh APs lose backhaul and clients will lose connectivity until a suitable Root AP is available again.
+If **no alternate Root AP** is in range, Mesh APs lose backhaul and clients lose connectivity until a suitable Root AP is available again.
 
 **Q4. How far can a Mesh link extend?**
 Nile Mesh is designed for short mesh paths between a Mesh AP and its Root AP, with distances and placement depending on your RF environment and throughput requirements. Your Nile team can help validate link budgets and layouts for your specific deployment.

@@ -6,29 +6,29 @@ createdAt: Fri Feb 07 2025 01:58:42 GMT+0000 (Coordinated Universal Time)
 
 Nile has added support for integration with LogicMonitor. LogicMonitor is a Hybrid Observability platform that is used by enterprises to monitor anything from cloud services to network infrastructure. In a :Link[2024 G2 report]{href="https://www.logicmonitor.com/resource/compare-the-top-network-monitoring-software" newTab="true" hasDisabledNofollow="false"}, LogicMonitor has been placed in the leader's quadrant.
 
-Traditionally, network monitoring relied on SNMP, Logs, events, CLI of the network infrastructure. However, in the case of Nile, since it is offered as a service, the approach taken is to export synthesized events to the LogicMonitor from the Nile cloud. The following events are sent to the LogicMonitor:
+Traditionally, network monitoring relied on SNMP, logs, events, CLI of the network infrastructure. However, in the case of Nile, since it is offered as a service, the approach taken is to export synthesized events to the LogicMonitor from the Nile cloud. The following events are sent to the LogicMonitor:
 
 - **End-user device events**
-  - This includes all the events seen on the Device Details page of the customer’s Nile Portal
+  - This includes all the events seen on the Device Details page of the your Nile Portal
   - For example, Device connection/disconnection, Authentication pass/fail, DHCP pass/fail, and several more
 - **Service-related alerts**
-  - Includes all the alerts that are seen today under the Alerts section of the Control Center (Nile portal), which includes service, infrastructure (customer’s DHCP, RADIUS, DNS), security and application monitoring related alerts, including Nile Infrastructure related alerts
+  - Includes all the alerts that are seen today under the Alerts section of the Control Center (Nile portal), which includes service, infrastructure (your DHCP, RADIUS, DNS), security and application monitoring related alerts, including Nile Infrastructure related alerts
 - **Audit Trail**
   - Any action taken by a user inside the Nile Portal, such as modifying settings
 
-Nile leverages the LogicMonitor’s generic Log Ingestion feature. A secure HTTPS-based connection is created between the Nile cloud and the LogicMonitor instance using LM’s access key and access code which is generated from within LM’s settings and provided in the integration settings screen.
+Nile leverages the LogicMonitor’s generic Log Ingestion feature. A secure HTTPS-based connection is created between the Nile cloud and the LogicMonitor instance using LM’s access key and access code which are generated from within LM’s settings and provided in the integration settings screen.
 
 ## Settings
 
 ### LogicMonitor Settings
 
-- **URL**: this is the LogicMonitor instance URL that has been provided to the customer in this example we’ll use. Please note the URL is unique to a customer
+- **URL**: this is the LogicMonitor instance URL that has been provided to you in this example we’ll use. Please note the URL is unique to a customer
   - [Logicmonitor Hosted Monitoring System](https://nile.logicmonitor.com/santaba)&#x20;
-- **Access code and access key**: The customer has to log into their LM instance and navigate to the screen below Settings > Users and Roles > API Tokens. Nile uses the LMv1 Token.
+- **Access code and access key**: You have to log into your LM instance and navigate to the screen below Settings > Users and Roles > API Tokens. Nile uses the LMv1 Token.
   - Add a new LMv1 token using the add button&#x20;
   - ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/ky1RoSoWrA6bK6BG3vLNG_image.png)
   - Enter the required details and an access ID and access key will be generated. Copy those and store them in a text file.
-    **Important:&#x20;**&#x54;he access key is displayed ONLY ONCE, so be sure to copy it on this screen. The customer may choose to use an existing user OR create a separate user specifically for API access. The users can be created under the Users tab in the LM
+    **Important:&#x20;**&#x54;he access key is displayed ONLY ONCE, so be sure to copy it on this screen. You may choose to use an existing user OR create a separate user specifically for API access. The users can be created under the Users tab in the LM
   - ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/b8hMmTp443MVfcyRk7VdU_image.png)
 
 ### Nile Settings
@@ -41,10 +41,10 @@ Nile leverages the LogicMonitor’s generic Log Ingestion feature. A secure HTTP
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/t_5hGj8IwR5YFVJvtmTIp_screenshot-2025-02-06-at-61851-pm.png)
 
-- Input the URL, Access ID and Access Key that has been generated from LogicMonitor. Provide a Name to this Integration on the top field so it's easy to identify it later.&#x20;
+- Input the URL, Access ID and Access Key that have been generated from LogicMonitor. Provide a Name to this Integration on the top field so it's easy to identify it later.&#x20;
   - Resource ID Map
-    - Resource maps to the component that generated the log. So we create a "Nile" resource in LogicMonitor and give the resource ID of "Nile" resource in the configuration.  So all the logs Nile sends have this resource ID and LogicMonitor automatically maps into the "Nile" resources. This makes it easier for searching, grouping, etc
-    - For example: If a customer creates a Resource called ‘Nile Access Service’ inside LogicMonitor, they have to note what value the LM assigned to the Resource Nile access service, let's assume 1. In the resources tab in LogicMonitor, click the resource and it will show below
+    - Resource maps to the component that generated the log. So we create a "Nile" resource in LogicMonitor and give the resource ID of "Nile" resource in the configuration. So all the logs Nile sends have this resource ID and LogicMonitor automatically maps into the "Nile" resources. This makes it easier for searching, grouping, etc
+    - For example: If you create a Resource called ‘Nile Access Service’ inside LogicMonitor, you have to note what value the LM assigned to the Resource Nile access service, let's assume 1. In the resources tab in LogicMonitor, click the resource and it will show below
 
 ![](https://api.archbee.com/api/optimize/6swSwg1BT-BlfEPtYJhxM/eRMQGeMA9fGX-JpArdaQ0_image.png)
 
